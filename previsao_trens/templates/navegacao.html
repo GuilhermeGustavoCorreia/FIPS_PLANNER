@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container">  
+  
+   
+    NAVEGACAO
+
+
+    {% if form.errors %}
+        <p class="mensagem__erro">Usuário e senha incorretos, tente novamente.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p class="mensagem__erro" >Sua conta não tem acesso a esta página. Para prosseguir,
+            faça login com uma conta que tenha acesso.</p>
+        {% else %}
+            <p class="mensagem__erro">Faça login para ver esta página.</p>
+        
+        {% endif %}
+    {% endif %}
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

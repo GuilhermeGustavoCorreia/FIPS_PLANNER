@@ -1,0 +1,65 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"> 
+  
+
+<div class="container">  
+  
+    <div class="logo__fips">
+        <img src="{% static 'imagens/logo-fips-horizontal.png' %}" alt="LOGO DA FIPS">
+    </div>
+  
+  <div class="login__area">
+        
+    <h2>Login</h2>
+    <p>Bem vindo, para acessar o sistema, efetue o login abaixo.</p>
+    
+    <form class="form__login" method="post" action="{% url 'login' %}">
+        
+        {% csrf_token %}
+        
+        <div class="form__email__linha">
+
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            
+        </div>
+        
+        <div class="form__senha__linha">
+
+            {{ form.password.label_tag }}
+            {{ form.password }}
+
+        </div>
+
+        <div class="form__input_entrar">
+            <input type="submit" value="Entrar" class="botao" />
+        </div>
+
+        <input type="hidden" name="next" value="{{ next }}" />
+
+  </form>
+
+
+    {% if form.errors %}
+        <p class="mensagem__erro">Usuário e senha incorretos, tente novamente.</p>
+    {% endif %}
+
+    {% if next %}
+    {% if user.is_authenticated %}
+        <p class="mensagem__erro" >Sua conta não tem acesso a esta página. Para prosseguir,
+        faça login com uma conta que tenha acesso.</p>
+    {% else %}
+        <p class="mensagem__erro">Faça login para ver esta página.</p>
+    {% endif %}
+    {% endif %}
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

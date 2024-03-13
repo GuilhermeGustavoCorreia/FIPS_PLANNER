@@ -1,0 +1,60 @@
+{% load static %}
+
+{% if request.path != '/accounts/login/' and request.user.is_authenticated %}   
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/header/header.css' %}"> 
+
+<header class="header">
+    
+    <img src="{% static "imagens/logo-fips-horizontal.png" %}" class="header__logo">
+  
+    <nav class="nav__menu__principal">
+      
+        <ul class="menu__principal">
+        <li class="item__do__menu"><a> Restrições</a></li>
+        <li class="item__do__menu"><a>   Previsão</a>
+          
+            <ul class="submenu">
+                <li class="submenu-lista"><a class="subitem">Nitro   </a></li>
+                <li class="submenu-lista"><a class="subitem"> Criar Trem    </a></li>
+                <li class="submenu-lista"><a class="subitem">Tabela  </a></li>
+            </ul>
+
+        </li>
+        <li class="item__do__menu"><a>  Terminais   </a></li>
+        <li class="item__do__menu"><a>   Relatórios</a>
+          
+          <ul class="submenu">
+            <li class="submenu-lista"><a class="subitem">Detalhe   </a></li>
+            <li class="submenu-lista"><a class="subitem">Prévia    </a></li>
+            <li class="submenu-lista"><a class="subitem">Ocupação  </a></li>
+          </ul>
+
+        </li>
+      </ul>
+    </nav>
+
+    <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
+        <div class="nome__do__usuario">
+          <label  class="primeiro__nome"  >{{ user.first_name }}</label>
+          <label  class="sobremnoe"       >{{ user.last_name }}</label>
+        </div>  
+        <img    class="usuario-foto" src="{{  user.foto.url }}" alt="Foto de usuário">
+    </div>
+
+</header>
+
+<ul id="menu__usuario" class="menu__usuario">
+  
+    <li><a class="menu__usuario__ancora" href="" >Minha conta           </a></li>
+    <li><a class="menu__usuario__ancora" href="" >Criar Novo usuário    </a></li>
+    <li><a class="menu__usuario__ancora" href="" >Ver todos os usuários </a></li>
+    <li><a class="menu__usuario__ancora" href="" >Configurações         </a></li>
+    <li><form id="logout-form" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <a class="menu__usuario__ancora" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+  </form></li>
+    
+</ul>
+
+{% endif %}
