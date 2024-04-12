@@ -1,0 +1,73 @@
+
+
+
+
+.LISTA__TRENS {
+    border-collapse: collapse;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+    user-select: none;
+
+}
+.LISTA__TRENS th, .LISTA__TRENS td{text-align: center;}
+.LISTA__TRENS thead{
+    background-color: var(--azul-profundo-m);
+    color: var(--neutro)
+}
+
+.LISTA__TRENS tbody tr:nth-child(even)        {background-color: #f2f2f2;}
+.LISTA__TRENS tbody tr:nth-child(odd)         {background-color: #ffff;  }
+.LISTA__TRENS tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
+.LISTA__TRENS tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
+
+
+.LISTA__TRENS td{ padding:0.2rem 0; }
+.LISTA__TRENS th{ padding:0.5rem 0; }
+
+.COL_PP{min-width: 2rem;}
+.COL_P{min-width: 5rem;}
+.COL_M{width: 8rem;}
+.COL_G{width: 15rem;}
+
+
+.BTN__CRIAR__TREM{
+    background-color: var(--amarelo-ouro-e);
+    color: var(--neutro);
+    margin-bottom: 2vh;
+}
+
+.BTN__CRIAR__TREM:hover{ background-color: var(--amarelo-ouro-m);}
+
+
+.ICONE_DELETAR{height: 2rem; cursor: pointer; fill: var(--cinza-chumbo-c);}
+.ICONE_DELETAR:hover{height: 2rem; fill: darkred;}
+
+.ICONE_EDITAR       {  width: 2rem; fill: var(--cinza-chumbo-c); cursor: pointer;}
+.ICONE_EDITAR:hover {  width: 2rem; fill: var(--cinza-chumbo-m); }
+
+
+.MODAL{
+    
+    display: none;
+
+    width: fit-content;
+    padding: 1rem;
+    border-radius: 10px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    background-color: white;
+}
+.MODAL p, .ckbox {margin: 0; padding: 0;margin: 0.5rem 0;}
+
+.MODAL .BOTAO {margin: 0.5rem 0;}
+
+.INPUT_P{max-width: 10.9rem; min-width:  10.9rem;}
+.INPUT_M{max-width: 16.5rem; min-width:  16.5rem;}
+.INPUT_G{max-width: 33.2rem; min-width: 33.2rem; margin-top: 0.5vh;}
+
