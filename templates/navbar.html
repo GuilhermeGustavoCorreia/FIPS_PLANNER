@@ -2,7 +2,10 @@
 
 {% if request.path != '/accounts/login/' and request.user.is_authenticated %}   
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/header/header.css' %}"> 
+<link   rel="stylesheet" type="text/css" href="{% static 'css/header/header.css' %}"> 
+<link   rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
+
+<script src="{% static 'javascript/header/main.js' %}"     defer></script>
 
 <header class="header">
     
@@ -11,18 +14,18 @@
     <nav class="nav__menu__principal">
       
         <ul class="menu__principal">
-        <li class="item__do__menu"><a> Restrições</a></li>
-        <li class="item__do__menu"><a>   Previsão</a>
+        <li class="item__do__menu"><a> Restrições </a></li>
+        <li class="item__do__menu"><a> Previsão   </a>
           
             <ul class="submenu">
-                <li class="submenu-lista"><a class="subitem">Nitro   </a></li>
-                <li class="submenu-lista"><a class="subitem"> Criar Trem    </a></li>
-                <li class="submenu-lista"><a class="subitem">Tabela  </a></li>
+                <li class="submenu-lista"><a class="subitem">Nitro        </a></li>
+                <li class="submenu-lista"><a href="{% url 'criar_trem' %}" class="subitem">Criar Trem   </a></li>
+                <li class="submenu-lista"><a class="subitem">Tabela       </a></li>
             </ul>
 
         </li>
         <li class="item__do__menu"><a>  Terminais   </a></li>
-        <li class="item__do__menu"><a>   Relatórios</a>
+        <li class="item__do__menu"><a>  Relatórios  </a>
           
           <ul class="submenu">
             <li class="submenu-lista"><a class="subitem">Detalhe   </a></li>
@@ -37,16 +40,16 @@
     <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
         <div class="nome__do__usuario">
           <label  class="primeiro__nome"  >{{ user.first_name }}</label>
-          <label  class="sobremnoe"       >{{ user.last_name }}</label>
+          <label  class="sobremnoe"       >{{ user.last_name }} </label>
         </div>  
         <img    class="usuario-foto" src="{{  user.foto.url }}" alt="Foto de usuário">
     </div>
 
 </header>
 
-<ul id="menu__usuario" class="menu__usuario">
+<ul id="menu__usuario" class="menu__usuario hidden">
   
-    <li><a class="menu__usuario__ancora" href="" >Minha conta           </a></li>
+    <li><a class="menu__usuario__ancora" href="{% url 'profile' %}" >Minha conta           </a></li>
     <li><a class="menu__usuario__ancora" href="" >Criar Novo usuário    </a></li>
     <li><a class="menu__usuario__ancora" href="" >Ver todos os usuários </a></li>
     <li><a class="menu__usuario__ancora" href="" >Configurações         </a></li>

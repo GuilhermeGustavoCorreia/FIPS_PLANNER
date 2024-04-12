@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Usuario
+from .models import Usuario, Trem
 
 
 
@@ -14,5 +14,7 @@ class UsuarioAdmin(UserAdmin):
 
     list_display = ('username', 'first_name', 'last_name', 'email', 'is_staff')
 
+
+admin.site.register(Trem)
 admin.site.register(Usuario, UsuarioAdmin)
 

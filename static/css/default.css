@@ -1,0 +1,56 @@
+.CONTEUDO__PADRAO{
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 12vh;
+    position: absolute;
+    
+    width: 80vw;
+}
+
+h1{
+    font-family: "Saira Expanded";
+    color: var(--cinza-chumbo-e);
+    margin: 0;
+}
+h2{
+    font-family: "Saira Expanded";
+    color: var(--azul-ceu-e);
+    margin: 0;
+}
+
+.BOTAO{
+
+    font-family: 'Saira Expanded';
+    font-weight: 600;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+.VERDE{ background-color:var(--verde-floresta-m); color: var(--neutro);}
+.VERDE:hover{ background-color:var(--verde-floresta-e)}
+
+.OVERLAY{ 
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(64, 64, 64, 0.4);
+    backdrop-filter: blur(10px);
+    display: none;
+}
+
+.INPUT { 
+    box-sizing: border-box;
+    min-height: 3.7vh;
+    font-size: 1rem;
+    text-align: center;
+}
+

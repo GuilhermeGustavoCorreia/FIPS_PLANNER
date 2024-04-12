@@ -1,11 +1,43 @@
 
 @font-face {
-    font-family: 'Saira Expanded';
-    src: url('../../fonts/Saira/Saira-VariableFont_wdth\,wght.ttf') format('truetype');
+    font-family: 'Saira Expanded Regular';
+    src:url('../../fonts/Saira/static/Saira_Expanded-Regular.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'Saira Expanded Bold';
+    src:url('../../fonts/Saira/static/Saira_Expanded-Bold.ttf') format('truetype');
+}
+
 @font-face {
     font-family: 'Open Sans';
     src: url('../../fonts/Open Sans/OpenSans-VariableFont_wdth\,wght.ttf') format('truetype');
+}
+
+:root {
+    /*PRIMÁRIAS*/
+    --azul-profundo-e: #002A68;
+    --azul-profundo-m: #004B9B;
+    --azul-profundo-c: #658EC9;
+    
+    --cinza-chumbo-e: #333B41;
+    --cinza-chumbo-m: #7B8C96;
+    --cinza-chumbo-c: #C0CCD2;
+
+    /*SECUNDÁRIAS*/
+    --azul-ceu-e: #0090D0;
+    --azul-ceu-m: #93BDE4;
+    --azul-ceu-c: #D3E3F4;
+
+    --verde-floresta-e: #00904C;
+    --verde-floresta-m: #00C64C;
+    --verde-floresta-c: #8BE5AD;
+
+    --amarelo-ouro-e: #F6921E;
+    --amarelo-ouro-m: #FDC24E;
+    --amarelo-ouro-c: #FFE4B8;
+    
+    --neutro: #E8EBFF;
 }
 
 body{
@@ -13,10 +45,9 @@ body{
     margin: 0 auto;
 }
 
-header
-{
+header{
     font-weight: 300;
-    font-family: "Saira Expanded";
+    font-family: "Saira Expanded Regular";
     position: absolute;
     background-color: #004B9B;
     width: 100%;
@@ -29,11 +60,19 @@ header
 
 /*#region LOGOTIPO*/
 .header__logo{
-    margin-left: 1vw;
-    margin-top: 1.3vh;       
-    float: left;
+    align-self: center;
     height: 7vh;
+    margin-left: 1vw;
+    margin-top: 1.3vh;    
+    float: left;
+    width: 10vw;
 }
+
+.header__logo img {
+
+    align-self: center; /* Isso impede que a imagem se estique */
+}
+
 /*#endregion*/
 
 /*#region MENU NAVEGADOR*/
@@ -79,7 +118,12 @@ header
     background-color: #002A68;
     font-weight: 400;
 }
-/*#endregion*/
+/*ISSO QUE FAZ O SUBMENU DESCER*/
+ul.menu__principal li:hover ul.submenu {
+    z-index: 200;
+    display: block;
+    background-color: black;
+}
 
 /*#region SUBMENU*/
 .item__do_menu a { 
@@ -87,7 +131,9 @@ header
     text-align: center;
     color: white;
 }
-.submenu-lista{  list-style: none;
+
+.submenu-lista{  
+    list-style: none;
     width: 9vw;
     font-size: 2vh;
     font-weight: 400;
@@ -101,7 +147,7 @@ header
     
 }
 ul.submenu {
-
+    display: none;
     position: absolute;
     background-color: #2b2b2b;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -118,8 +164,6 @@ ul.submenu li {
     background-color: #2b2b2b;
 }
 
-
-
 .regiao__usuario{
 
     display: flex;
@@ -131,6 +175,8 @@ ul.submenu li {
     display:    flex;
     transition: background-color 0.5s ease; 
 }
+/*#endregion*/
+
 /*#endregion*/
 
 /*#region BLOCO USUARIO*/
@@ -173,26 +219,14 @@ ul.submenu li {
 /*#endregion*/
 
 /*#region MENU DO USUÁRIO*/
-.menu__usuario{
-
-    font-size: 1.7vh;
-    position: absolute;
-    right: 0.3vw;   
-    margin-top: 9vh;
-    padding: 0;
-
-    -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
-    -moz-box-shadow:    0 3px 5px rgba(57, 63, 72, 0.3);
-    box-shadow:         0 3px 5px rgba(57, 63, 72, 0.3);
-}
 
 .menu__usuario li {
 
     list-style-type: none;
     border-bottom: 1px solid rgb(179, 179, 179); 
-    font-family: "Saira Expanded"; 
+    font-family: "Saira Expanded Regular"; 
     font-weight: 400;
-    width: 12vw;
+    width: 13vw;
     
     transition: background-color 0.5s ease;
 }
@@ -210,4 +244,27 @@ ul.submenu li {
     padding: 0.9vh 0.4vw;
     width: 12vw;
 }
+
+.hidden {
+    display: none;
+}
+  
+.visible {
+    
+    overflow: hidden;
+    transition: height 0.3s;
+
+    padding: 0px;
+    background-color: rgb(252, 252, 252);
+    position: absolute;
+    float: left;
+    height: auto;
+    margin-top: 9vh;
+    right: 5px;
+    -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    -moz-box-shadow:    0 3px 5px rgba(57, 63, 72, 0.3);
+    box-shadow:         0 3px 5px rgba(57, 63, 72, 0.3);
+    z-index: 100;
+}
+
 /*#endregion*/

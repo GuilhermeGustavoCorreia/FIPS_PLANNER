@@ -25,13 +25,13 @@ SECRET_KEY = 'django-insecure-ncma313p1ssm%ao*u24bnmt#tp1*g63um)gneel(6xw8yd+qk1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-        'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Aplicativos internos
-    'previsao_trens'
+    'previsao_trens',
+    'rolepermissions'
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-
-
 LOGIN_REDIRECT_URL = '/navegacao'
+
+ROLEPERMISSIONS_MODULE = "setup.roles" 
+ROLEPERMISSIONS_REGISTER_ADMIN = True

@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% load permission_tags %}
+<div class="container">  
+    
+    <link   rel="stylesheet" type="text/css" href="{% static 'css/profile/profile.css' %}">
+
+    {% if form.errors %}
+        <p class="mensagem__erro">Usuário e senha incorretos, tente novamente.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p class="mensagem__erro" >Sua conta não tem acesso a esta página. Para prosseguir,
+            faça login com uma conta que tenha acesso.</p>
+        {% else %}
+            <p class="mensagem__erro">Faça login para ver esta página.</p>
+        
+        {% endif %}
+    {% endif %}
+    
+    <div class="conteudo">
+
+        <img class="profile-foto-usuario" src="{{ user.foto.url }}" alt="Foto de usuário">
+        <h1>
+            {{ user.first_name }} 
+            {{ user.last_name  }}
+        </h1>
+
+        <h2>e-mail:     {{ user.email }}    </h2>
+        <h1>permissões</h1>
+        
+        <ul>
+            {% for permission in user.user_permissions.all %}
+                <li>{{ permission.name }}</li>
+            {% endfor %}
+        </ul>    
+
+    </div>
+
+</div>
+
+</div>
+
+
+{% endblock %}
