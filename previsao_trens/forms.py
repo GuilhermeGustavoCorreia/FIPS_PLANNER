@@ -11,7 +11,7 @@ def DICIONARIO_MERCADORIAS():
     LOCAL = os.getcwd()
     CAMINHO = "previsao_trens/src/DICIONARIOS/PRODUTOS_E_TERMINAIS.json"
 
-    with open(f"{ LOCAL }\{ CAMINHO }", 'r') as arquivo:
+    with open(f"{ LOCAL }/{ CAMINHO }", 'r') as arquivo:
         dados_lidos = json.load(arquivo)
     
     return dados_lidos
