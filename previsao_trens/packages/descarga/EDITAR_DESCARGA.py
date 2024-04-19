@@ -68,7 +68,7 @@ class NAVEGACAO_DESCARGA:
 
                 "NOVO_VALOR":   DESC_ATV,
                 "LINHA":        self.NM_TERMINAL,
-                "COLUNA":       f"{TREM["ferrovia"]}_{TREM["mercadoria"]}",
+                "COLUNA":       f'{TREM["ferrovia"]}_{TREM["mercadoria"]}',
                 "TABELA":       "DESCARGAS_ATIVAS.csv",
 
             }
