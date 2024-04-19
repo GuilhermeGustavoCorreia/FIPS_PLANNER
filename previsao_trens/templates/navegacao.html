@@ -2,11 +2,10 @@
 {% block content %}
 {% load static %}
 
-<div class="container">  
+<div class="conteudo__navegacao">  
   
-   
-    NAVEGACAO
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/navegacao.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/tabela_descarga.css' %}"> 
 
     {% if form.errors %}
         <p class="mensagem__erro">Usuário e senha incorretos, tente novamente.</p>
@@ -22,6 +21,196 @@
         {% endif %}
     {% endif %}
 
+    <!--uma tabela de descarga-->
+    
+    {% if descargas %}            
+        {% for DIA, DADOS in descargas.items %}
+            
+        <div class="um__dia">
+
+            {% for DESCARGA in DADOS %}
+            
+            <div class="uma__descarga">
+            
+                <table class="tabela__descarga">
+
+                <tr class="LINHA_TILOS">
+                    <td rowspan=5 colspan=2 class="NOME_TERMINAL">{{ DESCARGA.TERMINAL }}</td>
+                    <td rowspan=2 class="DIA_TERMINAL">{{ DIA }}</td>
+                    <td colspan=6 class="PERIODO_TERMINAL">01h - 07h</td>
+                    <td colspan=6 class="PERIODO_TERMINAL">07h - 13h</td>
+                    <td colspan=6 class="PERIODO_TERMINAL">13h - 19h</td>
+                    <td colspan=6 class="PERIODO_TERMINAL">19h - 01h</td>
+                    <td rowspan=3 colspan=2 class="TITLO_TOTAIS">TOTAIS</td>
+                </tr> 
+            
+                <tr class="LINHA_HORAS">  
+
+                    <td>01h</td>
+                    <td>02h</td>
+                    <td>03h</td>  
+                    <td>04h</td>
+                    <td>05h</td>
+                    <td>06h</td>
+                    <td>07h</td>
+                    <td>08h</td>
+                    <td>09h</td>  
+                    <td>10h</td>
+                    <td>11h</td>
+                    <td>12h</td>
+                    <td>13h</td>
+                    <td>14h</td>
+                    <td>15h</td>
+                    <td>16h</td>  
+                    <td>17h</td>
+                    <td>18h</td>
+                    <td>19h</td>
+                    <td>20h</td> 
+                    <td>21h</td>
+                    <td>22h</td>
+                    <td>23h</td>
+                    <td>24h</td>  
+
+                </tr> 
+
+                <tr class="LINHA_SALDO">
+                    <td>Saldo</td>
+                    {% for CHEGADA_PREFIXO in DESCARGA.PREFIXO %}
+                    <td>
+                        {% if CHEGADA_PREFIXO != 0%}
+                            {{ CHEGADA_PREFIXO }}
+                        {% endif%}
+                    </td>
+                    {% endfor %}
+                </tr> 
+                
+                <tr class="LINHA_CHEGADA">
+                    <td>Chegada</td>
+                    {% for CHEGADA in DESCARGA.CHEGADA %}
+                    <td>
+                        {% if CHEGADA != 0%}
+                            {{ CHEGADA }}
+                        {% endif%}
+                    </td>
+                    {% endfor %}
+
+                    <td>Ofrt.</td><td>Pdra</td>
+                </tr>  
+
+                <tr class="LINHA_PEDRA">
+
+                    <td>Pedra</td>
+
+                    {% for PEDRA in DESCARGA.PEDRA %}
+
+                    <td>
+                        {% if PEDRA != 0%}
+                            {{ PEDRA }}
+                        {% endif%}
+                    </td>
+
+                    {% endfor %}
+
+                    <td>{{ DESCARGA.INDICADORES.TOTAL_PEDRA }}</td><td>{{ DESCARGA.INDICADORES.TOTAL_SALDO }}</td>
+                </tr>  
+ 
+                {% for FERROVIA, PRODUTO in DESCARGA.DESCARGAS.items %}
+                
+                <tr class="LINHA_ENCOSTE">
+                    
+
+                    {%for PRODUTOS, LINHAS in PRODUTO.items %}
+                        
+                        <td class="FERROVIA_{{FERROVIA}}" rowspan=3>{{FERROVIA}}</td>
+                        <td rowspan=2 class="PRODUTO">{{PRODUTOS}}</td>
+                        <td >Saldo</td>
+
+                        {% for ENCOSTE in LINHAS.ENCOSTE %}
+                    
+                            <td>
+                                {% if ENCOSTE != 0%}
+                                    {{ ENCOSTE }}
+                                {% endif%}
+                            </td>
+
+                        {% endfor %}
+
+                        </tr>
+
+                        <tr class="LINHA_SALD0_DESCARGA">
+                        <td>{{ LINHAS.INDICADORES.SALDO_DE_VIRADA }}</td>
+                        
+                        {% for SALDO in LINHAS.SALDO %}
+                        <td>
+                            {% if SALDO != 0%}
+                                {{ SALDO }}
+                            {% endif%}
+                        </td>
+                        {% endfor %}
+
+                        </tr>
+                        <tr class="LINHA_PRODUTIVIDADE_{{FERROVIA}}">
+                        <td class="PRODUTIVIDADE_PADRAO_{{FERROVIA}}">{{ LINHAS.INDICADORES.PRODUTIVIDADE }}</td>
+                        <td ></td>
+
+                        {% for PRODUTIVIDADE in LINHAS.PRODUTIVIDADE %}
+
+                            <td class="PRODUTIVIDADE_{{FERROVIA}}">
+                                {% if PRODUTIVIDADE != 0%}
+                                    {{ PRODUTIVIDADE }}
+                                {% endif%}
+                            </td>
+
+                        {% endfor %}
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tr>
+                {% endfor %}
+                <tr class="LINHAS_TOTAIS_PEDRAS">
+
+                    <td colspan="5"></td>
+                    <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P1 }}</td>
+                    <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P1 }}</td>
+                    <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P1 }}</td>
+                    <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P1 }}</td>
+
+                    <td  colspan="2"></td>
+                    <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P2 }}</td>
+                    <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P2 }}</td>
+                    <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P2 }}</td>
+                    <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P2 }}</td>
+
+                    <td  colspan="2"></td>
+                    <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P3 }}</td>
+                    <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P3 }}</td>
+                    <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P3 }}</td>
+                    <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P3 }}</td>
+
+                    <td  colspan="2"></td>
+                    <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P4 }}</td>
+                    <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P4 }}</td>
+                    <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P4 }}</td>
+                    <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P4 }}</td>
+
+                </tr>
+                </table>
+            
+            </div>
+
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="SEM_NAVEGACAO">
+            <img src="{% static 'imagens/caixa-vazia.png' %}" >
+            <h3>Não há descargas disponíveis no momento.</h3>
+        </div>
+    {% endif %}
+    <!--uma tabela de descarga-->
 
 </div>
 

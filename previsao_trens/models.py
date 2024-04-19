@@ -27,6 +27,7 @@ class Trem(models.Model):
     mercadoria  = models.CharField(max_length=50)
     vagoes      = models.IntegerField()
     previsao    = models.DateTimeField()
+    ferrovia    = models.CharField(max_length=50, choices=[('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')])
     comentario  = models.CharField(max_length=100)
 
     def __str__(self):
