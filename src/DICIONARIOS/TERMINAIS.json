@@ -1,0 +1,529 @@
+{
+    "TGG":{
+        "TIPO":         ["DESCARGA"],
+        "MARGEM":       "ESQUERDA",
+        "PATIO":        "PCZ",
+        "FILA":         4,
+        "SATURACAO":    50,
+        "PRODUTOS":     ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA":     ["RUMO", "MRS", "VLI"],
+
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "TEG":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "TEAG":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["ACUCAR"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"ACUCAR": 0},
+            "MRS":  {"ACUCAR": 0},
+            "VLI":  {"ACUCAR": 0}
+        }
+    },
+
+    "TEAG ACUCAR":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "CUTRALE":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "TERMAG":{
+        "TIPO":   ["CARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["KCL", "UREIA", "OUTROS"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "MRS":  {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "VLI":  {"KCL": 0, "UREIA": 0, "OUTROS": 0}
+        }
+    },
+
+    "SBR":{
+        "TIPO":   ["CARGA", "DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "PCZ",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CONTEINER"],
+        "FERROVIA": ["MRS"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CONTEINER": 0},
+            "MRS":  {"CONTEINER": 0},
+            "VLI":  {"CONTEINER": 0}
+        }
+    },
+
+    "DPW SUZANO":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IBA",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CELULOSE"],
+        "FERROVIA": ["RUMO", "MRS"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CELULOSE": 0},
+            "MRS":  {"CELULOSE": 0},
+            "VLI":  {"CELULOSE": 0}
+        }
+    },
+
+    "DPW GRAOS":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IBA",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "DPW CONTEINER":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IBA",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CONTEINER"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CONTEINER": 0},
+            "MRS":  {"CONTEINER": 0},
+            "VLI":  {"CONTEINER": 0}
+        }
+    },
+
+    "TIPLAM":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IUF",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "TIPLAM ACUCAR":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IUF",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["ACUCAR"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"ACUCAR": 0},
+            "MRS":  {"ACUCAR": 0},
+            "VLI":  {"ACUCAR": 0}
+        }
+    },
+
+    "TIPLAM FERTILIZANTES":{
+        "TIPO":   ["CARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "IUF",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["KCL", "UREIA", "OUTROS"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "MRS":  {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "VLI":  {"KCL": 0, "UREIA": 0, "OUTROS": 0}
+        }
+    },
+
+    "TERLOC":{
+        "TIPO":   ["DESCARGA", "CARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "ICB",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CONTEINER"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CONTEINER": 0},
+            "MRS":  {"CONTEINER": 0},
+            "VLI":  {"CONTEINER": 0}
+        }
+    },
+
+    "ECOPORTO":{
+        "TIPO":   ["DESCARGA", "CARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CONTEINER"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CONTEINER": 0},
+            "MRS":  {"CONTEINER": 0},
+            "VLI":  {"CONTEINER": 0}
+        }
+    },
+
+    "TERLOC FERTILIZANTES":{
+        "TIPO":   ["CARGA"],
+        "MARGEM": "ESQUERDA",
+        "PATIO":       "ICB",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["KCL", "UREIA", "OUTROS"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "MRS":  {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "VLI":  {"KCL": 0, "UREIA": 0, "OUTROS": 0}
+        }
+    },
+
+    "TEC":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+   "TEC ACUCAR":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["ACUCAR"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"ACUCAR": 0},
+            "MRS":  {"ACUCAR": 0},
+            "VLI":  {"ACUCAR": 0}
+        }
+    }, 
+
+    "CLI":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+   "CLI ACUCAR":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["ACUCAR"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"ACUCAR": 0},
+            "MRS":  {"ACUCAR": 0},
+            "VLI":  {"ACUCAR": 0}
+        }
+    }, 
+
+    "HIDROVIAS":{
+        "TIPO":   ["CARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["KCL", "UREIA", "OUTROS"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "MRS":  {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "VLI":  {"KCL": 0, "UREIA": 0, "OUTROS": 0}
+        }
+    },
+
+    "STS-53":{
+        "TIPO":   ["CARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["KCL", "UREIA", "OUTROS"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "MRS":  {"KCL": 0, "UREIA": 0, "OUTROS": 0},
+            "VLI":  {"KCL": 0, "UREIA": 0, "OUTROS": 0}
+        }
+    },
+
+    "TAC":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+   "TAC ACUCAR":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["ACUCAR"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"ACUCAR": 0},
+            "MRS":  {"ACUCAR": 0},
+            "VLI":  {"ACUCAR": 0}
+        }
+    }, 
+
+    "TGRAO":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PST",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "T31":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PMC",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CELULOSE"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CELULOSE": 0},
+            "MRS":  {"CELULOSE": 0},
+            "VLI":  {"CELULOSE": 0}
+        }
+    },
+
+    "SUZANO":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PMC",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CELULOSE"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CELULOSE": 0},
+            "MRS":  {"CELULOSE": 0},
+            "VLI":  {"CELULOSE": 0}
+        }
+    },
+
+    "BRACELL":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PMC",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CELULOSE"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CELULOSE": 0},
+            "MRS":  {"CELULOSE": 0},
+            "VLI":  {"CELULOSE": 0}
+        }
+    },
+
+    "ELDORADO":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PMC",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["CELULOSE"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"CELULOSE": 0},
+            "MRS":  {"CELULOSE": 0},
+            "VLI":  {"CELULOSE": 0}
+        }
+    },
+
+    "MOEGA V":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PCX",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "MOEGA X":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PCX",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "TES":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PCX",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    },
+
+    "T39":{
+        "TIPO":   ["DESCARGA"],
+        "MARGEM": "DIREITA",
+        "PATIO":       "PCX",
+        "FILA":            4,
+        "SATURACAO":      50,
+        "PRODUTOS": ["FARELO", "MILHO", "SOJA"],
+        "FERROVIA": ["RUMO", "MRS", "VLI"],
+        
+        "PRODUTIVIDADE": {
+            "RUMO": {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "MRS":  {"FARELO": 0, "MILHO": 0, "SOJA": 0},
+            "VLI":  {"FARELO": 0, "MILHO": 0, "SOJA": 0}
+        }
+    } 
+}

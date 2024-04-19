@@ -1,0 +1,38 @@
+
+body{
+    margin:       0 auto;
+    user-select:    none;
+    display:        flex;
+    cursor:      default;
+    overflow:     hidden;
+
+}
+.conteudo__navegacao{
+    width:     100vw;
+    height:     91vh;
+    margin-top:  9vh;  
+    display:    flex;
+    overflow-x: auto;
+}
+
+.um__dia{
+
+    padding: 1rem;
+}
+.uma__descarga{
+
+    padding: 0.5rem;
+}
+
+
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+
+    width: 50%;
+}

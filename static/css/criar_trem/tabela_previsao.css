@@ -71,3 +71,18 @@
 .INPUT_M{max-width: 16.5rem; min-width:  16.5rem;}
 .INPUT_G{max-width: 33.2rem; min-width: 33.2rem; margin-top: 0.5vh;}
 
+
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+    
+    width: 20%;
+}
+
+.FERROVIAS{padding: 0.5rem  0 2rem  0}
+.FERROVIAS div{ display: flex;  float: left; width: 100%;} 

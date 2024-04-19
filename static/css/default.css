@@ -1,3 +1,47 @@
+:root {
+    /*PRIMÁRIAS*/
+    --azul-profundo-e: #002A68;
+    --azul-profundo-m: #004B9B;
+    --azul-profundo-c: #658EC9;
+    
+    --cinza-chumbo-e: #333B41;
+    --cinza-chumbo-m: #7B8C96;
+    --cinza-chumbo-c: #C0CCD2;
+
+    /*SECUNDÁRIAS*/
+    --azul-ceu-e: #0090D0;
+    --azul-ceu-m: #93BDE4;
+    --azul-ceu-c: #D3E3F4;
+
+    --verde-floresta-e: #00904C;
+    --verde-floresta-m: #00C64C;
+    --verde-floresta-c: #8BE5AD;
+
+    --amarelo-ouro-e: #F6921E;
+    --amarelo-ouro-m: #FDC24E;
+    --amarelo-ouro-c: #FFE4B8;
+    
+    --neutro: #E8EBFF;
+
+    /*CORES FERROVIAS*/
+    
+    
+    --azul-rumo: #003865;
+    --azul-claro-rumo: #32A6E6;
+
+
+    --amarelo-mrs: #fecb0a;
+    --azul-mrs:#00355b;
+
+
+    --laranja-vli: #ff6900;
+    --azul-vli : #0074C0;
+
+    --cinza-vli-txt: #393939;
+    --cinza-vli: #97B1B8;
+
+}
+
 .CONTEUDO__PADRAO{
     left: 50%;
     transform: translateX(-50%);
@@ -7,7 +51,7 @@
     width: 80vw;
 }
 
-h1{
+h1, h3{
     font-family: "Saira Expanded";
     color: var(--cinza-chumbo-e);
     margin: 0;
