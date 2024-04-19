@@ -7,11 +7,11 @@ from django.conf import settings
 
 def ATUALIZAR_DESCARGA():
 
-    PATH_PERIODO_VIGENTE = "previsao_trens\src\PARAMETROS\PERIODO_VIGENTE.csv"
-    PATH_MODELO_DESCARGA = "previsao_trens\src\DICIONARIOS\MODELO_DESCARGA.json"
-    DIRETORIO_DESCARGAS  =  "previsao_trens\src\DESCARGAS"
+    PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
+    PATH_MODELO_DESCARGA = "previsao_trens/src/DICIONARIOS/MODELO_DESCARGA.json"
+    DIRETORIO_DESCARGAS  =  "previsao_trens/src/DESCARGAS"
 
-    with open(f"previsao_trens\src\DICIONARIOS\TERMINAIS.json") as ARQUIVO_DESCARGA:
+    with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         dict_TERMINAIS = json.load(ARQUIVO_DESCARGA)
 
 
