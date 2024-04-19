@@ -20,10 +20,10 @@ def DIA_COMPLETO(DIA_LOGISTICO):
 
 def PAGINA_COMPLETA():
 
-    PERIODO_VIGENTE  = pd.read_csv("previsao_trens\src\PARAMETROS\PERIODO_VIGENTE.csv",  encoding='utf-8-sig', sep=';', index_col=0)
-    TERMINAIS_ATIVOS = pd.read_csv("previsao_trens\src\PARAMETROS\DESCARGAS_ATIVAS.csv", encoding='utf-8-sig', sep=';', index_col=0)
+    PERIODO_VIGENTE  = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",  encoding='utf-8-sig', sep=';', index_col=0)
+    TERMINAIS_ATIVOS = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv", encoding='utf-8-sig', sep=';', index_col=0)
     
-    with open(f"previsao_trens\src\DICIONARIOS\TERMINAIS.json") as ARQUIVO_DESCARGA:
+    with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         TERMINAIS_INFOS = json.load(ARQUIVO_DESCARGA)
 
     
@@ -65,7 +65,7 @@ def PAGINA_COMPLETA():
 
             DATA_ARQ = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA].iloc[0]['DATA_ARQ']
 
-            with open(f"previsao_trens\src\DESCARGAS\{TERMINAL}\descarga_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
+            with open(f"previsao_trens/src/DESCARGAS/{TERMINAL}/descarga_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
 
                 json_DESCARGA = json.load(ARQUIVO_DESCARGA)
                 

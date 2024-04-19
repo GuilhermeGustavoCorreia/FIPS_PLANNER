@@ -12,16 +12,16 @@ class NAVEGACAO_DESCARGA:
         self.INFOS       :  dict = {}
         self.DESCARGAS   :  dict = {}
         
-        self.PERIODO_VIGENTE = pd.read_csv(f"previsao_trens\src\PARAMETROS\PERIODO_VIGENTE.csv", sep=";", index_col=0)
+        self.PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
     
     def EDITAR_TREM(self, TREM, ACAO):
 
-        DIRETORIO_DESCARGAS   =  "previsao_trens\src\DESCARGAS"
+        DIRETORIO_DESCARGAS   =  "previsao_trens/src/DESCARGAS"
         
 
 
         #region INICIANDO OS OBJETOS
-        with open(f"previsao_trens\src\DICIONARIOS\TERMINAIS.json") as ARQUIVO_DESCARGA:
+        with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
             self.INFOS = json.load(ARQUIVO_DESCARGA)
         
         self.NM_TERMINAL = TREM['terminal']
@@ -40,7 +40,7 @@ class NAVEGACAO_DESCARGA:
 
         for _, LINHA in self.PERIODO_VIGENTE.iterrows():
 
-            with open(f"previsao_trens\src\DESCARGAS\{ self.NM_TERMINAL }\descarga_{ LINHA['DATA_ARQ'] }.json") as ARQUIVO_DESCARGA:
+            with open(f"previsao_trens/src/DESCARGAS/{ self.NM_TERMINAL }/descarga_{ LINHA['DATA_ARQ'] }.json") as ARQUIVO_DESCARGA:
                 DESCARGA = json.load(ARQUIVO_DESCARGA)
 
             self.DESCARGAS[LINHA['DATA_ARQ']] = DESCARGA
