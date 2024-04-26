@@ -5,12 +5,19 @@ from . import views
 urlpatterns = [
 
     path('', views.redirect_to_login),
+
+    path('restricao/',  views.restricao,    name="restricao"),
+
+    path('restricao/excluir/<int:id>/', views.excluir_restricao,        name="excluir_restricao"),
+    
     path('navegacao/',  views.navegacao,    name="navegacao"),
     path('profile/',    views.profile,      name="profile"),
 
     path('previsao/criar_trem',                        views.criar_trem,          name="criar_trem"),
     path('previsao/criar_trem/novo_trem_previsao',     views.novo_trem_previsao,  name="novo_trem_previsao"),
     path('previsao/criar_trem/excluir_trem/<int:id>/', views.excluir_trem,        name="excluir_trem"),
+    path('editar_trem/<int:trem_id>/',                 views.editar_trem,         name='editar_trem'),
+    path('dividir_trem/<int:trem_id>/',                views.dividir_trem,        name="dividir_trem"),
 
     path('configuracao/', views.configuracao,        name="configuracao"),
 

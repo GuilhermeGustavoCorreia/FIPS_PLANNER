@@ -81,9 +81,9 @@
 .LINHA_ENCOSTE td:nth-child(15),
 .LINHA_ENCOSTE td:nth-child(21),
 
-.LINHA_SALD0_DESCARGA td:nth-child(7),
-.LINHA_SALD0_DESCARGA td:nth-child(13),
-.LINHA_SALD0_DESCARGA td:nth-child(19),
+.LINHA_SALDO_DESCARGA td:nth-child(7),
+.LINHA_SALDO_DESCARGA td:nth-child(13),
+.LINHA_SALDO_DESCARGA td:nth-child(19),
 
 .LINHA_PRODUTIVIDADE_RUMO td:nth-child(8),
 .LINHA_PRODUTIVIDADE_RUMO td:nth-child(14),
@@ -98,3 +98,21 @@
 .LINHA_PRODUTIVIDADE_VLI td:nth-child(20)
 { border-right: 2px dashed darkgrey;}
 
+/*===========================LINHAS DE PRODUTIVIDADE==================================*/
+
+
+.CELULA_SELECIONADA{border-top: 2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100;}
+.PRIMEIRA{border-left: 2px solid var(--verde-floresta-m)}
+.ULTIMA{border-right: 2px solid var(--verde-floresta-m)}
+
+
+
+
+.LINHA_MOTIVO{background-color: rgb(228, 228, 228);}
+.LINHA_PCT{background-color: rgb(228, 228, 228)}
+.RESTRICAO_ATIVA{border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e); font-weight: bold; color: var(--cinza-chumbo-e)}
+
+
+
+/*===========================LINHAS DE PRODUTIVIDADE==================================*/
+ 

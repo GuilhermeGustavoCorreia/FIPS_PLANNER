@@ -1,5 +1,5 @@
 from django import forms
-from .models import Trem
+from .models import Trem, Restricao
 from django.forms.widgets import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
 
 import os
@@ -39,7 +39,7 @@ class TremForm(forms.ModelForm):
             'vagoes':       NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
             'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}),
             'comentario':   Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
-            'ferrovia':     RadioSelect()
+            'ferrovia':     RadioSelect(attrs={'name': 'ferrovia'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -50,12 +50,51 @@ class TremForm(forms.ModelForm):
         self.initial['origem'] = 'ZBL'
         self.initial['local'] = 'ZEM'
         self.initial['destino'] = 'PSN'
-        self.initial['mercadoria'] = 'FARELO'
-        self.initial['terminal'] = 'T39'
+        self.initial['mercadoria'] = 'ACUCAR'
+        self.initial['terminal'] = 'TAC ACUCAR'
         self.initial['vagoes'] = 60
-        self.initial['previsao'] = '2024-04-18T12:00'
+        self.initial['previsao'] = '2024-04-24T12:00'
         self.initial['comentario'] = 'ESTE É UM TRES DE DESTE'
         self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
 
+        self.fields['posicao_previsao'].required = False 
 
+
+class RestricaoForm(forms.ModelForm):
+
+    MERCADORIAS = DICIONARIO_MERCADORIAS()
+
+    class Meta:
+        
+        model = Restricao
+        fields = '__all__'
+        widgets = {
+
+            'mercadoria':   Select(choices=[(k, k) for k in MERCADORIAS.keys()],    attrs={'class': 'INPUT INPUT_M', 'onchange': 'updateTerminals()'}),
+            'terminal':     Select(choices=[(k, k) for k in MERCADORIAS["ACUCAR"]], attrs={'class': 'INPUT INPUT_M'}),
+            
+            'comeca_em':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', }),
+            'termina_em':    DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', }),
+
+            'porcentagem':   NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': '%'}),
+
+            'motivo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Motivo'}),
+            'comentario':  Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+
+        super(RestricaoForm, self).__init__(*args, **kwargs)
+        # Definir valores padrões
+        self.initial['mercadoria']  = 'ACUCAR'
+        self.initial['terminal']    = 'TAC ACUCAR'
+
+        self.initial['comeca_em']   = '2024-04-26T12:00'
+        self.initial['termina_em']  = '2024-04-27T12:00'
+
+        self.initial['porcentagem'] = 60
+
+        self.initial['motivo']      = 'MT'
+        self.initial['comentario']  = 'Manutenção'
 

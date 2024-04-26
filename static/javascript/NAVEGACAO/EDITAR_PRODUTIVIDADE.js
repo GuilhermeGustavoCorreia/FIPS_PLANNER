@@ -1,0 +1,243 @@
+var MOUSE_PRESSIONADO  = false
+var MODO_EDICAO        = false
+var NOVO_VALOR         = ""
+var PARAMETROS_EDITADOS = {
+    "TERMINAL": "",
+    "DATA_ARQ": "",
+    "FERROVIA": "",
+    "PRODUTO" : "",
+    "CELULAS" : [],
+    "VALOR"   : 0
+}
+
+let SENTIDO_SELECAO = ""
+
+//#region PARA AO ATUALIZAR NAO VOLTAR AO INICIO DA PAGINA
+
+window.addEventListener('load', function() {
+    const conteudoNavegacao = document.getElementById('conteudo__navegacao');
+
+    // Checking if there's a saved scroll position
+    if (localStorage.getItem('scrollX') && localStorage.getItem('scrollY')) {
+        conteudoNavegacao.scrollLeft = localStorage.getItem('scrollX');
+        conteudoNavegacao.scrollTop = localStorage.getItem('scrollY');
+    }
+
+    // Save scroll position before page unloads
+    window.addEventListener('beforeunload', function() {
+        localStorage.setItem('scrollX', conteudoNavegacao.scrollLeft);
+        localStorage.setItem('scrollY', conteudoNavegacao.scrollTop);
+    });
+});
+
+//#endregion
+
+
+//#region FUNCOES INTERNAS
+function LIMPAR_SELECOES(){
+
+    PARAMETROS_EDITADOS = {
+        "TERMINAL": "",
+        "DATA_ARQ": "",
+        "CELULAS" : [],
+        "VALOR"   : 0
+    }
+
+
+    let LINHA_PRODUTIVIDADE = document.getElementById('LINHA_EM_EDICAO')
+    if (LINHA_PRODUTIVIDADE !== null) {LINHA_PRODUTIVIDADE.removeAttribute('id')}
+
+    NOVO_VALOR         = ""
+}
+
+function DESENHAR_BORDA(CELULAS_INCICES){
+
+    var CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
+
+    var CELULAS_PRIMEIRA = document.querySelectorAll('.PRIMEIRA');
+    
+    CELULAS_PRIMEIRA.forEach(function(CELULA) {
+        CELULA.classList.remove('PRIMEIRA');
+    });
+    
+    var CELULAS_ULTIMA   = document.querySelectorAll('.ULTIMA');
+
+    CELULAS_ULTIMA.forEach(function(CELULA) {
+        CELULA.classList.remove('ULTIMA');
+    });
+
+    CELULAS_SELECIONADAS.forEach(function(CELULA) {
+        CELULA.classList.remove('CELULA_SELECIONADA');
+    });
+
+    CELULAS_INCICES.forEach(function(INDICE) {
+        let CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE }"]` )
+        CELULA.classList.add('CELULA_SELECIONADA');
+    });
+
+    let INDICE_PRIMEIRA = Math.min(...CELULAS_INCICES);
+    let PRIMEIRA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE_PRIMEIRA }"]` )
+
+    let INDICE_ULTIMA = Math.max(...CELULAS_INCICES);
+    let ULTIMA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE_ULTIMA }"]` )
+    
+    try{
+        PRIMEIRA_CELULA.classList.add('PRIMEIRA');
+        ULTIMA_CELULA.classList.add('ULTIMA');
+    }
+    catch{
+        return
+    }
+
+}
+//#endregion
+
+
+document.body.addEventListener('mousedown', async function(event) {
+   
+    MOUSE_PRESSIONADO = true
+    let CELULA_SELECIONADA = event.target;
+
+    let LINHA_PRODUTIVIDADE = CELULA_SELECIONADA.parentNode
+
+
+    //CLICANDO NA CÉLULA DE PRODUTIVIDADE   
+    if (CELULA_SELECIONADA.getAttribute('name') === "PRODUTIVIDADE"){
+
+                
+        LIMPAR_SELECOES()
+
+        MODO_EDICAO = true
+        let ID_TABELA = LINHA_PRODUTIVIDADE.parentNode.parentNode.id.split("_")
+        let FERROVIA_PRODUTO = LINHA_PRODUTIVIDADE.getElementsByTagName("td")[1].id.split("_")
+
+        PARAMETROS_EDITADOS["TERMINAL"] = ID_TABELA[0]
+        PARAMETROS_EDITADOS["DATA_ARQ"] = ID_TABELA[1]
+
+        PARAMETROS_EDITADOS["PRODUTO"] = FERROVIA_PRODUTO[0]
+        PARAMETROS_EDITADOS["FERROVIA"] = FERROVIA_PRODUTO[1]
+        
+        PARAMETROS_EDITADOS["CELULAS"][0] = CELULA_SELECIONADA.getAttribute('headers')
+
+        //CELULA_SELECIONADA.classList.add('CELULA_SELECIONADA');
+        LINHA_PRODUTIVIDADE.id = 'LINHA_EM_EDICAO';  
+        
+        DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+
+    }
+    else{ LIMPAR_SELECOES(); MODO_EDICAO = false; DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"]) }//NÃO É CÉLULA DE PRODUTIVIDADE
+
+})
+
+document.body.addEventListener('mouseover', async function(event) {
+    
+    let CELULA_SELECIONADA  = event.target;
+    let LINHA_PRODUTIVIDADE = CELULA_SELECIONADA.parentNode
+    let ESTA_NA_MESMA_LINHA = document.getElementById('LINHA_EM_EDICAO') === LINHA_PRODUTIVIDADE 
+        
+    let CELULA_DE_PRODUTIVIDADE = CELULA_SELECIONADA.getAttribute('name') === "PRODUTIVIDADE"
+
+    
+
+    if(MOUSE_PRESSIONADO && MODO_EDICAO && ESTA_NA_MESMA_LINHA && CELULA_DE_PRODUTIVIDADE){
+        
+        let POSICAO_CELULA = CELULA_SELECIONADA.getAttribute('headers')
+
+       
+
+        if (PARAMETROS_EDITADOS["CELULAS"].length === 1){
+            
+            if (PARAMETROS_EDITADOS["CELULAS"][0] >  POSICAO_CELULA) {SENTIDO_SELECAO = "ESQUERDA";}
+            else                                                     {SENTIDO_SELECAO = "DIREITA"; }
+        }
+        
+        if (SENTIDO_SELECAO === `DIREITA`){
+
+            if (POSICAO_CELULA == Math.max(...PARAMETROS_EDITADOS["CELULAS"]) + 1){
+
+                PARAMETROS_EDITADOS["CELULAS"].push(POSICAO_CELULA);
+                DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+              }
+              if (POSICAO_CELULA == Math.max(...PARAMETROS_EDITADOS["CELULAS"]) - 1){ //REMOVER ULTIMA CELULA POIS VOLTAMOS UMA CÉLULA PARA TRÁS
+                
+
+                var POSICAO_ULTIMA_CELULA =  Math.max(...PARAMETROS_EDITADOS["CELULAS"]);
+
+
+                POSICAO_ULTIMA_CELULA = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
+                PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA, 1); //REMOVENDO ITEM DA LISTA  
+                
+                DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+              }
+        
+        }
+        if(SENTIDO_SELECAO === `ESQUERDA`){
+
+            if (POSICAO_CELULA == Math.min(...PARAMETROS_EDITADOS["CELULAS"]) - 1){
+    
+
+                PARAMETROS_EDITADOS["CELULAS"].push(POSICAO_CELULA);
+                DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+
+            }
+            if (POSICAO_CELULA == Math.min(...PARAMETROS_EDITADOS["CELULAS"]) + 1){
+            
+                var POSICAO_ULTIMA_CELULA =  Math.min(...PARAMETROS_EDITADOS["CELULAS"]);
+
+                POSICAO_ULTIMA_CELULA = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
+                PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA, 1); //REMOVENDO ITEM DA LISTA
+
+                DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+    
+            }
+          }
+    }
+})
+
+document.body.addEventListener('mouseup', function() {
+    
+    if(MOUSE_PRESSIONADO){MOUSE_PRESSIONADO = false}
+  
+});
+
+
+document.addEventListener('keydown', async function (event) {
+  
+    
+    let CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
+
+    //AO DIGITAR ALGUM NUMERO
+    if (event.key >= '0' && event.key <= '9') {
+      
+      NOVO_VALOR +=  event.key
+
+      CELULAS_SELECIONADAS.forEach(function(elemento) {
+        elemento.innerText = "";
+      });
+
+      CELULAS_SELECIONADAS.forEach(function(elemento) {
+        elemento.innerText = NOVO_VALOR;
+  
+      });
+    }
+
+    //AO APAGAR UM DIGITO
+    if (event.key === 'Backspace') {
+
+        NOVO_VALOR =  NOVO_VALOR.slice(0, -1)
+        
+        CELULAS_SELECIONADAS.forEach(function(elemento) {
+            elemento.innerText = "";
+        });
+        CELULAS_SELECIONADAS.forEach(function(elemento) {
+            elemento.innerText = NOVO_VALOR;
+        });
+    }
+  
+    if (event.key === "Escape") {
+        LIMPAR_SELECOES()
+    }
+  
+
+});
+

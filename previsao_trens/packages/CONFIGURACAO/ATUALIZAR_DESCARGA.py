@@ -47,7 +47,7 @@ def ATUALIZAR_DESCARGA():
 
 
             
-        DIRETORIO_TERMINAL = f'{DIRETORIO_DESCARGAS}\{TERMINAL}'            
+        DIRETORIO_TERMINAL = os.path.join(DIRETORIO_DESCARGAS, TERMINAL)           
         if not os.path.exists(DIRETORIO_TERMINAL):
             os.mkdir(DIRETORIO_TERMINAL)
 
