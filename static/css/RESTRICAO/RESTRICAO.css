@@ -1,0 +1,61 @@
+.SEM_RESTRICAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_RESTRICAO img{
+    
+    width: 20%;
+}
+
+.BTN_NOVA_RESTRICAO{
+    background-color: var(--amarelo-ouro-e);
+    color: var(--neutro);
+    margin: 2vh 0;
+}
+
+.BTN_NOVA_RESTRICAO:hover{ background-color: var(--amarelo-ouro-m);}
+
+
+.INPUT_P{max-width: 10.9rem; min-width:  10.9rem;}
+.INPUT_M{max-width: 16.5rem; min-width:  16.5rem;}
+.INPUT_G{max-width: 33.2rem; min-width: 33.2rem;}
+
+.INPUT {margin-top: 0.5rem}
+
+
+
+
+
+.LISTA__RESTRICAO{   
+    border-collapse: collapse;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+    user-select: none;
+    margin-bottom: 2vh;
+}
+.LISTA__RESTRICAO th, .LISTA__RESTRICAO td{text-align: center;}
+.LISTA__RESTRICAO thead{
+    background-color: var(--azul-profundo-m);
+    color: var(--neutro)
+}
+.LISTA__RESTRICAO td{ padding:0.2rem 0; }
+.LISTA__RESTRICAO th{ padding:0.5rem 0; }
+.COL_PP{min-width: 2rem;}
+.COL_P{min-width: 5rem;}
+.COL_M{width: 8rem;}
+.COL_G{width: 15rem;}
+
+
+.LISTA__RESTRICAO tbody tr:nth-child(even)        {background-color: #f2f2f2;}
+.LISTA__RESTRICAO tbody tr:nth-child(odd)         {background-color: #ffff;  }
+.LISTA__RESTRICAO tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
+.LISTA__RESTRICAO tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
+
+.ICONE_DELETAR{height: 2rem; cursor: pointer; fill: var(--cinza-chumbo-c);     padding: 0 0.5rem;}
+.ICONE_DELETAR:hover{height: 2rem; fill: darkred;}
+
+.ICONE_EDITAR       {  width: 2rem; fill: var(--cinza-chumbo-c); cursor: pointer; padding: 0 0.2rem;}
+.ICONE_EDITAR:hover {  width: 2rem; fill: var(--cinza-chumbo-m); }

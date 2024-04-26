@@ -30,5 +30,27 @@ class Trem(models.Model):
     ferrovia    = models.CharField(max_length=50, choices=[('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')])
     comentario  = models.CharField(max_length=100)
 
+    posicao_previsao = models.IntegerField(default=0)
+
     def __str__(self):
         return self.prefixo
+    
+    
+class Restricao(models.Model):
+
+    terminal    = models.CharField(max_length=50)
+    mercadoria  = models.CharField(max_length=50)
+
+    comeca_em   = models.DateTimeField()
+    termina_em  = models.DateTimeField()
+
+    porcentagem = models.IntegerField()
+
+    motivo      = models.CharField(max_length=50)
+    comentario  = models.CharField(max_length=50) 
+
+    def __str__(self):
+
+        return (f"{ self.terminal } - { self.motivo }")
+
+

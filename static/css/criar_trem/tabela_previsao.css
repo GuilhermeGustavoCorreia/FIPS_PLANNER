@@ -7,6 +7,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
                 0 1px 2px rgba(0,0,0,0.24);
     user-select: none;
+    margin-bottom: 2vh;
 
 }
 .LISTA__TRENS th, .LISTA__TRENS td{text-align: center;}
@@ -33,39 +34,29 @@
 .BTN__CRIAR__TREM{
     background-color: var(--amarelo-ouro-e);
     color: var(--neutro);
-    margin-bottom: 2vh;
+    margin: 2vh 0;
 }
 
 .BTN__CRIAR__TREM:hover{ background-color: var(--amarelo-ouro-m);}
 
 
-.ICONE_DELETAR{height: 2rem; cursor: pointer; fill: var(--cinza-chumbo-c);}
+.ICONE_DELETAR{height: 2rem; cursor: pointer; fill: var(--cinza-chumbo-c);     padding: 0 0.5rem;}
 .ICONE_DELETAR:hover{height: 2rem; fill: darkred;}
 
-.ICONE_EDITAR       {  width: 2rem; fill: var(--cinza-chumbo-c); cursor: pointer;}
+.ICONE_EDITAR       {  width: 2rem; fill: var(--cinza-chumbo-c); cursor: pointer; padding: 0 0.2rem;}
 .ICONE_EDITAR:hover {  width: 2rem; fill: var(--cinza-chumbo-m); }
 
+.ICONE_DIVIDIR {width: 2.5rem; color: var(--cinza-chumbo-c); cursor: pointer;    margin-left: 0.5rem;}
+.ICONE_DIVIDIR:hover path{stroke: var(--cinza-chumbo-e) ;}
 
-.MODAL{
-    
-    display: none;
+.COMENTARIO{cursor: pointer;}
+.COMENTARIO:hover .cls-1{stroke: var(--amarelo-ouro-m)}
+.CONTEUDO_COMENTARIO {padding: 0.4rem 0.9rem;}
 
-    width: fit-content;
-    padding: 1rem;
-    border-radius: 10px;
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.DESATIVADO{display: none;}
 
-    z-index: 2;
 
-    background-color: white;
-}
-.MODAL p, .ckbox {margin: 0; padding: 0;margin: 0.5rem 0;}
-
-.MODAL .BOTAO {margin: 0.5rem 0;}
 
 .INPUT_P{max-width: 10.9rem; min-width:  10.9rem;}
 .INPUT_M{max-width: 16.5rem; min-width:  16.5rem;}
@@ -86,3 +77,25 @@
 
 .FERROVIAS{padding: 0.5rem  0 2rem  0}
 .FERROVIAS div{ display: flex;  float: left; width: 100%;} 
+
+
+
+
+#DIVIDIR_TREM .BOTAO{    margin-left: 100%;
+    transform: translateX(-100%);}
+
+.TABELA_DIVIDIR_TREM th{ padding: 0.5rem 0; background-color: var(--cinza-chumbo-e); color: var(--neutro)}
+
+.TABELA_DIVIDIR_TREM{
+    border-collapse: collapse;  
+    margin:            2rem 0;  
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+}
+
+.TABELA_DIVIDIR_TREM td{
+    padding: 0.5rem;
+}
+.TABELA_DIVIDIR_TREM .INPUT_P{ min-width: 4.9rem; max-width: 4.9rem !important}
+.TABELA_DIVIDIR_TREM .INPUT_G{ min-width: 10rem !important}
+.TABELA_DIVIDIR_TREM .INPUT_M{ min-width: 10rem !important}

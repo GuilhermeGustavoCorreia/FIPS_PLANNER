@@ -4,7 +4,7 @@ import json
 
 def ABRIR_TERMINAIS_ATIVOS():
 
-    DATAFRAME = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.CSV", sep=";", index_col=0)
+    DATAFRAME = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv", sep=";", index_col=0)
 
     with open(f"previsao_trens/src/DICIONARIOS/PRODUTOS_E_TERMINAIS.json") as ARQUIVO_DESCARGA:
         dict_PRODUTOS_TERMINAIS = json.load(ARQUIVO_DESCARGA)
