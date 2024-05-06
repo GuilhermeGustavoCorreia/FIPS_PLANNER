@@ -20,5 +20,5 @@ def CARREGAR_PREVISOES():
             ).order_by('posicao_previsao')
             if queryset.exists():  # Adiciona ao dicionário apenas se o queryset não estiver vazio
                 TABELAS[LINHA['NM_DIA']] = queryset
-
+    
     return TABELAS

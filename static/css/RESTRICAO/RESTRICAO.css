@@ -59,3 +59,5 @@
 
 .ICONE_EDITAR       {  width: 2rem; fill: var(--cinza-chumbo-c); cursor: pointer; padding: 0 0.2rem;}
 .ICONE_EDITAR:hover {  width: 2rem; fill: var(--cinza-chumbo-m); }
+
+.MENSAGEM_FORMULARIO{font-size: 0.9rem; width: 33rem; height: 2.5rem; color: red; font-weight: bold;}

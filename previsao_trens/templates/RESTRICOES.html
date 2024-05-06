@@ -18,70 +18,74 @@
 
     {% if RESTRICOES %}
 
-    <table class="LISTA__RESTRICAO" >
-        <thead>
-            <th class="COL_PP">             </th>
-            <th class="COL_M">TERMINAL      </th>
-            <th class="COL_M">MERCADORIA    </th>
-            <th class="COL_G">INICIO        </th>
-            <th class="COL_G">FIM           </th>
-            <th class="COL_P">%             </th>
-            <th class="COL_P">MOTIVO        </th>
-            <th class="COL_G">COMENTÁRIO    </th>
-            <th id="COLUNA_BOTOES" class="COL_P" colspan=2>  </th>
-        </thead>
+        <table class="LISTA__RESTRICAO" >
 
-    <tbody>  
-        
-    {% for RESTRICAO in RESTRICOES %}
-        <tr class="RES">
-            <td>{{forloop.counter0                         }}</td>
-            <td>{{ RESTRICAO.terminal                      }}</td>
-            <td>{{ RESTRICAO.mercadoria                    }}</td>
-            <td>{{ RESTRICAO.comeca_em  |date:"H:i d/m/Y"  }}</td>
-            <td>{{ RESTRICAO.termina_em  |date:"H:i d/m/Y" }}</td>
-            <td>{{ RESTRICAO.porcentagem                   }}</td>
-            <td>{{ RESTRICAO.motivo                        }}</td>
-            <td>{{ RESTRICAO.comentario                    }}</td>
-            
+            <thead>
+                <th class="COL_PP">             </th>
+                <th class="COL_M">TERMINAL      </th>
+                <th class="COL_M">MERCADORIA    </th>
+                <th class="COL_G">INICIO        </th>
+                <th class="COL_G">FIM           </th>
+                <th class="COL_P">%             </th>
+                <th class="COL_P">MOTIVO        </th>
+                <th class="COL_G">COMENTÁRIO    </th>
+                <th id="COLUNA_BOTOES" class="COL_P" colspan=2>  </th>
+            </thead>
 
-            <td>
-                <a href="{% url 'excluir_restricao' RESTRICAO.id %}">
-                <svg class="ICONE ICONE_DELETAR" id="Layer_1" data-name="Layer 1" data-id="{{ RESTRICAO.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88">
-                    <title>Excluir</title>
-                    <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
-                </svg>
+            <tbody>  
 
-            </td>
-            <td >
+                {% for RESTRICAO in RESTRICOES %}
+                    <tr class="RES">
 
-                <svg  version="1.1" id="Capa_1" onclick="" class="ICONE ICONE_EDITAR" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
-                    <title>Editar</title>
-                    <g>
-                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
-                            c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
-                            c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
-                            C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
-                            L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
-                            c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
-                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
-                            c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
-                            s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
-                            c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
-                    </g>
-                </svg>
+                        <td>{{ forloop.counter0                        }}</td>
+                        <td>{{ RESTRICAO.terminal                      }}</td>
+                        <td>{{ RESTRICAO.mercadoria                    }}</td>
+                        <td>{{ RESTRICAO.comeca_em  |date:"H:i d/m/Y"  }}</td>
+                        <td>{{ RESTRICAO.termina_em  |date:"H:i d/m/Y" }}</td>
+                        <td>{{ RESTRICAO.porcentagem                   }}</td>
+                        <td>{{ RESTRICAO.motivo                        }}</td>
+                        <td>{{ RESTRICAO.comentario                    }}</td>
+                        
 
-            </td>
+                        <td>
+                            <a href="{% url 'excluir_restricao' RESTRICAO.id %}">
+                            <svg class="ICONE ICONE_DELETAR" id="Layer_1" data-name="Layer 1" data-id="{{ RESTRICAO.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88">
+                                <title>Excluir</title>
+                                <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
+                            </svg>
 
-            {% comment %}
-        
-            
-            {% endcomment %}
+                        </td>
+                        <td >
 
-        </tr >
-    {% endfor %}
-    </tbody>
-    </table>
+                            <svg  version="1.1" id="Capa_1" onclick="EDITAR_RESTRICAO( {{ RESTRICAO.id }} )" class="ICONE ICONE_EDITAR" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                                <title>Editar</title>
+                                <g>
+                                    <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                        c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                        c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                        C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                        L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                        c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                                    <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                        c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                        s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                        c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                                </g>
+                            </svg>
+
+                        </td>
+
+                        {% comment %}
+                    
+                        
+                        {% endcomment %}
+
+                    </tr >
+                {% endfor %}
+                
+            </tbody>
+
+        </table>
 
     {% else %}
 
@@ -124,11 +128,58 @@
         {{ FORMULARIO.motivo }}</br>
         {{ FORMULARIO.comentario }}
     </div>
-
+    
+    <div class="MENSAGEM_FORMULARIO">
+    {% if messages %}
+        
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+            {% endfor %}
+        
+    {% endif %}
+    </div>
+    
     <input id="TIPO_FORMULARIO" type="hidden" name="TIPO_FORMULARIO" value="">
+    <input id="ID_EDICAO" type="hidden" name="ID_EDICAO" value="">
 
     <button type="submit" class="BOTAO VERDE" >Salvar</button>
 
 </form>
+<script>
+   
+    {% if messages %}
 
+
+        let TITULO_FORMULARIO   = document.getElementById("TITULO_FORMULARIO");
+        let OVERLAY             = document.getElementById("OVERLAY");
+        let FORMULARIO          = document.getElementById("FORMULARIO_RESTRICAO");
+        let TIPO_FORMULARIO     = document.getElementById("TIPO_FORMULARIO");
+
+        {% if TIPO_FORMULARIO == 'CRIAR'%}
+    
+            TITULO_FORMULARIO.textContent = "Criar Restrição"
+            TIPO_FORMULARIO.value = "CRIAR"
+    
+        {% endif %}
+
+        {% if TIPO_FORMULARIO == 'EDITAR'%}
+    
+            TITULO_FORMULARIO.textContent = "Editar Restrição"
+            TIPO_FORMULARIO.value = "EDITAR"
+    
+        {% endif %}
+        
+
+        let ELEMENTOS = [FORMULARIO, OVERLAY]
+
+        for (i = 0; i < ELEMENTOS.length; i++){
+                ELEMENTOS[i].style.display = "block";
+        }
+
+    {% endif %}
+
+    var MERCADORIAS = "{{ FORMULARIO.MERCADORIAS | safe }}"
+    MERCADORIAS = (JSON.parse(MERCADORIAS.replace(/'/g, '"')))
+
+</script>
 {% endblock %}

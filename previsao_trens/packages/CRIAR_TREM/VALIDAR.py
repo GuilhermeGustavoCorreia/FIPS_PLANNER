@@ -153,6 +153,7 @@ def VALIDAR_NOVA_PREVISAO(TREM):
     HORA    = TREM['previsao'].hour
 
     if not TREM_DATA_ARQ in LISTA_DATA_ARQ:
+        
         VALIDACAO["STATUS"]    = False
         VALIDACAO["DESCRICAO"] = "O Trem só pode ser inserido dentro do período vigente (D-1 até D+4)." 
 

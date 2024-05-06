@@ -1,29 +1,26 @@
 
 
-
 .tabela__descarga td{
     border-collapse: collapse;
     text-align: center;
-    padding: 0 6px;
+    
+    min-width: 2rem;
     
 }
 
 .tabela__descarga tr{max-height: 1rem;}
 
-
-
-
 .tabela__descarga {
-
+    background-color: white;
     border-collapse: collapse;
     font-family: "Saira Expanded";
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
     0 1px 2px rgba(0,0,0,0.24);
     
 }
-.TITLO_TOTAIS       {color: white;          background-color: var(--cinza-chumbo-e);  font-weight: bold;}
-.NOME_TERMINAL      {color: white;          background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 7rem}
-.DIA_TERMINAL       {color:white;  background-color: var(--azul-profundo-m); font-weight: bold;}
+.TITLO_TOTAIS       {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold;}
+.NOME_TERMINAL      {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 7rem}
+.DIA_TERMINAL       {color:white;   background-color: var(--azul-profundo-m); font-weight: bold;}
 .PERIODO_TERMINAL   {color: white;  background-color: var(--azul-profundo-e); font-weight: bold;}
 
 .LINHA_HORAS{color: white; background-color: var(--azul-profundo-c);font-weight: bold}
@@ -40,13 +37,13 @@
 .LINHA_PRODUTIVIDADE_MRS    {background-color: rgb(255, 255, 204);  font-weight: bold;}
 .LINHA_PRODUTIVIDADE_VLI    {background-color: rgb(230, 230, 231);  font-weight: bold;}
 
-.FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold; min-width: 3rem}
-.FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold; min-width: 3rem}
-.FERROVIA_VLI {color: white; background-color: var(--azul-vli);    font-weight: bold; min-width: 3rem}
+.FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold; min-width: 4rem}
+.FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold; min-width: 4rem}
+.FERROVIA_VLI {color: white; background-color: var(--azul-vli);    font-weight: bold; min-width: 4rem}
 
-.TOTAL_FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold; }
-.TOTAL_FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold;}
-.TOTAL_FERROVIA_VLI {color: white; background-color: var(--azul-vli);    font-weight: bold;}
+.TOTAL_FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold;  }
+.TOTAL_FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold; }
+.TOTAL_FERROVIA_VLI {color: white; background-color: var(--azul-vli);    font-weight: bold; }
 
 .PRODUTO{color: var(--cinza-chumbo-e); background-color: var(--cinza-chumbo-c);font-weight: bold;min-width: 4rem}
 
@@ -101,17 +98,13 @@
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/
 
 
-.CELULA_SELECIONADA{border-top: 2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100;}
-.PRIMEIRA{border-left: 2px solid var(--verde-floresta-m)}
-.ULTIMA{border-right: 2px solid var(--verde-floresta-m)}
+.CELULA_SELECIONADA {border-top:   2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100;}
+.PRIMEIRA           {border-left:  2px solid var(--verde-floresta-m)}
+.ULTIMA             {border-right: 2px solid var(--verde-floresta-m)}
 
-
-
-
-.LINHA_MOTIVO{background-color: rgb(228, 228, 228);}
-.LINHA_PCT{background-color: rgb(228, 228, 228)}
-.RESTRICAO_ATIVA{border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e); font-weight: bold; color: var(--cinza-chumbo-e)}
-
+.LINHA_MOTIVO       {background-color: rgb(228, 228, 228);}
+.LINHA_PCT          {background-color: rgb(228, 228, 228)}
+.RESTRICAO_ATIVA    {border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e); font-weight: bold; color: var(--cinza-chumbo-e)}
 
 
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/

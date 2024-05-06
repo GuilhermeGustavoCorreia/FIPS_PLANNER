@@ -1,0 +1,110 @@
+table{ 
+    border: 1px black solid; 
+    border-collapse: collapse;
+}
+table  th{border:     1px black solid}
+table td{}
+table td, th{ 
+    
+    text-align: center;
+    padding:    0 1rem;
+}
+
+table tr{height: 1rem;}
+
+body{
+    margin:       0 auto;
+    user-select:    none;
+    display:        flex;
+    cursor:      default;
+    overflow:     hidden;
+
+}
+.NOME__TERMINAL{ 
+
+    min-width: 6rem;
+    text-align: left;
+}
+
+.conteudo__navegacao{
+    padding:    1rem;
+    width:     100vw;
+    height:     91vh;
+    margin-top:  9vh;  
+    overflow-x: auto;
+}
+
+
+.COLUNA_TOTAL{
+    background-color: var(--cinza-chumbo-c);
+    border-left: 1px solid black; 
+    border-right: 1px solid black;
+    border-top: none;
+    border-bottom: none;
+}
+
+.TOTAL_TOTAL0,.TOTAL_TOTAL2, .TOTAL_TOTAL4{ 
+    border:    1px solid black; 
+    background-color: var(--azul-profundo-c);
+}
+.TOTAL_0, .TOTAL_2, .TOTAL_4{
+    background-color: var(--azul-ceu-m);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    
+}
+
+.TOTAL_PD0, .TOTAL_PD2, .TOTAL_PD4  {
+    background-color: var(--azul-profundo-c);
+    border: 1px solid black;
+}
+
+.CONTEUDO_0, .CONTEUDO_2, .CONTEUDO_4{
+    background-color: var(--azul-ceu-c);
+    border-left:     1px solid var(--cinza-chumbo-c);
+}
+
+
+.CONTEUDO_PD0, .CONTEUDO_PD2, .CONTEUDO_PD4{
+    background-color: var(--azul-ceu-m);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.CONTEUDO_PD1, .CONTEUDO_PD3{
+    background-color: var(--verde-floresta-c);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.TOTAL_PD1, .TOTAL_PD3{
+    background-color: var(--verde-floresta-m);
+    border: 1px solid black;
+    color: white;
+}
+
+.TOTAL_1, .TOTAL_3{
+    background-color: var(--verde-floresta-c);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    
+}
+
+.TOTAL_TOTAL1, .TOTAL_TOTAL3{ 
+    border:    1px solid black; 
+    background-color: var(--verde-floresta-m);
+    color: white;
+}
+
+.CONTEUDO_1, .CONTEUDO_3{
+    background-color: #dde7e1;
+    border-left:     1px solid var(--cinza-chumbo-m);
+}
+
+
+.TITULO_AZUL    {background-color: var(--azul-profundo-c); color:white}
+.TITULO_VERDE   {background-color: var(--verde-floresta-c); color:white}
