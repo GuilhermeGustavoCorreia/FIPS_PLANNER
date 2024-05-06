@@ -8,6 +8,14 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+  $("#SECAO_INSERIR_PREVISAO").click(function(){
+
+    $("#CONTEUDO_INSERIR_PREVISAO").slideToggle();
+
+  });
+});
+
 
 class mudarElemento {
 

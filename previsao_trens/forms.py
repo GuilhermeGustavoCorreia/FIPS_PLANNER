@@ -44,17 +44,17 @@ class TremForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TremForm, self).__init__(*args, **kwargs)
-        # Definir valores padrões
-        self.initial['prefixo'] = 'U36'
-        self.initial['os'] = 1234567
-        self.initial['origem'] = 'ZBL'
-        self.initial['local'] = 'ZEM'
-        self.initial['destino'] = 'PSN'
-        self.initial['mercadoria'] = 'ACUCAR'
-        self.initial['terminal'] = 'TAC ACUCAR'
-        self.initial['vagoes'] = 60
-        self.initial['previsao'] = '2024-04-24T12:00'
-        self.initial['comentario'] = 'ESTE É UM TRES DE DESTE'
+    #     # Definir valores padrões
+    #     self.initial['prefixo'] = 'U36'
+    #     self.initial['os'] = 1234567
+    #     self.initial['origem'] = 'ZBL'
+    #     self.initial['local'] = 'ZEM'
+    #     self.initial['destino'] = 'PSN'
+    #     self.initial['mercadoria'] = 'ACUCAR'
+    #     self.initial['terminal'] = 'TAC ACUCAR'
+    #     self.initial['vagoes'] = 60
+    #     self.initial['previsao'] = '2024-04-24T12:00'
+    #     self.initial['comentario'] = 'ESTE É UM TRES DE DESTE'
         self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
 
         self.fields['posicao_previsao'].required = False 
@@ -83,18 +83,21 @@ class RestricaoForm(forms.ModelForm):
 
         }
 
-    def __init__(self, *args, **kwargs):
+    #def __init__(self, *args, **kwargs):
 
-        super(RestricaoForm, self).__init__(*args, **kwargs)
-        # Definir valores padrões
-        self.initial['mercadoria']  = 'ACUCAR'
-        self.initial['terminal']    = 'TAC ACUCAR'
+        # super(RestricaoForm, self).__init__(*args, **kwargs)
+        # # Definir valores padrões
+        # self.initial['mercadoria']  = 'ACUCAR'
+        # self.initial['terminal']    = 'TAC ACUCAR'
 
-        self.initial['comeca_em']   = '2024-04-26T12:00'
-        self.initial['termina_em']  = '2024-04-27T12:00'
+        # self.initial['comeca_em']   = '2024-04-26T12:00'
+        # self.initial['termina_em']  = '2024-04-27T12:00'
 
-        self.initial['porcentagem'] = 60
+        # self.initial['porcentagem'] = 60
 
-        self.initial['motivo']      = 'MT'
-        self.initial['comentario']  = 'Manutenção'
+        # self.initial['motivo']      = 'MT'
+        # self.initial['comentario']  = 'Manutenção'
 
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

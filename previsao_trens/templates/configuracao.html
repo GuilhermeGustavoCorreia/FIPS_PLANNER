@@ -1,4 +1,4 @@
-{% extends 'main.html' %}
+    {% extends 'main.html' %}
 {% block content %}
 {% load static %}
 
@@ -10,20 +10,21 @@
 
 <script src="{% static 'javascript/CONFIGURACAO/main.js' %}" defer></script>
 
-
-
 <div class="CONTEUDO__PADRAO">  
   
     <h1>CONFIGURAÇÕES</h1>
 
-    
-
-
-
     <button type="button" class="BOTAO BTN_ATUALIZAR_DESCARGA" onclick="ATUALIZAR_DESCARGA()">
         ATUALIZAR DESCARGA
     </button>
-    {% comment %} onclick="location.href='{% url 'criar_modulo' %}'" {% endcomment %}
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <section>
         <h2  id="SECAO_DESCARGAS_ATIVAS"    class="SECAO_CONFIGURACAO">Descargas Ativas</h2>
@@ -56,6 +57,18 @@
                 <br>
             
             {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao</h2>
+        <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
+            <h1>Upload de arquivo CSV</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+                {% csrf_token %}
+                {{ FORM_CSV.as_p }}
+                <button type="submit">Upload</button>
+            </form>
         </div>
     </section>
 

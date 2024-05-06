@@ -1,0 +1,22 @@
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+
+    width: 20%;
+}
+table       {
+    font-family: "Saira Expanded";
+    background-color: rgb(247, 242, 242);    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+}
+
+table       { border-collapse: collapse;}
+table td    { border: 1px var(--cinza-chumbo-c) solid; text-align: center;}
+tbody th    { border: 1px var(--cinza-chumbo-c) solid; padding: 0.4 0.5rem; text-align: left;}
+thead td    { font-weight: bold;  padding: 0.4rem; background-color: var(--azul-profundo-m); color: white}

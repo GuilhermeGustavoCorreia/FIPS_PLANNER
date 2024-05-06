@@ -96,6 +96,11 @@
 .TABELA_DIVIDIR_TREM td{
     padding: 0.5rem;
 }
+
 .TABELA_DIVIDIR_TREM .INPUT_P{ min-width: 4.9rem; max-width: 4.9rem !important}
 .TABELA_DIVIDIR_TREM .INPUT_G{ min-width: 10rem !important}
 .TABELA_DIVIDIR_TREM .INPUT_M{ min-width: 10rem !important}
+
+.FUNDO_LARANJA{background-color: var(--amarelo-ouro-m) !important ; height: 2rem;}
+
+#FORM_DIVIDIR_TREM, #FORM_TREM_PADRAO {display: none}

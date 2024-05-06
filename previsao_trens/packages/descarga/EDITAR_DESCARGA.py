@@ -9,7 +9,7 @@ from datetime               import datetime, timedelta
 
 class NAVEGACAO_DESCARGA:
 
-    def __init__(self, TERMINAL, FERROVIA, PRODUTO):
+    def __init__(self, TERMINAL, FERROVIA, PRODUTO, DIA_ANTERIOR=False):
       
         #region DECLARANDO OBJETOS GLOBAIS
         self.NM_TERMINAL = TERMINAL
@@ -23,7 +23,12 @@ class NAVEGACAO_DESCARGA:
         #endregion
 
         #region INICIANDO OS OBJETOS GLOBAIS
-        self.LISTA_DATA_ARQ  = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)["DATA_ARQ"].tolist()
+        self.PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+        
+        #ESTOU REMOVENDO O D-1 DO CÁLCULO PARA VER NO QUE VAI DAR
+        if not DIA_ANTERIOR:
+            self.PERIODO_VIGENTE = self.PERIODO_VIGENTE.drop(self.PERIODO_VIGENTE.index[0]) 
+        self.LISTA_DATA_ARQ  = self.PERIODO_VIGENTE["DATA_ARQ"].tolist()
 
         with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
             self.INFOS = json.load(ARQUIVO_DESCARGA)
@@ -64,9 +69,18 @@ class NAVEGACAO_DESCARGA:
                 DESCARGA_COMPLETA[ITEM].extend(self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO][ITEM])
 
         #ITERANDO SOBRE A DESCARGA ÚNICA
-
         DESCARGA_COMPLETA["SALDO"][0] = 0
+
         for i, _ in enumerate(DESCARGA_COMPLETA["ENCOSTE"]):#AQUI PODERIA SER QUALQUER CHAVE, É PARA PEGARMOS O TAMANHO DA LISTA
+            
+            if i == 0: 
+
+                SALDO_D0 = self.DESCARGAS[self.LISTA_DATA_ARQ[0]]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]
+
+                DESCARGA_COMPLETA["SALDO"][i-1]         = SALDO_D0
+                DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = 0
+                DESCARGA_COMPLETA["ENCOSTE"][i-1]       = 0
+                DESCARGA_COMPLETA["CARREGAMENTO"][i-1]  = 0
             
             #ESTAS DUAS REGRAS É PARA O AUTOMATICO E O MANUAL
             if      DESCARGA_COMPLETA["SALDO"][i-1] == 0                                        : DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = 0 #(NÃO HÁ O QUE DESCARREGAR)
@@ -74,23 +88,23 @@ class NAVEGACAO_DESCARGA:
             if      DESCARGA_COMPLETA["SALDO"][i-1] < DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1]   : DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = DESCARGA_COMPLETA["SALDO"][i-1]#(NÃO HÁ O QUE DESCARREGAR)
 
             #AQUI FICA O CALCULO AUTOMATICO
-            
-            
             elif DESCARGA_COMPLETA["EDITADO"][i-1] == 0:
-
-
                 if   DESCARGA_COMPLETA["SALDO"][i-1] >= PRODUTIVIDADE: 
 
                     #AQUI DEVEMOS INCLUIR O CALCULO COM RESTRICAO
                     if DESCARGA_COMPLETA["RESTRICAO"][i-1] > 0: 
                         DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = round(PRODUTIVIDADE * 0.01 * DESCARGA_COMPLETA["RESTRICAO"][i-1])
                     else:
-                         DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = PRODUTIVIDADE
+                        DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = PRODUTIVIDADE
                 else:
                     DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = DESCARGA_COMPLETA["SALDO"][i-1]
-                    
-            SALDO = DESCARGA_COMPLETA["ENCOSTE"][i] + DESCARGA_COMPLETA["SALDO"][i-1] - DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1]
+
+
+            if i == 0:  SALDO = SALDO_D0
+            else:       SALDO = DESCARGA_COMPLETA["ENCOSTE"][i] + DESCARGA_COMPLETA["SALDO"][i-1] - DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1]
             
+            DESCARGA_COMPLETA["CARREGAMENTO"][i] = DESCARGA_COMPLETA["PRODUTIVIDADE"][i] + DESCARGA_COMPLETA["CARREGAMENTO"][i-1]
+            print(f"[{i}] {DESCARGA_COMPLETA["CARREGAMENTO"][i]} = {DESCARGA_COMPLETA["PRODUTIVIDADE"][i]} + {DESCARGA_COMPLETA["CARREGAMENTO"][i-1]}")
             if SALDO > 0 : DESCARGA_COMPLETA["SALDO"][i] = SALDO
             else         : DESCARGA_COMPLETA["SALDO"][i] = 0
 
@@ -105,16 +119,17 @@ class NAVEGACAO_DESCARGA:
             for ITEM in ITENS_DESCARGA:
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO][ITEM] = LISTAS[ITEM][index] #LISTA POSSUI O MESMO TAMANHO QUE O PERIODO ATIVO, COMPARTILHAM O INDEX
 
-            self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"] = \
-            self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SALDO"][0] -\
-            self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][0]
+            if index != 0: #NÃO VAMOS DEFINIR O SALDO DE VIRADA DE "D" AUTOMARICAMENTE (index = 1 é "D" na lista self.LISTA_DATA_ARQ)
+                self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"] = \
+                self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SALDO"][0] -\
+                self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][0]
             
     def __CALCULAR_TOTAIS__(self):
 
         INDICADORES = {
                 "PEDRAS"  : {},
                 "ENCOSTE" : {}
-            }
+        }
         
         #ITERANDO SOBRE TODOS OS DIAS PARA QUE TODOS OS DIAS TENHAM SEUS TOTAIS ATUALIZADOS (NA DETALHE E NA NAVEGAÇÃO)
         for DATA_ARQ in self.LISTA_DATA_ARQ: #1
@@ -210,7 +225,6 @@ class NAVEGACAO_DESCARGA:
         for DATA_ARQ in self.LISTA_DATA_ARQ:
 
             ARQUIVO = f"descarga_{ DATA_ARQ }.json"
-
             with open(os.path.join(DIRETORIO_TERMINAL, ARQUIVO), 'w') as ARQUIVO_NOME:
                 json.dump(self.DESCARGAS[DATA_ARQ], ARQUIVO_NOME)
 
@@ -239,6 +253,7 @@ class NAVEGACAO_DESCARGA:
             
                 HORA_CHEGADA     = 23 
                 DATA_ARQ_CHEGADA = self.LISTA_DATA_ARQ[self.LISTA_DATA_ARQ.index(TREM_DATA_ARQ) - 1]
+
             #endregion 
             
             TRENS_CHEGADA = Trem.objects.filter(terminal=self.NM_TERMINAL, previsao=TREM['previsao'])
@@ -276,7 +291,7 @@ class NAVEGACAO_DESCARGA:
             
             POSICAO_DIA = self.LISTA_DATA_ARQ.index(DATA_ARQ_CHEGADA)
 
-            if ((HORA_ENCOSTE) > 24 and POSICAO_DIA < 6):
+            if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
 
                 HORA_ENCOSTE     = HORA_ENCOSTE - 24
                 DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
@@ -323,14 +338,31 @@ class NAVEGACAO_DESCARGA:
 
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["PRODUTIVIDADE"][COLUNA] = PARAMETROS["VALOR"]
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["EDITADO"][COLUNA]       = 1
+       
+       
         __INSERIR_VALORES__()
 
         self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
 
+    def EDITAR_SALDO_VIRADA(self, PARAMETROS):
+
+        self.DESCARGAS[self.LISTA_DATA_ARQ[0]]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"] = PARAMETROS["VALOR"]
+
+        self.__CALCULAR_DESCARGA__()
+        self.__CALCULAR_TOTAIS__()
+        self.__SALVAR__()
+
     def EDITAR_RESTRICAO(self, RESTRICAO, ACAO):
-    
+        
+
+        # AQUI INSIRO E REMOVO RESTRICOES
+
+        # 1. AQUI RECEBEMOS RESTRICOES VALIDADASA
+        # 2. TRATAMOS RESTRICOES QUE VAO ALÉM DE D-4 (EM CASO DE INSERIR) (LINHA 337 procurar por RESTRICAO_TERMINA_NO_PERIODO_VIGENTE )
+        # 3. EXCLUIMOS RESTRICOES QUE VAO ALÉM DE D-1 (DENTRO DO IF ACAO == "REMOVER")
+
         #region PARAMETROS
         FERROVIAS               : list
         DIAS_AFETADOS           : int
@@ -354,6 +386,11 @@ class NAVEGACAO_DESCARGA:
         if ACAO == "REMOVER":
             MOTIVO = ""
             PCT    = 0
+
+            #PODEMOS EXCLUIR UMA RESTRICAO QUE TENHA COMEÇADO ANTES DE D-1 (ISTO DEVERIA CONTORNAR O ERRO)
+            if not (RESTRICAO["comeca_em"].strftime('%Y-%m-%d') in self.LISTA_DATA_ARQ):    
+                RESTRICAO["comeca_em"] = datetime.strptime(self.PERIODO_VIGENTE.iloc[0]["DATA_ARQ"], "%Y-%m-%d").replace(hour=1, minute=0, second=0)
+        
 
         #PRIMEIRO PRECISAMOS SABER EM QUANTAS FERROVIAS VAMOS APLICAR (POIS NEM TODOS OS TERMINAIS TEM TODAS AS FERROVIAS)       
         FERROVIAS = self.INFOS["FERROVIA"]
@@ -437,5 +474,17 @@ class NAVEGACAO_DESCARGA:
                 self.__CALCULAR_DESCARGA__()
 
         #endregion
+        self.__CALCULAR_TOTAIS__()
+        self.__SALVAR__()
+
+    #ESTA FUNCAO É CHAMADA EM CONFIGURACAO.ATUALIZAR_DESCARA (PARA INSERIR AS RESTRICOES NOS DIAS QUE ULTRAPASSAVAM D+4)
+    def RESTRICAO_ATUALIZAR_PERIODO(self, RESTRICAO, ULTIMO_DIA_ANTIGO, ULTIMO_DIA_NOVO):
+
+        RESTRICAO["comeca_em"] = ULTIMO_DIA_ANTIGO
+        self.EDITAR_RESTRICAO(self, RESTRICAO, "INSERIR")
+
+    def ATUALIZAR_CALCULO(self):
+
+        self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()

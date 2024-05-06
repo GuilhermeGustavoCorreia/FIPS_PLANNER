@@ -2,7 +2,8 @@
 from django.db              import transaction
 from django.db.models       import F
 from previsao_trens.models  import Trem
-
+import pandas as pd
+from datetime import datetime
 def AJUSTAR_POSICAO_CHEGADA(**kwargs):
 
     if  kwargs["ACAO"] == "INSERIR TREM":
@@ -177,3 +178,50 @@ def AJUSTAR_POSICAO_CHEGADA(**kwargs):
                     ).update(posicao_previsao=F('posicao_previsao') + 1)
             
             return SAIDAS
+
+
+def ALTERAR_POSICAO(PARAMETROS):
+
+    PERIODO_VIGENTE     = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
+    DATA_ARQ            = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]].iloc[0]['DATA_ARQ']
+
+    print(f"PARAMETROS: { PARAMETROS }")
+
+
+    
+    DIRECAO : str
+
+    
+
+    if PARAMETROS["POSICAO_B"] > PARAMETROS["POSICAO_A"]:   DIRECAO = "BAIXO"
+    else:                                                   DIRECAO = "CIMA"
+
+    TREM = Trem.objects.get(pk=PARAMETROS["TREM"])
+
+    if DIRECAO == "BAIXO":
+    
+        with transaction.atomic():  
+            
+            Trem.objects.filter(
+                    posicao_previsao__gt = TREM.posicao_previsao,
+                    posicao_previsao__lt = PARAMETROS["POSICAO_B"] + 1,
+                    previsao__date       = TREM.previsao
+                ).update(
+                    posicao_previsao=F('posicao_previsao') - 1
+                )
+            
+    if DIRECAO == "CIMA":
+
+         with transaction.atomic():  
+            
+            Trem.objects.filter(
+                    posicao_previsao__gt = PARAMETROS["POSICAO_B"] -1,
+                    posicao_previsao__lt = TREM.posicao_previsao,
+                    previsao__date       = TREM.previsao
+                ).update(
+                    posicao_previsao=F('posicao_previsao') + 1
+                )
+
+
+    TREM.posicao_previsao = PARAMETROS["POSICAO_B"]
+    TREM.save()

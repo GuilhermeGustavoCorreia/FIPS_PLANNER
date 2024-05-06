@@ -28,12 +28,22 @@
         <li class="item__do__menu"><a>  Relatórios  </a>
           
           <ul class="submenu">
-            <li class="submenu-lista"><a class="subitem">Detalhe   </a></li>
+            <li class="submenu-lista"><a class="subitem"  href="{% url 'detalhe' %}">Detalhe   </a></li>
             <li class="submenu-lista"><a class="subitem">Prévia    </a></li>
             <li class="submenu-lista"><a class="subitem">Ocupação  </a></li>
           </ul>
 
         </li>
+
+        <li class="item__do__menu"><a>  Operação  </a>
+          
+          <ul class="submenu">
+            <li class="submenu-lista"><a class="subitem"  href="{% url 'programacao_subida' %}">Programação de Subida </a></li>
+            <li class="submenu-lista"><a class="subitem">Ocupação de Linhas    </a></li>
+          </ul>
+
+        </li>
+
       </ul>
     </nav>
 

@@ -2,22 +2,27 @@ import json
 import pandas as pd
 from datetime import datetime, timedelta
 import os
-from pathlib import Path
 from django.conf import settings
+from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
+
+from previsao_trens.models        import Restricao
 
 def ATUALIZAR_DESCARGA():
 
     PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
     PATH_MODELO_DESCARGA = "previsao_trens/src/DICIONARIOS/MODELO_DESCARGA.json"
-    DIRETORIO_DESCARGAS  =  "previsao_trens/src/DESCARGAS"
+    DIRETORIO_DESCARGAS  = "previsao_trens/src/DESCARGAS"
 
     with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         dict_TERMINAIS = json.load(ARQUIVO_DESCARGA)
 
 
     #ATUALIZAR PERIODO VIGENTE
-    PERIODO_VIGENTE = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
+    PERIODO_VIGENTE     = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
+    ULTIMO_DIA_ANTIGO   = datetime.strptime(PERIODO_VIGENTE.iloc[-1]["DATA_ARQ"], "%Y-%m-%d")   #OBTENDO O ANTIGO D+4
+
     PERIODO_VIGENTE['DATA_ARQ'] = PERIODO_VIGENTE['DIA_LOGISTICO'].apply(lambda x: (datetime.now() + timedelta(days=x)).strftime("%Y-%m-%d"))
+    ULTIMO_DIA_NOVO   = datetime.strptime(PERIODO_VIGENTE.iloc[-1]["DATA_ARQ"], "%Y-%m-%d")     #OBTENDO O NOVO D+4
     PERIODO_VIGENTE.to_csv(PATH_PERIODO_VIGENTE, sep=";")
     
     LISTA_DATA_ARQ       = PERIODO_VIGENTE['DATA_ARQ'].tolist()
@@ -29,7 +34,8 @@ def ATUALIZAR_DESCARGA():
         MODELO_DESCARGA = json.load(ARQUIVO_DESCARGA)
 
     #REMOVER A DESCARGA
-    
+
+
     UMA_DESCARGA = MODELO_DESCARGA["DESCARGAS"]["FERROVIA"]["PRODUTO"]
 
     del MODELO_DESCARGA["DESCARGAS"]["FERROVIA"]
@@ -69,6 +75,13 @@ def ATUALIZAR_DESCARGA():
                     json.dump(DESCARGA_TERMINAL, ARQUIVO_NOME)
 
 
+    #VERIFICAR SE HÁ ALGUMA RESTRICAO ABERTA
+    RESTRICOES = Restricao.objects.filter(termina_em__gt=ULTIMO_DIA_ANTIGO)
+
+    for RESTRICAO in RESTRICOES:   
+
+        NAVEGACAO = NAVEGACAO_DESCARGA(RESTRICAO["terminal"], None, RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
+        NAVEGACAO.EDITAR_RESTRICAO(RESTRICAO, "INSERIR")
 
 
 
