@@ -47,7 +47,7 @@
     transform: translateX(-50%);
     margin-top: 12vh;
     position: absolute;
-    
+
     width: 80vw;
 }
 
@@ -55,6 +55,7 @@ h1, h3{
     font-family: "Saira Expanded";
     color: var(--cinza-chumbo-e);
     margin: 0;
+    font-size: 1.5rem;
 }
 h2{
     font-family: "Saira Expanded";
@@ -67,11 +68,11 @@ h2{
     font-family: 'Saira Expanded';
     font-weight: 600;
     border: none;
-    padding: 10px 20px;
+    padding: 7px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 0.9rem;
     border-radius: 4px;
     cursor: pointer;
 
@@ -106,7 +107,7 @@ h2{
     padding: 1rem;
     border-radius: 10px;
 
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -118,3 +119,31 @@ h2{
 .MODAL p, .ckbox {margin: 0; padding: 0;margin: 0.5rem 0;}
 
 .MODAL .BOTAO {margin: 0.5rem 0;}
+
+@media screen and (orientation: portrait) {
+    
+    .CONTEUDO__PADRAO{
+        left:       50%;
+        transform:  translateX(-50%);
+        margin-top: 5vh;
+        position:   absolute;    
+        width:      80vw;
+    }
+
+    .INPUT { 
+        box-sizing: border-box;
+        min-height: 1.7vh;
+        font-size:  1rem;
+        text-align: center;
+    }
+    
+}
+
+dialog::backdrop {
+
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(10px);
+
+}
+
+dialog{ overflow: hidden; border-radius: 5px; border: none; }

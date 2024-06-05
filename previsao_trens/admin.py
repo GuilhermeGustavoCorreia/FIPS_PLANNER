@@ -1,20 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Usuario, Trem
+from .models import Usuario, Trem, TremVazio
 
 
 
 class UsuarioAdmin(UserAdmin):
-    fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Informações Pessoais', {'fields': ('first_name', 'last_name', 'email', 'foto')}),
-        ('Permissões', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Datas Importantes', {'fields': ('last_login', 'date_joined')}),
+    
+    fieldsets = UserAdmin.fieldsets + (
+    (
+        None, {'fields': ('cargo', 'foto')}),
     )
 
-    list_display = ('username', 'first_name', 'last_name', 'email', 'is_staff')
+    add_fieldsets = UserAdmin.add_fieldsets + (
+    (
+        None, {'fields': ('cargo', 'foto')}),
+    )
 
+admin.site.register(Usuario, UserAdmin)
 
 admin.site.register(Trem)
-admin.site.register(Usuario, UsuarioAdmin)
-
+admin.site.register(TremVazio)

@@ -91,6 +91,7 @@
             
             {% for DESCARGA in DADOS.DESCARGAS %}
             
+
             <div class="uma__descarga">
                 
                 <table class="tabela__descarga" id="{{DESCARGA.TERMINAL}}_{{DESCARGA.DATA}}">
@@ -142,8 +143,8 @@
                         <td>Saldo</td>
                         {% for CHEGADA_PREFIXO in DESCARGA.PREFIXO %}
                             <td>
-                                {% if CHEGADA_PREFIXO != 0%}
-                                {% with palavra=CHEGADA_PREFIXO %}
+                                {% if CHEGADA_PREFIXO.0 != 0%}
+                                {% with palavra=CHEGADA_PREFIXO.0 %}
                                     {{ palavra|slice:":3" }}
                                 {% endwith %}
 
@@ -156,8 +157,8 @@
                         <td>Chegada</td>
                         {% for CHEGADA in DESCARGA.CHEGADA %}
                         <td>
-                            {% if CHEGADA != 0%}
-                                {{ CHEGADA }}
+                            {% if CHEGADA.0 != 0%}
+                                {{ CHEGADA.0 }}
                             {% endif%}
                         </td>
                         {% endfor %}
@@ -205,9 +206,9 @@
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
                                         <td>
-                                            {% if ENCOSTE != 0%}
-                                                {{ ENCOSTE }}
-                                            {% endif%}
+                                            {% if ENCOSTE.0 != 0 %}
+                                                {{ ENCOSTE.0 }}
+                                            {% endif %}
                                         </td>
 
                                     {% endfor %}
@@ -236,6 +237,22 @@
                                         <td  headers="{{ forloop.counter0 }}" class="PRODUTIVIDADE_{{FERROVIA}}" name="PRODUTIVIDADE">
                                             {% if PRODUTIVIDADE != 0%}
                                                 {{ PRODUTIVIDADE }}
+                                            {% endif%}
+                                        </td>
+
+                                    {% endfor %}
+
+                                </tr>
+                        
+                                <tr name="LINHA_PRODUTIVIDADE" class="LINHA_PRODUTIVIDADE_{{FERROVIA}}">
+
+                                    <td style="border: 1px black solid" colspan=3>OCUPACAO</td>
+
+                                    {% for OCUPACAO in LINHAS.OCUPACAO %}
+
+                                        <td style="border: 1px black solid" >
+                                            {% if OCUPACAO != 0%}
+                                                {{ OCUPACAO }}
                                             {% endif%}
                                         </td>
 

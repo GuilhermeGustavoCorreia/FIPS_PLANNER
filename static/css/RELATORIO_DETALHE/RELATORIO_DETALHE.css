@@ -108,3 +108,15 @@ body{
 
 .TITULO_AZUL    {background-color: var(--azul-profundo-c); color:white}
 .TITULO_VERDE   {background-color: var(--verde-floresta-c); color:white}
+
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+
+    width: 20%;
+}

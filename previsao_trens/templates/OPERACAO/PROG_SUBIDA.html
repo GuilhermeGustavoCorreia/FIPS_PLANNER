@@ -1,29 +1,600 @@
-{% extends 'main.html' %}
-{% block content %}
-{% load static %}
-{% load permission_tags %}
+{% extends  'main.html' %}
+{% block    content %}
+{% load     static %}
+{% load     permission_tags %}
 
-<div class="CONTEUDO__PADRAO">  
+
+<script src="{% static 'javascript/PROGRAMACAO_SUBIDA/main.js' %}" defer></script>
+
+<div id="OVERLAY" class="OVERLAY"  data-acao="FECHAR" onclick='modal_saldo_virada(this)'></div>
+
+<div class="MODAL" id="MODAL">
+    
+    <h2 id="TITULO_FORMULARIO"></h2>
+    
+    <form id="FORM_DIVIDIR_TREM"  method="POST" url='{% url 'programacao_subida' %}'>
+    
+        {% csrf_token %}
+
+        <h3 id="TITULO_MODAL"></h3>
+
+        <table class="TABELA_DIVIDIR_TREM">
+                    
+            <tr class="">
+                <td><input  name="VAGOES"     id="destino_01"    class="INPUT INPUT_VAGOES_VIRADA_LINHA"  type=text placeholder="Vgs" ></td>
+                <td>
+                    <select name="SEGMENTO"  id="mercadoria_01" class="INPUT INPUT_G"  maxlength="50">
+                        
+                        <option value="GRAO" selected>  GRAO            </option>
+                        <option value="ACUCAR">         ACUCAR          </option>
+                        <option value="CELULOSE">       CELULOSE        </option>
+                        <option value="CONTEINER">      CONTEINER       </option>
+                        <option value="FERTILIZANTES">  FERTILIZANTES   </option>
+
+                    </select>
+                </td>
+            </tr>
+
+        </table> 
+
+        <input type="hidden" name="ACAO"        value="EDITAR_SALDO_VIRADA_LINHA">
+        <input type="hidden" name="LINHA"       value="" id="NOME_DA_LINHA" >
+        <input type="hidden" name="FERROVIA"    value="" id="FERROVIA_DA_LINHA" >
+
+        <button type="submit" class="BOTAO VERDE" >Salvar</button>
+
+    </form> 
+
+</div>
+
+<div class="CONTEUDO__SUBIDA">  
     
     <link rel="stylesheet" type="text/css" href="{% static 'css/PROG_SUBIDA/PROG_SUBIDA.css' %}"> 
 
     <h1>PROGRAMAÇÃO DE SUBIDA</h1>
 
+    <form method="post"  action="{% url 'programacao_subida' %}">
+        {% csrf_token %}
+        <button type="submit" class="BOTAO VERDE">Recalcular Tabela</button>
+    </form>
     
+   
     {% if DADOS_VAZIOS %} 
-
+         
         {% for DIA, DADOS in DADOS_VAZIOS.items %}
+        
         <div class="um__dia">  
 
-            <h2>{{DIA}}</h2>
+            <h2>{{ DIA }}</h2>
             
+            <table>
 
-            
+            {% for NM_MARGEM, DADOS_MARGEM in DADOS.DESCARGAS.items %}
                 
-                <table>
-                    <thead>
+                <tr class="MARGEM">
+                    <td colspan=31 >
+                        <h3>{{NM_MARGEM}}</h3>
+                    </td>
+                </tr>
+                
+                {% for NM_PATIO, DADOS_PATIO in DADOS_MARGEM.items %} 
+                    
+                    <tr class="PULA_LINHA"><td colspan=31>x</td></tr> 
+
+                    <tr class="TITULO">
+
+                        <td colspan=4 rowspan=2></td>
+                        <td colspan=25>{{NM_PATIO}}</td>
+                        <td colspan=2>Lotes</td>
+                    
+                    </tr>
+
+                    <tr class="TITULO">
+                        
+                        <td>sld.</td>
+                        <td>01h</td>
+                        <td>02h</td>
+                        <td>03h</td>  
+                        <td>04h</td>
+                        <td>05h</td>
+                        <td>06h</td>
+                        <td>07h</td>
+                        <td>08h</td>
+                        <td>09h</td>  
+                        <td>10h</td>
+                        <td>11h</td>
+                        <td>12h</td>
+                        <td>13h</td>
+                        <td>14h</td>
+                        <td>15h</td>
+                        <td>16h</td>  
+                        <td>17h</td>
+                        <td>18h</td>
+                        <td>19h</td>
+                        <td>20h</td> 
+                        <td>21h</td>
+                        <td>22h</td>
+                        <td>23h</td>
+                        <td>24h</td>
+                        <td>mín</td>
+                        <td>máx</td>   
+
+                    </tr>
+
+                    {% for NM_TERMINAL, DADOS_TERMINAL in DADOS_PATIO.items %}
+                        {% for NM_SEGMENTO, DADOS_SEGMENTO in DADOS_TERMINAL.items %}
+                        
+                            {% for NM_FERROVIA, DADOS_FERROVIA in DADOS_SEGMENTO.items %}   
+                            
+                            <tr>
+
+                                <th rowspan=4>{{ NM_TERMINAL }}</th>
+                                <th rowspan=4>{{ NM_SEGMENTO }}</th>
+                                <th rowspan=4>{{ NM_FERROVIA }}</th>
+                            
+                                <td class="coluna_A  LINHA">Ger. Vazio</td>
+
+                                <td class="LINHA"></td>
+
+                                {% for ITEM in DADOS_FERROVIA.PRODUTIVIDADE %}
+                                    
+                                    {% if ITEM > 0 %}
+                                        <td class="AZUL LINHA">{{ ITEM }}</td>
+                                    {% else %}
+                                        <td class="LINHA"></td>
+                                    {% endif %}
+
+                                {% endfor %}
+                                
+                                <th rowspan=4>{{ DADOS_FERROVIA.SATURACAO.MIN }}</th>
+                                <th rowspan=4>{{ DADOS_FERROVIA.SATURACAO.MAX }}</th>
+
+                            </tr>
+
+                            <tr>
+                                <td class="coluna_A">Alívio</td>
+
+                                <td class="LINHA"></td>
+                                
+                                {% for ITEM in DADOS_FERROVIA.ALIVIO %}
+                                    
+                                    {% if ITEM > 0 %}  
+                                        <td class="VERDE LINHA" >{{ ITEM }}</td>
+                                    {% else %}
+                                        <td class="LINHA" ></td>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </tr>
+
+                            <tr>
+                                <td class="coluna_A LINHA_GROSSA" rowspan=2>Saldo</td>
+
+                                <td class="LINHA LINHA_GROSSA" data-terminal='{{NM_TERMINAL}}' data-segmento={{NM_SEGMENTO}} data-ferrovia={{NM_FERROVIA}} name="SALDO_VIRADA_VAZIO_TERMINAL" rowspan=2>{{DADOS_FERROVIA.SALDO_VIRADA_VAZIOS}}</td>
+
+                                {% for ITEM in DADOS_FERROVIA.SALDO_VAZIO %}
+
+                                    {% if ITEM > 0 %}
+                                        
+                                        {% if ITEM > DADOS_FERROVIA.SATURACAO.MAX %}
+                                            <td class="AMARELO_ESCURO">{{ ITEM }}</td>
+                                        {% else %}
+
+                                            {% if ITEM > DADOS_FERROVIA.SATURACAO.MIN %}
+                                                <td class="AMARELO_MEDIO">{{ ITEM }}</td>
+                                            {% else %}
+                                                <td class="AMARELO_CLARO">{{ ITEM }}</td>
+                                            {% endif %}
+
+                                        {% endif %}
+                                    {% else %}
+                                        <td class="LINHA"></td>        
+                                    {% endif %}
+
+                                {% endfor %}
+                            </tr>
+
+                            <tr style="min-height: 5px">
+
+
+                                {% for ITEM in DADOS_FERROVIA.CONTADOR_FILA_DE_VAZIOS %}                                   
+                                    
+                                    {% if ITEM.0 == 'P' %}  
+                                        <td class="CELULA_FILA LINHA_GROSSA">
+                                            <div style="font-size: 2px; background-color: red"> {{ ITEM.0 }} </div>
+                                        </td> 
+                                    {% else %}
+                                        <td class="LINHA_GROSSA"></td>
+                                    {% endif %} 
+
+                                {% endfor %}
+
+                            </tr>
+            
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                        
+                    <!--#region LINHA 4000-->  
+
+                        {% if NM_PATIO  == "PCX" %} 
+
+                            
+                            <tr class="PULA_LINHA"><td colspan=31>x</td>
+                            </tr> 
+        
+                            <tr class="TITULO_DARK">
+
+                                <td colspan=4 rowspan=2></td>
+                                <td colspan=25>LINHA 4000</td>
+                                <td colspan=2>Lotes</td>
+        
+                            </tr>
+
+                            <tr class="TITULO_DARK">
+        
+                                <td>sld.</td>
+                                <td>01h</td>
+                                <td>02h</td>
+                                <td>03h</td>  
+                                <td>04h</td>
+                                <td>05h</td>
+                                <td>06h</td>
+                                <td>07h</td>
+                                <td>08h</td>
+                                <td>09h</td>  
+                                <td>10h</td>
+                                <td>11h</td>
+                                <td>12h</td>
+                                <td>13h</td>
+                                <td>14h</td>
+                                <td>15h</td>
+                                <td>16h</td>  
+                                <td>17h</td>
+                                <td>18h</td>
+                                <td>19h</td>
+                                <td>20h</td> 
+                                <td>21h</td>
+                                <td>22h</td>
+                                <td>23h</td>
+                                <td>24h</td>
+                                <td>mín</td><td>máx</td>      
+
+                            </tr>
+                            
+                            <tr class=""> 
+                                    
+                                    {% for NM_FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_4000.FERROVIAS.items %}
+
+                                        <th class="" rowspan=3 COLSPAN=3>
+                                            {{ NM_FERROVIA }}
+                                        </th>
+
+                                        <td class=" coluna_A" >Recebidos</td>
+
+                                        <td class="LINHA"></td>
+
+                                        {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}
+
+                                            {% if ITEM > 0 %}  
+                                                <td class="VERDE LINHA">{{ ITEM }}</td>
+                                            {% else %}
+                                                <td class="LINHA"></td>
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                        </tr>
+
+                                        <tr class="">
+                                        <td class="coluna_A">Saldo</td>
+
+                                        <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_4000.LINHA}}' data-ferrovia='{{NM_FERROVIA}}' onclick="modal_saldo_virada(this)">{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+
+                                        {% for ITEM in DADOS_FERROVIA.SALDO %}
+                                            
+                                            {% if ITEM > 0 %}  
+                                                <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                            {% else %}
+                                                <td class="LINHA"></td>
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                        </tr>
+
+                                        <tr class="" >
+                                            <td class="coluna_A LINHA_GROSSA">Alívio</td>
+
+                                            <td class="LINHA LINHA_GROSSA"></td>
+
+                                            {% for ITEM in DADOS_FERROVIA.ALIVIO %}
+
+                                                {% if ITEM > 0 %}  
+                                                    <td class="VERMELHO LINHA LINHA_GROSSA" >{{ ITEM }}</td>
+                                                {% else %}
+                                                    <td class=" LINHA LINHA_GROSSA"></td>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            </tr>
+
+                                    {% endfor %}
+                                    </tr>        
+                
+                                <tr>
+
+                                    <th colspan=5 class="LINHA_GROSSA">OCUPACAO</th>
+
+                                    {% for ITEM in DADOS.LINHAS.LINHA_4000.OCUPACAO %}                                
+                                        
+                                        {% if ITEM.STATUS == "OCUPADO" %}
+                                            <td class="LINHA_GROSSA">X</td>
+                                        {% else %}
+                                            <td class="LINHA_GROSSA"></td>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                    
+                                </tr> 
+
+                        {% endif %}   
+
+                        <!--#endregion-->
+                
+                {% endfor %}
+
+                <!--#region LINHAS VALONGO-->
+                {% if NM_MARGEM == "DIREITA" %}
+                    
+                    <tr class="PULA_LINHA"><td colspan=31>x</td></tr></tr>
+
+                    <!--#region VALONGO FIPS-->
+                    <tr class="TITULO_DARK">
+
+                        <td colspan=4 rowspan=2></td>
+                        <td colspan=25>LINHA VALONGO FIPS</td>
+                        <td colspan=2 rowspan=2></td>
+
+                    </tr>
+                    
+                    <tr class="TITULO_DARK">
+
+                        <td>sld.</td>
+                        <td>01h</td>
+                        <td>02h</td>
+                        <td>03h</td>  
+                        <td>04h</td>
+                        <td>05h</td>
+                        <td>06h</td>
+                        <td>07h</td>
+                        <td>08h</td>
+                        <td>09h</td>  
+                        <td>10h</td>
+                        <td>11h</td>
+                        <td>12h</td>
+                        <td>13h</td>
+                        <td>14h</td>
+                        <td>15h</td>
+                        <td>16h</td>  
+                        <td>17h</td>
+                        <td>18h</td>
+                        <td>19h</td>
+                        <td>20h</td> 
+                        <td>21h</td>
+                        <td>22h</td>
+                        <td>23h</td>
+                        <td>24h</td>    
+
+                    </tr>
+                                
+                        {% for FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_VALONGO.FERROVIAS.items %}
+                            
+                            <tr>
+                                <th rowspan=3 colspan=3>{{ FERROVIA }}</th>
+                                <td class="coluna_A">Recebidos</td>
+
+                                <td class=""></td>
+
+                                {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}   
+
+                                    {% if ITEM > 0 %}  
+                                        <td class="LINHA VERDE" >{{ ITEM }}</td>
+                                    {% else %}
+                                        <td class="LINHA"></td>
+                                    {% endif %}
+
+                                {% endfor %}
+                                
+                            </tr>
+
+                            <tr>
+                                <td class="coluna_A">Saldo</td>
+
+                                <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_VALONGO.LINHA}}' data-ferrovia='{{FERROVIA}}' onclick="modal_saldo_virada(this)">{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+
+                                {% for ITEM in DADOS_FERROVIA.SALDO %}    
+
+                                    {% if ITEM > 0 %}  
+                                        <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                    {% else %}
+                                        <td class="LINHA"></td>
+                                    {% endif %}
+
+                                {% endfor %}
+                                
+                            </tr>
+
+                            <tr>
+                                <td class="coluna_A LINHA_GROSSA">Alívio</td>
+
+                                <td class="LINHA LINHA_GROSSA"></td>
+                                
+                                {% for ITEM in DADOS_FERROVIA.ALIVIO %}  
+
+                                    {% if ITEM > 0 %}  
+                                        <td class="VERMELHO LINHA LINHA_GROSSA" >{{ ITEM }}</td>
+                                    {% else %}
+                                        <td class="LINHA LINHA_GROSSA"></td>
+                                    {% endif %}
+
+                                {% endfor %}
+                                
+                            </tr>
+                   
+                        {% endfor %}
+
+                    <tr>
+                    <th colspan=5 class="LINHA LINHA_GROSSA">OCUPACAO</th>
+
+                        {% for ITEM in DADOS.LINHAS.LINHA_VALONGO.OCUPACAO %}                                
+                            
+                            {% if ITEM.STATUS == "OCUPADO" %}
+                                <td class=" LINHA_GROSSA">X</td>
+                            {% else %}
+                                <td class=" LINHA_GROSSA"></td>
+                            {% endif %}
+                            
+                        {% endfor %}
+                        
+                    </tr>
+
+                    <!--#endregion-->
+
+                    <tr class="PULA_LINHA"><td colspan=31>x</td></tr>
+                    
+                    <!--#region VALONGO MRS-->
+
+                    <tr class="TITULO_DARK">
+
+                        <td colspan=4 rowspan=2></td>
+                        <td colspan=25>LINHA VALONGO MRS</td>
+                        <td colspan=2 rowspan=2></td>
+
+                    </tr>
+                    
+                    <tr class="TITULO_DARK">
+
+
+                        <td>sld.</td>
+                        <td>01h</td>
+                        <td>02h</td>
+                        <td>03h</td>  
+                        <td>04h</td>
+                        <td>05h</td>
+                        <td>06h</td>
+                        <td>07h</td>
+                        <td>08h</td>
+                        <td>09h</td>  
+                        <td>10h</td>
+                        <td>11h</td>
+                        <td>12h</td>
+                        <td>13h</td>
+                        <td>14h</td>
+                        <td>15h</td>
+                        <td>16h</td>  
+                        <td>17h</td>
+                        <td>18h</td>
+                        <td>19h</td>
+                        <td>20h</td> 
+                        <td>21h</td>
+                        <td>22h</td>
+                        <td>23h</td>
+                        <td>24h</td>   
+                        
+                    </tr>
+
+                    {% for FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_VALONGO_MRS.FERROVIAS.items %}
                         <tr>
-                            <td colspan=5></td>
+
+                            <th rowspan=3 colspan=3>{{ FERROVIA }}</th>
+                            <td class="coluna_A">Recebidos</td>
+                            <td class="LINHA"></td>
+
+                            {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}   
+
+                                {% if ITEM > 0 %}  
+                                    <td class="VERDE" >{{ ITEM }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </tr>
+
+                        <tr>
+                            <td class="coluna_A">Saldos</td>
+                            <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_VALONGO_MRS.LINHA}}' data-ferrovia='{{FERROVIA}}' onclick="modal_saldo_virada(this)" >{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+                            
+                            {% for ITEM in DADOS_FERROVIA.SALDO %}    
+
+                                {% if ITEM > 0 %}  
+                                    <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                {% else %}
+                                    <td class="LINHA"></td>
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </tr>
+
+                        <tr>
+                            <td class="coluna_A LINHA_GROSSA">Alívio</td>
+                            <td class="LINHA LINHA_GROSSA"></td>
+                            {% for ITEM in DADOS_FERROVIA.ALIVIO %}     
+
+                                {% if ITEM > 0 %}  
+                                    <td class="VERMELHO LINHA_GROSSA LINHA" >{{ ITEM }}</td>
+                                {% else %}
+                                    <td  class="LINHA_GROSSA LINHA"></td>
+                                {% endif %}
+
+                            {% endfor %}
+                            
+                        </tr>
+                        <tr>
+                            <th colspan=5 class="LINHA LINHA_GROSSA">OCUPACAO</th>
+                                {% for ITEM in DADOS.LINHAS.LINHA_VALONGO_MRS.OCUPACAO %}                                
+                                        
+                                    {% if ITEM.STATUS == "OCUPADO" %}
+                                        <td class=" LINHA_GROSSA">X</td>
+                                    {% else %}
+                                        <td class=" LINHA_GROSSA"></td>
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                                
+                            </tr>
+                        
+
+                    
+                    {% endfor %}
+
+                    <tr>
+
+                    <!--#endregion-->
+                
+                    {% endif %}
+                <!--#endregion-->
+                    
+                <!--#region LINHAS MARGEM ESQUERDA-->  
+                {% if NM_MARGEM == "ESQUERDA" %}
+                        
+                        <!--#region LINHA 1-->
+                        <tr class="PULA_LINHA"><td colspan=31>x</td></tr> 
+                        <tr class="TITULO_DARK">
+
+                            <td colspan=4 rowspan=2></td>
+                            <td colspan=25>LINHA 1</td>
+                            <td colspan=2 rowspan=2></td>
+    
+                        </tr>
+                        
+                        <tr class="TITULO_DARK">
+    
+                            <td>sld.</td>
                             <td>01h</td>
                             <td>02h</td>
                             <td>03h</td>  
@@ -47,60 +618,362 @@
                             <td>21h</td>
                             <td>22h</td>
                             <td>23h</td>
-                            <td>24h</td>  
+                            <td>24h</td>    
+    
                         </tr>
-                    </thead>
-                    <tbody>    
-                        {% for NM_MARGEM, DADOS_MARGEM in DADOS.DESCARGAS.items %} 
-                            {% for NM_PATIO, DADOS_PATIO in DADOS_MARGEM.items %} 
-                                {% for DADOS_TERMINAL in DADOS_PATIO %} 
-                                    {% for FERROVIA, PRODUTOS in DADOS_TERMINAL.DESCARGAS.items %}
-                                        {% for PRODUTO, LINHAS in PRODUTOS.items %}    
-                                        <tr>
-                                            <th> {{NM_MARGEM}}   </th>
-                                            <th> {{NM_PATIO}}    </th>
-                                            <td> {{DADOS_TERMINAL.TERMINAL}} </td>
-                                            <td> {{FERROVIA}} </td>
-                                            <td> {{PRODUTO}} </td>
-
-                                            {% for CARREGAMENTO in LINHAS.CARREGAMENTO %}
-                                            <td>
-                                                {% if CARREGAMENTO != 0%}
-                                                    {{ CARREGAMENTO }}
-                                                {% endif%}
-                                            </td>
-                                        {% endfor %}
-
-                                        </tr> 
-                                        {% endfor %} 
+                                    
+                            {% for FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_1.FERROVIAS.items %}
+                                
+                                <tr>
+                                    <th rowspan=3 colspan=3>{{ FERROVIA }}</th>
+                                    <td class="coluna_A">Recebidos</td>
+    
+                                    <td class=""></td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}   
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="LINHA VERDE" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
                                     {% endfor %}
-                                {% endfor %}     
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A">Saldo</td>
+    
+                                    <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_1.LINHA}}' data-ferrovia='{{FERROVIA}}' onclick="modal_saldo_virada(this)">{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.SALDO %}    
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A LINHA_GROSSA">Alívio</td>
+    
+                                    <td class="LINHA LINHA_GROSSA"></td>
+                                    
+                                    {% for ITEM in DADOS_FERROVIA.ALIVIO %}  
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="VERMELHO LINHA LINHA_GROSSA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA LINHA_GROSSA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+                       
                             {% endfor %}
-                        {% endfor %}
+    
+                        <tr>
+                        <th colspan=5 class="LINHA LINHA_GROSSA">OCUPACAO</th>
+    
+                            {% for ITEM in DADOS.LINHAS.LINHA_1.OCUPACAO %}                                
+                                    
+                                {% if ITEM.STATUS == "OCUPADO" %}
+                                    <td class=" LINHA_GROSSA">X</td>
+                                {% else %}
+                                    <td class=" LINHA_GROSSA"></td>
+                                {% endif %}
+                                
+                            {% endfor %}
+                            
+                        </tr>
+    
+                        <!--#endregion-->
 
-                    </tbody>        
-                </table>
-                
-            
+                        <!--#region LINHA 2-->
+                        <tr class="PULA_LINHA"><td colspan=31>x</td></tr> 
+                        <tr class="TITULO_DARK">
 
+                            <td colspan=4 rowspan=2></td>
+                            <td colspan=25>LINHA 2</td>
+                            <td colspan=2 rowspan=2></td>
+    
+                        </tr>
+                        
+                        <tr class="TITULO_DARK">
+    
+                            <td>sld.</td>
+                            <td>01h</td>
+                            <td>02h</td>
+                            <td>03h</td>  
+                            <td>04h</td>
+                            <td>05h</td>
+                            <td>06h</td>
+                            <td>07h</td>
+                            <td>08h</td>
+                            <td>09h</td>  
+                            <td>10h</td>
+                            <td>11h</td>
+                            <td>12h</td>
+                            <td>13h</td>
+                            <td>14h</td>
+                            <td>15h</td>
+                            <td>16h</td>  
+                            <td>17h</td>
+                            <td>18h</td>
+                            <td>19h</td>
+                            <td>20h</td> 
+                            <td>21h</td>
+                            <td>22h</td>
+                            <td>23h</td>
+                            <td>24h</td>    
+    
+                        </tr>
+                                    
+                            {% for FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_2.FERROVIAS.items %}
+                                
+                                <tr>
+                                    <th rowspan=3 colspan=3>{{ FERROVIA }}</th>
+                                    <td class="coluna_A">Recebidos</td>
+    
+                                    <td class=""></td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}   
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="LINHA VERDE" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A">Saldo</td>
+    
+                                    <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_2.LINHA}}' data-ferrovia='{{FERROVIA}}' onclick="modal_saldo_virada(this)">{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.SALDO %}    
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A LINHA_GROSSA">Alívio</td>
+    
+                                    <td class="LINHA LINHA_GROSSA"></td>
+                                    
+                                    {% for ITEM in DADOS_FERROVIA.ALIVIO %}  
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="VERMELHO LINHA LINHA_GROSSA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA LINHA_GROSSA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+                       
+                            {% endfor %}
+    
+                        <tr>
+                        <th colspan=5 class="LINHA LINHA_GROSSA">OCUPACAO</th>
+    
+                            {% for ITEM in DADOS.LINHAS.LINHA_2.OCUPACAO %}                                
+                                    
+                                {% if ITEM.STATUS == "OCUPADO" %}
+                                    <td class=" LINHA_GROSSA">X</td>
+                                {% else %}
+                                    <td class=" LINHA_GROSSA"></td>
+                                {% endif %}
+                                
+                            {% endfor %}
+                            
+                        </tr>
+    
+                        <!--#endregion-->
+
+                        <!--#region LINHA 3-->
+                        <tr class="PULA_LINHA"><td colspan=31>x</td></tr> 
+                        <tr class="TITULO_DARK">
+
+                            <td colspan=4 rowspan=2></td>
+                            <td colspan=25>LINHA 3</td>
+                            <td colspan=2 rowspan=2></td>
+    
+                        </tr>
+                        
+                        <tr class="TITULO_DARK">
+    
+                            <td>sld.</td>
+                            <td>01h</td>
+                            <td>02h</td>
+                            <td>03h</td>  
+                            <td>04h</td>
+                            <td>05h</td>
+                            <td>06h</td>
+                            <td>07h</td>
+                            <td>08h</td>
+                            <td>09h</td>  
+                            <td>10h</td>
+                            <td>11h</td>
+                            <td>12h</td>
+                            <td>13h</td>
+                            <td>14h</td>
+                            <td>15h</td>
+                            <td>16h</td>  
+                            <td>17h</td>
+                            <td>18h</td>
+                            <td>19h</td>
+                            <td>20h</td> 
+                            <td>21h</td>
+                            <td>22h</td>
+                            <td>23h</td>
+                            <td>24h</td>    
+    
+                        </tr>
+                                    
+                            {% for FERROVIA, DADOS_FERROVIA in DADOS.LINHAS.LINHA_3.FERROVIAS.items %}
+                                
+                                <tr>
+                                    <th rowspan=3 colspan=3>{{ FERROVIA }}</th>
+                                    <td class="coluna_A">Recebidos</td>
+    
+                                    <td class=""></td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.RECEBIDOS %}   
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="LINHA VERDE" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A">Saldo</td>
+    
+                                    <td class="LINHA" data-acao="ABRIR" data-linha='{{DADOS.LINHAS.LINHA_3.LINHA}}' data-ferrovia='{{FERROVIA}}' onclick="modal_saldo_virada(this)">{{ DADOS_FERROVIA.SALDO_DE_VIRADA_VAZIOS.VAGOES }}</td>
+    
+                                    {% for ITEM in DADOS_FERROVIA.SALDO %}    
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="AMARELO LINHA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+    
+                                <tr>
+                                    <td class="coluna_A LINHA_GROSSA">Alívio</td>
+    
+                                    <td class="LINHA LINHA_GROSSA"></td>
+                                    
+                                    {% for ITEM in DADOS_FERROVIA.ALIVIO %}  
+    
+                                        {% if ITEM > 0 %}  
+                                            <td class="VERMELHO LINHA LINHA_GROSSA" >{{ ITEM }}</td>
+                                        {% else %}
+                                            <td class="LINHA LINHA_GROSSA"></td>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                    
+                                </tr>
+                        
+                            {% endfor %}
+    
+                        <tr>
+                        <th colspan=5 class="LINHA LINHA_GROSSA">OCUPACAO</th>
+    
+                            {% for ITEM in DADOS.LINHAS.LINHA_3.OCUPACAO %}                                
+                                    
+                                {% if ITEM.STATUS == "OCUPADO" %}
+                                    <td class=" LINHA_GROSSA">X</td>
+                                {% else %}
+                                    <td class=" LINHA_GROSSA"></td>
+                                {% endif %}
+                                
+                            {% endfor %}
+                            
+                        </tr>
+    
+                        <!--#endregion-->
+
+                {% endif %}
+                <!--#endregion-->
             
+            {% endfor %}
+            
+            </table>
 
         </div>
+
         {% endfor %}
 
-        
-        
     {% else %}
 
     <div class="SEM_NAVEGACAO">
+
         <img src="{% static 'imagens/caixa-vazia.png' %}" >
         <h3>Não há descargas disponíveis no momento.</h3>
+
     </div>
     
 {% endif %}
 
 
 </div>
+
+<script>
+document.body.addEventListener('keypress', function(e) {
+    
+    if ((editando_celula === true) && (e.which === 13)){
+        
+        $.ajax({
+            url: '{% url 'programacao_subida' %} ',
+            type: 'POST',
+            data: {
+                'ACAO'      : "EDITAR_SALDO_VIRADA_TERMINAL",
+                'TERMINAL'  :  TERMINAL,      
+                'FERROVIA'  :  FERROVIA,    
+                'SEGMENTO'  :  SEGMENTO,
+                'NOVO_VALOR':  Number(tbEdicao.value),
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(response) {
+
+                location.reload();
+
+            },
+            error: function(xhr) {
+                alert("ERRO")
+            }
+        });
+    }
+})
+</script>
 
 
 
