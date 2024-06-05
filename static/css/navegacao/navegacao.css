@@ -103,3 +103,19 @@ body{
 {
     border-right: 2px dashed darkgrey;
 }
+
+
+@media screen and (orientation: portrait) {
+    .conteudo__navegacao{
+        width:     100vw;
+        height:     97vh;
+        margin-top:  3vh;  
+        display:    flex;
+        overflow-x: auto;
+    }
+
+    .um__dia .uma__descarga:nth-child(2) {
+        margin-top: 3vh;
+    }
+    
+}

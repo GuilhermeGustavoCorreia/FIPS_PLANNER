@@ -51,7 +51,7 @@ def PAGINA_COMPLETA():
             for TREM in TRENS_TERMINAL: 
               
                 if CHEGADAS[INFOS_TERMINAL["MARGEM"]][TREM[0]] == 0:
-                    CHEGADAS[INFOS_TERMINAL["MARGEM"]][TREM[0]] = TREM[1]
+                    CHEGADAS[INFOS_TERMINAL["MARGEM"]][TREM[0]] = TREM[1][0]
 
         
         return CHEGADAS

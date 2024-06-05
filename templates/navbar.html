@@ -38,6 +38,7 @@
         <li class="item__do__menu"><a>  Operação  </a>
           
           <ul class="submenu">
+            <li class="submenu-lista"><a class="subitem"  href="{% url 'previsao_subida' %}">Previsão de Subida    </a></li>
             <li class="submenu-lista"><a class="subitem"  href="{% url 'programacao_subida' %}">Programação de Subida </a></li>
             <li class="submenu-lista"><a class="subitem">Ocupação de Linhas    </a></li>
           </ul>
@@ -64,8 +65,10 @@
     <li><a class="menu__usuario__ancora" href="" >Ver todos os usuários </a></li>
     <li><a class="menu__usuario__ancora" href="{% url 'configuracao' %}" >Configurações         </a></li>
     <li><form id="logout-form" action="{% url 'logout' %}" method="post">
+      
       {% csrf_token %}
       <a class="menu__usuario__ancora" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+  
   </form></li>
     
 </ul>

@@ -53,13 +53,14 @@ def VALIDAR_DIVISAO_PREVISAO(ID_TREM, TREM_01, TREM_02):
         EXISTE_TREM = Trem.objects.filter(
             ~Q(pk=ID_TREM),  # pk diferente de ID_TREM
             terminal=TREM["terminal"],
-            previsao=TREM["previsao"]
+            previsao=TREM["previsao"],
+            mercadoria=TREM["mercadoria"]
         ).exists()
 
         #2.
         if EXISTE_TREM:
             
-            FILTO = list(Trem.objects.filter(~Q(pk=ID_TREM), terminal=TREM["terminal"], previsao=TREM["previsao"]))[0]
+            FILTO = list(Trem.objects.filter(~Q(pk=ID_TREM), terminal=TREM["terminal"], previsao=TREM["previsao"], mercadoria=TREM["mercadoria"]))[0]
 
             VALIDACAO["STATUS"]    = False
             VALIDACAO["DESCRICAO"] = f"O Trem { FILTO } esta já ocupando esta chegada."                    
@@ -114,7 +115,8 @@ def VALIDAR_EDICAO_PREVISAO(TREM, ID_TREM):
     EXISTE_TREM = Trem.objects.filter(
         ~Q(pk=ID_TREM),  # pk diferente de ID_TREM
         terminal=TREM["terminal"],
-        previsao=TREM["previsao"]
+        previsao=TREM["previsao"],
+        mercadoria=TREM["mercadoria"]
     ).exists()
     
     #2.
@@ -166,12 +168,12 @@ def VALIDAR_NOVA_PREVISAO(TREM):
         VALIDACAO["STATUS"]    = False
         VALIDACAO["DESCRICAO"] = "Não é possível inserir um trem neste horário específico." 
  
-    EXISTE_TREM = Trem.objects.filter(terminal=TREM["terminal"], previsao=TREM["previsao"]).exists()
+    EXISTE_TREM = Trem.objects.filter(terminal=TREM["terminal"], previsao=TREM["previsao"], mercadoria=TREM["mercadoria"]).exists()
     
     #2.
     if EXISTE_TREM:
         
-        FILTO = list(Trem.objects.filter(terminal=TREM["terminal"], previsao=TREM["previsao"]))[0]
+        FILTO = list(Trem.objects.filter(terminal=TREM["terminal"], previsao=TREM["previsao"],  mercadoria=TREM["mercadoria"]))[0]
 
         VALIDACAO["STATUS"]    = False
         VALIDACAO["DESCRICAO"] = f"O Trem { FILTO } esta já ocupando esta chegada."                    

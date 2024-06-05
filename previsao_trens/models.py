@@ -11,10 +11,11 @@ class Usuario(AbstractUser):
     USERNAME_FIELD = 'username'  # Define o campo usado para fazer login
     
     # REQUIRED_FIELDS deve conter todos os campos adicionais necessários além de username
-    REQUIRED_FIELDS = ['first_name', 'last_name']  # Adicione 'nome' aos campos necessários
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'foto']  # Adicione 'nome' aos campos necessários
+
 
     def __str__(self):
-        return self.first_name if self.username else self.username  # Retorna o nome do usuário ao chamar str(objeto)
+        return  self.username if self.first_name else self.first_name  # Retorna o nome do usuário ao chamar str(objeto)
     
 class Trem(models.Model):
 
@@ -54,3 +55,23 @@ class Restricao(models.Model):
         return (f"{ self.terminal } - { self.motivo }")
 
 
+
+class TremVazio(models.Model):
+
+    prefixo      = models.CharField(max_length=100)
+    ferrovia     = models.CharField(max_length=50, choices=[('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')])
+    loco_1       = models.CharField(max_length=100)
+    loco_2       = models.CharField(max_length=100, blank=True, null=True)
+    loco_3       = models.CharField(max_length=100, blank=True, null=True)
+    loco_4       = models.CharField(max_length=100, blank=True, null=True)
+    loco_5       = models.CharField(max_length=100, blank=True, null=True)
+    previsao     = models.DateTimeField()
+    eot          = models.CharField(max_length=100)
+    vagoes       = models.IntegerField()
+    segmento_01  = models.CharField(max_length=50)
+    segmento_02  = models.CharField(max_length=50, blank=True, null=True)
+    segmento_03  = models.CharField(max_length=50, blank=True, null=True)
+    margem       = models.CharField(max_length=100,choices=[('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')])
+
+    def __str__(self):
+        return self.prefixo

@@ -7,7 +7,7 @@
 <script src="{% static 'javascript/RESTRICAO/main.js' %}" defer></script>
 
 <div class="conteudo__navegacao">  
-    
+    {% if RELATORIO %}
     <table>
 
         <thead>
@@ -226,7 +226,7 @@
         
         </thead>
         
-        {% for NOME_TERMINAL, DADOS in RELATORIO.items %}
+        {% for NOME_TERMINAL, DADOS in RELATORIO.PRINCIPAL.items %}
            
                 {% for NOME_FERROVIA, DADOS_FERROVIA in DADOS.items %}
                     
@@ -482,6 +482,12 @@
     
 
     </table>
+    {% else %}
+    <div class="SEM_NAVEGACAO">
+        <img src="{% static 'imagens/caixa-vazia.png' %}" >
+        <h3>Não há dados para gerar o relatório.</h3>
+    </div>
+    {% endif %}
 </div>
 
 <script>

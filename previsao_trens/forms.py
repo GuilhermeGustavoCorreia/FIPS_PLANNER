@@ -1,5 +1,5 @@
 from django import forms
-from .models import Trem, Restricao
+from .models import Trem, Restricao, TremVazio
 from django.forms.widgets import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
 
 import os
@@ -25,6 +25,7 @@ class TremForm(forms.ModelForm):
     class Meta:
         model = Trem
         fields = '__all__'
+        
         widgets = {
 
             'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
@@ -44,17 +45,6 @@ class TremForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TremForm, self).__init__(*args, **kwargs)
-    #     # Definir valores padrões
-    #     self.initial['prefixo'] = 'U36'
-    #     self.initial['os'] = 1234567
-    #     self.initial['origem'] = 'ZBL'
-    #     self.initial['local'] = 'ZEM'
-    #     self.initial['destino'] = 'PSN'
-    #     self.initial['mercadoria'] = 'ACUCAR'
-    #     self.initial['terminal'] = 'TAC ACUCAR'
-    #     self.initial['vagoes'] = 60
-    #     self.initial['previsao'] = '2024-04-24T12:00'
-    #     self.initial['comentario'] = 'ESTE É UM TRES DE DESTE'
         self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
 
         self.fields['posicao_previsao'].required = False 
@@ -66,8 +56,8 @@ class RestricaoForm(forms.ModelForm):
 
     class Meta:
         
-        model = Restricao
-        fields = '__all__'
+        model   = Restricao
+        fields  = '__all__'
         widgets = {
 
             'mercadoria':   Select(choices=[(k, k) for k in MERCADORIAS.keys()],    attrs={'class': 'INPUT INPUT_M', 'onchange': 'updateTerminals()'}),
@@ -83,21 +73,41 @@ class RestricaoForm(forms.ModelForm):
 
         }
 
-    #def __init__(self, *args, **kwargs):
-
-        # super(RestricaoForm, self).__init__(*args, **kwargs)
-        # # Definir valores padrões
-        # self.initial['mercadoria']  = 'ACUCAR'
-        # self.initial['terminal']    = 'TAC ACUCAR'
-
-        # self.initial['comeca_em']   = '2024-04-26T12:00'
-        # self.initial['termina_em']  = '2024-04-27T12:00'
-
-        # self.initial['porcentagem'] = 60
-
-        # self.initial['motivo']      = 'MT'
-        # self.initial['comentario']  = 'Manutenção'
-
-
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+
+class TremVazioForm(forms.ModelForm):
+
+    class Meta:
+
+        model   = TremVazio
+        fields  = '__all__'
+        widgets = {
+
+            'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
+            'vagoes':       NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
+            'eot':          TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'EOT'}),
+            
+            'ferrovia':     RadioSelect(attrs={'name': 'ferrovia'}),
+
+            'loco_1':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 01'}),
+            'loco_2':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 02'}),
+            'loco_3':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 03'}),
+            'loco_4':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 04'}),
+            'loco_5':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 05'}),
+
+            'segmento_01':   Select(choices=[("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
+            'segmento_02':   Select(choices=[("", ""), ("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
+            'segmento_03':   Select(choices=[("", ""), ("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
+
+            'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}, format='%Y-%m-%dT%H:%M'),
+            'margem':       RadioSelect(attrs={'name': 'margem'})
+        }
+
+
+    def __init__(self, *args, **kwargs):
+        
+        super(TremVazioForm, self).__init__(*args, **kwargs)
+        self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
+        self.fields['margem'].choices   = [('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')]
+
