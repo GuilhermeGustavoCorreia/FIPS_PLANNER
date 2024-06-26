@@ -1,0 +1,44 @@
+{   
+    "JUNTAR":{
+
+        "ADM" : {
+            "TIPO":         "JUNTAR",
+            "ENTRADAS":    ["MOEGA X", "MOEGA V"],
+            "SAIDA":    {
+                "TERMINAL": "ADM", 
+                "MARGEM":   "DIREITA",
+                "PATIO":    "PCX",
+                "SEGMENTO": "GRAO",
+                "SATURACAO_VAZIO": {"RUMO": {"MIN": 25, "MAX": 25 }, "MRS": { "MIN": 25, "MAX": 25 }, "VLI": { "MIN": 25, "MAX": 25 }},
+                "FERROVIA": ["RUMO",    "MRS",  "VLI" ],
+                "PRODUTOS": ["FARELO",  "MILHO","SOJA"]
+            }
+        }
+
+    },
+
+    "REMOVER": [       
+        
+        "SBR", 
+        "TERLOC", 
+        "TIPLAM", 
+        "TIPLAM ACUCAR", 
+        "TIPLAM FERTILIZANTES", 
+        "DPW SUZANO", 
+        "DPW GRAOS", 
+        "DPW CONTEINER", 
+        "TERLOC", 
+        "ECOPORTO",
+        "TERLOC FERTILIZANTES",
+        "TEC",
+        "TEC ACUCAR",
+        "STS-53",
+        "T31"
+
+    ],
+    "DESCONSIDERAR": {
+        "OUTORGA_SALDO"   : ["ADM"],
+        "VIZUALICACAO"    : ["MOEGA X", "MOEGA V"],
+        "CALCULO_SUBIDA"  : ["MOEGA X", "MOEGA V"]
+    }
+}

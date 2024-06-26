@@ -35,12 +35,12 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 1,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "FARELO": 10,
-                "MILHO": 0,
-                "SOJA": 16
+                "FARELO": 6,
+                "MILHO": 8,
+                "SOJA": 8
             },
             "MRS": {
                 "FARELO": 0,
@@ -95,7 +95,7 @@
             "RUMO": {
                 "FARELO": 8,
                 "MILHO": 8,
-                "SOJA": 6
+                "SOJA": 8
             },
             "MRS": {
                 "FARELO": 8,
@@ -145,7 +145,7 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 0,
@@ -198,16 +198,16 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "ACUCAR": 0
+                "ACUCAR": 4
             },
             "MRS": {
-                "ACUCAR": 0
+                "ACUCAR": 6
             },
             "VLI": {
-                "ACUCAR": 0
+                "ACUCAR": 6
             }
         }
     },
@@ -247,7 +247,7 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 0,
@@ -315,7 +315,7 @@
                 "SOJA": 10
             },
             "VLI": {
-                "FARELO": 0,
+                "FARELO": 13,
                 "MILHO": 0,
                 "SOJA": 0
             }
@@ -360,19 +360,19 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "FARELO": 5,
+                "FARELO": 7,
                 "MILHO": 0,
                 "SOJA": 10
             },
             "MRS": {
                 "FARELO": 0,
                 "MILHO": 0,
-                "SOJA": 9
+                "SOJA": 10
             },
             "VLI": {
-                "FARELO": 0,
+                "FARELO": 10,
                 "MILHO": 0,
-                "SOJA": 0
+                "SOJA": 10
             }
         }
     },
@@ -470,7 +470,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "FARELO": 4,
+                "FARELO": 7,
                 "MILHO": 0,
                 "SOJA": 7
             },
@@ -522,12 +522,12 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 0,
                 "MILHO": 0,
-                "SOJA": 8
+                "SOJA": 4
             },
             "MRS": {
                 "FARELO": 0,
@@ -582,7 +582,7 @@
             "RUMO": {
                 "FARELO": 0,
                 "MILHO": 10,
-                "SOJA": 12
+                "SOJA": 11
             },
             "MRS": {
                 "FARELO": 0,
@@ -633,7 +633,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "ACUCAR": 9
+                "ACUCAR": 5
             },
             "MRS": {
                 "ACUCAR": 6
@@ -689,7 +689,7 @@
             "MRS": {
                 "FARELO": 10,
                 "MILHO": 10,
-                "SOJA": 10
+                "SOJA": 5
             },
             "VLI": {
                 "FARELO": 10,
@@ -711,16 +711,16 @@
         "SATURACAO": 50,
         "SATURACAO_VAZIO": {
             "RUMO": {
-                "MIN": 20,
-                "MAX": 40
+                "MIN": 35,
+                "MAX": 60
             },
             "MRS": {
-                "MIN": 20,
-                "MAX": 40
+                "MIN": 35,
+                "MAX": 60
             },
             "VLI": {
-                "MIN": 20,
-                "MAX": 40
+                "MIN": 35,
+                "MAX": 60
             }
         },
         "ALIVIO": 30,
@@ -738,10 +738,10 @@
                 "ACUCAR": 5
             },
             "MRS": {
-                "ACUCAR": 10
+                "ACUCAR": 4
             },
             "VLI": {
-                "ACUCAR": 10
+                "ACUCAR": 4
             }
         }
     },
@@ -781,12 +781,12 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 0,
                 "MILHO": 0,
-                "SOJA": 2
+                "SOJA": 3
             },
             "MRS": {
                 "FARELO": 0,
@@ -841,7 +841,7 @@
             "RUMO": {
                 "KCL": 5,
                 "UREIA": 0,
-                "OUTROS": 0
+                "OUTROS": 5
             },
             "MRS": {
                 "KCL": 0,
@@ -888,7 +888,7 @@
         "FERROVIA": [
             "MRS"
         ],
-        "SLA": 2,
+        "SLA": 3,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "CONTEINER": 0
@@ -1289,13 +1289,13 @@
             "MRS",
             "VLI"
         ],
-        "SLA": 2,
+        "SLA": 1,
         "PRODUTIVIDADE": {
             "RUMO": {
                 "CONTEINER": 0
             },
             "MRS": {
-                "CONTEINER": 0
+                "CONTEINER": 6
             },
             "VLI": {
                 "CONTEINER": 0
@@ -1498,7 +1498,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "KCL": 0,
+                "KCL": 2,
                 "UREIA": 0,
                 "OUTROS": 1
             },

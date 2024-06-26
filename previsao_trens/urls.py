@@ -21,12 +21,10 @@ urlpatterns = [
     path('dividir_trem/<int:trem_id>/',                views.dividir_trem,        name="dividir_trem"),
     path('upload/',                                    views.upload_file_view,    name='upload_file'),
 
-    path('configuracao/', views.configuracao,        name="configuracao"),
-    
-    path('detalhe/', views.detalhe,        name="detalhe"),
+    path('configuracao/',   views.configuracao,        name="configuracao"),
+    path('detalhe/',        views.detalhe,             name="detalhe"),
 
     path('programacao_subida/',                     views.programacao_subida,     name="programacao_subida"),
     path('previsao_subida/',                        views.previsao_subida,        name="previsao_subida"),
-    
     path('editar_trem_subida/<int:id>/',            views.editar_trem_subida,     name="editar_trem_subida"),
 ]

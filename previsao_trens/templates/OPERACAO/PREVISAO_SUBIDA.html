@@ -5,49 +5,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/criar_trem/tabela_previsao.css' %}"> 
 
-<dialog class="modal_trem_vazio">
-    
-    <h2 id="TITULO_MODAL"></h2>
 
-    <form method="POST"  action='{% url 'previsao_subida' %}'>
-        
-        {% csrf_token %}
-        
-        <div>
-
-            <p>*Informações do Trem</p> 
-            {{ form.prefixo     }}
-            {{ form.vagoes      }}
-            {{ form.eot         }}</br>
-
-            <div class="FERROVIAS">{{ form.ferrovia }}</div>  
-
-            <p>*Locomotivas</p>
-            {{ form.loco_1     }}
-            {{ form.loco_2     }}
-            {{ form.loco_3     }}</br>
-            {{ form.loco_4     }}
-            {{ form.loco_5     }}
-
-            <p>*Conteúdo</p>
-            {{ form.segmento_01     }}
-            {{ form.segmento_02     }}
-            {{ form.segmento_03     }}
-
-            <p>*Origem</p>
-            {{ form.previsao   }}
-            {{ form.margem     }}
-                              
-        </div>
-
-        <input id="ACAO"    type="hidden" name="ACAO"    value="">
-        <input id="ID_TREM" type="hidden" name="ID_TREM" value="">
-
-        <button type="submit" class="BOTAO VERDE">Salvar</button>
-
-    </form>
-
-</dialog>
 
 
 <div class="CONTEUDO__PADRAO">  
@@ -60,144 +18,141 @@
 
     {% if TABELAS %}
 
-        {% for MARGEM, PREVISAO in TABELAS.items %}
+        <!--#region HEADER TABELA-->
 
-            <h2>{{ MARGEM }}</h2>
+        <table id="{{DIA_LOGISTICO}}" class="LISTA__TRENS" >
+                    
+            <thead>
 
-            <table id="{{DIA_LOGISTICO}}" class="LISTA__TRENS" >
+                <th class="COL_PP">                         </th>
+                <th class="COL_PP">MARGEM                   </th>
+                <th class="COL_PP">PREF                     </th>
+                <th class="COL_PP">FERR                     </th>
+                <th class="COL_M">PREVISÃO                  </th>
+                <th class="COL_P">EOT                       </th>
+
+                <th class="COL_PP">GRAOS                    </th>
+                <th class="COL_PP">FERTI                    </th>
+                <th class="COL_PP">CEL.                     </th>
+                <th class="COL_PP">ACR.                     </th>
+                <th class="COL_PP">CONT                     </th>
+
+                <th colspan=5>LOCOMOTIVAS                  </th>
                 
-                <thead>
 
-                    <th class="COL_PP">                         </th>
-                    <th class="COL_PP">PREF                     </th>
-                    <th class="COL_PP">FERR                     </th>
-                    <th class="COL_PP">VGS                      </th>
-                    <th class="COL_M">PREVISÃO                  </th>
-                    <th class="COL_M" colspan=3>SEGMENTOS       </th>
-                    <th  colspan=5>LOCOMOTIVAS                  </th>
-                    <th class="COL_P">EOT                       </th>
+                <th  colspan=2></th>
 
-                    <th  colspan=2></th>
+            </thead>
+            
+            <tbody>
 
-                </thead>
-                
-                <tbody>
-
-                    {% for TREM in PREVISAO %}
-                        
-                        <tr>
-                            <td>{{ forloop.counter0 }}                  </td>
-                            <td>{{TREM.prefixo}}                        </td>
-                            <td>{{TREM.ferrovia}}                       </td>
-                            <td>{{TREM.vagoes}}                         </td>
-                            
-                            <td>{{TREM.previsao | date:"H:i d/m/Y" }}   </td>
-                            
-                            <td  class="letra_pqn">
-                                {{TREM.segmento_01}} 
-                            </td>
-                            
-                            <td class="letra_pqn">
-                                
-                                {% if TREM.segmento_02 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.segmento_02}}  
-                                {% endif %}
-                                
-                            </td>
-
-                            <td class="letra_pqn">
-
-                                {% if TREM.segmento_03 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.segmento_03}}  
-                                {% endif %}
-                                
-                            </td>
-
-                            <td class="COL_PP letra_pqn">
-                                {{TREM.loco_1}}                         
-                            </td>
-
-                            <td class="COL_PP letra_pqn">
-
-                                {% if TREM.loco_2 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.loco_2}}  
-                                {% endif %}
-
-                            </td>
-
-                            <td class="COL_PP letra_pqn">
-                                {% if TREM.loco_3 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.loco_3}}  
-                                {% endif %}                       
-                            </td>
-
-                            <td class="COL_PP letra_pqn">
-                                {% if TREM.loco_4 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.loco_4}}  
-                                {% endif %}                        
-                            </td>
-
-                            <td class="COL_PP letra_pqn">
-                                {% if TREM.loco_5 == None %}
-                                    --   
-                                {% else %}
-                                    {{TREM.loco_5}}  
-                                {% endif %}                         
-                            </td>
-
-                            <td>{{TREM.eot}}</td>
-
-                            <td>
-                                <svg class="ICONE ICONE_DELETAR" id="Layer_1" data-name="Layer 1" data-id="{{ TREM.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88" onclick="EXCLUIR_TREM({{ TREM.id }})">
-                                    <title>Excluir</title>
-                                    <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
-                                </svg>  
-                            </td>
-                            <td> 
-                                                                       
-                                <svg  version="1.1" id="Capa_1"  class="ICONE ICONE_EDITAR" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve"  onclick="TOOGLE_FORM('EDITAR_TREM', {{ TREM.id }})">\
-                                    <g>
-                                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
-                                            c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
-                                            c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
-                                            C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
-                                            L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
-                                            c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
-                                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
-                                            c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
-                                            s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
-                                            c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
-                                    </g>
-                                </svg>
-                            
-                            </td>
-                        </tr>
-
-                    {% endfor %}
-
-                </tbody>
-            </table>
-
-        {% endfor %}
-        {% else %}
-
-        <div class="SEM_NAVEGACAO">
-            <img src="{% static 'imagens/caixa-vazia.png' %}" >
-            <h3>Não há previsões.</h3>
-        </div>
+        <!--#endregion-->
         
-    {% endif %}
+        {% for TREM in TABELAS %}
+        <tr>
+            <td>{{ forloop.counter0 }}                  </td>
+            <td>
+                {% if TREM.margem == None %}
+                    --   
+                {% else %}
+                    {{TREM.margem}}  
+                {% endif %}    
+            </td>
+            <td>{{TREM.prefixo}}                        </td>
+            <td>{{TREM.ferrovia}}                       </td>
+            <td>{{TREM.previsao | date:"H:i d/m/Y" }}   </td>
+            <td>{{TREM.eot}}                            </td>
+            <td>
+                {% if TREM.qt_graos == None %}
+                    --   
+                {% else %}
+                    {{TREM.qt_graos}}  
+                {% endif %}    
+            </td>
+            <td>
+                {% if TREM.qt_ferti == None %}
+                    --   
+                {% else %}
+                    {{TREM.qt_ferti}}  
+                {% endif %}                     
+            </td>
+            <td>
+                {% if TREM.qt_celul == None %}
+                    --   
+                {% else %}
+                    {{TREM.qt_celul}}  
+                {% endif %}                      
+            </td>
+            <td>
+                {% if TREM.qt_acuca == None %}
+                    --   
+                {% else %}
+                    {{TREM.qt_acuca}}  
+                {% endif %}                       
+            </td>
+            <td>
+                {% if TREM.qt_contei == None %}
+                    --   
+                {% else %}
+                    {{TREM.qt_contei}}  
+                {% endif %}      
+                     
+            </td>
 
+            <td>
+                {% if TREM.loco_1 == None %}
+                    --   
+                {% else %}
+                    {{TREM.loco_1}}  
+                {% endif %}                           
+            </td>
+
+            <td>
+                {% if TREM.loco_2 == None %}
+                    --   
+                {% else %}
+                    {{TREM.loco_2}}  
+                {% endif %}                           
+            </td>
+
+
+            <td>
+                {% if TREM.loco_3 == None %}
+                    --   
+                {% else %}
+                    {{TREM.loco_3}}  
+                {% endif %}                           
+            </td>
+
+
+            <td>
+                {% if TREM.loco_4 == None %}
+                    --   
+                {% else %}
+                    {{TREM.loco_4}}  
+                {% endif %}                           
+            </td>
+
+            <td>
+                {% if TREM.loco_5 == None %}
+                    --   
+                {% else %}
+                    {{TREM.loco_5}}  
+                {% endif %}                           
+            </td>
+
+            <td>
+                <svg class="ICONE ICONE_DELETAR" id="Layer_1" data-name="Layer 1" data-id="{{ TREM.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88" onclick="EXCLUIR_TREM_SUBIDA('{{ TREM.id }}')">
+                    <title>Excluir</title>
+                    <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
+                </svg>  
+            </td>   
+
+
+        </tr>            
+        {% endfor %}
+
+    {% endif %}
 </div>
 
 <script>
@@ -207,14 +162,7 @@
     const tipo_frm = document.getElementById("ACAO")
     const id_trem  = document.getElementById("ID_TREM")
     
-    
-    document.querySelector('dialog').addEventListener('mousedown', event => {
-        if (event.target === event.currentTarget) {
-            event.currentTarget.close()
-        }
-    })
-
-    function EXCLUIR_TREM(ID_TREM){
+    function EXCLUIR_TREM_SUBIDA(ID_TREM){
 
         $.ajax({
 
@@ -228,7 +176,7 @@
             success: function(response) {
                 location.reload();
             },
-            error: function(xhr) {
+            error:   function(xhr)      {
                 alert("ERRO")
             }
         });

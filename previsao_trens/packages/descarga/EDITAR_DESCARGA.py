@@ -12,6 +12,7 @@ class NAVEGACAO_DESCARGA:
     def __init__(self, TERMINAL, FERROVIA, PRODUTO, DIA_ANTERIOR=False):
       
         #region DECLARANDO OBJETOS GLOBAIS
+        
         self.NM_TERMINAL = TERMINAL
         self.FERROVIA    = FERROVIA
         self.PRODUTO     = PRODUTO
@@ -31,6 +32,7 @@ class NAVEGACAO_DESCARGA:
 
             self.QT_COLUNAS_FULL = 120
             self.PERIODO_VIGENTE = self.PERIODO_VIGENTE.drop(self.PERIODO_VIGENTE.index[0]) 
+        
         self.LISTA_DATA_ARQ  = self.PERIODO_VIGENTE["DATA_ARQ"].tolist()
 
         with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
@@ -58,7 +60,7 @@ class NAVEGACAO_DESCARGA:
 
                 DESCARGA_COMPLETA["OCUPACAO"] = [0] * self.QT_COLUNAS_FULL
                 
-                for indexs ,SALDO in enumerate(DESCARGA_COMPLETA["SALDO"]):
+                for _ ,SALDO in enumerate(DESCARGA_COMPLETA["SALDO"]):
                     
                     if SALDO == 0: 
                         pass
@@ -75,9 +77,6 @@ class NAVEGACAO_DESCARGA:
             if SALDO_VIRADA > 0: ORDEM_DE_CHEGADA.insert(0, [SALDO_VIRADA, 101, 0],)
 
 
-            #VER ATRAVÉS DE CADA PRODUTIVIDADE QUANDO O ENCOSTE TERMINA
-            QUANTIDADE_DE_TRENS = len(ORDEM_DE_CHEGADA)
-            print(ORDEM_DE_CHEGADA)
             __LIMPAR_OCUPACAO__()
 
             #ISTO É PARA A LOGICA DE UM TREM DESCARREGAR DIRETO DO OUTRO SEM ESPAÇO ENTRE OS "S A L D O S" DELES
@@ -122,40 +121,36 @@ class NAVEGACAO_DESCARGA:
 
                         HORA_FINAL += 1   
 
-                 
-                print(f"O TREM {ID_TREM} ACABOU EM {HORA_FINAL}h, SOBROU {SOBRA_ANTERIOR_DE_VAGOES}")
-            #print(DESCARGA_COMPLETA["PRODUTIVIDADE"])
             #INSERIR NA LINHA DE OCUPACAO
 
+        DESCARGA_COMPLETA = {}
 
+        ITENS_DESCARGA = ["ENCOSTE", "SALDO", "PRODUTIVIDADE", "EDITADO","OCUPACAO", "RESTRICAO"]
+        ITENS_SUBIDA   = ["GERACAO_DE_VAZIOS", "GERACAO_EDITADA", "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO"]
+        
+        for ITEM in ITENS_DESCARGA:
+                DESCARGA_COMPLETA[ITEM] = []
+
+        for ITEM in ITENS_SUBIDA:
+                DESCARGA_COMPLETA[ITEM] = []
 
         PRODUTIVIDADE = self.INFOS["PRODUTIVIDADE"][self.FERROVIA][self.PRODUTO]
-
-        #DECLARANDO OS OBJETOS DA DESCARGA
-        DESCARGA_COMPLETA  = {
-
-            "ENCOSTE"           : [],
-            "SALDO"             : [],
-            "PRODUTIVIDADE"     : [],
-            "EDITADO"           : [],
-            "GERACAO_DE_VAZIOS" : [],
-            "OCUPACAO"          : [],
-            "RESTRICAO"         : []
-
-         } 
-
+        
         #CRIANDO A DESCARGA ÚNICA (LINHAS CONSIDERADAS ABAIXO)
-        ITENS_DESCARGA = ["ENCOSTE", "SALDO", "PRODUTIVIDADE", "EDITADO", "GERACAO_DE_VAZIOS", "OCUPACAO", "RESTRICAO"]
-        for DATA_ARQ in self.LISTA_DATA_ARQ:   
+        
+        for DATA_ARQ in self.LISTA_DATA_ARQ:  
+                
             for ITEM in ITENS_DESCARGA:
                 DESCARGA_COMPLETA[ITEM].extend(self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO][ITEM])
+            
+            for ITEM in ITENS_SUBIDA:
+                DESCARGA_COMPLETA[ITEM].extend(self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SUBIDA"][ITEM])
 
-        #ITERANDO SOBRE A DESCARGA ÚNICA
+
+       #ITERANDO SOBRE A DESCARGA ÚNICA
         DESCARGA_COMPLETA["SALDO"][0] = 0
 
         for i, _ in enumerate(DESCARGA_COMPLETA["ENCOSTE"]):#AQUI PODERIA SER QUALQUER CHAVE, É PARA PEGARMOS O TAMANHO DA LISTA
-            
-            DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i]  = 0
             
             if i == 0: 
 
@@ -208,12 +203,18 @@ class NAVEGACAO_DESCARGA:
 
         for ITEM in ITENS_DESCARGA:
             LISTAS[ITEM] = [DESCARGA_COMPLETA[ITEM][i:i + 24] for i in range(0, len(DESCARGA_COMPLETA[ITEM]), 24)]
+        
+        for ITEM in ITENS_SUBIDA:
+            LISTAS[ITEM] = [DESCARGA_COMPLETA[ITEM][i:i + 24] for i in range(0, len(DESCARGA_COMPLETA[ITEM]), 24)]
 
         for index, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
         
             for ITEM in ITENS_DESCARGA:
-
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO][ITEM] = LISTAS[ITEM][index] #LISTA POSSUI O MESMO TAMANHO QUE O PERIODO ATIVO, COMPARTILHAM O INDEX
+
+            for ITEM in ITENS_SUBIDA:
+                self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SUBIDA"][ITEM] = LISTAS[ITEM][index] #LISTA POSSUI O MESMO TAMANHO QUE O PERIODO ATIVO, COMPARTILHAM O INDEX
+
 
             if index != 0: #NÃO VAMOS DEFINIR O SALDO DE VIRADA DE "D" AUTOMARICAMENTE (index = 1 é "D" na lista self.LISTA_DATA_ARQ)
                 
@@ -380,7 +381,6 @@ class NAVEGACAO_DESCARGA:
                 PREFIXO      = 0
                 TOTAL_VAGOES = 0
                 
-            print(f"CHEGADAS: {TODOS_IDs_DESTA_CHEGADA}")
 
             self.DESCARGAS[DATA_ARQ_CHEGADA]["PREFIXO"][HORA_CHEGADA][0] = PREFIXO    
             self.DESCARGAS[DATA_ARQ_CHEGADA]["PREFIXO"][HORA_CHEGADA][1] = TODOS_IDs_DESTA_CHEGADA
@@ -414,9 +414,10 @@ class NAVEGACAO_DESCARGA:
                 HORA_ENCOSTE     = HORA_ENCOSTE - 24
                 DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
 
-
+            print(f"antes do encoste{ self.DESCARGAS[DATA_ARQ_ENCOSTE] }")
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
+            print(f"antes do encoste{ self.DESCARGAS[DATA_ARQ_ENCOSTE] }")
             
         def __ATIVAR_TERMINAL__(ACAO):
             
@@ -465,6 +466,14 @@ class NAVEGACAO_DESCARGA:
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
 
+        DESCARGAS = []
+
+        for DATA_ARQ in self.LISTA_DATA_ARQ:
+
+            DESCARGAS.append(self.DESCARGAS[DATA_ARQ])
+            
+        return DESCARGAS
+
     def EDITAR_SALDO_VIRADA(self, PARAMETROS):
 
         self.DESCARGAS[self.LISTA_DATA_ARQ[0]]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"] = PARAMETROS["VALOR"]
@@ -478,9 +487,10 @@ class NAVEGACAO_DESCARGA:
 
         # AQUI INSIRO E REMOVO RESTRICOES
 
-        # 1. AQUI RECEBEMOS RESTRICOES VALIDADASA
-        # 2. TRATAMOS RESTRICOES QUE VAO ALÉM DE D-4 (EM CASO DE INSERIR) (LINHA 337 procurar por RESTRICAO_TERMINA_NO_PERIODO_VIGENTE )
-        # 3. EXCLUIMOS RESTRICOES QUE VAO ALÉM DE D-1 (DENTRO DO IF ACAO == "REMOVER")
+        # 1. AQUI RECEBEMOS RESTRICOES VALIDADAS
+        # 2. ATIVAMOS A RESTRICAO NA DESCARGA (NÃO TINHA ONDE COLOCAR ESTA FUNCAO...)
+        # 3. TRATAMOS RESTRICOES QUE VAO ALÉM DE D-4 (EM CASO DE INSERIR) (LINHA 337 procurar por RESTRICAO_TERMINA_NO_PERIODO_VIGENTE )
+        # 4. EXCLUIMOS RESTRICOES QUE VAO ALÉM DE D-1 (DENTRO DO IF ACAO == "REMOVER")
 
         #region PARAMETROS
         FERROVIAS               : list
@@ -502,14 +512,33 @@ class NAVEGACAO_DESCARGA:
         MOTIVO = RESTRICAO["motivo"]
         PCT    = RESTRICAO["porcentagem"]
 
+        print(RESTRICAO)
+
+
+        VALOR_ATIVACAO = 1
         if ACAO == "REMOVER":
             MOTIVO = ""
             PCT    = 0
+            VALOR_ATIVACAO = 0
 
             #PODEMOS EXCLUIR UMA RESTRICAO QUE TENHA COMEÇADO ANTES DE D-1 (ISTO DEVERIA CONTORNAR O ERRO)
             if not (RESTRICAO["comeca_em"].strftime('%Y-%m-%d') in self.LISTA_DATA_ARQ):    
                 RESTRICAO["comeca_em"] = datetime.strptime(self.PERIODO_VIGENTE.iloc[0]["DATA_ARQ"], "%Y-%m-%d").replace(hour=1, minute=0, second=0)
         
+
+        #region ATIVANDO RESTRICAO NA NAVEGACAO
+        
+        DIRETORIO_RESTRICOES_ATIVAS = "previsao_trens/src/PARAMETROS/RESTRICOES_ATIVAS.csv"
+
+        RESTRICOES_ATIVAS = pd.read_csv(DIRETORIO_RESTRICOES_ATIVAS, sep=";", index_col=0)
+
+        RESTRICOES_ATIVAS.loc[RESTRICAO["terminal"],    RESTRICAO["mercadoria"]] = VALOR_ATIVACAO
+        RESTRICOES_ATIVAS.loc[RESTRICAO["terminal"],    "RESTRICAO"]             = RESTRICOES_ATIVAS.loc[RESTRICAO["terminal"], RESTRICOES_ATIVAS.columns[1:]].sum()
+
+        RESTRICOES_ATIVAS.to_csv(DIRETORIO_RESTRICOES_ATIVAS, sep=";")
+
+        #endregion
+
 
         #PRIMEIRO PRECISAMOS SABER EM QUANTAS FERROVIAS VAMOS APLICAR (POIS NEM TODOS OS TERMINAIS TEM TODAS AS FERROVIAS)       
         FERROVIAS = self.INFOS["FERROVIA"]

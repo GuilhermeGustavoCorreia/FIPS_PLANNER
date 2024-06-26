@@ -1,7 +1,7 @@
 .CONTEUDO__SUBIDA{
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 9vh;
+    margin-top: 12vh;
     position: absolute;
     width: 94vw;
 }
@@ -10,8 +10,8 @@
 
 .SEM_NAVEGACAO{
 
-    height: fit-content;
-    margin: auto;
+    height:     fit-content;
+    margin:         auto;
     text-align: center;
 }
 
@@ -20,24 +20,27 @@
     width: 20%;
 }
 
-.PULA_LINHA td{color: white; background-color: white; border: none;}
 
 table{
-    font-size: 0.8rem;
+
+    font-size: 0.7rem;
     font-family: "Saira Expanded";
     background-color: rgb(237, 237, 237);
-    margin-bottom: 2rem ;
+    margin-bottom: 2rem;
+    transform: translateX(-50%);
+    margin-left: 50%;
+
 }
 
-.TITULO     { background-color: var(--azul-profundo-m);}
-.TITULO td  { border: 1px solid var(--azul-profundo-e); font-weight: bold;  padding: 0.1rem;  color: white; text-align: center;}
+.titulo     { background-color: var(--azul-profundo-m); color: white}
+.titulo td  { border: 1px solid var(--azul-profundo-e); font-weight: bold;  padding: 0.1rem;  color: white; text-align: center;}
 table       { border-collapse: collapse;}
 .MARGEM td  { background-color: white; border: none; text-align: left; padding-top: 1rem ;}
 
 table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var(--cinza-chumbo-c) solid; padding: 0 5px}
 
-.LINHA          { border-top:       1px var(--cinza-chumbo-c) solid; text-align: center;}
-.LINHA_GROSSA   { border-bottom:    2px var(--cinza-chumbo-c) solid; }
+.linha          { border-top:       1px var(--cinza-chumbo-c) solid; text-align: center;}
+.linha-grossa   { border-bottom:    2px var(--cinza-chumbo-c) solid; }
 .CELULA_FILA    { border:           none !important;}
 
 .TITULO_DARK { 
@@ -46,6 +49,8 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
     border-top:     1px var(--cinza-chumbo-m) solid;
     border-bottom:  1px var(--cinza-chumbo-m) solid;
 }
+
+.pula_linha td, .pula_linha{color: white !important; background-color: #f7f7f7 !important; border: none !important;}
 
 .TITULO_DARK td  { border: 1px solid var(--cinza-chumbo-m); font-weight: bold;  padding: 0.1rem;  color: white; text-align: center;}
 
@@ -57,6 +62,7 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
     border-radius: 4px;
     text-align: center;
 }
+
 .AMARELO_MEDIO{
     background-color: #cc9800;
     color:       white;
@@ -65,6 +71,7 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
     border-radius: 4px;
     text-align: center;
 }
+
 .AMARELO_ESCURO{
     background-color: #997200;
     color:       white;
@@ -75,6 +82,8 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
 }
 
 .AZUL{ 
+
+    text-align: center;
     background-color: var(--azul-ceu-e);
     color:       white;
     font-weight:    bold;
@@ -88,16 +97,58 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
     border-radius: 4px;
     text-align: center;
 }
+
+
+.CINZA-DARK{
+    
+    background-color:    #404040; 
+    color:       white;
+    font-weight:    bold;
+    border-radius: 4px;
+    text-align: center;
+}
+.VERDE-CLARO{
+
+    background-color:    #9bd21d; 
+    color:       white;
+    font-weight:    bold;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.LARANJA {
+
+    background-color: #ff7518;
+    color:       white;
+    font-weight:    bold;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.ROXO {
+
+    background-color: #7a3fc8;
+    color:       white;
+    font-weight:    bold;
+    border-radius: 4px;
+    text-align: center;
+}
 .VERMELHO{
     background-color: #C00000 !important; 
     color:       white;
     border: none;
     border-radius: 4px;
 }
+
 .coluna_A{
     border-right: 1px var(--cinza-chumbo-c) solid;
     text-align: left;
     padding: 0 5px;
+}
+
+.CRIAR_TREM_SUBIDA:hover {
+    cursor: pointer;
+    background-color: var(--cinza-chumbo-c);
 }
 
 .INPUT_SALDO_VIRADA{width: 1.5rem ;}
@@ -105,13 +156,72 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
 .INPUT_VAGOES_VIRADA_LINHA{ width: 6rem;}
 
 @media screen and (orientation: portrait) {
+    
     .CONTEUDO__SUBIDA{
 
         margin-top: 4vh;
 
     }
 
+}
 
-    
-    
+/*--------------------------------------DIALOG---------------------------------------*/
+
+.DIALOG_TREM_VAZIO{ border: 2px red dashed;}
+
+dialog::backdrop{
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(64, 64, 64, 0.4);
+    backdrop-filter: blur(10px);
+    display: block !important;
+}
+
+.FERROVIAS, #id_margem{padding: 0.5rem  0 2rem  0}
+.FERROVIAS div{ display: flex;  float: left; width: 100%;} 
+
+.INPUT_P{max-width: 6.9rem; min-width:  6.9rem; margin-top: 5px;}
+
+.DIALOG_TREM_VAZIO button{ margin-top: 5px;}
+
+.VAGOES_FORM{border: 2px red dashed; display: table; font-weight: bold;}
+.VERDE:disabled{ background-color: var(--verde-floresta-c) !important; cursor: none;}
+/*-----------------------------------------------------------------------------------*/
+
+.abas {
+    display: flex;
+}
+
+.aba {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+}
+
+.ativa{font-weight: bold;}
+
+.sub-aba {
+    padding: 5px 10px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    background-color: #f2f2f2;
+  }
+  
+.sub-conteudo {
+    border:     1px solid #ccc;
+    padding:    10px;
+    margin-top: 10px;
+}
+
+.conteudo-abas{
+    padding:    10px;
+    background-color: #f7f7f7;
+    min-height: 100vh;
 }

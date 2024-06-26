@@ -65,13 +65,16 @@ class TremVazio(models.Model):
     loco_3       = models.CharField(max_length=100, blank=True, null=True)
     loco_4       = models.CharField(max_length=100, blank=True, null=True)
     loco_5       = models.CharField(max_length=100, blank=True, null=True)
-    previsao     = models.DateTimeField()
+    previsao     = models.DateTimeField(blank=True, null=True)
     eot          = models.CharField(max_length=100)
-    vagoes       = models.IntegerField()
-    segmento_01  = models.CharField(max_length=50)
-    segmento_02  = models.CharField(max_length=50, blank=True, null=True)
-    segmento_03  = models.CharField(max_length=50, blank=True, null=True)
-    margem       = models.CharField(max_length=100,choices=[('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')])
+    
+    qt_graos     = models.IntegerField(blank=True, null=True)
+    qt_ferti     = models.IntegerField(blank=True, null=True)
+    qt_celul     = models.IntegerField(blank=True, null=True)
+    qt_acuca     = models.IntegerField(blank=True, null=True)
+    qt_contei    = models.IntegerField(blank=True, null=True)
+
+    margem       = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.prefixo

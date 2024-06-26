@@ -1,0 +1,8 @@
+{
+    "LINHA_4K": {
+        "SEGMENTOS": ["GRAO"],
+        "FERROVIAS": ["RUMO", "MRS", "VLI"],
+        "LOTE"     : 82,
+        "SATURACAO_VAZIO": {"RUMO": {"MIN": 40, "MAX": 82}, "MRS": {"MIN": 40, "MAX": 82}, "VLI": {"MIN": 40, "MAX": 82}}
+    }
+}

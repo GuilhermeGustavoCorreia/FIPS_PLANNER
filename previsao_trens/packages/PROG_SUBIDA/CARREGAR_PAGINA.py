@@ -15,18 +15,19 @@ def CARREGAR_PREVISAO_SUBIDA():
     
     TABELAS = {}
     for MARGEM in MARGENS:
-        queryset = TremVazio.objects.filter(
-                    previsao__year=HOJE.year,
-                    previsao__month=HOJE.month,
-                    previsao__day=HOJE.day,
-                    margem=MARGEM
-                ).order_by('previsao')
+        # queryset = TremVazio.objects.filter(
+        #             previsao__year=HOJE.year,
+        #             previsao__month=HOJE.month,
+        #             previsao__day=HOJE.day,
+        #             margem=MARGEM
+        #         ).order_by('previsao')
+        queryset = TremVazio.objects
         if queryset.exists():  # Adiciona ao dicionário apenas se o queryset não estiver vazio
             TABELAS[MARGEM] = queryset
 
-    return TABELAS
+    return TremVazio.objects.all() #TABELAS
     
-def CARREGAR_PROG_SUBIDA():
+def CARREGAR_PROG_SUBIDA_OLD():
 
     TERMINAIS_ATIVOS  = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
     PERIODO_VIGENTE   = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
@@ -111,7 +112,6 @@ def CARREGAR_PROG_SUBIDA():
             with open(f"previsao_trens/src/OPERACAO/LINHAS_VAZIOS/{LINHA}/subida_{ DATA_ARQ }.json") as ARQUIVO_SUBIDA:
                 json_SUBIDA = json.load(ARQUIVO_SUBIDA)
 
-
             #region REMOVENDO AS FERROVIAS DO VALONGO QUE NAO SAO UTILIZADAS
             
             if LINHA == "LINHA_VALONGO":
@@ -126,8 +126,6 @@ def CARREGAR_PROG_SUBIDA():
 
         SAIDAS[DIA_LOGISTICO]["LINHAS"][LINHA] = json_SUBIDA
     
-
-
     for DIA_LOGISTICO in SAIDAS.keys():
 
         DATA_ARQ = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO].iloc[0]['DATA_ARQ']
@@ -135,3 +133,142 @@ def CARREGAR_PROG_SUBIDA():
                 SAIDAS[DIA_LOGISTICO]["DESCARGAS"] = json.load(ARQUIVO_SUBIDA)
     
     return SAIDAS
+
+def CARREGAR_PROG_SUBIDA():
+
+    SAIDA = {
+        "D": {
+            "LINHA_4K": "",
+            "TERMINAIS": {
+
+                "PCX": [],
+                "PCZ": [],
+                "PST": [],
+                "PMC": []
+            },
+            "BUFFER":      {},
+            "CONDENSADOS": {}
+        },
+        "D1": {
+            "LINHA_4K": "",
+            "TERMINAIS": {
+
+                "PCX": [],
+                "PCZ": [],
+                "PST": [],
+                "PMC": []
+            },
+            "BUFFER":      {},
+            "CONDENSADOS": {}
+        }
+
+    }
+
+    TERMINAIS_ATIVOS  = pd.read_csv("previsao_trens/src/SUBIDA/PARAMETROS/TERMINAIS_ATIVOS.csv",    encoding='utf-8-sig', sep=';', index_col=0)
+    PERIODO_VIGENTE   = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",            encoding='utf-8-sig', sep=';', index_col=0)
+    
+    lst_TERMINAIS_ATIVOS = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
+    TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)
+    
+
+    with open(f"previsao_trens/src/SUBIDA/PARAMETROS/TERMINAIS_ESPECIAIS.json") as ARQUIVO:
+        TERMINAIS_ESPECIAIS = json.load(ARQUIVO)
+
+    TERMINAIS_ADAPTADOS = (os.listdir("previsao_trens/src/SUBIDA/TERMINAIS_ADAPTADOS"))
+    
+    with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO:
+        INFOS_TERMINAIS = json.load(ARQUIVO)
+
+
+    with open(f"previsao_trens/src/SUBIDA/PARAMETROS/LINHAS.json") as ARQUIVO:
+        INFOS_LINHAS = json.load(ARQUIVO)
+    
+    TERMINAIS_DESCONDIDERADOS = TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["VIZUALICACAO"]
+    lst_TERMINAIS_ATIVOS = [item for item in lst_TERMINAIS_ATIVOS if item not in TERMINAIS_DESCONDIDERADOS]
+    
+    DIAS_LOGISTICOS = ["D", "D+1"]
+    CHAVES          = ["D", "D1"]
+    
+    for i, DIA_LOGISTICO in enumerate(DIAS_LOGISTICOS):
+        
+        #region ABRINDO TERMINAIS   [rgb(255,77,197, 0.1)]
+        for TERMINAL in lst_TERMINAIS_ATIVOS:
+            
+            FERROVIAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
+            DATA_ARQ = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO].iloc[0]['DATA_ARQ']
+            
+            with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{ TERMINAL }/subida_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
+                jsSUBIDA = json.load(ARQUIVO_DESCARGA)
+
+            PATIO = jsSUBIDA["PATIO"]
+
+            #APENAS COLOCA NA DESCARGA A INFORMACAO DO QUE ESTA ATIVO NO TERMINAL (FERROVIA E PRODUTO)        
+            jsSUBIDA["SUBIDA"] = {chave: valor for chave, valor in jsSUBIDA["SUBIDA"].items() if chave in FERROVIAS_ATIVAS}
+            
+            FERROVIAS = list(jsSUBIDA["SUBIDA"].keys())
+
+            #region INSERINDO MIN E MAX  [rgb(255,77,197, 0.2)]
+            for FERROVIA in FERROVIAS:
+
+                SEGMENTOS = list(jsSUBIDA["SUBIDA"][FERROVIA].keys())
+                for SEGMENTO in SEGMENTOS:
+
+                    if TERMINAL in TERMINAIS_ADAPTADOS:
+
+                        #region TERMINAIS ESPECIAIS [rgb(255,77,197, 0.3)]
+                        for ITEM in TERMINAIS_ESPECIAIS:
+                            
+                            if not (ITEM == "REMOVER" or ITEM == "DESCONSIDERAR"):
+
+                                for TERMINAL_ESPECIAL in TERMINAIS_ESPECIAIS[ITEM]:
+
+                                    if TERMINAL_ESPECIAL == TERMINAL:
+
+                                        jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MIN"] = TERMINAIS_ESPECIAIS["JUNTAR"][TERMINAL_ESPECIAL]["SAIDA"]["SATURACAO_VAZIO"][FERROVIA]["MIN"]
+                                        jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MAX"] = TERMINAIS_ESPECIAIS["JUNTAR"][TERMINAL_ESPECIAL]["SAIDA"]["SATURACAO_VAZIO"][FERROVIA]["MAX"]
+                    
+                        #endregion
+
+                    else:    
+                        
+                        jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MIN"] = INFOS_TERMINAIS[TERMINAL]["SATURACAO_VAZIO"][FERROVIA]["MIN"]
+                        jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MAX"] = INFOS_TERMINAIS[TERMINAL]["SATURACAO_VAZIO"][FERROVIA]["MAX"]
+
+
+            #endregion
+
+            SAIDA[CHAVES[i]]["TERMINAIS"][PATIO].append(jsSUBIDA)  
+        #endregion 
+
+        #region ABRINDO CONDENSADOS [rgb(255,77,197, 0.2)]
+        
+        with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{DATA_ARQ}.json") as ARQUIVO:
+                jsCONDENSADO = json.load(ARQUIVO)
+        
+        SAIDA[CHAVES[i]]["CONDENSADOS"] = jsCONDENSADO
+
+        #endregion 
+
+        #region ABRINDO LINHA 4K    [rgb(255,77,197, 0.2)]
+
+        with open(f"previsao_trens/src/SUBIDA/LINHAS/LINHA_4K/linha_4k_{DATA_ARQ}.json") as ARQUIVO:
+                jsLINHA_4K = json.load(ARQUIVO)
+        
+        SEGMENTOS = INFOS_LINHAS["LINHA_4K"]["SEGMENTOS"]
+        for SEGMENTO in SEGMENTOS:
+            for FERROVIA in INFOS_LINHAS["LINHA_4K"]["FERROVIAS"]:
+                jsLINHA_4K["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"] = INFOS_LINHAS["LINHA_4K"]["SATURACAO_VAZIO"][FERROVIA]
+
+        SAIDA[CHAVES[i]]["LINHA_4K"] = jsLINHA_4K
+
+        #endregion
+
+        #region ABRINDO BUFFER      [rgb(255,77,197, 0.2)]
+
+        with open(f"previsao_trens/src/SUBIDA/BUFFER/buffer_{DATA_ARQ}.json") as ARQUIVO:
+                jsCONDENSADO = json.load(ARQUIVO)
+
+        SAIDA[CHAVES[i]]["BUFFER"] = jsCONDENSADO
+        #endregion
+
+    return SAIDA

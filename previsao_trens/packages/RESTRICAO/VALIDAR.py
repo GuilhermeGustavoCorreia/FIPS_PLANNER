@@ -20,7 +20,7 @@ def VALIDAR_RESTRICAO(RESTRICAO):
 
     PERIODO_VIGENTE      = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
     LISTA_DATA_ARQ       = PERIODO_VIGENTE['DATA_ARQ'].tolist()
-    print(RESTRICAO["comeca_em"], type(RESTRICAO["comeca_em"]))
+
     RESTRICAO_DATA_ARQ = RESTRICAO["comeca_em"].strftime('%Y-%m-%d')
 
 

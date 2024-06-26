@@ -14,7 +14,7 @@ from .forms         import TremForm, RestricaoForm, TremVazioForm
 from django.contrib import messages
 
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
-from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS
+from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
 
 from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import VALIDAR_NOVA_PREVISAO, VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
@@ -25,21 +25,19 @@ import  previsao_trens.packages.descarga.CARREGAR_PAGINA as CARREGAR_DESCARGA
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
 
 from previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA, CARREGAR_PREVISAO_SUBIDA
-from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import SUBIDA_DE_VAZIOS, editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
+from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
 
-from previsao_trens.packages.DETELHE.CARREGAR_PAGINA        import CARREGAR_RELATORIO_DETALHE
+from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, Condensados
+from previsao_trens.packages.DETELHE.CARREGAR_PAGINA            import CARREGAR_RELATORIO_DETALHE
+from previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDAR_RESTRICAO
 
-from previsao_trens.packages.RESTRICAO.VALIDAR import VALIDAR_RESTRICAO
+from    .forms      import UploadFileForm
+from    io          import TextIOWrapper
+from    datetime    import datetime, time
+import  json
+import  pandas as pd
 
-
-from datetime import datetime
-import json
-
-from .forms import UploadFileForm
-import csv
-from django.utils.dateparse import parse_datetime
-from io import TextIOWrapper
-import os
+import  csv
 
 def redirect_to_login(request):
     
@@ -66,7 +64,10 @@ def navegacao(request):
                 }
                     
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
-                Descarga.EDITAR_PRODUTIVIDADE(PARAMETROS)
+                DESCARGAS = Descarga.EDITAR_PRODUTIVIDADE(PARAMETROS)
+
+                return JsonResponse(DESCARGAS, safe=False)
+
 
             if ACAO == "EDITAR_SALDO_DE_VIRADA":
 
@@ -145,6 +146,7 @@ def novo_trem_previsao(request):
     TABELAS = CARREGAR_PREVISOES()
     form = TremForm()
     TIPO_FORMULARIO = "CRIAR_TREM"
+    
     if request.method == 'POST':
 
         with transaction.atomic():
@@ -203,15 +205,21 @@ def excluir_trem(request, id):
             trem.delete()
             
             TREM_ANTIGO = model_to_dict(trem)
-            
             try:
-                NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"]) #5
-                NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
-            
-            except IndexError :
-                NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"], DIA_ANTERIOR=True) #5
-                NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
-            
+
+                try:
+                    
+                    NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"]) #5
+                    NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
+                
+                except:
+                    
+                    NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"], DIA_ANTERIOR=True) #5
+                    NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
+           
+            except IndexError:
+                pass
+
             POSICAO_TREM  = trem.posicao_previsao
             PREVISAO_TREM = trem.previsao.date()
 
@@ -531,7 +539,6 @@ def restricao(request):
 
     return render(request, 'RESTRICOES.html', {'RESTRICOES': RESTRICOES, 'FORMULARIO': FORMULARIO})
 
-
 @login_required
 def excluir_restricao(request, id):
 
@@ -591,12 +598,14 @@ def detalhe(request):
 
 @login_required
 def configuracao(request):
+
     FORM_CSV = UploadFileForm()
+    
     if request.method == 'POST':
         
         ACAO = request.POST.get('ACAO', 0)
 
-        if ACAO == "EDITAR_CONFIGURACAO":
+        if ACAO == "DESCARGAS_ATIVAS":
 
             PARAMETROS = {
                 "NOVO_VALOR":   request.POST.get('novo_valor',  0),
@@ -607,6 +616,16 @@ def configuracao(request):
 
 
             return HttpResponse(EDITAR_PARAMETROS(PARAMETROS))
+
+        elif ACAO == "SUBIDAS_ATIVAS":
+
+            PARAMETROS = {
+                "NOVO_VALOR":   request.POST.get('NOVO_VALOR', 0),
+                "FERROVIA":     request.POST.get('FERROVIA'  , 0),
+                "TERMINAL":     request.POST.get('TERMINAL'  , 0)
+            }
+
+            return HttpResponse(EDITAR_PARAMOS_SUBIDAS(PARAMETROS))
 
         if ACAO == "ATUALIZAR_DESCARGA":
 
@@ -628,9 +647,12 @@ def programacao_subida(request):
         REQUISICAO  = dict(request.POST) 
 
         if "ACAO" in REQUISICAO: 
-            ACAO        = REQUISICAO["ACAO"][0]
+
+            ACAO = REQUISICAO["ACAO"][0]
             
-            if ACAO ==  "EDITAR_SALDO_VIRADA_TERMINAL":
+            if ACAO ==  "EDITAR_SALDO_VIRADA_TERMINAL": 
+                
+                #AQUI PARA PODER AGILIZAR A ENTREGA, TAMBÉM ENVIA SALDO DE VIRADA DA LINHA 4K TERMINAL = L4K    
                 
                 PARAMETROS = {
 
@@ -640,27 +662,69 @@ def programacao_subida(request):
                     "NOVO_VALOR":   REQUISICAO["NOVO_VALOR"][0]
 
                 }
-
-                editarSaldoViradaVazios(PARAMETROS)
-
-            elif ACAO == "EDITAR_SALDO_VIRADA_LINHA":
                 
+                EDITAR_SALDO_VIRADA_TERMINAL(PARAMETROS)
+
+            if ACAO == "CRIAR_TREM_SUBIDA":
+                
+                FORM_NOVO_TREM = TremVazioForm(request.POST)
+                
+                if FORM_NOVO_TREM.is_valid():
+
+                    PARAMETROS = {
+
+                        "PREFIXO"       : REQUISICAO['prefixo'][0],
+                        "FERROVIA"      : REQUISICAO['ferrovia'][0],
+                        "HORA"          : REQUISICAO['HORA'][0],
+                        "MARGEM"        : REQUISICAO['MARGEM'][0],
+                        "DIA_LOGISTICO" : REQUISICAO['DIA_LOGISTICO'][0],
+                        "QT_GRAOS"      : REQUISICAO['qt_graos'][0],
+                        "QT_FERTI"      : REQUISICAO['qt_ferti'][0],
+                        "QT_CELUL"      : REQUISICAO['qt_celul'][0],
+                        "QT_ACUCA"      : REQUISICAO['qt_acuca'][0],
+                        "QT_CONTE"      : REQUISICAO['qt_contei'][0],
+
+                    }
+
+                    NOVO_TREM        = FORM_NOVO_TREM.save(commit=False)
+                    NOVO_TREM.margem = PARAMETROS["MARGEM"]
+
+                    PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+                    LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]]
+                    DATA_ARQ            = LINHA['DATA_ARQ'].values[0]
+
+                    DATA = datetime.strptime(DATA_ARQ, "%Y-%m-%d")
+                    HORA = time(int(PARAMETROS["HORA"]), 0)
+                    NOVO_TREM.previsao = datetime.combine(DATA, HORA)
+
+                    NOVO_TREM.save()
+                    Condensados().inserirTrem(PARAMETROS)
+
+                else:
+                    print(FORM_NOVO_TREM.errors)
+                    messages.error(request, FORM_NOVO_TREM.errors)
+
+            if ACAO == "EDITAR_BUFFER":
+
                 PARAMETROS = {
-
-                    "VAGOES":   REQUISICAO["VAGOES"][0],
-                    "SEGMENTO": REQUISICAO["SEGMENTO"][0],
-                    "LINHA":    REQUISICAO["LINHA"][0],
-                    "FERROVIA": REQUISICAO["FERROVIA"][0]
-
+                    "HORA"          : REQUISICAO["HORA"][0],
+                    "MARGEM"        : REQUISICAO["MARGEM"][0],
+                    "FERROVIA"      : REQUISICAO["FERROVIA"][0],
+                    "NOVO_VALOR"    : REQUISICAO["NOVO_VALOR"][0],
+                    "DIA_LOGISTICO" : REQUISICAO["DIA_LOGISTICO"][0]
                 }
-                
-                editarSaldoViradaVaziosNaLinha(PARAMETROS)
-        else:
-             SUBIDA_DE_VAZIOS().ATUALIZAR()       
-    
-    DADOS_VAZIOS = CARREGAR_PROG_SUBIDA()
 
-    return render(request, 'OPERACAO/PROG_SUBIDA.html', {"DADOS_VAZIOS": DADOS_VAZIOS})
+                EDITAR_BUFFER(PARAMETROS)
+        
+        else:
+
+            SUBIDA_DE_VAZIOS().ATUALIZAR()
+   
+    
+    TABELAS_SUBIDA = CARREGAR_PROG_SUBIDA()
+    FORM_NOVO_TREM = TremVazioForm()
+    
+    return render(request, 'OPERACAO/PROG_SUBIDA.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
 
 @login_required
 def editar_trem_subida(request, id):
@@ -671,9 +735,7 @@ def editar_trem_subida(request, id):
     TABELAS = CARREGAR_PREVISAO_SUBIDA()
 
     return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': FORM, "TABELAS": TABELAS, 'MODAL_OPEN': True})
-
-
-     
+   
 @login_required
 def previsao_subida(request):
     
@@ -718,8 +780,33 @@ def previsao_subida(request):
 
             ID_TREM = REQUISICAO["ID_TREM"][0]
             TREM_ANTIGO = TremVazio.objects.get(pk=ID_TREM) 
-            TREM_ANTIGO.delete()
+            print(TREM_ANTIGO)
 
+            DATA_ARQ = TREM_ANTIGO.previsao.strftime("%Y-%m-%d")
+
+            PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+            LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
+            DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
+            
+            PARAMETROS = {
+
+                        "PREFIXO"       : 0,
+                        "FERROVIA"      : TREM_ANTIGO.ferrovia,
+                        "HORA"          : TREM_ANTIGO.previsao.hour,
+                        "MARGEM"        : TREM_ANTIGO.margem,
+                        "DIA_LOGISTICO" : DIA_LOGISTICO,
+                        "QT_GRAOS"      : 0,
+                        "QT_FERTI"      : 0,
+                        "QT_CELUL"      : 0,
+                        "QT_ACUCA"      : 0,
+                        "QT_CONTE"      : 0,
+
+            }
+            
+            Condensados().inserirTrem(PARAMETROS)
+
+            
+            TREM_ANTIGO.delete()
 
     elif request.method == 'GET': 
 
@@ -738,7 +825,6 @@ def previsao_subida(request):
                 TREM["previsao"] = TREM["previsao"].strftime('%Y-%m-%d %H:%M')
 
                 return JsonResponse(TREM)
-
 
     TABELAS = CARREGAR_PREVISAO_SUBIDA()
 

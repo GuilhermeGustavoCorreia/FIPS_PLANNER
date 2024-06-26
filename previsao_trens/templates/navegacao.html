@@ -3,6 +3,7 @@
 {% load static %}
 
 <script src="{% static 'javascript/NAVEGACAO/EDITAR_PRODUTIVIDADE.js' %}" defer></script>
+<script src="{% static 'javascript/NAVEGACAO/ATUALIZAR_DESCARGA.js' %}" defer></script>
 
 <div id="conteudo__navegacao" class="conteudo__navegacao">  
   
@@ -23,7 +24,7 @@
         {% endif %}
     {% endif %}
 
-    <!--uma tabela de descarga-->
+    <!--#region uma tabela de descarga-->
     {% if CONTEUDO_NAVEGACAO %}            
         
         <div class="header__navegacao">
@@ -34,6 +35,9 @@
         <div class="um__dia">      
             
             <div class="uma__margem"> 
+
+                
+
                 <table class="tabela__margens">
                     
                     <tr>
@@ -69,7 +73,7 @@
                         {% for CHEGADA_PREFIXO in DADOS.MARGENS.DIREITA %}
                         <td>
                             {% if CHEGADA_PREFIXO != 0%}
-                                {{ CHEGADA_PREFIXO }}
+                                {{ CHEGADA_PREFIXO|slice:":3" }}
                             {% endif%}
                         </td>
                         {% endfor %}
@@ -80,13 +84,15 @@
                         {% for CHEGADA_PREFIXO in DADOS.MARGENS.ESQUERDA %}
                         <td>
                             {% if CHEGADA_PREFIXO != 0%}
-                                {{ CHEGADA_PREFIXO }}
+                                {{ CHEGADA_PREFIXO|slice:":3" }}
                             {% endif%}
                         </td>
                         {% endfor %}
                         
                     </tr> 
+
                 </table>
+
             </div>
             
             {% for DESCARGA in DADOS.DESCARGAS %}
@@ -95,8 +101,8 @@
             <div class="uma__descarga">
                 
                 <table class="tabela__descarga" id="{{DESCARGA.TERMINAL}}_{{DESCARGA.DATA}}">
-
-                    <tr class="LINHA_TILOS">
+                    <input type="hidden" id="DESCARGAS_ATIVAS" value="{{ DESCARGA.DESCARGAS_ATIVAS }}">
+                    <tr class="LINHA_TITULOS">
 
                         <td rowspan=5 colspan=2 class="NOME_TERMINAL">{{ DESCARGA.TERMINAL }}</td>
                         <td rowspan=2 class="DIA_TERMINAL">{{ DIA }}</td>
@@ -172,7 +178,7 @@
 
                         {% for PEDRA in DESCARGA.PEDRA %}
 
-                        <td>
+                        <td headers="{{ forloop.counter0 }}" name="LINHA_PEDRA">
                             {% if PEDRA != 0%}
                                 {{ PEDRA }}
                             {% endif%}
@@ -180,7 +186,7 @@
 
                         {% endfor %}
 
-                        <td>{{ DESCARGA.INDICADORES.TOTAL_SALDO }}</td><td>{{ DESCARGA.INDICADORES.TOTAL_PEDRA }}</td>
+                        <td id="TOTAL_SALDO">{{ DESCARGA.INDICADORES.TOTAL_SALDO }}</td><td id="TOTAL_PEDRA">{{ DESCARGA.INDICADORES.TOTAL_PEDRA }}</td>
                     </tr>  
     
                     {% for FERROVIA, PRODUTO in DESCARGA.DESCARGAS.items %}
@@ -191,6 +197,7 @@
 
                                     <th class="FERROVIA_{{FERROVIA}}" rowspan=3>{{FERROVIA}}</th>
                                     <th rowspan=2 class="PRODUTO">
+
                                         {% if PRODUTOS == "CELULOSE"%}
                                             CEL.
                                         {% else %}
@@ -200,12 +207,13 @@
                                                 {{PRODUTOS}}
                                             {% endif%}
                                         {% endif%}
+
                                     </th>
                                     <td >Saldo</td>
 
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
-                                        <td>
+                                        <td style="font-weight: bold;">
                                             {% if ENCOSTE.0 != 0 %}
                                                 {{ ENCOSTE.0 }}
                                             {% endif %}
@@ -216,10 +224,10 @@
                                 </tr>
 
                                 <tr class="LINHA_SALDO_DESCARGA">
-                                    <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" name="SALDO_DE_VIRADA_{{DIA}}">{{ LINHAS.INDICADORES.SALDO_DE_VIRADA }}</td>
+                                    <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="SALDO_VIRADA" name="SALDO_DE_VIRADA_{{DIA}}">{{ LINHAS.INDICADORES.SALDO_DE_VIRADA }}</td>
                                     
                                     {% for SALDO in LINHAS.SALDO %}
-                                    <td>
+                                    <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="{{ forloop.counter0 }}" name="SALDO">
                                         {% if SALDO != 0%}
                                             {{ SALDO }}
                                         {% endif%}
@@ -234,7 +242,7 @@
 
                                     {% for PRODUTIVIDADE in LINHAS.PRODUTIVIDADE %}
 
-                                        <td  headers="{{ forloop.counter0 }}" class="PRODUTIVIDADE_{{FERROVIA}}" name="PRODUTIVIDADE">
+                                        <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="{{ forloop.counter0 }}" class="PRODUTIVIDADE_{{FERROVIA}}" name="PRODUTIVIDADE">
                                             {% if PRODUTIVIDADE != 0%}
                                                 {{ PRODUTIVIDADE }}
                                             {% endif%}
@@ -244,22 +252,6 @@
 
                                 </tr>
                         
-                                <tr name="LINHA_PRODUTIVIDADE" class="LINHA_PRODUTIVIDADE_{{FERROVIA}}">
-
-                                    <td style="border: 1px black solid" colspan=3>OCUPACAO</td>
-
-                                    {% for OCUPACAO in LINHAS.OCUPACAO %}
-
-                                        <td style="border: 1px black solid" >
-                                            {% if OCUPACAO != 0%}
-                                                {{ OCUPACAO }}
-                                            {% endif%}
-                                        </td>
-
-                                    {% endfor %}
-
-                                </tr>
-
                         {% endfor %}
     
                     {% endfor %}
@@ -267,42 +259,47 @@
                     <tr class="LINHAS_TOTAIS_PEDRAS">
 
                         <td colspan="5"></td>
-                        <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P1 }}</td>
-                        <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P1 }}</td>
-                        <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P1 }}</td>
-                        <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P1 }}</td>
+                        <td class="TOTAL_FERROVIA_RUMO" data-periodo="1">   {{ DESCARGA.INDICADORES.PEDRAS.RUMO.P1  }}</td>
+                        <td class="TOTAL_FERROVIA_MRS"  data-periodo="1">   {{ DESCARGA.INDICADORES.PEDRAS.MRS.P1   }}</td>
+                        <td class="TOTAL_FERROVIA_VLI"  data-periodo="1">   {{ DESCARGA.INDICADORES.PEDRAS.VLI.P1   }}</td>
+                        <td class="TITLO_TOTAIS"        data-periodo="1">   {{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P1 }}</td>
 
                         <td  colspan="2"></td>
-                        <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P2 }}</td>
-                        <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P2 }}</td>
-                        <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P2 }}</td>
-                        <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P2 }}</td>
+                        <td class="TOTAL_FERROVIA_RUMO" data-periodo="2">   {{ DESCARGA.INDICADORES.PEDRAS.RUMO.P2  }}</td>
+                        <td class="TOTAL_FERROVIA_MRS"  data-periodo="2">   {{ DESCARGA.INDICADORES.PEDRAS.MRS.P2   }}</td>
+                        <td class="TOTAL_FERROVIA_VLI"  data-periodo="2">   {{ DESCARGA.INDICADORES.PEDRAS.VLI.P2   }}</td>
+                        <td class="TITLO_TOTAIS"        data-periodo="2">   {{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P2 }}</td>
 
                         <td  colspan="2"></td>
-                        <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P3 }}</td>
-                        <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P3 }}</td>
-                        <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P3 }}</td>
-                        <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P3 }}</td>
+                        <td class="TOTAL_FERROVIA_RUMO" data-periodo="3">   {{ DESCARGA.INDICADORES.PEDRAS.RUMO.P3  }}</td>
+                        <td class="TOTAL_FERROVIA_MRS"  data-periodo="3">   {{ DESCARGA.INDICADORES.PEDRAS.MRS.P3   }}</td>
+                        <td class="TOTAL_FERROVIA_VLI"  data-periodo="3">   {{ DESCARGA.INDICADORES.PEDRAS.VLI.P3   }}</td>
+                        <td class="TITLO_TOTAIS"        data-periodo="3">   {{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P3 }}</td>
 
                         <td  colspan="2"></td>
-                        <td class="TOTAL_FERROVIA_RUMO">{{ DESCARGA.INDICADORES.PEDRAS.RUMO.P4 }}</td>
-                        <td class="TOTAL_FERROVIA_MRS">{{ DESCARGA.INDICADORES.PEDRAS.MRS.P4 }}</td>
-                        <td class="TOTAL_FERROVIA_VLI">{{ DESCARGA.INDICADORES.PEDRAS.VLI.P4 }}</td>
-                        <td class="TITLO_TOTAIS">{{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P4 }}</td>
+                        <td class="TOTAL_FERROVIA_RUMO" data-periodo="4">   {{ DESCARGA.INDICADORES.PEDRAS.RUMO.P4  }}</td>
+                        <td class="TOTAL_FERROVIA_MRS"  data-periodo="4">   {{ DESCARGA.INDICADORES.PEDRAS.MRS.P4   }}</td>
+                        <td class="TOTAL_FERROVIA_VLI"  data-periodo="4">   {{ DESCARGA.INDICADORES.PEDRAS.VLI.P4   }}</td>
+                        <td class="TITLO_TOTAIS"        data-periodo="4">   {{ DESCARGA.INDICADORES.PEDRAS.TOTAL.P4 }}</td>
 
                     </tr>
 
                     {% if DESCARGA.POSSUI_RESTRICAO %} 
                         
                         <tr class="LINHA_MOTIVO">
-                            <td colspan=3>MOTIVO: </td>
+                            <td colspan=3 rowspan="2" class="EXCLAMACAO_RESTRICAO">
+                                <svg fill="#F7931E" height="50px" width="50px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-24.86 -24.86 360.53 360.53" xml:space="preserve" stroke="#F7931E" stroke-width="6.21612">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier"> <path d="M305.095,229.104L186.055,42.579c-6.713-10.52-18.172-16.801-30.652-16.801c-12.481,0-23.94,6.281-30.651,16.801 L5.711,229.103c-7.145,11.197-7.619,25.39-1.233,37.042c6.386,11.647,18.604,18.883,31.886,18.883h238.079 c13.282,0,25.5-7.235,31.888-18.886C312.714,254.493,312.24,240.301,305.095,229.104z M155.403,253.631 c-10.947,0-19.82-8.874-19.82-19.82c0-10.947,8.874-19.821,19.82-19.821c10.947,0,19.82,8.874,19.82,19.821 C175.223,244.757,166.349,253.631,155.403,253.631z M182.875,115.9l-9.762,65.727c-1.437,9.675-10.445,16.353-20.119,14.916 c-7.816-1.161-13.676-7.289-14.881-14.692l-10.601-65.597c-2.468-15.273,7.912-29.655,23.185-32.123 c15.273-2.468,29.655,7.912,32.123,23.185C183.284,110.192,183.268,113.161,182.875,115.9z"></path> </g>
+                                </svg>
+                            </td>
                             
                             {% for MOTIVO in DESCARGA.RESTRICAO_MOTIVO %}
                             
                                 {% if MOTIVO != 0%}
                                     <td class="RESTRICAO_ATIVA">{{MOTIVO}} </td>
                                 {% else %}
-                                    <td></td>
+                                    <td>.</td>
                                 {% endif%}
                             
                             {% endfor %}
@@ -310,14 +307,13 @@
                         </tr>
                         
                         <tr class="LINHA_PCT">
-                            <td colspan=3>PCT: </td>
-                            
+                         
                             {% for RESTRICAO in DESCARGA.RESTRICAO_PCT %}
                             
                                 {% if RESTRICAO != 0%}
-                                    <td class="RESTRICAO_ATIVA">{{RESTRICAO}} </td>
+                                    <td class="RESTRICAO_ATIVA">{{RESTRICAO}}</td>
                                 {% else %}
-                                    <td></td>
+                                    <td>.</td>
                                 {% endif%}
                         
                             {% endfor %}
@@ -343,7 +339,7 @@
         </div>
         
     {% endif %}
-    <!--uma tabela de descarga-->
+    <!--#endregion-->
 
 </div>
 
@@ -353,12 +349,15 @@
 
     document.body.addEventListener('keypress', function(e) {
 
+        
+        
         if ((MODO_EDICAO === true) && (e.which === 13) && (NOVO_VALOR != "")){
 
             PARAMETROS_EDITADOS["VALOR"] = NOVO_VALOR
-
+            console.log(`PARAMETROS EDITADOS ${JSON.stringify(PARAMETROS_EDITADOS)}`)
             $.ajax({
-                url: '{% url 'navegacao' %} ',
+
+                url: '{% url "navegacao" %} ',
                 type: 'POST',
                 data: {
                     'ACAO'      : "EDITAR_PRODUTIVIDADE",
@@ -370,14 +369,15 @@
                     'VALOR'     :  PARAMETROS_EDITADOS["VALOR"],
                     'csrfmiddlewaretoken': "{{ csrf_token }}"
                 },
-                success: function(response) {
+                success: function(DESCARGAS) {
 
-                    location.reload();
+                    ATUALIZAR_DESCARGA(DESCARGAS);
 
                 },
                 error: function(xhr) {
                     alert("ERRO")
                 }
+
             });
         }
 
@@ -386,7 +386,7 @@
             PARAMETROS_EDITADOS["VALOR"] = NOVO_VALOR
 
             $.ajax({
-                url: '{% url 'navegacao' %} ',
+                url: '{% url "navegacao" %} ',
                 type: 'POST',
                 data: {
                     'ACAO'      : "EDITAR_SALDO_DE_VIRADA",
@@ -415,7 +415,7 @@
             PARAMETROS_EDITADOS["VALOR"] = NOVO_VALOR
 
             $.ajax({
-                url: '{% url 'navegacao' %} ',
+                url: '{% url "navegacao" %} ',
                 type: 'POST',
                 data: {
                     'ACAO'      : "EDITAR_CONSTANTE_PRODUTIVIDADE",
