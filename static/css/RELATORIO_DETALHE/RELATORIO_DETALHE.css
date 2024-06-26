@@ -1,5 +1,5 @@
 table{ 
-    border: 1px black solid; 
+
     border-collapse: collapse;
 }
 table  th{border:     1px black solid}
@@ -21,7 +21,7 @@ body{
 
 }
 .NOME__TERMINAL{ 
-
+    border: 1px black solid;
     min-width: 6rem;
     text-align: left;
 }
@@ -39,8 +39,7 @@ body{
     background-color: var(--cinza-chumbo-c);
     border-left: 1px solid black; 
     border-right: 1px solid black;
-    border-top: none;
-    border-bottom: none;
+
 }
 
 .TOTAL_TOTAL0,.TOTAL_TOTAL2, .TOTAL_TOTAL4{ 
@@ -120,3 +119,13 @@ body{
 
     width: 20%;
 }
+
+.PULA_LINHA{
+    color:transparent;
+    border-top: 1px black solid !important;
+    border-bottom: 1px black solid !important;
+}
+
+.border_bottom{ border-bottom: 1px black solid ;}
+
+.border_top{ border-top: 1px black solid ;}

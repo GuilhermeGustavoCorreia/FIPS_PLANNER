@@ -43,7 +43,7 @@ class SUBIDA_DE_VAZIOS:
         #SALVANDO AS TABELAS
         for DATA_ARQ in self.TERMIAIS_VAZIOS.keys():
                 with open(os.path.join(DIRETORIO_TABELA_VAZIOS, f'GERACAO_VAZIO_{DATA_ARQ}.json'), 'w') as ARQUIVO_NOME:
-                            json.dump(self.TERMIAIS_VAZIOS[DATA_ARQ], ARQUIVO_NOME, indent=4)
+                    json.dump(self.TERMIAIS_VAZIOS[DATA_ARQ], ARQUIVO_NOME, indent=4)
 
         #SALVANSO AS LINHAS
         DIRETORIO_LINHAS = "previsao_trens/src/OPERACAO/LINHAS_VAZIOS"
@@ -868,6 +868,7 @@ class SUBIDA_DE_VAZIOS:
                     "MIN":      ALIVIO["MIN"],
                     "MAX":      ALIVIO["MAX"]
                 }
+                
                 TABELA_DE_ALIVIOS.loc[len(TABELA_DE_ALIVIOS)] = NOVA_LINHA
 
             if len(TABELA_DE_ALIVIOS) == 0: return None
@@ -925,7 +926,8 @@ class SUBIDA_DE_VAZIOS:
                     TIPO_DESC_SELECIONADO["VAGOES"] = TIPO_DESC_SELECIONADO["VAGOES_NESC."]
                 
                 else: 
-                     return None
+                    
+                    return None
 
 
 
@@ -1304,6 +1306,7 @@ class SUBIDA_DE_VAZIOS:
 
 
                 else:
+
                     QUANTOS_VAGOES_ESTAO_NA_LINHA = 0
 
                 QUANTOS_VAGOES_A_LINHA_PRECISA  = QUANTOS_VAGOES_FORMAM_UM_TREM - QUANTOS_VAGOES_ESTAO_NA_LINHA
@@ -1334,7 +1337,7 @@ class SUBIDA_DE_VAZIOS:
 
                                 __ATUALIZAR_SALDO__("DIREITA", "PCX", TERMINAL, SEGMENTO, FERROVIA, i)
                                 
-                                #AQUI DENTRO ESTAMOS EM UM INSTANTE TAL DENTRO DE UM TERMINAL
+                                # AQUI DENTRO ESTAMOS EM UM INSTANTE TAL DENTRO DE UM TERMINAL
                                 # PARA ANALIZAR QUE DECISÃO TOMAR
                                 # VAMOS VERIFICAR COMO ESTA O TERMINAL
 
@@ -2149,9 +2152,9 @@ class SUBIDA_DE_VAZIOS:
                             __ATUALIZAR_SALDO_LINHA_PCZ__(LINHA, FERROVIA)               
   
        
-        __CALCULAR_MARGEM_DIREITA__()
+        #__CALCULAR_MARGEM_DIREITA__()
 
-        __CALCULAR_MARGEM_ESQUERDA__()
+        #__CALCULAR_MARGEM_ESQUERDA__()
 
     def __SEPARAR_FULL__(self):
 
@@ -2216,8 +2219,7 @@ class SUBIDA_DE_VAZIOS:
                                 for ITEM in ITENS_CALCULADOS:
                                     LISTAS[MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA][ITEM] = [self.FULL_TABLE[MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA][ITEM][i:i + 24] for i in range(0, len(self.FULL_TABLE[MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA][ITEM]), 24)]
 
-       
-
+    
         for index, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
             for MARGEM in self.TERMIAIS_VAZIOS[DATA_ARQ]:
                 for PATIO in self.TERMIAIS_VAZIOS[DATA_ARQ][MARGEM]:
@@ -2268,7 +2270,7 @@ def editarSaldoViradaVazios(PARAMETROS):
 
 def editarSaldoViradaVaziosNaLinha(PARAMETROS): 
 
-    PERIODO_VIGENTE   = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
+    PERIODO_VIGENTE   = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", encoding='utf-8-sig', sep=';', index_col=0)
     PERIODO_VIGENTE   = PERIODO_VIGENTE.drop(PERIODO_VIGENTE.index[0])
     LISTA_DATA_ARQ    = PERIODO_VIGENTE["DATA_ARQ"].tolist()
     DATA_ARQ          = LISTA_DATA_ARQ[0]

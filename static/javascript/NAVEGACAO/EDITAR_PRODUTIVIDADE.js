@@ -15,6 +15,8 @@ var PARAMETROS_EDITADOS = {
 
 let SENTIDO_SELECAO = ""
 
+let NOVA_SELECAO = []
+
 //#region PARA AO ATUALIZAR NAO VOLTAR AO INICIO DA PAGINA
 
 window.addEventListener('load', function() {
@@ -41,16 +43,24 @@ window.addEventListener('load', function() {
 
 //#endregion
 
-
 //#region FUNCOES INTERNAS
 function LIMPAR_SELECOES(){
 
-    PARAMETROS_EDITADOS = {
+
+    var CELULAS_SELECIONADAS    = document.querySelectorAll('.CELULA_SELECIONADA');
+    var CELULAS_PRIMEIRA        = document.querySelectorAll('.PRIMEIRA');
+    var CELULAS_ULTIMA          = document.querySelectorAll('.ULTIMA');
+    
+    CELULAS_PRIMEIRA.forEach(function(CELULA)       {CELULA.classList.remove('PRIMEIRA');});
+    CELULAS_ULTIMA.forEach(function(CELULA)         {CELULA.classList.remove('ULTIMA');});
+    CELULAS_SELECIONADAS.forEach(function(CELULA)   {CELULA.classList.remove('CELULA_SELECIONADA');});
+
+    /*PARAMETROS_EDITADOS = {
         "TERMINAL": "",
         "DATA_ARQ": "",
         "CELULAS" : [],
         "VALOR"   : 0
-    }
+    }*/
 
 
     let LINHA_PRODUTIVIDADE = document.getElementById('LINHA_EM_EDICAO')
@@ -60,8 +70,8 @@ function LIMPAR_SELECOES(){
 }
 
 function DESENHAR_BORDA(CELULAS_INCICES){
-
-    var CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
+    
+    /*var CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
 
     var CELULAS_PRIMEIRA = document.querySelectorAll('.PRIMEIRA');
     
@@ -77,15 +87,28 @@ function DESENHAR_BORDA(CELULAS_INCICES){
 
     CELULAS_SELECIONADAS.forEach(function(CELULA) {
         CELULA.classList.remove('CELULA_SELECIONADA');
+    });*/
+
+    CELULAS_INCICES.forEach(function(INDICE) {
+        
+        let CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE }"]` )
+
+        if (CELULA) {
+            CELULA.classList.remove('CELULA_SELECIONADA');
+            CELULA.classList.remove('PRIMEIRA');
+            CELULA.classList.remove('ULTIMA');
+        } 
+
     });
 
     CELULAS_INCICES.forEach(function(INDICE) {
         let CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE }"]` )
-        CELULA.classList.add('CELULA_SELECIONADA');
+        if (CELULA) {CELULA.classList.add('CELULA_SELECIONADA');} 
     });
 
     let INDICE_PRIMEIRA = Math.min(...CELULAS_INCICES);
     let PRIMEIRA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE_PRIMEIRA }"]` )
+
 
     let INDICE_ULTIMA = Math.max(...CELULAS_INCICES);
     let ULTIMA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE_ULTIMA }"]` )
@@ -100,6 +123,7 @@ function DESENHAR_BORDA(CELULAS_INCICES){
 }
 //#endregion
 
+let ctrlPressed = false
 
 document.body.addEventListener('mousedown', async function(event) {
    
@@ -112,7 +136,7 @@ document.body.addEventListener('mousedown', async function(event) {
     EDITAR_PRODUTIVIADE = false
 
     //CLICANDO NA CÉLULA DE PRODUTIVIDADE   
-    if (CELULA_SELECIONADA.getAttribute('name') === "PRODUTIVIDADE"){
+    if (CELULA_SELECIONADA.getAttribute('name') === "PRODUTIVIDADE" && ctrlPressed === false){
 
         LIMPAR_SELECOES()
 
@@ -126,11 +150,26 @@ document.body.addEventListener('mousedown', async function(event) {
         PARAMETROS_EDITADOS["PRODUTO"]  = FERROVIA_PRODUTO[0]
         PARAMETROS_EDITADOS["FERROVIA"] = FERROVIA_PRODUTO[1]
         
+        PARAMETROS_EDITADOS["CELULAS"] = []
         PARAMETROS_EDITADOS["CELULAS"][0] = CELULA_SELECIONADA.getAttribute('headers')
+
+        NOVA_SELECAO = [CELULA_SELECIONADA.getAttribute('headers')]
+        
 
         LINHA_PRODUTIVIDADE.id = 'LINHA_EM_EDICAO';  
         
-        DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+        DESENHAR_BORDA(NOVA_SELECAO)
+
+    }
+
+    else if(CELULA_SELECIONADA.getAttribute('name') === "PRODUTIVIDADE" && ctrlPressed === true){
+
+        let POSICAO_CELULA = CELULA_SELECIONADA.getAttribute('headers')
+        PARAMETROS_EDITADOS["CELULAS"].push(POSICAO_CELULA);
+
+
+        NOVA_SELECAO = [POSICAO_CELULA];
+        DESENHAR_BORDA(NOVA_SELECAO)
 
     }
 
@@ -173,13 +212,12 @@ document.body.addEventListener('mousedown', async function(event) {
 
         PARAMETROS_EDITADOS["PRODUTO"]  = CELULA_SELECIONADA.dataset.produto
         PARAMETROS_EDITADOS["FERROVIA"] = CELULA_SELECIONADA.dataset.ferrovia
-        
+
         PARAMETROS_EDITADOS["CELULAS"][0] = ""
 
         CELULA_SELECIONADA.classList.add('CELULA_SELECIONADA');
         CELULA_SELECIONADA.classList.add('ULTIMA');
         CELULA_SELECIONADA.classList.add('PRIMEIRA');
-
         
     }
 
@@ -189,7 +227,7 @@ document.body.addEventListener('mousedown', async function(event) {
         MODO_EDICAO = false; 
         DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"]) 
 
-    }//NÃO É CÉLULA DE PRODUTIVIDADE
+    }   //NÃO É CÉLULA DE PRODUTIVIDADE
 
 })
 
@@ -204,7 +242,8 @@ document.body.addEventListener('mouseover', async function(event) {
     if(MOUSE_PRESSIONADO && MODO_EDICAO && ESTA_NA_MESMA_LINHA && CELULA_DE_PRODUTIVIDADE){
         
         let POSICAO_CELULA = CELULA_SELECIONADA.getAttribute('headers')
-        console.log(`${PARAMETROS_EDITADOS["CELULAS"][0]} > ${POSICAO_CELULA}`)
+
+        //DEFININDO O SENTIDO DA SELEÇÃO [ESQUERDA OU DIREITA]
         if (PARAMETROS_EDITADOS["CELULAS"].length === 1){
             
             if (PARAMETROS_EDITADOS["CELULAS"][0] >  POSICAO_CELULA) {SENTIDO_SELECAO = "ESQUERDA";}
@@ -213,21 +252,34 @@ document.body.addEventListener('mouseover', async function(event) {
         
         if (SENTIDO_SELECAO === `DIREITA`){
 
-            if (POSICAO_CELULA == Math.max(...PARAMETROS_EDITADOS["CELULAS"]) + 1){
+            if (POSICAO_CELULA == Math.max(...NOVA_SELECAO) + 1){
 
                 PARAMETROS_EDITADOS["CELULAS"].push(POSICAO_CELULA);
-                DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+                NOVA_SELECAO.push(POSICAO_CELULA)
+
+                DESENHAR_BORDA(NOVA_SELECAO)
             }
-            if (POSICAO_CELULA == Math.max(...PARAMETROS_EDITADOS["CELULAS"]) - 1){ //REMOVER ULTIMA CELULA POIS VOLTAMOS UMA CÉLULA PARA TRÁS
+
+
+            if (POSICAO_CELULA == Math.max(...NOVA_SELECAO) - 1){ //REMOVER ULTIMA CELULA POIS VOLTAMOS UMA CÉLULA PARA TRÁS
             
 
-            var POSICAO_ULTIMA_CELULA =  Math.max(...PARAMETROS_EDITADOS["CELULAS"]);
+                var POSICAO_ULTIMA_CELULA = Math.max(...NOVA_SELECAO);
+                
+                let POSICAO_ULTIMA_CELULA_PARAM = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
+                let POSICAO_ULTIMA_CELULA_NOVA  = NOVA_SELECAO.indexOf(POSICAO_ULTIMA_CELULA);
 
+                //REMOVENDO ITEM DA LISTA  
+                NOVA_SELECAO.splice(POSICAO_ULTIMA_CELULA_NOVA, 1); 
+                PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA_PARAM, 1); 
 
-            POSICAO_ULTIMA_CELULA = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
-            PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA, 1); //REMOVENDO ITEM DA LISTA  
-            
-            DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
+                //REMOVENDO BORDA 
+                let ULTIMA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ POSICAO_ULTIMA_CELULA }"]` )
+                ULTIMA_CELULA.classList.remove('CELULA_SELECIONADA');
+                ULTIMA_CELULA.classList.remove('ULTIMA');
+
+                
+                DESENHAR_BORDA(NOVA_SELECAO)
             }
         
         }
@@ -245,8 +297,18 @@ document.body.addEventListener('mouseover', async function(event) {
             
                 var POSICAO_ULTIMA_CELULA =  Math.min(...PARAMETROS_EDITADOS["CELULAS"]);
 
-                POSICAO_ULTIMA_CELULA = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
-                PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA, 1); //REMOVENDO ITEM DA LISTA
+                let POSICAO_ULTIMA_CELULA_PARAM = PARAMETROS_EDITADOS["CELULAS"].indexOf(POSICAO_ULTIMA_CELULA);
+                let POSICAO_ULTIMA_CELULA_NOVA  = NOVA_SELECAO.indexOf(POSICAO_ULTIMA_CELULA);
+
+                //REMOVENDO ITEM DA LISTA  
+                NOVA_SELECAO.splice(POSICAO_ULTIMA_CELULA_NOVA, 1); 
+                PARAMETROS_EDITADOS["CELULAS"].splice(POSICAO_ULTIMA_CELULA_PARAM, 1); 
+
+                //REMOVENDO BORDA 
+                let ULTIMA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ POSICAO_ULTIMA_CELULA }"]` )
+                ULTIMA_CELULA.classList.remove('CELULA_SELECIONADA');
+                ULTIMA_CELULA.classList.remove('PRIMEIRA');
+
 
                 DESENHAR_BORDA(PARAMETROS_EDITADOS["CELULAS"])
     
@@ -260,7 +322,6 @@ document.body.addEventListener('mouseup', function() {
     if(MOUSE_PRESSIONADO){MOUSE_PRESSIONADO = false}
   
 });
-
 
 document.addEventListener('keydown', async function (event) {
   
@@ -285,20 +346,25 @@ document.addEventListener('keydown', async function (event) {
     //AO APAGAR UM DIGITO
     if (event.key === 'Backspace') {
 
-        NOVO_VALOR =  NOVO_VALOR.slice(0, -1)
+        NOVO_VALOR = NOVO_VALOR.slice(0, -1)
         
         CELULAS_SELECIONADAS.forEach(function(elemento) {
             elemento.innerText = "";
         });
+
         CELULAS_SELECIONADAS.forEach(function(elemento) {
             elemento.innerText = NOVO_VALOR;
         });
-    }
-  
-    if (event.key === "Escape") {
-        LIMPAR_SELECOES()
-    }
-  
 
+    }
+  
+    if (event.key === "Escape") { LIMPAR_SELECOES()  }
+    if ( event.ctrlKey )        { ctrlPressed = true }
+  
 });
 
+document.addEventListener('keyup', function(event) {
+    
+    if (!event.ctrlKey) { ctrlPressed = false }
+
+})

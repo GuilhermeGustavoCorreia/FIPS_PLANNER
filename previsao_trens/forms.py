@@ -85,20 +85,22 @@ class TremVazioForm(forms.ModelForm):
         widgets = {
 
             'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
-            'vagoes':       NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
+            
             'eot':          TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'EOT'}),
             
-            'ferrovia':     RadioSelect(attrs={'name': 'ferrovia'}),
+            'ferrovia':     RadioSelect(attrs={'name': 'ferrovia', 'onclick': 'ATUALIZAR_VAGOES()'}),
 
-            'loco_1':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 01'}),
-            'loco_2':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 02'}),
-            'loco_3':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 03'}),
-            'loco_4':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 04'}),
-            'loco_5':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Loco 05'}),
+            'loco_1':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 01'}),
+            'loco_2':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 02'}),
+            'loco_3':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 03'}),
+            'loco_4':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 04'}),
+            'loco_5':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 05'}),
 
-            'segmento_01':   Select(choices=[("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
-            'segmento_02':   Select(choices=[("", ""), ("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
-            'segmento_03':   Select(choices=[("", ""), ("VAZIO", "VAZIO"), ("FERTILIZANTE", "FERTILIZANTE")],    attrs={'class': 'INPUT INPUT_P'}),
+            'qt_graos':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'GRAO',            'placeholder': 'Grãos', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_ferti':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'FERTILIZANTE',    'placeholder': 'Ferti', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_celul':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE',        'placeholder': 'Celulose', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_acuca':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR',          'placeholder': 'Açúcar', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_contei':      NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER',       'placeholder': 'Conteiner', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
 
             'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}, format='%Y-%m-%dT%H:%M'),
             'margem':       RadioSelect(attrs={'name': 'margem'})
@@ -108,6 +110,23 @@ class TremVazioForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         
         super(TremVazioForm, self).__init__(*args, **kwargs)
-        self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
+        self.fields['ferrovia'].choices = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
         self.fields['margem'].choices   = [('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')]
+
+        # Definindo o valor inicial para 'ferrovia' como 'RUMO'
+        self.initial['ferrovia'] = 'RUMO'
+
+        # Tornando os campos específicos não obrigatórios
+        self.fields['loco_2'].required      = False
+        self.fields['loco_3'].required      = False
+        self.fields['loco_4'].required      = False
+        self.fields['loco_5'].required      = False
+        self.fields['qt_graos'].required    = False
+        self.fields['qt_ferti'].required    = False
+        self.fields['qt_celul'].required    = False
+        self.fields['qt_acuca'].required    = False
+        self.fields['qt_contei'].required   = False
+
+        self.fields['previsao'].required    = False
+        self.fields['margem'].required      = False
 

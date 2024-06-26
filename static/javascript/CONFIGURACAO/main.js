@@ -16,6 +16,13 @@ $(document).ready(function(){
   });
 });
 
+$(document).ready(function(){
+  $("#SECAO_SUBIDAS_ATIVAS").click(function(){
+
+    $("#CONTEUDO_SUBIDAS_ATIVAS").slideToggle();
+
+  });
+});
 
 class mudarElemento {
 
@@ -27,7 +34,7 @@ class mudarElemento {
   }
 
   para_textBox() {
-
+      
       var textBox = document.createElement('input');
       
       textBox.className = 'INPUT';
@@ -35,49 +42,70 @@ class mudarElemento {
       textBox.type = 'text';
       textBox.placeholder = this.valor_original;
       
-      this.elemento.classList.add("BORDA_VERDE")
+      this.elemento.classList.add("BORDA_VERDE");
 
       this.elemento.innerHTML = '';
-      this.elemento.appendChild(textBox)
+      this.elemento.appendChild(textBox);
 
       return textBox
 
   }
 
-  voltar_ao_nomral(){
-      this.elemento.classList.remove("BORDA_VERDE")
+  voltar_ao_nomral() {
+      this.elemento.classList.remove("BORDA_VERDE");
       this.elemento.innerHTML = this.valor_original;
   }
 
 }
 
-var editando_celula = false;
-var elementoTransformado = null;
-var tbEdicao = null
-var celula_selecionada = null;
+var editando_celula       = false;
+var elementoTransformado  = null;
+var tbEdicao              = null
+var celula_selecionada    = null;
+var ACAO                  = null;
 
 var NOVO_VALOR = null
 
-
+var FERROVIA = null;
+var TERMINAL = null;
 
 function celula_modo_edicao(celula_selecionada){
 
-  if      ((editando_celula === false) && (celula_selecionada.tagName === "TD"))
+  //DESCARGAS_ATIVAS
+  if      ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "DESCARGAS_ATIVAS"))
   {
+      ACAO = "DESCARGAS_ATIVAS"
       elementoTransformado = new mudarElemento(celula_selecionada);
       tbEdicao = elementoTransformado.para_textBox();
       tbEdicao.focus();
       editando_celula = true;
   }
-  else if ((editando_celula === true) && (celula_selecionada.tagName === "TD"))  
+  else if ((editando_celula === true) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "DESCARGAS_ATIVAS"))  
   {
+      ACAO = "DESCARGAS_ATIVAS"
       tbEdicao = elementoTransformado.voltar_ao_nomral();
       elementoTransformado = new mudarElemento(celula_selecionada);
       tbEdicao = elementoTransformado.para_textBox();
 
   }
+
+  //SUBIDAS_ATIVAS
+  else if ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "SUBIDAS_ATIVAS"))
+  {
+      ACAO = "SUBIDAS_ATIVAS"
+      elementoTransformado = new mudarElemento(celula_selecionada);
+      tbEdicao = elementoTransformado.para_textBox();
+      tbEdicao.focus();
+      editando_celula = true;
+
+      FERROVIA = celula_selecionada.dataset.ferrovia
+      TERMINAL = celula_selecionada.dataset.terminal
+  }
+
+
   else if ((editando_celula === true) && (celula_selecionada.tagName !== "INPUT") )  
   {
+      ACAO = null
       tbEdicao = elementoTransformado.voltar_ao_nomral();
       editando_celula = false;
 

@@ -30,26 +30,29 @@
         <h2  id="SECAO_DESCARGAS_ATIVAS"    class="SECAO_CONFIGURACAO">Descargas Ativas</h2>
         <div id="CONTEUDO_DESCARGAS_ATIVAS" class="CONTEUDO_CONFIGURACAO">
                 
-            {% for PRODUTO, CONTEUDO in terminais_ativos.items %}
+            {% for PRODUTO, CONTEUDO in terminais_ativos.DESCARGAS_ATIVAS.items %}
                 
                 <h3>{{PRODUTO}}</h3>
                 <table id="DESCARGAS_ATIVAS.csv" class="TABELA_DESCARGAS_ATIVAS">
+
                     <thead>
                         <th></th>
                         <th>RUMO</th>
                         <th>MRS</th>
                         <th>VLI</th>
                     </thead>
+
                     <tbody>
+
                         {% for terminal, item in CONTEUDO.items %} 
                         <tr>
-                            
-                            <th >{{ terminal }}</th>
-                            <td class="EDITAVEL" headers = "RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
-                            <td class="EDITAVEL" headers = "MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
-                            <td class="EDITAVEL" headers = "VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
+                            <th>{{ terminal }}</th>
+                            <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
+                            <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
+                            <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
                         </tr>
-                        {% endfor %} 
+                        {% endfor %}
+
                     </tbody>
                 </table>    
                 
@@ -57,6 +60,36 @@
                 <br>
             
             {% endfor %}
+        </div>
+    </section>
+    
+    <section>
+        <h2  id="SECAO_SUBIDAS_ATIVAS"    class="SECAO_CONFIGURACAO">Subidas Ativas</h2>
+        <div id="CONTEUDO_SUBIDAS_ATIVAS" class="CONTEUDO_CONFIGURACAO">
+
+            <table id="DESCARGAS_ATIVAS.csv" class="TABELA_DESCARGAS_ATIVAS">
+                <thead>
+                    <th></th>
+                    <th>RUMO</th>
+                    <th>MRS</th>
+                    <th>VLI</th>
+                </thead>
+                <tbody>
+
+                    {% for TERMINAL, CONTEUDO in terminais_ativos.SUBIDAS_ATIVAS.items %}
+                    <tr>
+                            
+                        <th >{{ TERMINAL }}</th>
+                        <td name="SUBIDAS_ATIVAS" class="EDITAVEL" data-ferrovia= "RUMO" data-terminal="{{ TERMINAL }}">{{ CONTEUDO.RUMO }}</td>
+                        <td name="SUBIDAS_ATIVAS" class="EDITAVEL" data-ferrovia= "MRS"  data-terminal="{{ TERMINAL }}">{{ CONTEUDO.MRS  }}</td>
+                        <td name="SUBIDAS_ATIVAS" class="EDITAVEL" data-ferrovia= "VLI"  data-terminal="{{ TERMINAL }}">{{ CONTEUDO.VLI  }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>                   
+
         </div>
     </section>
 
@@ -72,42 +105,66 @@
         </div>
     </section>
 
-
-  
-
-
 </div>
 
 <script>
     
     document.body.addEventListener('keypress', function(e) {
             
-        if ((editando_celula === true) && (e.which === 13)){
+        if ((editando_celula === true) && (e.which === 13) && (ACAO === "DESCARGAS_ATIVAS")){
 
             NOVO_VALOR = tbEdicao.value
 
-        $.ajax({
-            url: '/configuracao/',
-            type: 'POST',
-            data: {
-                'novo_valor':   Number(NOVO_VALOR),
-                'coluna':       celula_selecionada.getAttribute("headers"),
-                'linha':        celula_selecionada.id,
-                'tabela':       tbEdicao.parentNode.parentNode.parentNode.parentNode.id,
-                'ACAO': "EDITAR_CONFIGURACAO",
-                'csrfmiddlewaretoken': "{{ csrf_token }}"
-            },
-            success: function(response) {
+            $.ajax({
+                url: '/configuracao/',
+                type: 'POST',
+                data: {
+                    'novo_valor':   Number(NOVO_VALOR),
+                    'coluna':       celula_selecionada.getAttribute("headers"),
+                    'linha':        celula_selecionada.id,
+                    'tabela':       tbEdicao.parentNode.parentNode.parentNode.parentNode.id,
+                    'ACAO': "DESCARGAS_ATIVAS",
+                    'csrfmiddlewaretoken': "{{ csrf_token }}"
+                },
+                success: function(response) {
 
-                elementoTransformado.voltar_ao_nomral();
-                celula_selecionada.textContent = response;
-                editando_celula = false;
-            },
-            error: function(xhr) {
-                alert("ERRO")
-            }
-        });
-    }
+                    elementoTransformado.voltar_ao_nomral();
+                    celula_selecionada.textContent = response;
+                    editando_celula = false;
+                },
+                error: function(xhr) {
+                    alert("ERRO")
+                }
+            });
+
+        }
+        if ((editando_celula === true) && (e.which === 13) && (ACAO === "SUBIDAS_ATIVAS")){
+
+            NOVO_VALOR = tbEdicao.value
+
+            $.ajax({
+                url: '/configuracao/',
+                type: 'POST',
+                data: {
+
+                    'NOVO_VALOR':   NOVO_VALOR,
+                    'FERROVIA'  :   FERROVIA,
+                    'TERMINAL'  :   TERMINAL,
+                    'ACAO'      :   "SUBIDAS_ATIVAS",
+                    'csrfmiddlewaretoken': "{{ csrf_token }}"
+
+                },
+                success: function(response) {
+
+                    elementoTransformado.voltar_ao_nomral();
+                    celula_selecionada.textContent = response;
+                    editando_celula = false;
+                },
+                error: function(xhr) {
+                    alert("ERRO")
+                }
+            });
+        }
 });
 
 function ATUALIZAR_DESCARGA(){
@@ -119,12 +176,8 @@ function ATUALIZAR_DESCARGA(){
           'ACAO': "ATUALIZAR_DESCARGA",
           'csrfmiddlewaretoken': "{{ csrf_token }}"
       },
-      success: function(response) {
-        alert("FOI")
-      },
-      error: function(xhr) {
-          alert("ERRO")
-      }
+      success:  function(response)  {alert("FOI")},
+      error:    function(xhr)       {alert("ERR")}
   });
   
   }

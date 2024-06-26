@@ -102,9 +102,13 @@
 .PRIMEIRA           {border-left:  2px solid var(--verde-floresta-m)}
 .ULTIMA             {border-right: 2px solid var(--verde-floresta-m)}
 
-.LINHA_MOTIVO       {background-color: rgb(228, 228, 228);}
-.LINHA_PCT          {background-color: rgb(228, 228, 228)}
-.RESTRICAO_ATIVA    {border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e); font-weight: bold; color: var(--cinza-chumbo-e)}
+
+
+
+.EXCLAMACAO_RESTRICAO{ background: linear-gradient(to right, #961a1a, rgb(255, 183, 183));}
+.LINHA_MOTIVO       {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
+.LINHA_PCT          {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50)}
+.RESTRICAO_ATIVA    {/*border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e);*/ font-weight: bold; color: var(#961a1a)}
 
 
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/
