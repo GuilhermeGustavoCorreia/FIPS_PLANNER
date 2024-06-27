@@ -200,8 +200,8 @@
         ]
     ],
     "PEDRA": [
-        0,
-        0,
+        2,
+        2,
         0,
         0,
         0,
@@ -497,7 +497,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -882,7 +884,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -1267,7 +1271,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -1654,7 +1660,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -1895,8 +1903,8 @@
                     ]
                 ],
                 "SALDO": [
-                    0,
-                    0,
+                    4,
+                    2,
                     0,
                     0,
                     0,
@@ -1921,8 +1929,8 @@
                     0
                 ],
                 "PRODUTIVIDADE": [
-                    0,
-                    0,
+                    2,
+                    2,
                     0,
                     0,
                     0,
@@ -1973,8 +1981,8 @@
                     0
                 ],
                 "OCUPACAO": [
-                    0,
-                    0,
+                    101,
+                    101,
                     0,
                     0,
                     0,
@@ -2026,7 +2034,7 @@
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
-                    "SALDO_DE_VIRADA": 0,
+                    "SALDO_DE_VIRADA": 4,
                     "PRODUTIVIDADE": 0,
                     "RECEBIMENTOS": [
                         0,
@@ -2035,11 +2043,13 @@
                         0
                     ],
                     "PEDRA": [
-                        0,
+                        4,
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 4
                 },
                 "PEDRAS": [
                     0,
@@ -2049,8 +2059,8 @@
                 ],
                 "SUBIDA": {
                     "GERACAO_DE_VAZIOS": [
-                        0,
-                        0,
+                        4,
+                        6,
                         0,
                         0,
                         0,
@@ -2424,7 +2434,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -2811,7 +2823,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -3196,7 +3210,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -3581,7 +3597,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -3725,9 +3743,9 @@
         }
     },
     "INDICADORES": {
-        "TOTAL_SALDO": 0,
+        "TOTAL_SALDO": 4,
         "SALDO_DE_VIRADA_TOTAL": 0,
-        "TOTAL_PEDRA": 0,
+        "TOTAL_PEDRA": 4,
         "PEDRAS": {
             "RUMO": {
                 "P1": 0,
@@ -3736,7 +3754,7 @@
                 "P4": 0
             },
             "MRS": {
-                "P1": 0,
+                "P1": 4,
                 "P2": 0,
                 "P3": 0,
                 "P4": 0
@@ -3748,7 +3766,7 @@
                 "P4": 0
             },
             "TOTAL": {
-                "P1": 0,
+                "P1": 4,
                 "P2": 0,
                 "P3": 0,
                 "P4": 0

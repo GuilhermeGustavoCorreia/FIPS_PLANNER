@@ -8,7 +8,7 @@
 }
 
 body{
-    font-family: 'Saira Expanded';
+    font-family: 'Saira Expanded', Arial, sans-serif; 
     background-image: url('../imagens/background-login.jpeg');
     background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o corpo */
     background-repeat: no-repeat; 
@@ -60,7 +60,7 @@ p{margin-left: 5vw;  width: 15vw; margin-top: 0px}
 } 
 
 .form__email__linha,
-.form__senha__linha{        display: table-row; font-family: 'Saira Expanded';}
+.form__senha__linha{        display: table-row; font-family: 'Saira Expanded', Arial, sans-serif;}
 
 .form__email__linha label,
 .form__senha__linha label{text-align: left; padding-right: 1vw; }
@@ -82,7 +82,7 @@ p{margin-left: 5vw;  width: 15vw; margin-top: 0px}
 
     margin-top: 2vh;
 
-    font-family: 'Saira Expanded';
+    font-family: 'Saira Expanded', Arial, sans-serif;
     font-weight: 600;
     background-color: #FFFF;
     border: none;

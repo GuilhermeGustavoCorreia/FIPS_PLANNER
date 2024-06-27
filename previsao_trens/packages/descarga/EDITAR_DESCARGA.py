@@ -158,7 +158,7 @@ class NAVEGACAO_DESCARGA:
 
                 DESCARGA_COMPLETA["SALDO"][i-1]         = SALDO_D0
                 DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = 0
-                DESCARGA_COMPLETA["ENCOSTE"][i-1]       = [0, 0]
+                #DESCARGA_COMPLETA["ENCOSTE"][i]       = [0, 0]
                 DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-1] = 0
                 DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-2] = 0
             
@@ -180,7 +180,7 @@ class NAVEGACAO_DESCARGA:
                     DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = DESCARGA_COMPLETA["SALDO"][i-1]
 
 
-            if i == 0:  SALDO = SALDO_D0
+            if i == 0:  SALDO = SALDO_D0 + DESCARGA_COMPLETA["ENCOSTE"][i][0]
             else:       SALDO = DESCARGA_COMPLETA["ENCOSTE"][i][0] + DESCARGA_COMPLETA["SALDO"][i-1] - DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1]
  
             if SALDO > 0 : DESCARGA_COMPLETA["SALDO"][i] = SALDO
@@ -258,6 +258,12 @@ class NAVEGACAO_DESCARGA:
                     self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][1] = sum(LINHA_PRODUTIVIDADE[ 6:12])
                     self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][2] = sum(LINHA_PRODUTIVIDADE[12:18])
                     self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][3] = sum(LINHA_PRODUTIVIDADE[18:  ])
+
+                    print(LINHA_ENCOSTE)
+                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_CHEGADA"] = sum(sublista[0] for sublista in LINHA_ENCOSTE)
+                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PEDRA"]   = sum(LINHA_PRODUTIVIDADE)
+
+
             #endregion
 
             #region OBTENDO OS INDICADORES TOTAIS (PERIODO POR FERROVIA)  
@@ -481,6 +487,14 @@ class NAVEGACAO_DESCARGA:
         self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
+
+        DESCARGAS = []
+
+        for DATA_ARQ in self.LISTA_DATA_ARQ:
+
+            DESCARGAS.append(self.DESCARGAS[DATA_ARQ])
+            
+        return DESCARGAS
 
     def EDITAR_RESTRICAO(self, RESTRICAO, ACAO):
         

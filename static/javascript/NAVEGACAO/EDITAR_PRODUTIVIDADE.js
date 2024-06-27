@@ -46,7 +46,8 @@ window.addEventListener('load', function() {
 //#region FUNCOES INTERNAS
 function LIMPAR_SELECOES(){
 
-
+    MODO_EDICAO = false
+    EDITAR_SALDO_VIRADA = false;
     var CELULAS_SELECIONADAS    = document.querySelectorAll('.CELULA_SELECIONADA');
     var CELULAS_PRIMEIRA        = document.querySelectorAll('.PRIMEIRA');
     var CELULAS_ULTIMA          = document.querySelectorAll('.ULTIMA');
@@ -174,7 +175,7 @@ document.body.addEventListener('mousedown', async function(event) {
     }
 
     else if(CELULA_SELECIONADA.getAttribute('name') === "SALDO_DE_VIRADA_D"){
-
+        MODO_EDICAO = false
         EDITAR_SALDO_VIRADA = true
         NOVO_VALOR_SALDO = ""
         

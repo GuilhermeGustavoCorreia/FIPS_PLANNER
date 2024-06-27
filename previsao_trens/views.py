@@ -52,6 +52,8 @@ def navegacao(request):
             REQUISICAO =  dict(request.POST)
             ACAO = REQUISICAO["ACAO"][0]
 
+            print(f"REQUISICAO {REQUISICAO}")
+
             if ACAO == "EDITAR_PRODUTIVIDADE":
 
                 PARAMETROS = {
@@ -62,6 +64,7 @@ def navegacao(request):
                     'CELULAS'   :   [int(valor) for valor in REQUISICAO['CELULAS[]']], #EM ACAO=="EDITAR_SALDO_DE_VIRADA" ISTO NAO É USADO.
                     'VALOR'     :   int(REQUISICAO['VALOR'][0]),      
                 }
+
                     
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
                 DESCARGAS = Descarga.EDITAR_PRODUTIVIDADE(PARAMETROS)
@@ -81,7 +84,9 @@ def navegacao(request):
                 }
 
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
-                Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)
+                DESCARGAS = Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)
+
+                return JsonResponse(DESCARGAS, safe=False)
 
             if ACAO == "EDITAR_CONSTANTE_PRODUTIVIDADE":
 
@@ -613,7 +618,7 @@ def configuracao(request):
                 "COLUNA":       request.POST.get('coluna',      0),
                 "TABELA":       request.POST.get('tabela',      0),
             }
-
+            print(PARAMETROS)
 
             return HttpResponse(EDITAR_PARAMETROS(PARAMETROS))
 
@@ -783,27 +788,31 @@ def previsao_subida(request):
             print(TREM_ANTIGO)
 
             DATA_ARQ = TREM_ANTIGO.previsao.strftime("%Y-%m-%d")
+            try:
+                PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+                LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
+                DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
+                
+                PARAMETROS = {
 
-            PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-            LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
-            DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
-            
-            PARAMETROS = {
+                            "PREFIXO"       : 0,
+                            "FERROVIA"      : TREM_ANTIGO.ferrovia,
+                            "HORA"          : TREM_ANTIGO.previsao.hour,
+                            "MARGEM"        : TREM_ANTIGO.margem,
+                            "DIA_LOGISTICO" : DIA_LOGISTICO,
+                            "QT_GRAOS"      : 0,
+                            "QT_FERTI"      : 0,
+                            "QT_CELUL"      : 0,
+                            "QT_ACUCA"      : 0,
+                            "QT_CONTE"      : 0,
 
-                        "PREFIXO"       : 0,
-                        "FERROVIA"      : TREM_ANTIGO.ferrovia,
-                        "HORA"          : TREM_ANTIGO.previsao.hour,
-                        "MARGEM"        : TREM_ANTIGO.margem,
-                        "DIA_LOGISTICO" : DIA_LOGISTICO,
-                        "QT_GRAOS"      : 0,
-                        "QT_FERTI"      : 0,
-                        "QT_CELUL"      : 0,
-                        "QT_ACUCA"      : 0,
-                        "QT_CONTE"      : 0,
+                }
+                
+                Condensados().inserirTrem(PARAMETROS)
 
-            }
-            
-            Condensados().inserirTrem(PARAMETROS)
+            except IndexError:
+                pass
+                
 
             
             TREM_ANTIGO.delete()

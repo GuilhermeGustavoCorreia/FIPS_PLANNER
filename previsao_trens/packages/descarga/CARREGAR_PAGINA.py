@@ -125,7 +125,7 @@ def PAGINA_COMPLETA():
                 #APENAS COLOCA NA DESCARGA A INFORMACAO DO QUE ESTA ATIVO NO TERMINAL (FERROVIA E PRODUTO)
                 for FERROVIA in FERROVIAS_ATIVAS:
                     json_DESCARGA["DESCARGAS"][FERROVIA] = {chave: valor for chave, valor in json_DESCARGA["DESCARGAS"][FERROVIA].items() if chave in FERROVIAS_ATIVAS[FERROVIA]}
-               
+                
                 json_DESCARGA["DESCARGAS_ATIVAS"] = FERROVIAS_ATIVAS
                 SAIDAS[DIA]["DESCARGAS"].append(json_DESCARGA)
 

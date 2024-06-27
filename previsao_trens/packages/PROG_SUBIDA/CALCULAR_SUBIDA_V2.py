@@ -116,7 +116,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                     for DATA_ARQ in self.LISTA_DATA_ARQ:
 
                         if not DATA_ARQ in self.jsL4K:
-                            with open(f"previsao_trens/src/SUBIDA/LINHAS/LINHA_4K/linha_4K_{ DATA_ARQ }.json") as ARQUIVO:
+                            with open(f"previsao_trens/src/SUBIDA/LINHAS/LINHA_4K/linha_4k_{ DATA_ARQ }.json") as ARQUIVO:
                                 self.jsL4K[DATA_ARQ] = json.load(ARQUIVO)
 
                         if DATA_ARQ == self.LISTA_DATA_ARQ[0]:
