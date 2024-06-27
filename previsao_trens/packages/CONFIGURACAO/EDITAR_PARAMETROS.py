@@ -2,24 +2,28 @@ import pandas as pd
 
 
 def EDITAR_PARAMETROS(PARAMETROS, ACAO="INSERIR"):
+        
+        print(f'LINHA: {PARAMETROS["COLUNA"]} COLUNA: {PARAMETROS["COLUNA"]} VALOR: {PARAMETROS["NOVO_VALOR"]}')
+    
+        DIRETORIO = f'previsao_trens/src/PARAMETROS/{PARAMETROS["TABELA"]}'
 
-    DIRETORIO = f'previsao_trens/src/PARAMETROS/{PARAMETROS["TABELA"]}'
+        DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
+        DATAFRAME[DATAFRAME < 0] = 0
+        
+        if PARAMETROS["LINHA"] in DATAFRAME.index and PARAMETROS["COLUNA"] in DATAFRAME.columns:
+            
 
-    DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
-    DATAFRAME[DATAFRAME < 0] = 0
-    print(f'LINHA: {PARAMETROS["COLUNA"]} COLUNA: {PARAMETROS["COLUNA"]} VALOR: {PARAMETROS["NOVO_VALOR"]}')
+            if ACAO == "SOMAR":
+                PARAMETROS["NOVO_VALOR"] = DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] + int(PARAMETROS["NOVO_VALOR"])
+        
+            DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] = int(PARAMETROS["NOVO_VALOR"])
+            DATAFRAME[DATAFRAME < 0] = 0
 
-    if ACAO == "SOMAR":
-        PARAMETROS["NOVO_VALOR"] = DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] + int(PARAMETROS["NOVO_VALOR"])
- 
-    DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] = int(PARAMETROS["NOVO_VALOR"])
-    DATAFRAME[DATAFRAME < 0] = 0
+            DATAFRAME.loc[PARAMETROS["LINHA"], "TERMINAL"] = DATAFRAME.loc[PARAMETROS['LINHA'], DATAFRAME.columns[1:]].sum()
 
-    DATAFRAME.loc[PARAMETROS["LINHA"], "TERMINAL"] = DATAFRAME.loc[PARAMETROS['LINHA'], DATAFRAME.columns[1:]].sum()
+            DATAFRAME.to_csv(DIRETORIO, sep=";")
 
-    DATAFRAME.to_csv(DIRETORIO, sep=";")
-
-    return int(DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]])
+            return int(DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]])
 
 
 

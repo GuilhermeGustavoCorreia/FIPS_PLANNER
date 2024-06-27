@@ -164,7 +164,7 @@
         
                         {% for TREM in PREVISAO %}
 
-                            <tr onclick="SELECIONAR_TREM({{ TREM.id }})" class="trem ui-sortable-handle">
+                            <tr onclick="SELECIONAR_TREM('{{ TREM.id }}')" class="trem ui-sortable-handle">
             
                                 <td class="COL_PP">{{ TREM.posicao_previsao }}</td>
                                 <td class="COL_P">{{  TREM.prefixo     }}</td>

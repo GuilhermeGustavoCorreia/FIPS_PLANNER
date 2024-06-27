@@ -508,7 +508,7 @@
                             
                                 <!--#region RUMO  LINHA 4K (D)  -->
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <th rowspan="3" class="coluna_A linha">RUMO</th> 
                                         <th rowspan="3" class="coluna_A linha">GRAO</th> 
                                         <td class="linha coluna_A">Ger.Vazios</td>
@@ -529,7 +529,7 @@
                                     </tr>
             
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha coluna_A">Alívios</td>
                                         <td class="linha"></td>
                                         {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D.LINHA_4K.SUBIDA.RUMO.GRAO.ALIVIO_DE_VAZIOS %}
@@ -545,7 +545,7 @@
                                     </tr>
             
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha linha-grossa coluna_A">Saldo</td>
                                         <td class="linha linha-grossa"
                                         
@@ -571,7 +571,7 @@
     
                                 <!--#region MRS   LINHA 4K (D)  -->
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <th rowspan="3" class="coluna_A linha">MRS</th> 
                                         <th rowspan="3" class="coluna_A linha">GRAO</th> 
                                         <td class="linha coluna_A">Ger.Vazios</td>
@@ -593,7 +593,7 @@
                                     </tr>
             
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha coluna_A">Alívios</td>
                                         <td class="linha"></td>
                                         {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D.LINHA_4K.SUBIDA.MRS.GRAO.ALIVIO_DE_VAZIOS %}
@@ -609,7 +609,7 @@
                                     </tr>
             
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha linha-grossa coluna_A">Saldo</td>
                                         <td class="linha linha-grossa"
                                         
@@ -634,7 +634,7 @@
                                 
                                 <!--#region VLI   LINHA 4K (D)  -->
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <th rowspan="3" class="coluna_A linha">VLI</th> 
                                         <th rowspan="3" class="coluna_A linha">GRAO</th> 
                                         <td class="linha coluna_A">Ger.Vazios</td>
@@ -654,7 +654,7 @@
                                     </tr>
             
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha coluna_A">Alívios</td>
                                         <td class="linha"></td>
                                         {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D.LINHA_4K.SUBIDA.VLI.GRAO.ALIVIO_DE_VAZIOS %}
@@ -670,7 +670,7 @@
                                     </tr>
                                     
                                     <tr>
-                                        <th class="pula_linha "></th>
+                                        <td class="pula_linha "></td>
                                         <td class="linha linha-grossa coluna_A">Saldo</td>
                                         <td class="linha linha-grossa"
                                         
@@ -704,10 +704,10 @@
                 
                                         <tr>
                                             
-                                            <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                            <td colspan=2 rowspan="2" class="pula_linha"></td>
                                             <th colspan=2 rowspan="2">BUFFER</th>
                                             <th colspan=25>DIREITA</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
 
                                         </tr>
                 
@@ -738,7 +738,7 @@
                                             <th>22h</th>
                                             <th>23h</th>
                                             <th>24h</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                 
                                         </tr>
                 
@@ -748,7 +748,7 @@
                                 <!--#region RUMO-->
             
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">RUMO</td> 
                                     <td class="linha" name="BUFFER" data-ferrovia="RUMO" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D.BUFFER.DIREITA.RUMO.SALDO_VIRADA}}</td>
                                     
@@ -762,7 +762,7 @@
                 
                                     {% endfor %}
                                     
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
             
                                 <!--#endregion-->
@@ -770,7 +770,7 @@
                                 <!--#region MRS-->
             
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">MRS</td> 
                                     <td class="linha" name="BUFFER" data-ferrovia="MRS" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D.BUFFER.DIREITA.MRS.SALDO_VIRADA}}</td>
                                     
@@ -784,7 +784,7 @@
                 
                                     {% endfor %}
                                     
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
             
                                 <!--#endregion-->
@@ -792,7 +792,7 @@
                                 <!--#region VLI-->
             
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">VLI</td> 
                                     <td class="linha" name="BUFFER" data-ferrovia="VLI" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA" >{{TABELAS_SUBIDA.D.BUFFER.DIREITA.VLI.SALDO_VIRADA}}</td>
                                     
@@ -806,7 +806,7 @@
                 
                                     {% endfor %}
                                     
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
             
                                 <!--#endregion-->
@@ -821,10 +821,10 @@
                                     <thead class="titulo">
                 
                                         <tr>
-                                            <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                            <td colspan=2 rowspan="2" class="pula_linha"></td>
                                             <th colspan=2 rowspan="2">RUMO</th>
                                             <th colspan=25>DIREITA</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                                         </tr>
                 
                                         <tr>
@@ -854,7 +854,7 @@
                                             <th>22h</th>
                                             <th>23h</th>
                                             <th>24h</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                 
                                         </tr>
                 
@@ -863,7 +863,7 @@
                                 
                                 <!--#region GRAOS -->                
                                     <tr>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                         <td class="linha"></td>
                                         {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.GRAO %}
@@ -881,7 +881,7 @@
             
                                 <!--#region FERTILIZANTES -->    
                                     <tr>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                         <td class="linha"></td>
                                         {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE %}
@@ -893,13 +893,13 @@
                                             {% endif%}
             
                                         {% endfor %}
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                     </tr>
                                 <!--#endregion--> 
                                 
                                 <!--#region CELULOSE -->  
                                     <tr>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                         <td class="linha"></td>
                                         {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CELULOSE %}
@@ -911,13 +911,13 @@
                                             {% endif%}
             
                                         {% endfor %}
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                     </tr>
                                 <!--#endregion--> 
             
                                 <!--#region ACUCAR -->
                                     <tr>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                         <td class="linha"></td>
                                         {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.ACUCAR %}
@@ -927,7 +927,7 @@
                                                 <td class="linha"></td>
                                             {% endif%}
                                         {% endfor %}
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                     </tr>
                                 <!--#endregion-->  
             
@@ -944,7 +944,7 @@
                                             {% endif%}
                                         </td>
                                         {% endfor %}
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                     </tr>
             
                                 <!--#endregion--> 
@@ -959,10 +959,10 @@
                                     <thead class="titulo">
                     
                                         <tr>
-                                            <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                            <td colspan=2 rowspan="2" class="pula_linha"></td>
                                             <th colspan=2 rowspan="2">MRS</th>
                                             <th colspan=25>DIREITA</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                                         </tr>
                                         <tr>
                                             
@@ -991,14 +991,14 @@
                                             <th>22h</th>
                                             <th>23h</th>
                                             <th>24h</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                     
                                         </tr>
                                     </thead>
                                 <!--#endregion-->
                                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                     <td class="linha"></td>
                                     {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.GRAO %}
@@ -1008,11 +1008,11 @@
                                             <td></td>
                                         {% endif%}
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                     <td class="linha"></td>
                                     {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.FERTILIZANTE %}
@@ -1024,11 +1024,11 @@
                                         {% endif%}
                 
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                     <td class="linha"></td>
                                     {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CELULOSE %}
@@ -1040,11 +1040,11 @@
                                         {% endif%}
                 
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                     <td class="linha"></td>
                                     {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.ACUCAR %}
@@ -1054,7 +1054,7 @@
                                             <td class="linha"></td>
                                         {% endif%}
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 
                                 <tr>
@@ -1069,7 +1069,7 @@
                                     </td>
                                     
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
             
                             <!--#endregion-->        
@@ -1081,10 +1081,10 @@
                                 <!--#region HEADER-->
                                     <thead class="titulo">
                                         <tr>
-                                            <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                            <td colspan=2 rowspan="2" class="pula_linha"></td>
                                             <th colspan=2 rowspan="2">VLI</th>
                                             <th colspan=25>DIREITA</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                                         </tr>
                                         <tr>
                                             
@@ -1113,14 +1113,14 @@
                                             <th>22h</th>
                                             <th>23h</th>
                                             <th>24h</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                     
                                         </tr>
                                     </thead>
                                 <!--#endregion--> 
 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                     <td class="linha"></td>
                                     {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.GRAO %}
@@ -1130,11 +1130,11 @@
                                             <td class="linha"></td>
                                         {% endif%}
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                     <td class="linha"></td>
                                     {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.FERTILIZANTE %}
@@ -1146,11 +1146,11 @@
                                         {% endif%}
                 
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                     <td class="linha"></td>
                                     {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CELULOSE %}
@@ -1163,11 +1163,11 @@
                                         {% endif%}
                                         
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                     <td class="linha"></td>
                                     {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.ACUCAR %}
@@ -1177,7 +1177,7 @@
                                             <td class="linha"></td>
                                         {% endif%}
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 
                                 <tr>
@@ -1191,7 +1191,7 @@
                                         {% endif%}
                                     </td>
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
             
                             <!--#endregion -->
@@ -1204,10 +1204,10 @@
                                     <thead class="titulo">
                                         
                                         <tr>
-                                            <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                            <td colspan=2 rowspan="2" class="pula_linha"></td>
                                             <th colspan=2 rowspan="2">SAIDAS</th>
                                             <th colspan=25>DIREITA</th>
-                                            <th colspan=2 class="pula_linha "></th>
+                                            <td colspan=2 class="pula_linha "></td>
                                         </tr>
                                         
                                         <tr>
@@ -1247,7 +1247,7 @@
                                 <!--#endregion -->    
                             
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                     <td class="linha"></td>
                                     {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.SAIDAS.GRAO %}
@@ -1257,11 +1257,11 @@
                                             <td class="linha"></td>
                                         {% endif%}
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                     <td class="linha"></td>
                                     {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.SAIDAS.FERTILIZANTE %}
@@ -1273,11 +1273,11 @@
                                         {% endif%}
                 
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                     <td class="linha"></td>
                                     {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.SAIDAS.CELULOSE %}
@@ -1289,11 +1289,11 @@
                                         {% endif%}
                 
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                     <td class="linha"></td>
                 
@@ -1305,7 +1305,7 @@
                                         {% endif %}
                                     {% endfor %}
                 
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 
                                 <tr>
@@ -1319,7 +1319,7 @@
                                         {% endif %}
                                     </td>
                                     {% endfor %}
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                 
                                 <tr>
@@ -1329,7 +1329,7 @@
                                     {% for PREFIXO in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.SAIDAS.PREFIXO %}
                 
                                         {% if PREFIXO != 0 %}
-                                            <td class="VERDE CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"> {{PREFIXO}} </td>      
+                                            <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{PREFIXO}} </td>      
                                         {% else  %}
                                             <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"></td>
                                         {% endif %}
@@ -1489,10 +1489,10 @@
                 
                                     <tr>
                                         
-                                        <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
                                         <th colspan=2 rowspan="2">BUFFER</th>
                                         <th colspan=25>ESQUERDA</th>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
 
                                     </tr>
             
@@ -1523,7 +1523,7 @@
                                         <th>22h</th>
                                         <th>23h</th>
                                         <th>24h</th>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
             
                                     </tr>
             
@@ -1533,7 +1533,7 @@
                             <!--#region RUMO-->
         
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">RUMO</td> 
                                 <td class="linha" name="BUFFER" data-ferrovia="RUMO" data-dia="D" data-margem="ESQUERDA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D.BUFFER.ESQUERDA.RUMO.SALDO_VIRADA}}</td>
                                 
@@ -1547,7 +1547,7 @@
             
                                 {% endfor %}
                                 
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
         
                             <!--#endregion-->
@@ -1555,7 +1555,7 @@
                             <!--#region MRS-->
         
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">MRS</td> 
                                 <td class="linha" name="BUFFER" data-ferrovia="MRS" data-dia="D" data-margem="ESQUERDA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D.BUFFER.ESQUERDA.MRS.SALDO_VIRADA}}</td>
                                 
@@ -1569,7 +1569,7 @@
             
                                 {% endfor %}
                                 
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
         
                             <!--#endregion-->
@@ -1577,7 +1577,7 @@
                             <!--#region VLI-->
         
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">VLI</td> 
                                 <td class="linha" name="BUFFER" data-ferrovia="VLI" data-dia="D" data-margem="ESQUERDA" data-hora="SALDO_VIRADA" >{{TABELAS_SUBIDA.D.BUFFER.ESQUERDA.VLI.SALDO_VIRADA}}</td>
                                 
@@ -1591,7 +1591,7 @@
             
                                 {% endfor %}
                                 
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
         
                             <!--#endregion-->
@@ -1606,10 +1606,10 @@
 
                                 <thead class="titulo">
                                     <tr>
-                                        <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
                                         <th colspan=2 rowspan="2">RUMO</th>
                                         <th colspan=25>ESQUERDA</th>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                                     </tr>
                                     <tr>
                                         
@@ -1638,7 +1638,7 @@
                                         <th>22h</th>
                                         <th>23h</th>
                                         <th>24h</th>
-                                        <th colspan=2 class="pula_linha "></th>
+                                        <td colspan=2 class="pula_linha "></td>
                         
                                     </tr>
                                 </thead>
@@ -1646,7 +1646,7 @@
                             <!--#endregion -->
 
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                 <td class="linha"></td>
                                 {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.GRAO %}
@@ -1658,11 +1658,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                 <td class="linha"></td>
                                 {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.FERTILIZANTE %}
@@ -1674,11 +1674,11 @@
                                     {% endif%}
     
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                 <td class="linha"></td>
                                 {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CELULOSE %}
@@ -1690,11 +1690,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                 <td class="linha"></td>
                                 {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.ACUCAR %}
@@ -1706,7 +1706,7 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             
                             <tr>
@@ -1720,7 +1720,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
     
                         <!--#endregion -->
@@ -1731,10 +1731,10 @@
 
                              <thead class="titulo">
                                 <tr>
-                                    <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
                                     <th colspan=2 rowspan="2">MRS</th>
                                     <th colspan=25>ESQUERDA</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 <tr>
                                     
@@ -1763,13 +1763,13 @@
                                     <th>22h</th>
                                     <th>23h</th>
                                     <th>24h</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                     
                                 </tr>
                             </thead>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                 <td class="linha"></td>
                                 {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.GRAO %}
@@ -1781,11 +1781,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                 <td class="linha"></td>
                                 {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.FERTILIZANTE %}
@@ -1797,11 +1797,11 @@
                                     {% endif%}
     
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                 <td class="linha"></td>
                                 {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CELULOSE %}
@@ -1813,11 +1813,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                 <td class="linha"></td>
                                 {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.ACUCAR %}
@@ -1827,7 +1827,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             
                             <tr>
@@ -1841,7 +1841,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
     
                         <!--#endregion -->
@@ -1852,10 +1852,10 @@
 
                             <thead class="titulo">
                                 <tr>
-                                    <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
                                     <th colspan=2 rowspan="2">VLI</th>
                                     <th colspan=25>ESQUERDA</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 <tr>
                                     
@@ -1884,13 +1884,13 @@
                                     <th>22h</th>
                                     <th>23h</th>
                                     <th>24h</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                     
                                 </tr>
                             </thead>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                 <td class="linha"></td>
                                 {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.GRAO %}
@@ -1902,11 +1902,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                 <td class="linha"></td>
                                 {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.FERTILIZANTE %}
@@ -1918,11 +1918,11 @@
                                     {% endif%}
     
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                 <td class="linha"></td>
                                 {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CELULOSE %}
@@ -1934,11 +1934,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                 <td class="linha"></td>
                                 {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.ACUCAR %}
@@ -1948,7 +1948,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             
                             <tr>
@@ -1962,7 +1962,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
     
                         <!--#endregion -->
@@ -1973,10 +1973,10 @@
 
                             <thead class="titulo">
                                 <tr>
-                                    <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
                                     <th colspan=2 rowspan="2">SAIDAS</th>
                                     <th colspan=25>ESQUERDA</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 <tr>
                                     
@@ -2005,13 +2005,13 @@
                                     <th>22h</th>
                                     <th>23h</th>
                                     <th>24h</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                     
                                 </tr>
                             </thead>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                 <td class="linha"></td>
                                 {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.SAIDAS.GRAO %}
@@ -2023,11 +2023,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                 <td class="linha"></td>
                                 {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.SAIDAS.FERTILIZANTE %}
@@ -2039,11 +2039,11 @@
                                     {% endif%}
     
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                 <td class="linha"></td>
                                 {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.SAIDAS.CELULOSE %}
@@ -2055,11 +2055,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                 <td class="linha"></td>
                                 {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.SAIDAS.ACUCAR %}
@@ -2069,7 +2069,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             
                             <tr>
@@ -2083,7 +2083,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
         
                         <!--#endregion -->
@@ -2269,7 +2269,7 @@
 
                         <!--#region RUMO  LINHA 4K (D+1)  -->
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <th rowspan="3" class="coluna_A linha">RUMO</th> 
                             <th rowspan="3" class="coluna_A linha">GRAO</th> 
                             <td class="linha coluna_A">Ger.Vazios</td>
@@ -2279,7 +2279,7 @@
 
                             <td class="linha">      
                                 {% if GRAOS != 0%}
-                                        
+                                    {{GRAOS}}  
                                 {% endif%}
                             </td>
 
@@ -2289,7 +2289,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha coluna_A">Alívios</td>
                             <td class="linha"></td>
                             {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.ALIVIO_DE_VAZIOS %}
@@ -2305,7 +2305,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha linha-grossa coluna_A">Saldo</td>
                             <td class="linha linha-grossa"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SALDO_DE_VAZIOS %}
@@ -2323,7 +2323,7 @@
 
                         <!--#region MRS   LINHA 4K (D+1)  -->
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <th rowspan="3" class="coluna_A linha">MRS</th> 
                             <th rowspan="3" class="coluna_A linha">GRAO</th> 
                             <td class="linha coluna_A">Ger.Vazios</td>
@@ -2343,7 +2343,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha coluna_A">Alívios</td>
                             <td class="linha"></td>
                             {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.ALIVIO_DE_VAZIOS %}
@@ -2357,7 +2357,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha linha-grossa coluna_A">Saldo</td>
                             <td class="linha linha-grossa"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SALDO_DE_VAZIOS %}
@@ -2374,7 +2374,7 @@
                         
                         <!--#region VLI   LINHA 4K (D+1)  -->
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <th rowspan="3" class="coluna_A linha">VLI</th> 
                             <th rowspan="3" class="coluna_A linha">GRAO</th> 
                             <td class="linha coluna_A">Ger. Vazios</td>
@@ -2392,7 +2392,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha coluna_A">Alívios</td>
                             <td class="linha"></td>
                             {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.ALIVIO_DE_VAZIOS %}
@@ -2406,7 +2406,7 @@
                         </tr>
 
                         <tr>
-                            <th class="pula_linha "></th>
+                            <td class="pula_linha "></td>
                             <td class="linha linha-grossa coluna_A">Saldo</td>
                             <td class="linha linha-grossa"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SALDO_DE_VAZIOS %}
@@ -2430,10 +2430,10 @@
 
                             <thead class="titulo">
                                 <tr>
-                                    <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
                                     <th colspan=2 rowspan="2">RUMO</th>
                                     <th colspan=25>DIREITA</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                                 </tr>
                                 <tr>
                                     
@@ -2462,13 +2462,13 @@
                                     <th>22h</th>
                                     <th>23h</th>
                                     <th>24h</th>
-                                    <th colspan=2 class="pula_linha "></th>
+                                    <td colspan=2 class="pula_linha "></td>
                     
                                 </tr>
                             </thead>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
                                 <td class="linha"></td>
                                 {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.GRAOS %}
@@ -2478,11 +2478,11 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                                 <td class="linha"></td>
                                 {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE %}
@@ -2494,11 +2494,11 @@
                                     {% endif%}
 
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                                 <td class="linha"></td>
                                 {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CELULOSE %}
@@ -2508,11 +2508,11 @@
                                     <td class="linha"></td>
                                 {% endif%}
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                     
                             <tr>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                                 <td class="linha"></td>
                                 {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.ACUCAR %}
@@ -2522,7 +2522,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             
                             <tr>
@@ -2536,7 +2536,7 @@
                                     {% endif%}
                                 </td>
                                 {% endfor %}
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
 
                         <!--#endregion -->
@@ -2549,10 +2549,10 @@
                         <thead class="titulo">
 
                             <tr>
-                                <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                <td colspan=2 rowspan="2" class="pula_linha"></td>
                                 <th colspan=2 rowspan="2">MRS</th>
                                 <th colspan=25>DIREITA</th>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
 
                             <tr>
@@ -2582,14 +2582,14 @@
                                 <th>22h</th>
                                 <th>23h</th>
                                 <th>24h</th>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                 
                             </tr>
 
                         </thead>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">GRAOS</td> 
                             <td class="linha"></td>
                             {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.GRAOS %}
@@ -2599,11 +2599,11 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                             <td class="linha"></td>
                             {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.FERTILIZANTE %}
@@ -2615,11 +2615,11 @@
                                 {% endif%}
 
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                             <td class="linha"></td>
                             {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CELULOSE %}
@@ -2629,11 +2629,11 @@
                                     <td class="linha"></td>
                                 {% endif%}
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                             <td class="linha"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.ACUCAR %}
@@ -2643,7 +2643,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                         
                         <tr>
@@ -2658,7 +2658,7 @@
                             </td>
                             
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <!--#endregion-->        
@@ -2671,10 +2671,10 @@
                 
                         <thead class="titulo">
                             <tr>
-                                <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                <td colspan=2 rowspan="2" class="pula_linha"></td>
                                 <th colspan=2 rowspan="2">VLI</th>
                                 <th colspan=25>DIREITA</th>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             <tr>
                                 
@@ -2703,13 +2703,13 @@
                                 <th>22h</th>
                                 <th>23h</th>
                                 <th>24h</th>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                 
                             </tr>
                         </thead>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">GRAOS</td> 
                             <td class="linha"></td>
                             {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.GRAOS %}
@@ -2719,11 +2719,11 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                             <td class="linha"></td>
                             {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.FERTILIZANTE %}
@@ -2735,11 +2735,11 @@
                                 {% endif%}
 
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                             <td class="linha"></td>
                             {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CELULOSE %}
@@ -2751,11 +2751,11 @@
                                 {% endif%}
 
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                             <td class="linha"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.ACUCAR %}
@@ -2765,7 +2765,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                         
                         <tr>
@@ -2779,7 +2779,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <!--#endregion -->
@@ -2792,10 +2792,10 @@
                 
                         <thead class="titulo">
                             <tr>
-                                <th colspan=2 rowspan="2" class="pula_linha"></th>
+                                <td colspan=2 rowspan="2" class="pula_linha"></td>
                                 <th colspan=2 rowspan="2">SAIDAS</th>
                                 <th colspan=25>DIREITA</th>
-                                <th colspan=2 class="pula_linha "></th>
+                                <td colspan=2 class="pula_linha "></td>
                             </tr>
                             <tr>
                                 
@@ -2830,7 +2830,7 @@
                         </thead>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">GRAOS</td> 
                             <td class="linha"></td>
                             {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.GRAO %}
@@ -2840,11 +2840,11 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
                             <td class="linha"></td>
                             {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.FERTILIZANTE %}
@@ -2856,11 +2856,11 @@
                                 {% endif%}
 
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">CELULOSE</td> 
                             <td class="linha"></td>
                             {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.CELULOSE %}
@@ -2872,11 +2872,11 @@
                                 {% endif%}
 
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                             <td colspan=2 class="coluna_A linha">ACUCAR</td> 
                             <td class="linha"></td>
                             {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.ACUCAR %}
@@ -2886,7 +2886,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                         
                         <tr>
@@ -2900,7 +2900,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <tr>
@@ -2914,7 +2914,7 @@
                                 {% endif%}
                             </td>
                             {% endfor %}
-                            <th colspan=2 class="pula_linha "></th>
+                            <td colspan=2 class="pula_linha "></td>
                         </tr>
                 
                         <!--#endregion TOTAL -->

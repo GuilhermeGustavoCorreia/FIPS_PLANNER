@@ -764,7 +764,7 @@ def CARREGAR_RELATORIO_DETALHE():
 
         #region CALCULANDO OS TOTAIS DO RESUMO VLI TOTAL
         if "TOTAO_GRAO_ACUCAR" in TOTAIS["VLI"]:
-            for LINHA_RELATORIO in list(TOTAIS["VLI"]["ACUCAR"]): #MARGENS DO PRODUTO PCX OU PSN GRAOS
+            for LINHA_RELATORIO in list(TOTAIS["VLI"]["TOTAO_GRAO_ACUCAR"]): #MARGENS DO PRODUTO PCX OU PSN GRAOS
             
                 for i in range(5):
                     TOTAIS["VLI"]["TOTAO_GRAO_ACUCAR"][i]["TT_OF"] = TOTAIS["VLI"]["TOTAO_GRAO_ACUCAR"][i]["SALDOS"]["P1"]
@@ -805,15 +805,15 @@ def CARREGAR_RELATORIO_DETALHE():
 
         #region CALCULANDO OS TOTAIS DO RESUMO MRS TOTAL
         if "TOTAO_GRAO_ACUCAR" in TOTAIS["MRS"]:
-            for LINHA_RELATORIO in list(TOTAIS["MRS"]["ACUCAR"]): #MARGENS DO PRODUTO PCX OU PSN GRAOS
-            
-                for i in range(5):
-                    TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_OF"] = TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["SALDOS"]["P1"]
-                    TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_PD"] = 0
-                    
-                    for J in range(1, 5):
-                        TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_OF"] += TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["RECEBIMENTOS"][f"P{J}"]
-                        TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_PD"] += TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["PEDRA"][f"P{J}"]
+                for LINHA_RELATORIO in list(TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"]): #MARGENS DO PRODUTO PCX OU PSN GRAOS
+                
+                    for i in range(5):
+                        TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_OF"] = TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["SALDOS"]["P1"]
+                        TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_PD"] = 0
+                        
+                        for J in range(1, 5):
+                            TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_OF"] += TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["RECEBIMENTOS"][f"P{J}"]
+                            TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["TT_PD"] += TOTAIS["MRS"]["TOTAO_GRAO_ACUCAR"][i]["PEDRA"][f"P{J}"]
         #endregion
 
         #region CALCULANDO OS TOTAIS DO RESUMO MRS CELULOSE

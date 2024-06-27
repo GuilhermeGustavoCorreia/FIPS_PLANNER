@@ -9,15 +9,19 @@ body{
 }
 .conteudo__navegacao{
     width:     100vw;
-    height:     91vh;
+    height:     90vh;
     margin-top:  9vh;  
     display:    flex;
     overflow-x: auto;
+
+
 }
 
 .um__dia{
     height: fit-content;
     padding: 0 1rem;
+
+
 }
 .uma__descarga{
 
@@ -38,26 +42,28 @@ body{
 }
 
 .header__navegacao{
+    
+    
     width: 100%;
     position: fixed;
-    height: 5.1rem;
+    height: 6rem;
     background-color: rgb(235, 234, 234);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline;
 }    
 
 .tabela__margens{
-    border: 1px dashed red;
-     margin-left: 50.0%;
-    transform: translateX(-47%);
+    font-family: "Saira Expanded", Arial, sans-serif;
+    /*margin-left: 50.0%;
+    transform: translateX(-47%);*/
     background-color: var(--azul-ceu-c);
-    border: var(--borda-padrao);
+
     font-weight: bold;
     border-collapse: collapse;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
 }
 
-.tabela__margens tr:first-child td:first-child,
+.tabela__margens tr:first-child td:nth-child(3),
 .tabela__margens tr:first-child{
     color: white;
     background-color: var( --azul-profundo-m);
@@ -66,20 +72,27 @@ body{
 .tabela__margens tr:nth-child(2) td:first-child,
 .tabela__margens tr:nth-child(3) td:first-child{
     background-color: var(--azul-ceu-e);
+    color: white;
 }
 
 .tabela__margens td{ 
 
-    min-width: 2rem; 
-    font-size: 0.7rem; 
     text-align: center; 
+    min-width: 2.5rem;
+    max-width: 2.5rem
+    /*font-size: 0.7rem; */
 }
 
 .uma__margem{
     position: -webkit-sticky;
     position: sticky;
-    top:0.5rem;
-    font-size: 20px;
+    /* font-size: 20px;*/
+   top:5px;
+
+
+    
+    padding: 0 0.5rem;
+    height: 100%;
     
 }
 
@@ -88,20 +101,20 @@ body{
 }
 
 .um__dia .uma__descarga:nth-child(2) {
-    margin-top: 8vh;
+    margin-top: 6vh;
 }
 
-.tabela__margens tr:first-child td:nth-child(7),
+.tabela__margens tr:first-child td:nth-child(9),
 .tabela__margens tr:nth-child(2) td:nth-child(7),
 .tabela__margens tr:nth-child(3) td:nth-child(7),
-.tabela__margens tr:first-child td:nth-child(13),
+.tabela__margens tr:first-child td:nth-child(15),
 .tabela__margens tr:nth-child(2) td:nth-child(13),
 .tabela__margens tr:nth-child(3) td:nth-child(13),
-.tabela__margens tr:first-child td:nth-child(19),
+.tabela__margens tr:first-child td:nth-child(21),
 .tabela__margens tr:nth-child(2) td:nth-child(19),
 .tabela__margens tr:nth-child(3) td:nth-child(19)
 {
-    border-right: 2px dashed darkgrey;
+     border-right: 1px solid darkgrey;
 }
 
 
@@ -119,3 +132,12 @@ body{
     }
     
 }
+
+.margens_aux_1, .margens_aux_2 {
+    background-color: rgb(235, 234, 234) !important;
+    
+    color:rgb(235, 234, 234)
+}
+
+.margens_aux_1{min-width: 3.2rem;padding: 0 10px;}
+.margens_aux_2{min-width: 4.5rem !important;}

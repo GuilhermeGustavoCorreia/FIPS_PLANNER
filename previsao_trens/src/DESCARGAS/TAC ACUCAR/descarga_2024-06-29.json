@@ -223,7 +223,7 @@
         0,
         0,
         0,
-        4
+        0
     ],
     "RESTRICAO_MOTIVO": [
         0,
@@ -497,7 +497,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -884,7 +886,9 @@
                         0,
                         0,
                         0
-                    ]
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -1176,7 +1180,7 @@
                     0,
                     0,
                     0,
-                    4
+                    0
                 ],
                 "EDITADO": [
                     0,
@@ -1270,8 +1274,10 @@
                         0,
                         0,
                         0,
-                        4
-                    ]
+                        0
+                    ],
+                    "TOTAL_CHEGADA": 0,
+                    "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
                     0,
@@ -1304,7 +1310,7 @@
                         0,
                         0,
                         0,
-                        4
+                        0
                     ],
                     "GERACAO_EDITADA": [
                         0,
@@ -1417,7 +1423,7 @@
     "INDICADORES": {
         "TOTAL_SALDO": 0,
         "SALDO_DE_VIRADA_TOTAL": 0,
-        "TOTAL_PEDRA": 4,
+        "TOTAL_PEDRA": 0,
         "PEDRAS": {
             "RUMO": {
                 "P1": 0,
@@ -1435,13 +1441,13 @@
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 4
+                "P4": 0
             },
             "TOTAL": {
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 4
+                "P4": 0
             }
         },
         "SALDO_DE_VIRADA_VAZIOS": {

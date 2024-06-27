@@ -53,20 +53,20 @@
 }
 
 h1, h3{
-    font-family: "Saira Expanded";
+    font-family: "Saira Expanded", Arial, sans-serif;;
     color: var(--cinza-chumbo-e);
     margin: 0;
     font-size: 1.5rem;
 }
 h2{
-    font-family: "Saira Expanded";
+    font-family: "Saira Expanded", Arial, sans-serif;;
     color: var(--azul-ceu-e);
     margin: 0;
 }
 
 .BOTAO{
 
-    font-family: 'Saira Expanded';
+    font-family: 'Saira Expanded', Arial, sans-serif;;
     font-weight: 600;
     border: none;
     padding: 7px 20px;

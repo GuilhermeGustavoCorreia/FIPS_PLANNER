@@ -5,7 +5,7 @@
     position: absolute;
     width: 94vw;
 }
-
+body{user-select:    none;}
 
 
 .SEM_NAVEGACAO{
@@ -24,7 +24,7 @@
 table{
 
     font-size: 0.7rem;
-    font-family: "Saira Expanded";
+    font-family: "Saira Expanded", Arial, sans-serif;
     background-color: rgb(237, 237, 237);
     margin-bottom: 2rem;
     transform: translateX(-50%);
@@ -32,8 +32,8 @@ table{
 
 }
 
-.titulo     { background-color: var(--azul-profundo-m); color: white}
-.titulo td  { border: 1px solid var(--azul-profundo-e); font-weight: bold;  padding: 0.1rem;  color: white; text-align: center;}
+
+.titulo th  { border: 1px solid var(--azul-profundo-e); font-weight: bold;  padding: 0 3px;  color: white; text-align: center; background-color: var(--azul-profundo-m); min-width: 1.5rem;}
 table       { border-collapse: collapse;}
 .MARGEM td  { background-color: white; border: none; text-align: left; padding-top: 1rem ;}
 
@@ -167,7 +167,6 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
 
 /*--------------------------------------DIALOG---------------------------------------*/
 
-.DIALOG_TREM_VAZIO{ border: 2px red dashed;}
 
 dialog::backdrop{
     z-index: 1;
@@ -187,7 +186,7 @@ dialog::backdrop{
 
 .DIALOG_TREM_VAZIO button{ margin-top: 5px;}
 
-.VAGOES_FORM{border: 2px red dashed; display: table; font-weight: bold;}
+.VAGOES_FORM{ display: table; font-weight: bold;}
 .VERDE:disabled{ background-color: var(--verde-floresta-c) !important; cursor: none;}
 /*-----------------------------------------------------------------------------------*/
 

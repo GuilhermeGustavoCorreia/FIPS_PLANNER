@@ -12,9 +12,6 @@
 
     <h1>CRIAR TREM - IMPORTAÇÃO</h1>
 
-    <button type="button"  data-acao="CRIAR_TREM" class="BOTAO BTN__CRIAR__TREM" onclick="TOOGLE_FORM('novo_trem', 0)">
-        Novo Trem
-    </button>
 
     {% if TABELAS %}
 
@@ -151,7 +148,13 @@
 
         </tr>            
         {% endfor %}
+    {% else %}
 
+    <div class="SEM_NAVEGACAO">
+        <img src="{% static 'imagens/caixa-vazia.png' %}" >
+        <h3>Não há previsões.</h3>
+    </div>
+    
     {% endif %}
 </div>
 
