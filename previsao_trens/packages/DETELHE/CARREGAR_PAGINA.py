@@ -147,8 +147,9 @@ def CARREGAR_RELATORIO_DETALHE():
                         COLUNAS = ["SALDOS", "RECEBIMENTOS", "PEDRA"]
                         
                         for COLUNA in COLUNAS:
-                            
+                            print(f"TEMRINAL: {TERMINAL} FERROVIA: { FERROVIA } PRODUTO: { PRODUTO} D: {DIA_LOGISTICO} COLUNA: { COLUNA } ")
                             if not COLUNA in RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["TOTAL"][DIA_LOGISTICO]:
+
                                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["TOTAL"][DIA_LOGISTICO][COLUNA] = {"P1": 0, "P2": 0, "P3": 0, "P4": 0}
                                                       
                             RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["TOTAL"][DIA_LOGISTICO][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO][COLUNA]["P1"]

@@ -30,6 +30,7 @@
                     "RECEBIMENTOS"           : [0, 0, 0, 0],
                     "PEDRA"                  : [0, 0, 0, 0],
                     "TOTAL_CHEGADA"          : 0,
+                    "TOTAL_PRODUTIVIDADE"    : 0,
                     "TOTAL_PEDRA"            : 0
 
                 },

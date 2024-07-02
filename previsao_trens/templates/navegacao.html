@@ -242,6 +242,7 @@
                                 </tr>
                                 
                                 <tr name="LINHA_PRODUTIVIDADE" class="LINHA_PRODUTIVIDADE_{{FERROVIA}}">
+                                    
                                     <td class="PRODUTIVIDADE_PADRAO_{{FERROVIA}}" data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" name="EDITAR_CONSTANTE_PRODUTIVIDADE">{{ LINHAS.INDICADORES.PRODUTIVIDADE }}</td>
                                     <td id="{{ PRODUTOS }}_{{ FERROVIA }}"></td>
 
@@ -254,7 +255,7 @@
                                         </td>
 
                                     {% endfor %}
-                                    <td ><div class="SETA_PRODUTIVIDADE_{{FERROVIA}}" >➔</div></td><td class="VALOR_PRODUTIVIDADE_{{FERROVIA}}">{{LINHAS.INDICADORES.TOTAL_PEDRA}}</td>       
+                                    <td ><div class="SETA_PRODUTIVIDADE_{{FERROVIA}}" >➔</div></td><td class="VALOR_PRODUTIVIDADE_{{FERROVIA}}">{{LINHAS.INDICADORES.TOTAL_PRODUTIVIDADE}}</td>       
                                 </tr>
                         
                         {% endfor %}
