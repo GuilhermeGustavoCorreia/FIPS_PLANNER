@@ -20,7 +20,6 @@
             <ul class="submenu">
                 <li class="submenu-lista"><a class="subitem">Nitro        </a></li>
                 <li class="submenu-lista"><a href="{% url 'criar_trem' %}" class="subitem">Criar Trem   </a></li>
-                <li class="submenu-lista"><a class="subitem">Tabela       </a></li>
             </ul>
 
         </li>
@@ -28,9 +27,8 @@
         <li class="item__do__menu"><a>  Relatórios  </a>
           
           <ul class="submenu">
-            <li class="submenu-lista"><a class="subitem"  href="{% url 'detalhe' %}">Detalhe   </a></li>
-            <li class="submenu-lista"><a class="subitem">Prévia    </a></li>
-            <li class="submenu-lista"><a class="subitem">Ocupação  </a></li>
+            <li class="submenu-lista"><a class="subitem"  href="{% url 'detalhe' %}"            >Detalhe   </a></li>
+            <li class="submenu-lista"><a class="subitem"  href="{% url 'ocupacao_terminais' %}" >Ocupação  </a></li>
           </ul>
 
         </li>
@@ -48,13 +46,13 @@
       </ul>
     </nav>
 
-    <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
-        <div class="nome__do__usuario">
-          <label  class="primeiro__nome"  >{{ user.first_name }}</label>
-          <label  class="sobremnoe"       >{{ user.last_name }} </label>
-        </div>  
-        <img    class="usuario-foto" src="{{  user.foto.url }}" alt="Foto de usuário">
-    </div>
+      <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
+          <div class="nome__do__usuario">
+            <label  class="primeiro__nome"  >{{ user.first_name }}</label>
+            <label  class="sobremnoe"       >{{ user.last_name }} </label>
+          </div>  
+          <img    class="usuario-foto" src="{{  user.foto.url }}" alt="Foto de usuário">
+      </div>
 
 </header>
 

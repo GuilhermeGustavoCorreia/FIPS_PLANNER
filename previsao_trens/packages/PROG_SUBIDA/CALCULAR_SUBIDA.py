@@ -91,7 +91,6 @@ class SUBIDA_DE_VAZIOS:
 
                             FERROVIA = DESCARGA[0]
                             
-                            
                             self.TERMIAIS_VAZIOS[DATA_ARQ][MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA]                            = {}
                             self.TERMIAIS_VAZIOS[DATA_ARQ][MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA]["SATURACAO"]               =  0
                             self.TERMIAIS_VAZIOS[DATA_ARQ][MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA]["GERACAO_VAZIO"]           = []
@@ -1395,8 +1394,7 @@ class SUBIDA_DE_VAZIOS:
                     self.FULL_LINHAS["LINHA_4000"]["OCUPACAO"][HORA_ALIVIO]["SEGMENTO"] = SEGMENTO
 
                     __ATUALIZAR_SALDO_LINHA_4000__(FERROVIA)
-
-          
+        
                 #endregion
 
         def __ATUALIZAR_VALONGO_FIPS__():
@@ -2151,11 +2149,6 @@ class SUBIDA_DE_VAZIOS:
                             self.FULL_LINHAS[LINHA]["FERROVIAS"][FERROVIA]["ALIVIO"][HORA_ALIVIO] = SALDO_NA_LINHA
                             __ATUALIZAR_SALDO_LINHA_PCZ__(LINHA, FERROVIA)               
   
-       
-        #__CALCULAR_MARGEM_DIREITA__()
-
-        #__CALCULAR_MARGEM_ESQUERDA__()
-
     def __SEPARAR_FULL__(self):
 
         #region VOLTANDO DIVIDINDO A LINHA_FULL UNICA NAS LINHAS DIARIAS

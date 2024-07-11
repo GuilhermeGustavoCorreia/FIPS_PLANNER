@@ -34,30 +34,25 @@ function LIMPAR_SELECOES(){
 
 function ATUALIZAR_DESCARGA(DESCARGAS){
 
-
-    
-
-
     for (let i = 0; i < DESCARGAS.length; i++){
         
-
         LIMPAR_SELECOES()
-        let TERMINAL = DESCARGAS[i]["TERMINAL"]
-        let DATA_ARQ = DESCARGAS[i]["DATA"]
+
+        let TERMINAL        = DESCARGAS[i]["TERMINAL"]
+        let DATA_ARQ        = DESCARGAS[i]["DATA"]
         let TABELA_DESCARGA = document.getElementById(`${ TERMINAL }_${ DATA_ARQ }`)
-        
+       
+        // SEXTA 13:45 
+
         if(TABELA_DESCARGA){
+
             let DESCARGAS_ATIVAS = JSON.parse(corrigirSintaxeJSON(TABELA_DESCARGA.querySelector(`#DESCARGAS_ATIVAS`).value))
         
-            //console.log(DESCARGAS_ATIVAS, typeof(DESCARGAS_ATIVAS))
-
             //#region REMOVENDO O QUE NAO ESTA ATIVO
             for (let CHAVE in DESCARGAS_ATIVAS) {
                 if (DESCARGAS_ATIVAS[CHAVE].length == 0){ delete DESCARGAS[i]["DESCARGAS"][CHAVE]; delete DESCARGAS_ATIVAS[CHAVE];}
             }
             //#endregion
-
-            
 
             //#region INSERINDO A LINHA DA PEDRA
             for (let k = 0; k < 24; k++){
@@ -69,8 +64,6 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
             }
             //#endregion
       
-           
-
             //#region INSERINDO TOTAIS
 
             let TOTAL_SALDO = TABELA_DESCARGA.querySelector("#TOTAL_SALDO")
@@ -132,7 +125,6 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
 
             //#endregion
 
-
             for (let FERROVIA in DESCARGAS_ATIVAS){
                 for (let j = 0; j < DESCARGAS_ATIVAS[FERROVIA].length; j++){
                     
@@ -145,6 +137,16 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
                     let ELEMENTO_SALDO_VIRADA       = TABELA_DESCARGA.querySelector(FILTRO_SALDO_VIRADA);
                     if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]) !== 0)
                     {ELEMENTO_SALDO_VIRADA.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]}
+
+                    //#endregion
+
+                    //#region INSERINDO TOTAL PRODUTIVIDADE 
+
+                    let FILTRO_TOTAL_PRODUTIVIDADE  = `td[data-ferrovia="${FERROVIA}"][data-produto="${PRODUTO}"][name="TOTAL_PRODUTIVIDADE"]`
+
+                    let ELEMENTO_TOTAL_PRODUTIVIDADE       = TABELA_DESCARGA.querySelector(FILTRO_TOTAL_PRODUTIVIDADE);
+                    if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PRODUTIVIDADE"]) !== 0)
+                    {ELEMENTO_TOTAL_PRODUTIVIDADE.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PRODUTIVIDADE"]}
 
                     //#endregion
 

@@ -36,8 +36,6 @@
             
             <div class="uma__margem"> 
 
-                
-
                 <table class="tabela__margens">
                     
                     <tr>
@@ -104,7 +102,9 @@
             <div class="uma__descarga">
                 
                 <table class="tabela__descarga" id="{{DESCARGA.TERMINAL}}_{{DESCARGA.DATA}}">
+                    
                     <input type="hidden" id="DESCARGAS_ATIVAS" value="{{ DESCARGA.DESCARGAS_ATIVAS }}">
+
                     <tr class="LINHA_TITULOS">
 
                         <td rowspan=5 colspan=2 class="NOME_TERMINAL">{{ DESCARGA.TERMINAL }}</td>
@@ -255,8 +255,41 @@
                                         </td>
 
                                     {% endfor %}
-                                    <td ><div class="SETA_PRODUTIVIDADE_{{FERROVIA}}" >➔</div></td><td class="VALOR_PRODUTIVIDADE_{{FERROVIA}}">{{LINHAS.INDICADORES.TOTAL_PRODUTIVIDADE}}</td>       
+                                    <td ><div class="SETA_PRODUTIVIDADE_{{FERROVIA}}" >➔</div></td><td name="TOTAL_PRODUTIVIDADE" data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" class="VALOR_PRODUTIVIDADE_{{FERROVIA}}">{{LINHAS.INDICADORES.TOTAL_PRODUTIVIDADE}}</td>       
                                 </tr>
+
+                                <!-- <tr>
+                                    
+                                    <td colspan="3" style="border: 1px black solid">FILA</td>
+                                    
+
+                                    {% for PRODUTIVIDADE in LINHAS.FILA %}
+
+                                        <td style="border: 1px black solid" >
+                                            {% if PRODUTIVIDADE != 0%}
+                                                {{ PRODUTIVIDADE }}
+                                            {% endif%}
+                                        </td>
+
+                                    {% endfor %}
+                                        
+                                </tr>
+
+                                <tr>
+                                    
+                                    <td colspan="3" style="border: 1px black solid">OCUPACAO</td>
+                                    
+                                    {% for PRODUTIVIDADE in LINHAS.OCUPACAO %}
+
+                                        <td style="border: 1px black solid" >
+                                            {% if PRODUTIVIDADE != 0%}
+                                                {{ PRODUTIVIDADE }}
+                                            {% endif%}
+                                        </td>
+
+                                    {% endfor %}
+                                        
+                                </tr> -->
                         
                         {% endfor %}
     
@@ -357,8 +390,6 @@
 
     document.body.addEventListener('keypress', function(e) {
 
-        
-        
         if ((MODO_EDICAO === true) && (e.which === 13)){
             if (NOVO_VALOR == ""){NOVO_VALOR = 0 }
             PARAMETROS_EDITADOS["VALOR"] = NOVO_VALOR

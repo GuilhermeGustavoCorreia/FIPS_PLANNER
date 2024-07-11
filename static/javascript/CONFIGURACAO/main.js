@@ -24,6 +24,23 @@ $(document).ready(function(){
   });
 });
 
+$(document).ready(function(){
+  $("#SECAO_EDITAR_PXO").click(function(){
+
+    $("#CONTEUDO_EDITAR_PXO").slideToggle();
+
+  });
+});
+
+
+$(document).ready(function(){
+  $("#SECAO_DOWNLOADS").click(function(){
+
+    $("#CONTEUDO_DOWNLOADS").slideToggle();
+
+  });
+});
+
 class mudarElemento {
 
   constructor(elemento) {
@@ -66,12 +83,13 @@ var ACAO                  = null;
 
 var NOVO_VALOR = null
 
+var TIPO_PXO = null;
 var FERROVIA = null;
 var TERMINAL = null;
 
 function celula_modo_edicao(celula_selecionada){
 
-  //DESCARGAS_ATIVAS
+  //#region DESCARGAS_ATIVAS
   if      ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "DESCARGAS_ATIVAS"))
   {
       ACAO = "DESCARGAS_ATIVAS"
@@ -88,8 +106,9 @@ function celula_modo_edicao(celula_selecionada){
       tbEdicao = elementoTransformado.para_textBox();
 
   }
+  //#endregion
 
-  //SUBIDAS_ATIVAS
+  //#region SUBIDAS_ATIVAS
   else if ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "SUBIDAS_ATIVAS"))
   {
       ACAO = "SUBIDAS_ATIVAS"
@@ -102,7 +121,6 @@ function celula_modo_edicao(celula_selecionada){
       TERMINAL = celula_selecionada.dataset.terminal
   }
 
-
   else if ((editando_celula === true) && (celula_selecionada.tagName !== "INPUT") )  
   {
       ACAO = null
@@ -110,7 +128,28 @@ function celula_modo_edicao(celula_selecionada){
       editando_celula = false;
 
   }
+  //#endregion
 
+  //#region PxO
+  else if ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "PXO"))
+  {
+      ACAO = "PXO"
+      elementoTransformado = new mudarElemento(celula_selecionada);
+      tbEdicao = elementoTransformado.para_textBox();
+      tbEdicao.focus();
+      editando_celula = true;
+
+      TIPO_PXO = celula_selecionada.headers
+      TERMINAL = celula_selecionada.id
+  }
+  
+  else if ((editando_celula === true) && (celula_selecionada.tagName !== "INPUT"))  
+  {
+      ACAO = null
+      tbEdicao = elementoTransformado.voltar_ao_nomral();
+      editando_celula = false;
+  }
+  //#endregion
 }
 
 document.body.addEventListener('click', async function(event) {

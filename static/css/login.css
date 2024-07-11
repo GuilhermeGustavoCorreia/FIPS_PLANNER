@@ -100,3 +100,23 @@ p{margin-left: 5vw;  width: 15vw; margin-top: 0px}
 .botao:hover {cursor:  pointer;background-color: #7B8C96;}
 
 /*#endregion*/
+
+
+@media screen and (orientation: portrait) {
+    .container{
+        position: absolute;
+        width:     100vw;
+        height:     97vh;
+        margin-top:  0;  
+        display:    block;
+        overflow-x: auto;
+    }
+    p { display: none}
+    .login__area{
+
+        width:     90vw;
+    }
+    
+  
+    
+}

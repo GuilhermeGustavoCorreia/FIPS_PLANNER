@@ -5,9 +5,6 @@
 
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/configucacao/configucacao.css' %}"> 
-
-
-
 <script src="{% static 'javascript/CONFIGURACAO/main.js' %}" defer></script>
 
 <div class="CONTEUDO__PADRAO">  
@@ -105,6 +102,56 @@
         </div>
     </section>
 
+    <section>
+        <h2  id="SECAO_EDITAR_PXO"    class="SECAO_CONFIGURACAO">Editar PxO</h2>
+        <div id="CONTEUDO_EDITAR_PXO" class="CONTEUDO_CONFIGURACAO">
+            <h1>Editar PxO</h1>
+            
+            <table id="TERMINAIS" class="TABELA__PXO">
+
+                <thead>
+                    
+                    <th>        </th>
+                    <th>PROD.   </th>
+                    <th>OSC.    </th>
+
+                </thead>
+
+                <tbody>
+
+                    {% for TERMINAL, CONTEUDO_TERMINAL in terminais_ativos.TERMINAIS.items %} 
+                    <tr>
+                        <th>{{ TERMINAL }}</th>
+                        <td name="PXO" class="EDITAVEL" headers="PRODUTIVIDADE" id="{{ TERMINAL }}">{{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}   </td>
+                        <td name="PXO" class="EDITAVEL" headers="OCIOSIDADE"    id="{{ TERMINAL }}">{{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE  }}     </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>    
+
+        </div>
+    </section>
+
+    <section>
+
+        <h2  id="SECAO_DOWNLOADS"    class="SECAO_CONFIGURACAO">Downloads</h2>
+        <div id="CONTEUDO_DOWNLOADS" class="CONTEUDO_CONFIGURACAO">
+
+            <h1>DOWNLOADS</h1>
+            <p>Clique no botão abaixo para baixar uma versão do sistema em planilha Excel.</p>
+
+            <form method="GET" enctype="multipart/form-data" action="{% url 'configuracao' %}">
+                
+                {% csrf_token %}
+                <input  type="hidden" name="ACAO" value="BAIXAR_PLANILHA">
+                <button class="BOTAO VERDE" type="submit">Baixar Planilha</button>
+
+            </form>  
+
+        </div>
+    </section>
+
 </div>
 
 <script>
@@ -138,6 +185,7 @@
             });
 
         }
+        
         if ((editando_celula === true) && (e.which === 13) && (ACAO === "SUBIDAS_ATIVAS")){
 
             NOVO_VALOR = tbEdicao.value
@@ -164,6 +212,33 @@
                     alert("ERRO")
                 }
             });
+        }
+        
+        if ((editando_celula === true) && (e.which === 13) && (ACAO === "PXO")){
+
+            NOVO_VALOR = tbEdicao.value
+
+            $.ajax({
+                url: '/configuracao/',
+                type: 'POST',
+                data: {
+                    'NOVO_VALOR':   Number(NOVO_VALOR),
+                    'TIPO':       TIPO_PXO,
+                    'TERMINAL':   TERMINAL,
+                    'ACAO': "PXO",
+                    'csrfmiddlewaretoken': "{{ csrf_token }}"
+                },
+                success: function(response) {
+
+                    elementoTransformado.voltar_ao_nomral();
+                    celula_selecionada.textContent = response;
+                    editando_celula = false;
+                },
+                error: function(xhr) {
+                    alert("ERRO")
+                }
+            });
+
         }
 });
 

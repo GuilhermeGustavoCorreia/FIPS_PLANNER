@@ -59,7 +59,8 @@ class NAVEGACAO_DESCARGA:
             def __LIMPAR_OCUPACAO__():
 
                 DESCARGA_COMPLETA["OCUPACAO"] = [0] * self.QT_COLUNAS_FULL
-                
+                DESCARGA_COMPLETA["FILA"]     = [0] * self.QT_COLUNAS_FULL
+
                 for _ ,SALDO in enumerate(DESCARGA_COMPLETA["SALDO"]):
                     
                     if SALDO == 0: 
@@ -80,36 +81,44 @@ class NAVEGACAO_DESCARGA:
             __LIMPAR_OCUPACAO__()
 
             #ISTO É PARA A LOGICA DE UM TREM DESCARREGAR DIRETO DO OUTRO SEM ESPAÇO ENTRE OS "S A L D O S" DELES
+            
             SOBRA_ANTERIOR_DE_VAGOES = 0
-            for i, DADOS_FILA_DO_TREM in enumerate(ORDEM_DE_CHEGADA):
+
+            #ORDEM_DE_CHEGADA = [
+                # [80, 1722,  3], [VGS, PK, HR]
+                # [43, 1727,  7], 
+                # [41, 1746, 24], 
+                # [40, 1772, 45]
+            #]
+
+            for i, DADOS_FILA_DO_TREM in enumerate(ORDEM_DE_CHEGADA): #PARA CADA TREM
                 
                 QUANDO_O_TREM_ENCOSTA   = DADOS_FILA_DO_TREM[2]
                 TAMANHO_DO_TREM         = DADOS_FILA_DO_TREM[0]
                 ID_TREM                 = int(DADOS_FILA_DO_TREM[1])
                 TREM_ACABOU_DESCARGA    = False
-                HORA = QUANDO_O_TREM_ENCOSTA
+                HORA                    = QUANDO_O_TREM_ENCOSTA
                 DIFERENCA = 0
                 HORA_FINAL = HORA
      
-                while not TREM_ACABOU_DESCARGA: 
+                while not TREM_ACABOU_DESCARGA: #ENQUANTO O TREM NÃO ACABOU A DESCARGA
+                    
                     TAMANHO_DO_TREM += SOBRA_ANTERIOR_DE_VAGOES 
 
-
-
-                    if (DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] - DESCARGA_COMPLETA["SALDO"][HORA_FINAL]) == 0 or HORA_FINAL == 119:      
+                    if (DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] - DESCARGA_COMPLETA["SALDO"][HORA_FINAL]) == 0 or HORA_FINAL == 119:     # VERIFICA SE O TREM ACABOU A DESCARGA  
                         TREM_ACABOU_DESCARGA    = True
                           
-                    if DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] ==  ID_TREM or DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] == 0:
+                    if DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] == ID_TREM or DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] == 0:                  # SE ESTIVER DESCARRGANDO O TREM EM QUESTÃO
                         
-                        if (DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] >= TAMANHO_DO_TREM):
-                            DIFERENCA = DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] - TAMANHO_DO_TREM
-  
-                        DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] = ID_TREM
-                        HORA_FINAL += 1
+                        if (DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] >= TAMANHO_DO_TREM):                                                 # SE A PRODUTIVIDADE ATUAL FOR MAIOR QUE O TAM. DO TREM
+                            DIFERENCA = DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] - TAMANHO_DO_TREM                                        # DIFERENÇA = PROD - TAM. TREM
+                    
+                        DESCARGA_COMPLETA["OCUPACAO"][HORA_FINAL] = ID_TREM                                                                     # O TREM ATUAL ESTA OCUPANDO A DESCARGA
+                        HORA_FINAL += 1                                                                                                         # HORA FINAL É A PROXIMA
        
-                        TAMANHO_DO_TREM = TAMANHO_DO_TREM - DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL - 1] - DIFERENCA
+                        TAMANHO_DO_TREM = TAMANHO_DO_TREM - DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL - 1] - DIFERENCA                      # REMOVE O QUE FOI PRODUZIDO DO TAMANHO DO TREM
     
-                        if TAMANHO_DO_TREM <= 0:
+                        if TAMANHO_DO_TREM <= 0:                                                                                                # SE O TAMANHO DO TREM ACABAR, O TREM ACABOU
 
                             if TAMANHO_DO_TREM < 0:
 
@@ -118,25 +127,28 @@ class NAVEGACAO_DESCARGA:
                             TREM_ACABOU_DESCARGA = True
 
                     else:
-
+                        
+                        DESCARGA_COMPLETA["FILA"][HORA_FINAL] = 1                                                                                    # SIGNIFICA QUE HÁ FILA.
                         HORA_FINAL += 1   
+            
+            #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             #INSERIR NA LINHA DE OCUPACAO
 
         DESCARGA_COMPLETA = {}
 
-        ITENS_DESCARGA = ["ENCOSTE", "SALDO", "PRODUTIVIDADE", "EDITADO","OCUPACAO", "RESTRICAO"]
-        ITENS_SUBIDA   = ["GERACAO_DE_VAZIOS", "GERACAO_EDITADA", "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO"]
+        ITENS_DESCARGA = ["ENCOSTE", "SALDO",  "PRODUTIVIDADE",   "EDITADO", "OCUPACAO", "FILA", "RESTRICAO"]
+        ITENS_SUBIDA   = ["GERACAO_DE_VAZIOS", "GERACAO_EDITADA", "ALIVIO_DE_VAZIOS",       "ALIVIO_EDITADO"]
         
         for ITEM in ITENS_DESCARGA:
-                DESCARGA_COMPLETA[ITEM] = []
+            DESCARGA_COMPLETA[ITEM] = []
 
         for ITEM in ITENS_SUBIDA:
-                DESCARGA_COMPLETA[ITEM] = []
+            DESCARGA_COMPLETA[ITEM] = []
 
         PRODUTIVIDADE = self.INFOS["PRODUTIVIDADE"][self.FERROVIA][self.PRODUTO]
         
-        #CRIANDO A DESCARGA ÚNICA (LINHAS CONSIDERADAS ABAIXO)
+        # CRIANDO A DESCARGA ÚNICA (LINHAS CONSIDERADAS ABAIXO)
         
         for DATA_ARQ in self.LISTA_DATA_ARQ:  
                 
@@ -147,7 +159,7 @@ class NAVEGACAO_DESCARGA:
                 DESCARGA_COMPLETA[ITEM].extend(self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SUBIDA"][ITEM])
 
 
-       #ITERANDO SOBRE A DESCARGA ÚNICA
+        # ITERANDO SOBRE A DESCARGA ÚNICA
         DESCARGA_COMPLETA["SALDO"][0] = 0
 
         for i, _ in enumerate(DESCARGA_COMPLETA["ENCOSTE"]):#AQUI PODERIA SER QUALQUER CHAVE, É PARA PEGARMOS O TAMANHO DA LISTA
@@ -158,20 +170,19 @@ class NAVEGACAO_DESCARGA:
 
                 DESCARGA_COMPLETA["SALDO"][i-1]         = SALDO_D0
                 DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = 0
-                #DESCARGA_COMPLETA["ENCOSTE"][i]       = [0, 0]
                 DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-1] = 0
                 DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-2] = 0
             
-            #ESTAS TRÊS REGRAS SÃO PARA O AUTOMATICO E O MANUAL
+            # ESTAS TRÊS REGRAS SÃO PARA O AUTOMATICO E O MANUAL
             if      DESCARGA_COMPLETA["SALDO"][i-1] == 0                                        : DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = 0 #(NÃO HÁ O QUE DESCARREGAR)
             elif    DESCARGA_COMPLETA["SALDO"][i-1] < DESCARGA_COMPLETA["SALDO"][i-1]           : DESCARGA_COMPLETA["SALDO"][i-1] = DESCARGA_COMPLETA["SALDO"][i-1] #(HÁ MENOS SALDO QUE PRODUTIVIDADE)
             if      DESCARGA_COMPLETA["SALDO"][i-1] < DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1]   : DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = DESCARGA_COMPLETA["SALDO"][i-1]#(NÃO HÁ O QUE DESCARREGAR)
 
-            #AQUI FICA O CALCULO AUTOMATICO
+            # AQUI FICA O CALCULO AUTOMATICO
             elif DESCARGA_COMPLETA["EDITADO"][i-1] == 0:
                 if   DESCARGA_COMPLETA["SALDO"][i-1] >= PRODUTIVIDADE: 
 
-                    #AQUI DEVEMOS INCLUIR O CALCULO COM RESTRICAO
+                    # AQUI DEVEMOS INCLUIR O CALCULO COM RESTRICAO
                     if DESCARGA_COMPLETA["RESTRICAO"][i-1] > 0: 
                         DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] = round(PRODUTIVIDADE * 0.01 * DESCARGA_COMPLETA["RESTRICAO"][i-1])
                     else:
@@ -214,7 +225,6 @@ class NAVEGACAO_DESCARGA:
 
             for ITEM in ITENS_SUBIDA:
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SUBIDA"][ITEM] = LISTAS[ITEM][index] #LISTA POSSUI O MESMO TAMANHO QUE O PERIODO ATIVO, COMPARTILHAM O INDEX
-
 
             if index != 0: #NÃO VAMOS DEFINIR O SALDO DE VIRADA DE "D" AUTOMARICAMENTE (index = 1 é "D" na lista self.LISTA_DATA_ARQ)
                 
@@ -259,10 +269,8 @@ class NAVEGACAO_DESCARGA:
                     self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][2] = sum(LINHA_PRODUTIVIDADE[12:18])
                     self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][3] = sum(LINHA_PRODUTIVIDADE[18:  ])
 
-
-
-                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_CHEGADA"] = sum(sublista[0] for sublista in LINHA_ENCOSTE)
-                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PRODUTIVIDADE"]   = sum(LINHA_PRODUTIVIDADE)
+                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_CHEGADA"]        = sum(sublista[0] for sublista in LINHA_ENCOSTE)
+                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PRODUTIVIDADE"]  = sum(LINHA_PRODUTIVIDADE)
 
 
             #endregion
@@ -303,8 +311,6 @@ class NAVEGACAO_DESCARGA:
                     PEDRAS[FERROVIA]["P3"] += self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][2]
                     PEDRAS[FERROVIA]["P4"] += self.DESCARGAS[DATA_ARQ]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PEDRA"][3]
 
-            
-
 
             #COLOCA AS SOMAS DAS PEDRAS POR FERROVIAS NA DESCARGA (QUADRADOS COLORIDOS EM BAIXO DA DESCARGA)
             PERIODOS = ["P1", "P2", "P3", "P4"]
@@ -329,6 +335,7 @@ class NAVEGACAO_DESCARGA:
                                                                         self.DESCARGAS[DATA_ARQ]["INDICADORES"]["PEDRAS"]["TOTAL"]["P4"]
             #LINHA DA PEDRA
             self.DESCARGAS[DATA_ARQ]["PEDRA"] = PEDRA
+            #endregion 
 
     def __SALVAR__(self):
 
@@ -340,10 +347,6 @@ class NAVEGACAO_DESCARGA:
             ARQUIVO = f"descarga_{ DATA_ARQ }.json"
             with open(os.path.join(DIRETORIO_TERMINAL, ARQUIVO), 'w') as ARQUIVO_NOME:
                 json.dump(self.DESCARGAS[DATA_ARQ], ARQUIVO_NOME, indent=4)
-
-    #endregion
-    
-    
 
     #endregion
 
@@ -381,7 +384,6 @@ class NAVEGACAO_DESCARGA:
             if PRIMEIRO_TREM:
                 PREFIXO = PRIMEIRO_TREM.prefixo
                 TODOS_IDs_DESTA_CHEGADA = list(Trem.objects.filter(terminal=self.NM_TERMINAL, previsao=TREM['previsao']).values_list('pk', flat=True))
-                print(TODOS_IDs_DESTA_CHEGADA)
 
             #CASO NAO EXISTA
             else:
@@ -421,10 +423,8 @@ class NAVEGACAO_DESCARGA:
                 HORA_ENCOSTE     = HORA_ENCOSTE - 24
                 DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
 
-            print(f"antes do encoste{ self.DESCARGAS[DATA_ARQ_ENCOSTE] }")
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
-            print(f"antes do encoste{ self.DESCARGAS[DATA_ARQ_ENCOSTE] }")
             
         def __ATIVAR_TERMINAL__(ACAO):
             
@@ -444,6 +444,7 @@ class NAVEGACAO_DESCARGA:
             EDITAR_PARAMETROS(PARAMETROS, "SOMAR")
         
         #endregion      
+        
         TREM_DATA_ARQ    = TREM['previsao'].strftime('%Y-%m-%d')
         HORA             = TREM['previsao'].hour
 
@@ -526,9 +527,6 @@ class NAVEGACAO_DESCARGA:
         
         MOTIVO = RESTRICAO["motivo"]
         PCT    = RESTRICAO["porcentagem"]
-
-        print(RESTRICAO)
-
 
         VALOR_ATIVACAO = 1
         if ACAO == "REMOVER":

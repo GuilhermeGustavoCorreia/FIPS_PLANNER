@@ -19,10 +19,8 @@ def CARREGAR_RELATORIO_DETALHE():
 
     RELATORIO_DETALHE = {
 
-        "PRINCIPAL":  {},
-        "RUMO": {}
-
-
+        "PRINCIPAL":    {},
+        "RUMO":         {}
     }
 
     #OBTENDO OS VALORES DA DETALHADA
@@ -36,7 +34,7 @@ def CARREGAR_RELATORIO_DETALHE():
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()   
 
         for DESCARGAS in DESCARGAS_ATIVAS: #CADA DESCARGA
-            print(DESCARGAS)
+
             FERROVIA, PRODUTO = DESCARGAS.split("_")
 
             if not FERROVIA in RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]:
@@ -147,7 +145,7 @@ def CARREGAR_RELATORIO_DETALHE():
                         COLUNAS = ["SALDOS", "RECEBIMENTOS", "PEDRA"]
                         
                         for COLUNA in COLUNAS:
-                            print(f"TEMRINAL: {TERMINAL} FERROVIA: { FERROVIA } PRODUTO: { PRODUTO} D: {DIA_LOGISTICO} COLUNA: { COLUNA } ")
+                            
                             if not COLUNA in RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["TOTAL"][DIA_LOGISTICO]:
 
                                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["TOTAL"][DIA_LOGISTICO][COLUNA] = {"P1": 0, "P2": 0, "P3": 0, "P4": 0}

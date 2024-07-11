@@ -1,10 +1,8 @@
 import pandas as pd
-
+import json
 
 def EDITAR_PARAMETROS(PARAMETROS, ACAO="INSERIR"):
         
-        print(f'LINHA: {PARAMETROS["COLUNA"]} COLUNA: {PARAMETROS["COLUNA"]} VALOR: {PARAMETROS["NOVO_VALOR"]}')
-    
         DIRETORIO = f'previsao_trens/src/PARAMETROS/{PARAMETROS["TABELA"]}'
 
         DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
@@ -36,3 +34,22 @@ def EDITAR_PARAMOS_SUBIDAS(PARAMETROS):
     DATAFRAME.to_csv(DIRETORIO, sep=";")
 
     return int(DATAFRAME.loc[PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"]])
+
+
+
+def EDITAR_PARAMOS_PXO(PARAMETROS):
+     
+
+    print(f"EDITANDO: {PARAMETROS}")
+
+    with open("previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO:
+        jsDESCARGAS = json.load(ARQUIVO)
+
+    if PARAMETROS["TERMINAL"] in jsDESCARGAS:
+         jsDESCARGAS[PARAMETROS["TERMINAL"]]["PXO"][PARAMETROS["TIPO"]] = float(PARAMETROS["NOVO_VALOR"])
+
+    with open("previsao_trens/src/DICIONARIOS/TERMINAIS.json", 'w') as ARQUIVOA:
+         json.dump(jsDESCARGAS, ARQUIVOA, indent=4)
+
+
+    return jsDESCARGAS[PARAMETROS["TERMINAL"]]["PXO"][PARAMETROS["TIPO"]]

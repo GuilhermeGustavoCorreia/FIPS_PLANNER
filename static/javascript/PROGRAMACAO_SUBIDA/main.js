@@ -41,7 +41,8 @@ class mudarElemento {
   var SEGMENTO = null
   var FERROVIA = null
   var TERMINAL = null
-  
+  var MARGEM   = null
+
   var TIPO          = null
   var DIA_LOGISTICO = null
 
@@ -50,7 +51,40 @@ function celula_modo_edicao(celula_selecionada){
 
     //console.log(`EDITANDO CÉLULA: ${editando_celula} CELULA SELECIONADA: ${celula_selecionada.getAttribute('name')}`)
 
-    if ((editando_celula === false) && (celula_selecionada.getAttribute('name') === "SALDO_VIRADA_VAZIO_TERMINAL")) {
+    //#region CONDENSADOS 
+
+    if ((editando_celula === false) && (celula_selecionada.getAttribute('name') === "SALDO_VIRADA_CONDENSADOS")) {
+        
+        TIPO     = "SALDO_CONDENSADOS"
+
+        SEGMENTO = celula_selecionada.dataset.segmento
+        FERROVIA = celula_selecionada.dataset.ferrovia
+        MARGEM   = celula_selecionada.dataset.margem
+
+        elementoTransformado = new mudarElemento(celula_selecionada);
+        tbEdicao = elementoTransformado.para_textBox();
+        tbEdicao.focus();
+        editando_celula = true;
+
+    }
+
+    else if ((editando_celula === true) && (celula_selecionada.getAttribute('name') === "SALDO_VIRADA_CONDENSADOS"))  {
+
+        TIPO     = "SALDO_CONDENSADOS"
+
+        SEGMENTO = celula_selecionada.dataset.segmento
+        FERROVIA = celula_selecionada.dataset.ferrovia
+        TERMINAL = celula_selecionada.dataset.terminal
+
+        tbEdicao = elementoTransformado.voltar_ao_nomral();
+        elementoTransformado = new mudarElemento(celula_selecionada);
+        tbEdicao = elementoTransformado.para_textBox();
+  
+    }
+    //#endregion
+
+    //#region SALDO_VIRADA_VAZIO_TERMINAL 
+    else if ((editando_celula === false) && (celula_selecionada.getAttribute('name') === "SALDO_VIRADA_VAZIO_TERMINAL")) {
 
         TIPO     = "SALDO_TERMINAL"
         SEGMENTO = celula_selecionada.dataset.segmento
@@ -76,7 +110,8 @@ function celula_modo_edicao(celula_selecionada){
         tbEdicao = elementoTransformado.para_textBox();
   
     }
-
+    //#endregion
+    
     else if ((editando_celula === true) && (celula_selecionada.getAttribute('name') !== "INPUT"))   {
         
         tbEdicao = elementoTransformado.voltar_ao_nomral();
@@ -137,7 +172,7 @@ CELULAS_PREFIXO.forEach(CELULA => {
     CELULA.addEventListener('click', criar_trem_subida);
 });
 
-let MARGEM = ""
+
 let HORA   = ""
 
 function MOSTRAR_VAGOES_FORMULARIO(MARGEM, FERROVIA, HORA){
@@ -188,7 +223,7 @@ function criar_trem_subida(event) {
     let COLUNA          = event.target.dataset.hora;
     let ACAO            = document.getElementById("ACAO_FORMULARIO_TREM_VAZIO");
     let DIA_LOGISTICO   = document.getElementById("DIA_LOGISTICO_FORM");
-    let HORA_FRM                = document.getElementById("HORA_FORM");
+    let HORA_FRM        = document.getElementById("HORA_FORM");
     let MARGEM_FRM      = document.getElementById("MARGEM_FORM");
 
     

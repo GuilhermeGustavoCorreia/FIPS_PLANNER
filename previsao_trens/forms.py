@@ -44,10 +44,12 @@ class TremForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(TremForm, self).__init__(*args, **kwargs)
-        self.fields['ferrovia'].choices = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
 
-        self.fields['posicao_previsao'].required = False 
+        super(TremForm, self).__init__(*args, **kwargs)
+        
+        self.fields['ferrovia'].choices             = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
+        self.fields['comentario'].required          = False
+        self.fields['posicao_previsao'].required    = False 
 
 
 class RestricaoForm(forms.ModelForm):

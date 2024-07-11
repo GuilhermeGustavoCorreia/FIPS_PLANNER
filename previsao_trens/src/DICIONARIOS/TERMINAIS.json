@@ -24,6 +24,10 @@
                 "MAX": 80
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 100.0,
+            "OCIOSIDADE": 100.0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "FARELO",
@@ -79,6 +83,10 @@
                 "MAX": 80
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 82,
         "PRODUTOS": [
             "FARELO",
@@ -107,7 +115,8 @@
                 "MILHO": 8,
                 "SOJA": 8
             }
-        }
+        },
+        "OCIOSIDADE": "2"
     },
     "TEAG": {
         "ORDEM": 2,
@@ -133,6 +142,10 @@
                 "MIN": 40,
                 "MAX": 80
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 80.0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 82,
         "PRODUTOS": [
@@ -189,6 +202,10 @@
                 "MAX": 80
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 80.0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 82,
         "PRODUTOS": [
             "ACUCAR"
@@ -236,6 +253,10 @@
                 "MAX": 80
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 82,
         "PRODUTOS": [
             "FARELO",
@@ -264,7 +285,8 @@
                 "MILHO": 0,
                 "SOJA": 0
             }
-        }
+        },
+        "OCIOSIDADE": "4"
     },
     "T39": {
         "ORDEM": 5,
@@ -291,6 +313,10 @@
                 "MAX": 82
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 82,
         "PRODUTOS": [
             "FARELO",
@@ -305,19 +331,19 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "FARELO": 13,
+                "FARELO": 7,
                 "MILHO": 0,
-                "SOJA": 0
+                "SOJA": 10
             },
             "MRS": {
                 "FARELO": 0,
-                "MILHO": 10,
+                "MILHO": 0,
                 "SOJA": 10
             },
             "VLI": {
-                "FARELO": 13,
+                "FARELO": 10,
                 "MILHO": 0,
-                "SOJA": 0
+                "SOJA": 10
             }
         }
     },
@@ -345,6 +371,10 @@
                 "MIN": 40,
                 "MAX": 60
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 82,
         "PRODUTOS": [
@@ -401,6 +431,10 @@
                 "MAX": 25
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "FARELO",
@@ -455,6 +489,10 @@
                 "MIN": 25,
                 "MAX": 25
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -511,6 +549,10 @@
                 "MAX": 40
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "FARELO",
@@ -565,6 +607,10 @@
                 "MIN": 25,
                 "MAX": 50
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -621,6 +667,10 @@
                 "MAX": 30
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "ACUCAR"
@@ -667,6 +717,10 @@
                 "MIN": 10,
                 "MAX": 20
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -723,6 +777,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "ACUCAR"
@@ -769,6 +827,10 @@
                 "MIN": 45,
                 "MAX": 45
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -824,6 +886,10 @@
                 "MIN": 20,
                 "MAX": 28
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -881,6 +947,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CONTEINER"
@@ -925,6 +995,10 @@
                 "MIN": 18,
                 "MAX": 64
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -971,6 +1045,10 @@
                 "MIN": 50,
                 "MAX": 60
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1027,6 +1105,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CONTEINER"
@@ -1073,6 +1155,10 @@
                 "MIN": 80,
                 "MAX": 80
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1129,6 +1215,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "ACUCAR"
@@ -1175,6 +1265,10 @@
                 "MIN": 50,
                 "MAX": 60
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1232,6 +1326,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CONTEINER"
@@ -1280,6 +1378,10 @@
                 "MAX": 80
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CONTEINER"
@@ -1326,6 +1428,10 @@
                 "MIN": 50,
                 "MAX": 60
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1382,6 +1488,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "FARELO",
@@ -1437,6 +1547,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "ACUCAR"
@@ -1483,6 +1597,10 @@
                 "MIN": 5,
                 "MAX": 10
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1539,6 +1657,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "KCL",
@@ -1594,6 +1716,10 @@
                 "MAX": 60
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CELULOSE"
@@ -1640,6 +1766,10 @@
                 "MIN": 26,
                 "MAX": 40
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [
@@ -1688,6 +1818,10 @@
                 "MAX": 67
             }
         },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
         "ALIVIO": 30,
         "PRODUTOS": [
             "CELULOSE"
@@ -1734,6 +1868,10 @@
                 "MIN": 64,
                 "MAX": 67
             }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
         },
         "ALIVIO": 30,
         "PRODUTOS": [

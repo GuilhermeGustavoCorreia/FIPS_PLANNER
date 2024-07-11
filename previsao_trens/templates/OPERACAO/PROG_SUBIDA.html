@@ -68,32 +68,39 @@
     
     {% if TABELAS_SUBIDA %} 
 
+
+        <!--#region ABAS DE NAVEGACAO-->
+        
         <div class="abas">
-            <div class="aba ativa" onclick="abrirAba(event, 'D')">D</div>
-            <div class="aba" onclick="abrirAba(event, 'D1')">D+1</div>
+
+            <div class="aba ativa"  onclick="abrirAba(event, 'D')"  >D  </div>
+            <div class="aba"        onclick="abrirAba(event, 'D1')" >D+1</div>
+
         </div>
 
         <div id="D" class="conteudo">
             
-            <div class="sub-aba" onclick="abrirSubAba(event, 'esquerda')">Esquerda</div>
-            <div class="sub-aba ativa" onclick="abrirSubAba(event, 'direita')">Direita</div>
+            <div class="sub-aba"        onclick="abrirSubAba(event, 'esquerda')">Esquerda   </div>
+            <div class="sub-aba ativa"  onclick="abrirSubAba(event, 'direita')" >Direita    </div>
             
         </div>
       
         <div id="D1" class="conteudo" style="display:none">
 
-            <div class="sub-aba" onclick="abrirSubAba(event, 'esquerda_d1')">Esquerda</div>
-            <div class="sub-aba" onclick="abrirSubAba(event, 'direita_d1')">Direita</div>
+            <div class="sub-aba" onclick="abrirSubAba(event, 'esquerda_d1')">Esquerda   </div>
+            <div class="sub-aba" onclick="abrirSubAba(event, 'direita_d1')" >Direita    </div>
             
         </div>
 
+        <!--#endregion-->
+
         <div class="conteudo-abas">
         
-                <div id="direita"       class="sub-conteudo" >
+                <div id="direita" class="sub-conteudo" >
                               
                         <table>
 
-                            <!--#region PST-->
+                            <!--#region D PST-->
                             
                                 <!--#region HEADER-->    
                                 <thead class="titulo">
@@ -215,7 +222,7 @@
                             
                             <tr class="pula_linha"><td colspan=32>x</td></tr>    
                                 
-                            <!--#region PMC-->
+                            <!--#region D PMC-->
 
                                 <!--#region HEADER--> 
                                 <thead class="titulo">
@@ -341,7 +348,7 @@
                     
                             <tr class="pula_linha"><td colspan=32>x</td></tr> 
 
-                            <!--#region PCX-->
+                            <!--#region D PCX-->
                             
                                 <!--#region HEADER-->
                                     <thead class="titulo">
@@ -457,7 +464,7 @@
                             
                             <tr class="pula_linha"><td colspan=32>x</td></tr>          
     
-                            <!--#region LINHA 4K (D)  -->
+                            <!--#region D LINHA 4K-->
 
                                 <!--#region HEADER-->                    
 
@@ -697,7 +704,7 @@
 
                             <tr class="pula_linha"><td colspan=32>x</td></tr>      
                             
-                            <!--#region BUFFER-->
+                            <!--#region D BUFFER-->
             
                                 <!--#region HEADER-->
                                     <thead class="titulo">
@@ -815,7 +822,7 @@
             
                             <tr class="pula_linha"><td colspan=32>x</td></tr>     
             
-                            <!--#region RUMO    CONDENSADO -->
+                            <!--#region D DIREITA RUMO CONDENSADO -->
             
                                 <!--#region HEADER-->
                                     <thead class="titulo">
@@ -861,12 +868,12 @@
                                     </thead>
                                 <!--#endregion--> 
                                 
-                                <!--#region GRAOS -->                
+                                <!--#region D DIREITA RUMO GRAOS -->                
                                     <tr>
                                         <td colspan=2 class="pula_linha "></td>
-                                        <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                        <td class="linha"></td>
-                                        {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.GRAO %}
+                                        <td colspan=2 class="coluna_A linha">GRAOS </td> 
+                                        <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="DIREITA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.GRAO.SALDO_VIRADA }}</td>
+                                        {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.GRAO.SALDO %}
                                         
                                             {% if GRAOS != 0%}
                                                 <td class="AZUL" name="CONDENSADOS_RUMO" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
@@ -879,12 +886,12 @@
                                     </tr>
                                 <!--#endregion--> 
             
-                                <!--#region FERTILIZANTES -->    
+                                <!--#region D DIREITA RUMO FERTILIZANTES -->    
                                     <tr>
                                         <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                        <td class="linha"></td>
-                                        {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE %}
+                                        <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="DIREITA" data-segmento="FERTILIZANTE">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                        {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE.SALDO %}
             
                                             {% if FERTILIZANTES != 0%}
                                                 <td class="LARANJA" name="CONDENSADOS_RUMO" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
@@ -896,13 +903,13 @@
                                         <td colspan=2 class="pula_linha "></td>
                                     </tr>
                                 <!--#endregion--> 
-                                
-                                <!--#region CELULOSE -->  
+                                    
+                                <!--#region D DIREITA RUMO CELULOSE -->  
                                     <tr>
                                         <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                        <td class="linha"></td>
-                                        {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CELULOSE %}
+                                        <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="DIREITA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CELULOSE.SALDO_VIRADA }}</td>
+                                        {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CELULOSE.SALDO %}
                                             
                                             {% if CELULOSE != 0%}
                                                 <td class="CINZA-DARK "  name="CONDENSADOS_RUMO" data-segmento="CELULOSE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
@@ -915,12 +922,12 @@
                                     </tr>
                                 <!--#endregion--> 
             
-                                <!--#region ACUCAR -->
+                                <!--#region D DIREITA RUMO ACUCAR -->
                                     <tr>
                                         <td colspan=2 class="pula_linha "></td>
                                         <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                        <td class="linha"></td>
-                                        {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.ACUCAR %}
+                                        <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="DIREITA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.ACUCAR.SALDO_VIRADA }}</td>
+                                        {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.ACUCAR.SALDO %}
                                             {% if ACUCAR != 0%}
                                                 <td class="ROXO" name="CONDENSADOS_RUMO" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
                                             {% else  %}
@@ -931,13 +938,13 @@
                                     </tr>
                                 <!--#endregion-->  
             
-                                <!--#region CONTEINER -->  
+                                <!--#region D DIREITA RUMO CONTEINER -->  
             
                                     <tr>
                                         <th colspan=2 class="pula_linha"></th>
                                         <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                        <td class="linha"></td>
-                                        {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CONTEINER %}
+                                        <td class="linha"   name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="DIREITA" data-segmento="CONTEINER">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CONTEINER.SALDO_VIRADA }}</td>
+                                        {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.RUMO.CONTEINER.SALDO  %}
                                         <td class="linha">      
                                             {% if CONTEINER != 0%}
                                                 {{CONTEINER}}       
@@ -953,7 +960,7 @@
                             
                             <tr class="pula_linha"><td colspan=32>x</td></tr>
             
-                            <!--#region MRS     CONDENSADO -->
+                            <!--#region D DIREITA MRS CONDENSADO-->
 
                                 <!--#region HEADER-->
                                     <thead class="titulo">
@@ -997,11 +1004,12 @@
                                     </thead>
                                 <!--#endregion-->
                                 
+                                <!--#region D DIREITA MRS GRAOS -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                    <td class="linha"></td>
-                                    {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.GRAO %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="DIREITA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.GRAO.SALDO_VIRADA }}</td>
+                                    {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.GRAO.SALDO %}
                                         {% if GRAOS != 0%}
                                             <td class="AZUL" name="CONDENSADOS_MRS" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
                                         {% else  %}
@@ -1010,12 +1018,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion  -->
+
+                                <!--#region D DIREITA MRS FERTILIZANTES -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                    <td class="linha"></td>
-                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.FERTILIZANTE %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="DIREITA" data-segmento="FERTILIZANTE">{{TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.FERTILIZANTE.SALDO_VIRADA}}</td>
+                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.FERTILIZANTE.SALDO %}
                                         
                                         {% if FERTILIZANTES != 0%}
                                             <td class="LARANJA" name="CONDENSADOS_MRS" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
@@ -1026,12 +1036,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion  -->
+                                
+                                <!--#region D DIREITA MRS CELULOSE -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                    <td class="linha"></td>
-                                    {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CELULOSE %}
+                                    <td class="linha"  name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="DIREITA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CELULOSE.SALDO_VIRADA }}</td>
+                                    {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CELULOSE.SALDO %}
                                         
                                         {% if CELULOSE != 0%}
                                             <td class="CINZA-DARK " name="CONDENSADOS_MRS" data-segmento="CELULOSE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
@@ -1042,12 +1054,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion  -->
+
+                                <!--#region D DIREITA MRS ACUCAR -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                    <td class="linha"></td>
-                                    {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.ACUCAR %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="DIREITA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.ACUCAR.SALDO_VIRADA }}</td>
+                                    {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.ACUCAR.SALDO %}
                                         {% if ACUCAR != 0%}
                                             <td class="ROXO" name="CONDENSADOS_MRS" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
                                         {% else  %}
@@ -1056,12 +1070,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
+                                <!--#endregion  -->    
                                 
+                                <!--#region D DIREITA MRS CONTEINER -->
                                 <tr>
                                     <th colspan=2 class="pula_linha"></th>
                                     <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                    <td class="linha"></td>
-                                    {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CONTEINER %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="DIREITA" data-segmento="CONTEINER">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CONTEINER.SALDO_VIRADA }} </td>
+                                    {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.MRS.CONTEINER.SALDO %}
                                     <td class="linha">      
                                         {% if CONTEINER != 0%}
                                             {{CONTEINER}}       
@@ -1071,12 +1087,13 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-            
+                                <!--#endregion-->
+                            
                             <!--#endregion-->        
             
                             <tr class="pula_linha"><td colspan=32>x</td></tr>
             
-                            <!--#region VLI     CONDENSADO -->
+                            <!--#region D DIREITA VLI CONDENSADO -->
 
                                 <!--#region HEADER-->
                                     <thead class="titulo">
@@ -1118,12 +1135,13 @@
                                         </tr>
                                     </thead>
                                 <!--#endregion--> 
-
+                                
+                                <!--#region D DIREITA VLI GRAOS -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                    <td class="linha"></td>
-                                    {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.GRAO %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="DIREITA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.GRAO.SALDO_VIRADA }}</td>
+                                    {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.GRAO.SALDO %}
                                         {% if GRAOS != 0%}
                                             <td class="AZUL" name="CONDENSADOS_VLI" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
                                         {% else  %}
@@ -1132,12 +1150,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion-->
+
+                                <!--#region D DIREITA VLI FERTILIZANTES -->    
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                    <td class="linha"></td>
-                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.FERTILIZANTE %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="DIREITA" data-segmento="FERTILIZANTE">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.FERTILIZANTE.SALDO %}
                                         
                                         {% if FERTILIZANTES != 0%}
                                             <td class="LARANJA" name="CONDENSADOS_VLI" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
@@ -1148,12 +1168,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion-->
+                                
+                                <!--#region D DIREITA VLI CELULOSE -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                    <td class="linha"></td>
-                                    {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CELULOSE %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="DIREITA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CELULOSE.SALDO_VIRADA }}</td>
+                                    {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CELULOSE.SALDO %}
                                     
                                     
                                         {% if CELULOSE != 0%}
@@ -1165,12 +1187,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-                
+                                <!--#endregion--> 
+
+                                <!--#region D DIREITA VLI ACUCAR -->
                                 <tr>
                                     <td colspan=2 class="pula_linha "></td>
                                     <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                    <td class="linha"></td>
-                                    {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.ACUCAR %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="DIREITA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.ACUCAR.SALDO_VIRADA }}</td>
+                                    {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.ACUCAR.SALDO %}
                                         {% if ACUCAR != 0%}
                                             <td class="ROXO" name="CONDENSADOS_VLI" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
                                         {% else  %}
@@ -1179,12 +1203,14 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
+                                <!--#endregion-->    
                                 
+                                <!--#region D DIREITA VLI CONTEINER -->
                                 <tr>
                                     <th colspan=2 class="pula_linha"></th>
                                     <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                    <td class="linha"></td>
-                                    {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CONTEINER %}
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="DIREITA" data-segmento="CONTEINER">{{TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CONTEINER.SALDO_VIRADA }}</td>
+                                    {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.VLI.CONTEINER.SALDO %}
                                     <td class="linha">      
                                         {% if CONTEINER != 0%}
                                             {{CONTEINER}}       
@@ -1193,7 +1219,8 @@
                                     {% endfor %}
                                     <td colspan=2 class="pula_linha "></td>
                                 </tr>
-            
+                                <!--#endregion -->        
+                            
                             <!--#endregion -->
 
                             <tr class="pula_linha"> <td colspan=32>x</td></tr>
@@ -1342,14 +1369,1283 @@
             
                         </table>                  
                     
-                    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------->     
-
+                    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                
                 </div>
 
                 <div id="direita_d1"    class="sub-conteudo"    style="display:none">
                 
-                    <div class="sub-aba" onclick="abrirSubSubAba(event, 'pcx_d1')">PCX</div>
-                    <div class="sub-aba" onclick="abrirSubSubAba(event, 'pst-pmc_d1')">PST e PMC</div>
+                    <table>
+
+                        <!--#region D+1 PST-->
+                        
+                            <!--#region HEADER-->    
+                            <thead class="titulo">
+                                <tr>
+                                    <th colspan=4 rowspan="2">D+1</th>
+                                    <th colspan=25>PST</th>
+                                    <th colspan=2>SATURACÃO</th>
+                                </tr>
+                                <tr>
+                                    
+                                    <th>D-1</th>
+                                    <th>01h</th>
+                                    <th>02h</th>
+                                    <th>03h</th>  
+                                    <th>04h</th>
+                                    <th>05h</th>
+                                    <th>06h</th>
+                                    <th>07h</th>
+                                    <th>08h</th>
+                                    <th>09h</th>  
+                                    <th>10h</th>
+                                    <th>11h</th>
+                                    <th>12h</th>
+                                    <th>13h</th>
+                                    <th>14h</th>
+                                    <th>15h</th>
+                                    <th>16h</th>  
+                                    <th>17h</th>
+                                    <th>18h</th>
+                                    <th>19h</th>
+                                    <th>20h</th> 
+                                    <th>21h</th>
+                                    <th>22h</th>
+                                    <th>23h</th>
+                                    <th>24h</th>
+                                    <th>mín</th>
+                                    <th>máx</th>
+                    
+                                </tr>
+                            </thead>   
+                            <!--#endregion--> 
+                    
+                            <!--#region TERMINAIS PST-->
+                                {% for TERMINAL in TABELAS_SUBIDA.D1.TERMINAIS.PST %}
+                    
+                                    {% for FERROVIA, CONTEUDO_FERROVIA in TERMINAL.SUBIDA.items %}
+                                    <tr>
+                                        {% for SEGMENTO, CONTEUDO_SEGMENTO in CONTEUDO_FERROVIA.items %}
+                    
+                                            <th rowspan="3"><p>{{TERMINAL.TERMINAL}}</p></th>
+                    
+                                            <th rowspan="3"><p></p>{{FERROVIA}}</p></th>
+                    
+                                            <th rowspan="3"><p> <p></p>
+                                                {% if SEGMENTO == 'FERTILIZANTE'%}
+                                                    <p> FERT. </p>      
+                                                {% else  %}
+                                                    <p>{{SEGMENTO}}</p>
+                                                {% endif%}
+                                            </th>
+                    
+                    
+                                            <td class="coluna_A">Ger.Vazios</td>
+                                            <td></td>
+                                            {% for GER_VAZIOS in CONTEUDO_SEGMENTO.GERACAO_DE_VAZIOS %}
+                                            
+                                                
+                                                {% if GER_VAZIOS != 0%}
+                                                    <td class="AZUL"> {{GER_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                    
+                                            {% endfor %}
+                                            <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MIN}}</th>
+                                            <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MAX}}</th>
+                                            </tr>
+                    
+                                            <tr class="linha">
+                                            <td class="coluna_A">Alívios</td>
+                                            <td></td>
+                                            {% for ALIVIO_DE_VAZIOS in CONTEUDO_SEGMENTO.ALIVIO_DE_VAZIOS %}
+                                                                                        
+                                                {% if ALIVIO_DE_VAZIOS != 0%}
+                                                    <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                                            
+                                            {% endfor %}
+                                            </tr>
+                    
+                                            <tr class="linha-grossa linha">
+                                            <td class="coluna_A">Saldo</td>
+                                            <td 
+                                            name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                            data-terminal="{{TERMINAL.TERMINAL}}" 
+                                            data-segmento="{{SEGMENTO}}" 
+                                            data-ferrovia="{{FERROVIA}}" >{{ CONTEUDO_SEGMENTO.SALDO_VIRADA }}</td>
+                                            {% for SALDO_DE_VAZIOS in CONTEUDO_SEGMENTO.SALDO_DE_VAZIOS %}
+                                                
+                                                {% if SALDO_DE_VAZIOS != 0%}
+                                                    <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                                            
+                                            {% endfor %}
+                                            </tr>
+                                        
+                                        {% endfor %}
+                                        
+                                    {% endfor %}
+                                        
+                                {% endfor %}
+                            <!--#endregion -->
+                        
+                        <!--#endregion-->
+                        
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>    
+                            
+                        <!--#region D+1 PMC-->
+                    
+                            <!--#region HEADER--> 
+                            <thead class="titulo">
+                                <tr>
+                                    <th colspan=4 rowspan="2">D+1</th>
+                                    <th colspan=25>PMC</th>
+                                    <th colspan=2>SATURACÃO</th>
+                                </tr>
+                                <tr>
+                                    
+                                    <th>D-1</th>
+                                    <th>01h</th>
+                                    <th>02h</th>
+                                    <th>03h</th>  
+                                    <th>04h</th>
+                                    <th>05h</th>
+                                    <th>06h</th>
+                                    <th>07h</th>
+                                    <th>08h</th>
+                                    <th>09h</th>  
+                                    <th>10h</th>
+                                    <th>11h</th>
+                                    <th>12h</th>
+                                    <th>13h</th>
+                                    <th>14h</th>
+                                    <th>15h</th>
+                                    <th>16h</th>  
+                                    <th>17h</th>
+                                    <th>18h</th>
+                                    <th>19h</th>
+                                    <th>20h</th> 
+                                    <th>21h</th>
+                                    <th>22h</th>
+                                    <th>23h</th>
+                                    <th>24h</th>
+                                    <th>mín</th>
+                                    <th>máx</th>
+                    
+                                </tr>
+                            </thead>   
+                            <!--#endregion--> 
+                        
+                            <!--#region TERMINAIS PMC-->
+                                {% for TERMINAL in TABELAS_SUBIDA.D1.TERMINAIS.PMC %}                                                                 
+                                    {% for FERROVIA, CONTEUDO_FERROVIA in TERMINAL.SUBIDA.items %}
+                                    <tr>
+                                        {% for SEGMENTO, CONTEUDO_SEGMENTO in CONTEUDO_FERROVIA.items %}
+                    
+                                            <th rowspan="3">
+                            
+                                                    <p>{{TERMINAL.TERMINAL}}</p>
+                                            
+                                            </th>
+                    
+                                            <th rowspan="3"><p></p>{{FERROVIA}}</p></th>
+                    
+                                            <th rowspan="3">                                        
+                                                {% if SEGMENTO == 'CELULOSE'%}
+                                                    <p> CEL. </p>      
+                                                {% else  %}
+                                                    <p>{{SEGMENTO}}</p>
+                                                {% endif%}
+                                            </th>
+                    
+                    
+                                            <td class="coluna_A">Ger.Vazios</td>
+                                            <td></td>
+                                            {% for GER_VAZIOS in CONTEUDO_SEGMENTO.GERACAO_DE_VAZIOS %}
+                                            
+                                                
+                                                {% if GER_VAZIOS != 0%}
+                                                    <td class="AZUL"> {{GER_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                    
+                                            
+                                            
+                                            {% endfor %}
+                                            <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MIN}}</th>
+                                            <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MAX}}</th>
+                                            </tr>
+                    
+                                            <tr class="linha">
+                                            <td class="coluna_A">Alívios</td>
+                                            <td></td>
+                                            {% for ALIVIO_DE_VAZIOS in CONTEUDO_SEGMENTO.ALIVIO_DE_VAZIOS %}
+                                                                                        
+                                                {% if ALIVIO_DE_VAZIOS != 0%}
+                                                    <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                                            
+                                            {% endfor %}
+                                            </tr>
+                    
+                                            <tr class="linha-grossa linha">
+                                            <td class="coluna_A">Saldo</td>
+                                            <td 
+                                            name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                            data-terminal="{{TERMINAL.TERMINAL}}" 
+                                            data-segmento="{{SEGMENTO}}" 
+                                            data-ferrovia="{{FERROVIA}}" >{{ CONTEUDO_SEGMENTO.SALDO_VIRADA }}</td>
+                                            {% for SALDO_DE_VAZIOS in CONTEUDO_SEGMENTO.SALDO_DE_VAZIOS %}
+                                                
+                                                {% if SALDO_DE_VAZIOS != 0%}
+                                                    <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                                {% else  %}
+                                                    <td></td>
+                                                {% endif%}
+                                            
+                                            {% endfor %}
+                                            </tr>
+                                        
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+                    
+                            <!--#endregion-->
+                        
+                        <!--#endregion-->
+                    
+                        <tr class="pula_linha"><td colspan=32>x</td></tr> 
+                    
+                        <!--#region D+1 PCX-->
+                        
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                                    <tr>
+                                        <th colspan=4 rowspan="2">D+1</th>
+                                        <th colspan=25>PCX</th>
+                                        <th colspan=2>SATURACÃO</th>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <th>mín</th>
+                                        <th>máx</th>
+                    
+                                    </tr>
+                                </thead>   
+                            <!--#endregion-->    
+                            
+                            <!--#region TERMINAIS PCX (D) -->
+                                {% for TERMINAL in TABELAS_SUBIDA.D1.TERMINAIS.PCX %}
+                                    {% for FERROVIA, CONTEUDO_FERROVIA in TERMINAL.SUBIDA.items %}
+                                        <tr>
+                                            {% for SEGMENTO, CONTEUDO_SEGMENTO in CONTEUDO_FERROVIA.items %}
+                    
+                                                <th rowspan="3"><p>{{TERMINAL.TERMINAL}}</p></th>
+                    
+                                                <th rowspan="3"><p></p>{{FERROVIA}}</p></th>
+                    
+                                                <th rowspan="3"><p></p>{{SEGMENTO}}</p></th>
+                    
+                    
+                                                <td class="coluna_A">Ger.Vazios</td>
+                                                <td></td>
+                                                {% for GER_VAZIOS in CONTEUDO_SEGMENTO.GERACAO_DE_VAZIOS %}
+                                                    
+                                                    {% if GER_VAZIOS != 0%}
+                                                        <td class="AZUL"> {{GER_VAZIOS}} </td>      
+                                                    {% else  %}
+                                                        <td></td>
+                                                    {% endif%}
+                        
+                                                {% endfor %}
+                                                <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MIN}}</th>
+                                                <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MAX}}</th>
+                                                </tr>
+                    
+                                                <tr class="linha">
+                                                <td class="coluna_A">Alívios</td>
+                                                <td></td>
+                    
+                                                {% for ALIVIO_DE_VAZIOS in CONTEUDO_SEGMENTO.ALIVIO_DE_VAZIOS %}
+                                                        
+                                                    {% if ALIVIO_DE_VAZIOS != 0%}
+                                                        <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                                    {% else  %}
+                                                        <td></td>
+                                                    {% endif%}
+                                                        
+                                                {% endfor %}
+                    
+                                                </tr>
+                    
+                                                <tr class="linha-grossa linha">
+                                                <td class="coluna_A">Saldo</td>
+                                                <td 
+                                                    name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                                    data-terminal="{{TERMINAL.TERMINAL}}" 
+                                                    data-segmento="{{SEGMENTO}}" 
+                                                    data-ferrovia="{{FERROVIA}}" >{{ CONTEUDO_SEGMENTO.SALDO_VIRADA }}</td>
+                                                
+                                                {% for SALDO_DE_VAZIOS in CONTEUDO_SEGMENTO.SALDO_DE_VAZIOS %}
+                                                    
+                                                    {% if SALDO_DE_VAZIOS != 0%}
+                                                        <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                                    {% else  %}
+                                                        <td></td>
+                                                    {% endif %}
+                                                
+                                                {% endfor %}
+                                            </tr>
+                                        
+                                        {% endfor %}       
+                                    {% endfor %}      
+                                {% endfor %}
+                    
+                            <!--#endregion-->
+                        
+                        <!--#endregion-->             
+                        
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>          
+                    
+                        <!--#region D+1 LINHA 4K-->
+                    
+                            <!--#region HEADER-->                    
+                    
+                                <thead class="titulo">
+                                    
+                                    <tr>
+                                        <th  rowspan="2" class="pula_linha"></th>
+                                        <th colspan=3 rowspan="2">LINHA 4K</th>
+                                        <th colspan=25>PCX</th>
+                                        <th colspan=2 >SATURAÇÃO</th>
+                                        
+                                    </tr>
+                    
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <th>mín</th>
+                                        <th>máx</th>
+                        
+                                    </tr>
+                    
+                                </thead>
+                            <!--#endregion-->         
+                        
+                            <!--#region RUMO  LINHA 4K (D)  -->
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <th rowspan="3" class="coluna_A linha">RUMO</th> 
+                                    <th rowspan="3" class="coluna_A linha">GRAO</th> 
+                                    <td class="linha coluna_A">Ger.Vazios</td>
+                                    
+                                    <td class="linha"></td>
+                    
+                                    {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.GERACAO_DE_VAZIOS %}
+                    
+                                        {% if GRAOS != 0%}
+                                            <td class="AZUL"> {{GRAOS}} </td>      
+                                        {% else  %}
+                                            <td></td>
+                                        {% endif%}
+                                        
+                                    {% endfor %}
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SATURACAO_VAZIO.MIN}}</th>
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SATURACAO_VAZIO.MAX}}</th>
+                                </tr>
+                    
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha coluna_A">Alívios</td>
+                                    <td class="linha"></td>
+                                    {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.ALIVIO_DE_VAZIOS %}
+                    
+                                        {% if ALIVIO_DE_VAZIOS != 0%}
+                                            <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                        {% else  %}
+                                            <td class="linha linha-grossa"></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                    
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha linha-grossa coluna_A">Saldo</td>
+                                    <td class="linha linha-grossa"
+                                    
+                                    name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                    data-terminal="L4K" 
+                                    data-segmento="GRAO" 
+                                    data-ferrovia="RUMO"
+                    
+                                    >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SALDO_VIRADA}}</td> <!--SALDO LINHA 4K-->
+                                    
+                                    {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SALDO_DE_VAZIOS %}
+                                        
+                                        {% if SALDO_DE_VAZIOS != 0%}
+                                            <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                        {% else  %}
+                                            <td class="linha linha-grossa"></td>
+                                        {% endif%}
+                                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                            <!--#endregion-->
+                    
+                            <!--#region MRS   LINHA 4K (D)  -->
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <th rowspan="3" class="coluna_A linha">MRS</th> 
+                                    <th rowspan="3" class="coluna_A linha">GRAO</th> 
+                                    <td class="linha coluna_A">Ger.Vazios</td>
+                                    
+                                    <td class="linha"></td>
+                                    {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.GERACAO_DE_VAZIOS %}
+                                    
+                                        {% if GRAOS != 0%}
+                                            <td class="AZUL"> {{GRAOS}} </td>      
+                                        {% else  %}
+                                            <td></td>
+                                        {% endif%}
+                                    
+                                    {% endfor %}
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SATURACAO_VAZIO.MIN}}</th>
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SATURACAO_VAZIO.MAX}}</th>
+                                
+                                    
+                                </tr>
+                    
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha coluna_A">Alívios</td>
+                                    <td class="linha"></td>
+                                    {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.ALIVIO_DE_VAZIOS %}
+                                    
+                                    {% if ALIVIO_DE_VAZIOS != 0%}
+                                        <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                    {% else  %}
+                                        <td class="linha linha-grossa"></td>
+                                    {% endif %}
+                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                    
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha linha-grossa coluna_A">Saldo</td>
+                                    <td class="linha linha-grossa"
+                                    
+                                    name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                    data-terminal="L4K" 
+                                    data-segmento="GRAO" 
+                                    data-ferrovia="MRS"
+                                    
+                                    >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SALDO_VIRADA}}</td> <!--SALDO LINHA 4K-->
+                                    {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SALDO_DE_VAZIOS %}
+                                        
+                                        {% if SALDO_DE_VAZIOS != 0%}
+                                            <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                        {% else  %}
+                                            <td class="linha linha-grossa"></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                            <!--#endregion-->
+                            
+                            <!--#region VLI   LINHA 4K (D)  -->
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <th rowspan="3" class="coluna_A linha">VLI</th> 
+                                    <th rowspan="3" class="coluna_A linha">GRAO</th> 
+                                    <td class="linha coluna_A">Ger.Vazios</td>
+                                    
+                                    <td class="linha"></td>
+                                    {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.GERACAO_DE_VAZIOS %}
+                                        
+                                        {% if GRAOS != 0%}
+                                            <td class="AZUL"> {{GRAOS}} </td>      
+                                        {% else  %}
+                                            <td></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SATURACAO_VAZIO.MIN}}</th>
+                                    <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SATURACAO_VAZIO.MAX}}</th>
+                                </tr>
+                    
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha coluna_A">Alívios</td>
+                                    <td class="linha"></td>
+                                    {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.ALIVIO_DE_VAZIOS %}
+                                    
+                                    {% if ALIVIO_DE_VAZIOS != 0%}
+                                        <td class="VERDE"> {{ALIVIO_DE_VAZIOS}} </td>      
+                                    {% else  %}
+                                        <td class="linha linha-grossa"></td>
+                                    {% endif %}
+                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    <td class="pula_linha "></td>
+                                    <td class="linha linha-grossa coluna_A">Saldo</td>
+                                    <td class="linha linha-grossa"
+                                    
+                                    name="SALDO_VIRADA_VAZIO_TERMINAL"
+                                    data-terminal="L4K" 
+                                    data-segmento="GRAO" 
+                                    data-ferrovia="VLI"
+                                    
+                                    >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SALDO_VIRADA}}</td> <!--SALDO LINHA 4K-->
+                                    {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SALDO_DE_VAZIOS %} 
+                                        
+                                        {% if SALDO_DE_VAZIOS != 0%}
+                                            <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
+                                        {% else  %}
+                                            <td class="linha linha-grossa"></td>
+                                        {% endif%}
+                                    
+                                    {% endfor %}
+                                    
+                                </tr>
+                            <!--#endregion-->
+                        
+                        <!--#endregion-->    
+                    
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>      
+                        
+                        <!--#region D+1 BUFFER-->
+                    
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                    
+                                    <tr>
+                                        
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">BUFFER</th>
+                                        <th colspan=25>DIREITA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                    
+                                    </tr>
+                    
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                    
+                                    </tr>
+                    
+                                </thead>    
+                            <!--#endregion-->    
+                            
+                            <!--#region RUMO-->
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">RUMO</td> 
+                                <td class="linha" name="BUFFER" data-ferrovia="RUMO" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D1.BUFFER.DIREITA.RUMO.SALDO_VIRADA}}</td>
+                                
+                                {% for BUFFER in TABELAS_SUBIDA.D1.BUFFER.DIREITA.RUMO.SALDO %}
+                                
+                                    {% if BUFFER != 0%}
+                                        <td class="AZUL"    name="BUFFER" data-ferrovia="RUMO" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}> {{BUFFER}} </td>      
+                                    {% else  %}
+                                        <td class="linha"   name="BUFFER" data-ferrovia="RUMO" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <!--#endregion-->
+                    
+                            <!--#region MRS-->
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">MRS</td> 
+                                <td class="linha" name="BUFFER" data-ferrovia="MRS" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA">{{TABELAS_SUBIDA.D1.BUFFER.DIREITA.MRS.SALDO_VIRADA}}</td>
+                                
+                                {% for BUFFER in TABELAS_SUBIDA.D1.BUFFER.DIREITA.MRS.SALDO %}
+                                
+                                    {% if BUFFER != 0%}
+                                        <td class="AZUL"    name="BUFFER" data-ferrovia="MRS" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}> {{BUFFER}} </td>      
+                                    {% else  %}
+                                        <td class="linha"   name="BUFFER" data-ferrovia="MRS" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <!--#endregion-->
+                    
+                            <!--#region VLI-->
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">VLI</td> 
+                                <td class="linha" name="BUFFER" data-ferrovia="VLI" data-dia="D" data-margem="DIREITA" data-hora="SALDO_VIRADA" >{{TABELAS_SUBIDA.D1.BUFFER.DIREITA.VLI.SALDO_VIRADA}}</td>
+                                
+                                {% for BUFFER in TABELAS_SUBIDA.D1.BUFFER.DIREITA.VLI.SALDO %}
+                                
+                                    {% if BUFFER != 0%}
+                                        <td class="AZUL"    name="BUFFER" data-ferrovia="VLI" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}> {{BUFFER}} </td>      
+                                    {% else  %}
+                                        <td class="linha"   name="BUFFER" data-ferrovia="VLI" data-dia="D" data-margem="DIREITA" data-hora={{forloop.counter}}></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <!--#endregion-->
+                    
+                        <!--#endregion-->
+                    
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>     
+                    
+                        <!--#region D+1 DIREITA RUMO CONDENSADO -->
+                    
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                    
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">RUMO</th>
+                                        <th colspan=25>DIREITA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                    
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                    
+                                    </tr>
+                    
+                                </thead>
+                            <!--#endregion--> 
+                            
+                            <!--#region D+1 DIREITA RUMO GRAOS -->                
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">GRAOS</td> 
+                                    <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.GRAO.SALDO_VIRADA }}</td>
+                                    {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.GRAO.SALDO %}
+                                    
+                                        {% if GRAOS != 0%}
+                                            <td class="AZUL" name="CONDENSADOS_RUMO" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    <th colspan=2 class="pula_linha ">abc</th>
+                                </tr>
+                            <!--#endregion--> 
+                    
+                            <!--#region D+1 DIREITA RUMO FERTILIZANTES -->    
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
+                                    <td class="linha" >{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE.SALDO %}
+                    
+                                        {% if FERTILIZANTES != 0%}
+                                            <td class="LARANJA" name="CONDENSADOS_RUMO" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion--> 
+                                
+                            <!--#region D+1 DIREITA RUMO CELULOSE -->  
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">CELULOSE</td> 
+                                    <td class="linha" >{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CELULOSE.SALDO_VIRADA }}</td>
+                                    {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CELULOSE.SALDO %}
+                                        
+                                        {% if CELULOSE != 0%}
+                                            <td class="CINZA-DARK "  name="CONDENSADOS_RUMO" data-segmento="CELULOSE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+                    
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion--> 
+                    
+                            <!--#region D+1 DIREITA RUMO ACUCAR -->
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">ACUCAR</td> 
+                                    <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.ACUCAR.SALDO_VIRADA }}</td>
+                                    {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.ACUCAR.SALDO %}
+                                        {% if ACUCAR != 0%}
+                                            <td class="ROXO" name="CONDENSADOS_RUMO" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion-->  
+                    
+                            <!--#region D+1 DIREITA RUMO CONTEINER -->  
+                    
+                                <tr>
+                                    <th colspan=2 class="pula_linha"></th>
+                                    <td colspan=2 class="coluna_A linha">CONTEINER</td> 
+                                    <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CONTEINER.SALDO_VIRADA }}</td>
+                                    {% for CONTEINER in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CONTEINER.SALDO  %}
+                                    <td class="linha">      
+                                        {% if CONTEINER != 0%}
+                                            {{CONTEINER}}       
+                                        {% endif%}
+                                    </td>
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                    
+                            <!--#endregion--> 
+                    
+                        <!--#endregion  -->
+                        
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>
+                    
+                        <!--#region D+1 DIREITA MRS CONDENSADO-->
+                    
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                    
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">MRS</th>
+                                        <th colspan=25>DIREITA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                    
+                                    </tr>
+                                </thead>
+                            <!--#endregion-->
+                            
+                            <!--#region D+1 DIREITA MRS GRAOS -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">GRAOS</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.GRAO.SALDO_VIRADA }}</td>
+                                {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.GRAO.SALDO %}
+                                    {% if GRAOS != 0%}
+                                        <td class="AZUL" name="CONDENSADOS_MRS" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
+                                    {% else  %}
+                                        <td></td>
+                                    {% endif%}
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion  -->
+                    
+                            <!--#region D+1 DIREITA MRS FERTILIZANTES -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
+                                <td class="linha">{{TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.FERTILIZANTE.SALDO_VIRADA}}</td>
+                                {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.FERTILIZANTE.SALDO %}
+                                    
+                                    {% if FERTILIZANTES != 0%}
+                                        <td class="LARANJA" name="CONDENSADOS_MRS" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion  -->
+                            
+                            <!--#region D+1 DIREITA MRS CELULOSE -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">CELULOSE</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CELULOSE.SALDO_VIRADA }}</td>
+                                {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CELULOSE.SALDO %}
+                                    
+                                    {% if CELULOSE != 0%}
+                                        <td class="CINZA-DARK " name="CONDENSADOS_MRS" data-segmento="CELULOSE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion  -->
+                    
+                            <!--#region D+1 DIREITA MRS ACUCAR -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">ACUCAR</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.ACUCAR.SALDO_VIRADA }}</td>
+                                {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.ACUCAR.SALDO %}
+                                    {% if ACUCAR != 0%}
+                                        <td class="ROXO" name="CONDENSADOS_MRS" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion  -->    
+                            
+                            <!--#region D+1 DIREITA MRS CONTEINER -->
+                            <tr>
+                                <th colspan=2 class="pula_linha"></th>
+                                <td colspan=2 class="coluna_A linha">CONTEINER</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CONTEINER.SALDO_VIRADA }} </td>
+                                {% for CONTEINER in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CONTEINER.SALDO %}
+                                <td class="linha">      
+                                    {% if CONTEINER != 0%}
+                                        {{CONTEINER}}       
+                                    {% endif%}
+                                </td>
+                                
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion-->
+                        
+                        <!--#endregion-->        
+                    
+                        <tr class="pula_linha"><td colspan=32>x</td></tr>
+                    
+                        <!--#region D+1 DIREITA VLI CONDENSADO -->
+                    
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">VLI</th>
+                                        <th colspan=25>DIREITA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                    
+                                    </tr>
+                                </thead>
+                            <!--#endregion--> 
+                            
+                            <!--#region D+1 DIREITA VLI GRAOS -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">GRAOS</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.GRAO.SALDO_VIRADA }}</td>
+                                {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.GRAO.SALDO %}
+                                    {% if GRAOS != 0%}
+                                        <td class="AZUL" name="CONDENSADOS_VLI" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion-->
+                    
+                            <!--#region D+1 DIREITA VLI FERTILIZANTES -->    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.FERTILIZANTE.SALDO %}
+                                    
+                                    {% if FERTILIZANTES != 0%}
+                                        <td class="LARANJA" name="CONDENSADOS_VLI" data-segmento="FERTILIZANTE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion-->
+                            
+                            <!--#region D+1 DIREITA VLI CELULOSE -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">CELULOSE</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CELULOSE.SALDO_VIRADA }}</td>
+                                {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CELULOSE.SALDO %}
+                                
+                                
+                                    {% if CELULOSE != 0%}
+                                        <td class="CINZA-DARK " name="CONDENSADOS_VLI" data-segmento="CELULOSE" data-margem="DIREITA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion--> 
+                    
+                            <!--#region D+1 DIREITA VLI ACUCAR -->
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">ACUCAR</td> 
+                                <td class="linha">{{ TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.ACUCAR.SALDO_VIRADA }}</td>
+                                {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.ACUCAR.SALDO %}
+                                    {% if ACUCAR != 0%}
+                                        <td class="ROXO" name="CONDENSADOS_VLI" data-segmento="ACUCAR" data-margem="DIREITA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion-->    
+                            
+                            <!--#region D+1 DIREITA VLI CONTEINER -->
+                            <tr>
+                                <th colspan=2 class="pula_linha"></th>
+                                <td colspan=2 class="coluna_A linha">CONTEINER</td> 
+                                <td class="linha">{{TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CONTEINER.SALDO_VIRADA }}</td>
+                                {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CONTEINER.SALDO %}
+                                <td class="linha">      
+                                    {% if CONTEINER != 0%}
+                                        {{CONTEINER}}       
+                                    {% endif%}
+                                </td>
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            <!--#endregion -->        
+                        
+                        <!--#endregion -->
+                    
+                        <tr class="pula_linha"> <td colspan=32>x</td></tr>
+                    
+                        <!--#region TOTAL   CONDENSADO -->
+                            
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                                    
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">SAIDAS</th>
+                                        <th colspan=25>DIREITA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                                    
+                                    <tr>
+                    
+                                        
+                    
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <th colspan=2 class="pula_linha"></th>
+                    
+                                    </tr>
+                                    
+                                </thead>
+                            <!--#endregion -->    
+                        
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">GRAOS</td> 
+                                <td class="linha"></td>
+                                {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.GRAO %}
+                                    {% if GRAOS != 0%}
+                                        <td class="AZUL" name="CONDENSADOS_VLI" data-segmento="GRAO" data-margem="DIREITA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
+                                <td class="linha"></td>
+                                {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.FERTILIZANTE %}
+                                
+                                    {% if FERTILIZANTES != 0%}
+                                        <td class="LARANJA"> {{FERTILIZANTES}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">CELULOSE</td> 
+                                <td class="linha"></td>
+                                {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.CELULOSE %}
+                                    
+                                    {% if CELULOSE != 0%}
+                                        <td class="CINZA-DARK "> {{CELULOSE}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif%}
+                    
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <tr>
+                                <td colspan=2 class="pula_linha "></td>
+                                <td colspan=2 class="coluna_A linha">ACUCAR</td> 
+                                <td class="linha"></td>
+                    
+                                {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.ACUCAR %}
+                                    {% if ACUCAR != 0 %}
+                                        <td class="ROXO"> {{ACUCAR}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
+                                    {% endif %}
+                                {% endfor %}
+                    
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                            
+                            <tr>
+                                <th colspan=2 class="pula_linha"></th>
+                                <td colspan=2 class="coluna_A linha">CONTEINER</td> 
+                                <td class="linha"></td>
+                                {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.CONTEINER %}
+                                <td class="linha">      
+                                    {% if CONTEINER != 0 %}
+                                        {{CONTEINER}}       
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                                <td colspan=2 class="pula_linha "></td>
+                            </tr>
+                    
+                            <tr>
+                                <th colspan=2 class="pula_linha"></th>
+                                <td colspan=2 class="coluna_A linha">PREFIXO</td> 
+                                <td class="linha"></td>
+                                {% for PREFIXO in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.PREFIXO %}
+                    
+                                    {% if PREFIXO != 0 %}
+                                        <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{PREFIXO}} </td>      
+                                    {% else  %}
+                                        <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"></td>
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                                <th colspan=2 class="pula_linha " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"></th>
+                            </tr>
+                    
+                    <!--#endregion-->
+                    
+                    </table>  
+
                 
                 </div>
 
@@ -1600,7 +2896,7 @@
 
                         <tr class="pula_linha"><td colspan=32>x</td></tr> 
 
-                        <!--#region RUMO CONDENSADO ESQ. (D)  -->
+                        <!--#region D ESQUERDA RUMO CONDENSADO  -->
                         
                             <!--#region HEADER-->
 
@@ -1645,317 +2941,349 @@
 
                             <!--#endregion -->
 
+                            <!--#region D ESQUERDA RUMO GRAOS -->                
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                <td class="linha"></td>
-                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.GRAO %}
-                                    
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="ESQUERDA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.GRAO.SALDO_VIRADA }}</td>
+                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.GRAO.SALDO %}
+                                
                                     {% if GRAOS != 0%}
-                                        <td class="AZUL"> {{GRAOS}} </td>      
-                                    {% else  %}
-                                        <td></td>
-                                    {% endif%}
-
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                <td class="linha"></td>
-                                {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.FERTILIZANTE %}
-                                    
-                                    {% if FERTILIZANTES != 0%}
-                                        <td class="LARANJA"> {{FERTILIZANTES}} </td>      
+                                        <td class="AZUL" name="CONDENSADOS_RUMO" data-segmento="GRAO" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
                                     {% else  %}
                                         <td class="linha"></td>
                                     {% endif%}
     
                                 {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
+                                <th colspan=2 class="pula_linha ">abc</th>
                             </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                <td class="linha"></td>
-                                {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CELULOSE %}
-                                    
-                                    {% if CELULOSE != 0%}
-                                        <td class="CINZA-DARK "> {{CELULOSE}} </td>      
-                                    {% else  %}
-                                        <td class="linha"></td>
-                                    {% endif%}
-
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                <td class="linha"></td>
-                                {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.ACUCAR %}
-
-                                    {% if ACUCAR != 0%}
-                                        <td class="ROXO" name="CONDENSADOS_RUMO" data-segmento="ACUCAR" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
-                                    {% else  %}
-                                        <td class="linha"></td>
-                                    {% endif%}
-
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
+                            <!--#endregion--> 
+    
+                            <!--#region D ESQUERDA RUMO FERTILIZANTES -->    
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="ESQUERDA" data-segmento="FERTILIZANTE">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                    {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.FERTILIZANTE.SALDO %}
+        
+                                        {% if FERTILIZANTES != 0%}
+                                            <td class="LARANJA" name="CONDENSADOS_RUMO" data-segmento="FERTILIZANTE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+        
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion--> 
                             
-                            <tr>
-                                <th colspan=2 class="pula_linha"></th>
-                                <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                <td class="linha"></td>
-                                {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CONTEINER %}
-                                <td class="linha">      
-                                    {% if CONTEINER != 0%}
-                                        {{CONTEINER}}       
-                                    {% endif%}
-                                </td>
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
+                            <!--#region D ESQUERDA RUMO CELULOSE -->  
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">CELULOSE</td> 
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="ESQUERDA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CELULOSE.SALDO_VIRADA }}</td>
+                                    {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CELULOSE.SALDO %}
+                                        
+                                        {% if CELULOSE != 0%}
+                                            <td class="CINZA-DARK "  name="CONDENSADOS_RUMO" data-segmento="CELULOSE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+        
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion--> 
+    
+                            <!--#region D ESQUERDA RUMO ACUCAR -->
+                                <tr>
+                                    <td colspan=2 class="pula_linha "></td>
+                                    <td colspan=2 class="coluna_A linha">ACUCAR</td> 
+                                    <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="ESQUERDA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.ACUCAR.SALDO_VIRADA }}</td>
+                                    {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.ACUCAR.SALDO %}
+                                        {% if ACUCAR != 0%}
+                                            <td class="ROXO" name="CONDENSADOS_RUMO" data-segmento="ACUCAR" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                        {% else  %}
+                                            <td class="linha"></td>
+                                        {% endif%}
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+                            <!--#endregion-->  
+    
+                            <!--#region D ESQUERDA RUMO CONTEINER -->  
+        
+                                <tr>
+                                    <th colspan=2 class="pula_linha"></th>
+                                    <td colspan=2 class="coluna_A linha">CONTEINER</td> 
+                                    <td class="linha"   name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="RUMO" data-margem="ESQUERDA" data-segmento="CONTEINER">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CONTEINER.SALDO_VIRADA }}</td>
+                                    {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.RUMO.CONTEINER.SALDO  %}
+                                    <td class="linha">      
+                                        {% if CONTEINER != 0%}
+                                            {{CONTEINER}}       
+                                        {% endif%}
+                                    </td>
+                                    {% endfor %}
+                                    <td colspan=2 class="pula_linha "></td>
+                                </tr>
+        
+                            <!--#endregion--> 
     
                         <!--#endregion -->
                             
                         <tr class="pula_linha"><td colspan=32>x</td></tr>
 
-                        <!--#region MRS CONDENSADO ESQ. (D)  -->
+                        <!--#region D ESQUERDA MRS CONDENSADO-->
 
-                             <thead class="titulo">
-                                <tr>
-                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                    <th colspan=2 rowspan="2">MRS</th>
-                                    <th colspan=25>ESQUERDA</th>
-                                    <td colspan=2 class="pula_linha "></td>
-                                </tr>
-                                <tr>
-                                    
-                                    <th>D-1</th>
-                                    <th>01h</th>
-                                    <th>02h</th>
-                                    <th>03h</th>  
-                                    <th>04h</th>
-                                    <th>05h</th>
-                                    <th>06h</th>
-                                    <th>07h</th>
-                                    <th>08h</th>
-                                    <th>09h</th>  
-                                    <th>10h</th>
-                                    <th>11h</th>
-                                    <th>12h</th>
-                                    <th>13h</th>
-                                    <th>14h</th>
-                                    <th>15h</th>
-                                    <th>16h</th>  
-                                    <th>17h</th>
-                                    <th>18h</th>
-                                    <th>19h</th>
-                                    <th>20h</th> 
-                                    <th>21h</th>
-                                    <th>22h</th>
-                                    <th>23h</th>
-                                    <th>24h</th>
-                                    <td colspan=2 class="pula_linha "></td>
+                            <!--#region HEADER-->
+                                <thead class="titulo">
                     
-                                </tr>
-                            </thead>
-                    
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">MRS</th>
+                                        <th colspan=25>ESQUERDA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                
+                                    </tr>
+                                </thead>
+                            <!--#endregion-->
+                            
+                            <!--#region D ESQUERDA MRS GRAOS -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                <td class="linha"></td>
-                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.GRAO %}
-                                   
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="ESQUERDA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.GRAO.SALDO_VIRADA }}</td>
+                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.GRAO.SALDO %}
                                     {% if GRAOS != 0%}
-                                        <td class="AZUL"> {{GRAOS}} </td>      
+                                        <td class="AZUL" name="CONDENSADOS_MRS" data-segmento="GRAO" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
                                     {% else  %}
                                         <td></td>
                                     {% endif%}
-
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion  -->
+
+                            <!--#region D ESQUERDA MRS FERTILIZANTES -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                <td class="linha"></td>
-                                {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.FERTILIZANTE %}
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="ESQUERDA" data-segmento="FERTILIZANTE">{{TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.FERTILIZANTE.SALDO_VIRADA}}</td>
+                                {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.FERTILIZANTE.SALDO %}
                                     
                                     {% if FERTILIZANTES != 0%}
-                                        <td class="LARANJA"> {{FERTILIZANTES}} </td>      
+                                        <td class="LARANJA" name="CONDENSADOS_MRS" data-segmento="FERTILIZANTE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
                                     {% else  %}
                                         <td class="linha"></td>
                                     {% endif%}
-    
+            
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion  -->
+                            
+                            <!--#region D ESQUERDA MRS CELULOSE -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                <td class="linha"></td>
-                                {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CELULOSE %}
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="ESQUERDA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CELULOSE.SALDO_VIRADA }}</td>
+                                {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CELULOSE.SALDO %}
                                     
                                     {% if CELULOSE != 0%}
-                                        <td class="CINZA-DARK "> {{CELULOSE}} </td>      
+                                        <td class="CINZA-DARK " name="CONDENSADOS_MRS" data-segmento="CELULOSE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
                                     {% else  %}
                                         <td class="linha"></td>
                                     {% endif%}
-
+            
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion  -->
+
+                            <!--#region D ESQUERDA MRS ACUCAR -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                <td class="linha"></td>
-                                {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.ACUCAR %}
-                                <td class="linha">      
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="ESQUERDA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.ACUCAR.SALDO_VIRADA }}</td>
+                                {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.ACUCAR.SALDO %}
                                     {% if ACUCAR != 0%}
-                                        {{ACUCAR}}       
+                                        <td class="ROXO" name="CONDENSADOS_MRS" data-segmento="ACUCAR" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
                                     {% endif%}
-                                </td>
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
+                            <!--#endregion  -->    
                             
+                            <!--#region D ESQUERDA MRS CONTEINER -->
                             <tr>
                                 <th colspan=2 class="pula_linha"></th>
                                 <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                <td class="linha"></td>
-                                {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CONTEINER %}
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="MRS" data-margem="ESQUERDA" data-segmento="CONTEINER">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CONTEINER.SALDO_VIRADA }} </td>
+                                {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.MRS.CONTEINER.SALDO %}
                                 <td class="linha">      
                                     {% if CONTEINER != 0%}
                                         {{CONTEINER}}       
                                     {% endif%}
                                 </td>
+                                
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-    
-                        <!--#endregion -->
+                            <!--#endregion-->
+                        
+                        <!--#endregion-->  
                             
                         <tr class="pula_linha"><td colspan=32>x</td></tr>
 
-                        <!--#region VLI CONDENSADO ESQ. (D)  -->
+                        <!--#region D ESQUERDA VLI CONDENSADO -->
 
-                            <thead class="titulo">
-                                <tr>
-                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                    <th colspan=2 rowspan="2">VLI</th>
-                                    <th colspan=25>ESQUERDA</th>
-                                    <td colspan=2 class="pula_linha "></td>
-                                </tr>
-                                <tr>
-                                    
-                                    <th>D-1</th>
-                                    <th>01h</th>
-                                    <th>02h</th>
-                                    <th>03h</th>  
-                                    <th>04h</th>
-                                    <th>05h</th>
-                                    <th>06h</th>
-                                    <th>07h</th>
-                                    <th>08h</th>
-                                    <th>09h</th>  
-                                    <th>10h</th>
-                                    <th>11h</th>
-                                    <th>12h</th>
-                                    <th>13h</th>
-                                    <th>14h</th>
-                                    <th>15h</th>
-                                    <th>16h</th>  
-                                    <th>17h</th>
-                                    <th>18h</th>
-                                    <th>19h</th>
-                                    <th>20h</th> 
-                                    <th>21h</th>
-                                    <th>22h</th>
-                                    <th>23h</th>
-                                    <th>24h</th>
-                                    <td colspan=2 class="pula_linha "></td>
-                    
-                                </tr>
-                            </thead>
-                    
+                            <!--#region HEADER-->
+                                <thead class="titulo">
+                                    <tr>
+                                        <td colspan=2 rowspan="2" class="pula_linha"></td>
+                                        <th colspan=2 rowspan="2">VLI</th>
+                                        <th colspan=25>ESQUERDA</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <th>D-1</th>
+                                        <th>01h</th>
+                                        <th>02h</th>
+                                        <th>03h</th>  
+                                        <th>04h</th>
+                                        <th>05h</th>
+                                        <th>06h</th>
+                                        <th>07h</th>
+                                        <th>08h</th>
+                                        <th>09h</th>  
+                                        <th>10h</th>
+                                        <th>11h</th>
+                                        <th>12h</th>
+                                        <th>13h</th>
+                                        <th>14h</th>
+                                        <th>15h</th>
+                                        <th>16h</th>  
+                                        <th>17h</th>
+                                        <th>18h</th>
+                                        <th>19h</th>
+                                        <th>20h</th> 
+                                        <th>21h</th>
+                                        <th>22h</th>
+                                        <th>23h</th>
+                                        <th>24h</th>
+                                        <td colspan=2 class="pula_linha "></td>
+                
+                                    </tr>
+                                </thead>
+                            <!--#endregion--> 
+                            
+                            <!--#region D ESQUERDA VLI GRAOS -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                <td class="linha"></td>
-                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.GRAO %}
-                                    
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="ESQUERDA" data-segmento="GRAO">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.GRAO.SALDO_VIRADA }}</td>
+                                {% for GRAOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.GRAO.SALDO %}
                                     {% if GRAOS != 0%}
-                                        <td class="AZUL"> {{GRAOS}} </td>      
+                                        <td class="AZUL" name="CONDENSADOS_VLI" data-segmento="GRAO" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{GRAOS}} </td>      
                                     {% else  %}
-                                        <td></td>
+                                        <td class="linha"></td>
                                     {% endif%}
-
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion-->
+
+                            <!--#region D ESQUERDA VLI FERTILIZANTES -->    
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                <td class="linha"></td>
-                                {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.FERTILIZANTE %}
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="ESQUERDA" data-segmento="FERTILIZANTE">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.FERTILIZANTE.SALDO_VIRADA }}</td>
+                                {% for FERTILIZANTES in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.FERTILIZANTE.SALDO %}
                                     
                                     {% if FERTILIZANTES != 0%}
-                                        <td class="LARANJA"> {{FERTILIZANTES}} </td>      
+                                        <td class="LARANJA" name="CONDENSADOS_VLI" data-segmento="FERTILIZANTE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{FERTILIZANTES}} </td>      
                                     {% else  %}
                                         <td class="linha"></td>
                                     {% endif%}
-    
+            
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion-->
+                            
+                            <!--#region D ESQUERDA VLI CELULOSE -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                <td class="linha"></td>
-                                {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CELULOSE %}
-                                    
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="ESQUERDA" data-segmento="CELULOSE">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CELULOSE.SALDO_VIRADA }}</td>
+                                {% for CELULOSE in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CELULOSE.SALDO %}
+                                
+                                
                                     {% if CELULOSE != 0%}
-                                        <td class="CINZA-DARK "> {{CELULOSE}} </td>      
+                                        <td class="CINZA-DARK " name="CONDENSADOS_VLI" data-segmento="CELULOSE" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{CELULOSE}} </td>      
                                     {% else  %}
                                         <td class="linha"></td>
                                     {% endif%}
-
+                                    
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-                    
+                            <!--#endregion--> 
+
+                            <!--#region D ESQUERDA VLI ACUCAR -->
                             <tr>
                                 <td colspan=2 class="pula_linha "></td>
                                 <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                <td class="linha"></td>
-                                {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.ACUCAR %}
-                                <td class="linha">      
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="ESQUERDA" data-segmento="ACUCAR">{{ TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.ACUCAR.SALDO_VIRADA }}</td>
+                                {% for ACUCAR in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.ACUCAR.SALDO %}
                                     {% if ACUCAR != 0%}
-                                        {{ACUCAR}}       
+                                        <td class="ROXO" name="CONDENSADOS_VLI" data-segmento="ACUCAR" data-margem="ESQUERDA" data-hora={{forloop.counter}}> {{ACUCAR}} </td>      
+                                    {% else  %}
+                                        <td class="linha"></td>
                                     {% endif%}
-                                </td>
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
+                            <!--#endregion-->    
                             
+                            <!--#region D ESQUERDA VLI CONTEINER -->
                             <tr>
                                 <th colspan=2 class="pula_linha"></th>
                                 <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                <td class="linha"></td>
-                                {% for CONTEINER in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CONTEINER %}
+                                <td class="linha" name="SALDO_VIRADA_CONDENSADOS" data-ferrovia="VLI" data-margem="ESQUERDA" data-segmento="CONTEINER">{{TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CONTEINER.SALDO_VIRADA }}</td>
+                                {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.VLI.CONTEINER.SALDO %}
                                 <td class="linha">      
                                     {% if CONTEINER != 0%}
                                         {{CONTEINER}}       
@@ -1964,7 +3292,8 @@
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
                             </tr>
-    
+                            <!--#endregion -->        
+                        
                         <!--#endregion -->
                             
                         <tr class="pula_linha"><td colspan=32>x</td></tr>
@@ -2092,837 +3421,11 @@
 
                     </table>
 
-                    
-
-                
-                
                 </div>
 
                 <div id="esquerda_d1"   class="sub-conteudo"    style="display:none">
                     Conteúdo da sub-aba Esquerda em D+1
                 </div>
-
-                <!-- #region PCX       - (D+1) -->
-                <div id="pcx_d1" class="sub-conteudo" style="display:none">
-                
-                    <table>
-
-                        <thead class="titulo">
-                            
-                            <tr>
-                                <th colspan=4 rowspan="2">D+1</th>
-                                <th colspan=25>PCX</th>
-                                <th colspan=2>SATURACÃO</th>
-                            </tr>
-
-                            <tr>
-                                
-                                <th>D-1</th>
-                                <th>01h</th>
-                                <th>02h</th>
-                                <th>03h</th>  
-                                <th>04h</th>
-                                <th>05h</th>
-                                <th>06h</th>
-                                <th>07h</th>
-                                <th>08h</th>
-                                <th>09h</th>  
-                                <th>10h</th>
-                                <th>11h</th>
-                                <th>12h</th>
-                                <th>13h</th>
-                                <th>14h</th>
-                                <th>15h</th>
-                                <th>16h</th>  
-                                <th>17h</th>
-                                <th>18h</th>
-                                <th>19h</th>
-                                <th>20h</th> 
-                                <th>21h</th>
-                                <th>22h</th>
-                                <th>23h</th>
-                                <th>24h</th>
-                                <th>mín</th>
-                                <th>máx</th>
-                
-                            </tr>
-
-                        </thead>    
-
-                        <!--#region TERMINAIS PCX (D+1) -->
-                        {% for TERMINAL in TABELAS_SUBIDA.D1.TERMINAIS.PCX %}
-                
-                            {% for FERROVIA, CONTEUDO_FERROVIA in TERMINAL.SUBIDA.items %}
-                            <tr>
-                                {% for SEGMENTO, CONTEUDO_SEGMENTO in CONTEUDO_FERROVIA.items %}
-        
-                                    <th rowspan="3"><p>{{TERMINAL.TERMINAL}}</p></th>
-        
-                                    <th rowspan="3"><p></p>{{FERROVIA}}</p></th>
-        
-                                    <th rowspan="3"><p></p>{{SEGMENTO}}</p></th>
-        
-        
-                                    <td class="coluna_A">Ger.Vazios</td>
-                                    <td></td>
-                                    {% for GER_VAZIOS in CONTEUDO_SEGMENTO.GERACAO_DE_VAZIOS %}
-                                        
-                                        {% if GER_VAZIOS != 0%}
-                                            <td class="AZUL"> {{GER_VAZIOS}} </td>      
-                                        {% else  %}
-                                            <td></td>
-                                        {% endif%}
-            
-                                    {% endfor %}
-                                    <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MIN}}</th>
-                                    <th rowspan="3">{{CONTEUDO_SEGMENTO.SATURACAO_VAZIO.MAX}}</th>
-                                    </tr>
-        
-                                    <tr class="linha">
-                                    <td class="coluna_A">Alívios</td>
-                                    <td></td>
-                                    {% for ALIVIO_DE_VAZIOS in CONTEUDO_SEGMENTO.ALIVIO_DE_VAZIOS %}
-                                        <td>      
-                                            {% if ALIVIO_DE_VAZIOS != 0%}
-                                                {{ALIVIO_DE_VAZIOS}}       
-                                            {% endif%}
-                                        </td>
-                                    {% endfor %}
-                                    </tr>
-        
-                                    <tr class="linha-grossa linha">
-                                    <td class="coluna_A">Saldo</td>
-                                    <td 
-                                        name="SALDO_VIRADA_VAZIO_TERMINAL"
-                                        data-terminal="{{TERMINAL.TERMINAL}}" 
-                                        data-segmento="{{SEGMENTO}}" 
-                                        data-ferrovia="{{FERROVIA}}" >{{ CONTEUDO_SEGMENTO.SALDO_VIRADA }}</td>
-                                    
-                                    {% for SALDO_DE_VAZIOS in CONTEUDO_SEGMENTO.SALDO_DE_VAZIOS %}
-                                         
-                                        {% if SALDO_DE_VAZIOS != 0%}
-                                            <td class="AMARELO"> {{SALDO_DE_VAZIOS}} </td>      
-                                        {% else  %}
-                                            <td></td>
-                                        {% endif%}
-                                    
-                                    {% endfor %}
-                                    </tr>
-                                
-                                {% endfor %}
-                                
-                            {% endfor %}
-                                
-                        {% endfor %}
-
-                        <!--#endregion-->
-
-                        <tr class="pula_linha">
-                            <td colspan=32>x</td>
-                        </tr>           
-
-                        <!--#region LINHA 4K (D+1)  -->
-
-                        <thead class="titulo">
-                            
-                            <tr>
-                                <th  rowspan="2" class="pula_linha"></th>
-                                <th colspan=3 rowspan="2">LINHA 4K</th>
-                                <th colspan=25>PCX</th>
-                                <th colspan=2 >SATURAÇÃO</th>
-                                
-                            </tr>
-
-                            <tr>
-                                
-                                <th>D-1</th>
-                                <th>01h</th>
-                                <th>02h</th>
-                                <th>03h</th>  
-                                <th>04h</th>
-                                <th>05h</th>
-                                <th>06h</th>
-                                <th>07h</th>
-                                <th>08h</th>
-                                <th>09h</th>  
-                                <th>10h</th>
-                                <th>11h</th>
-                                <th>12h</th>
-                                <th>13h</th>
-                                <th>14h</th>
-                                <th>15h</th>
-                                <th>16h</th>  
-                                <th>17h</th>
-                                <th>18h</th>
-                                <th>19h</th>
-                                <th>20h</th> 
-                                <th>21h</th>
-                                <th>22h</th>
-                                <th>23h</th>
-                                <th>24h</th>
-                                <th>mín</th>
-                                <th>máx</th>
-                
-                            </tr>
-
-                        </thead>
-
-                        <!--#region RUMO  LINHA 4K (D+1)  -->
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <th rowspan="3" class="coluna_A linha">RUMO</th> 
-                            <th rowspan="3" class="coluna_A linha">GRAO</th> 
-                            <td class="linha coluna_A">Ger.Vazios</td>
-                            
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.GERACAO_DE_VAZIOS %}
-
-                            <td class="linha">      
-                                {% if GRAOS != 0%}
-                                    {{GRAOS}}  
-                                {% endif%}
-                            </td>
-
-                            {% endfor %}
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SATURACAO_VAZIO.MIN}}</th>
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SATURACAO_VAZIO.MAX}}</th>
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha coluna_A">Alívios</td>
-                            <td class="linha"></td>
-                            {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.ALIVIO_DE_VAZIOS %}
-
-                            <td class="linha">      
-                                {% if ALIVIO_DE_VAZIOS != 0%}
-                                    {{ALIVIO_DE_VAZIOS}} 
-                                {% endif%}
-                            </td>
-
-                            {% endfor %}
-                            
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha linha-grossa coluna_A">Saldo</td>
-                            <td class="linha linha-grossa"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.RUMO.GRAO.SALDO_DE_VAZIOS %}
-                            
-                            <td class="linha linha-grossa">      
-                                {% if SALDO_DE_VAZIOS != 0%}
-                                    {{SALDO_DE_VAZIOS}}
-                                {% endif%}
-                            </td>
-
-                            {% endfor %}
-                            
-                        </tr>
-                        <!--#endregion-->
-
-                        <!--#region MRS   LINHA 4K (D+1)  -->
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <th rowspan="3" class="coluna_A linha">MRS</th> 
-                            <th rowspan="3" class="coluna_A linha">GRAO</th> 
-                            <td class="linha coluna_A">Ger.Vazios</td>
-                            
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.GERACAO_DE_VAZIOS %}
-                            <td class="linha">  
-                                {% if GRAOS != 0%}
-                                        {{GRAOS}}
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SATURACAO_VAZIO.MIN}}</th>
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SATURACAO_VAZIO.MAX}}</th>
-                        
-                            
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha coluna_A">Alívios</td>
-                            <td class="linha"></td>
-                            {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.ALIVIO_DE_VAZIOS %}
-                            <td class="linha">      
-                                {% if ALIVIO_DE_VAZIOS != 0%}
-                                    {{ALIVIO_DE_VAZIOS}}
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha linha-grossa coluna_A">Saldo</td>
-                            <td class="linha linha-grossa"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.MRS.GRAO.SALDO_DE_VAZIOS %}
-                            <td class="linha linha-grossa">      
-                                {% if SALDO_DE_VAZIOS != 0%}
-                                    {{SALDO_DE_VAZIOS}}
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            
-                        </tr>
-
-                        <!--#endregion-->
-                        
-                        <!--#region VLI   LINHA 4K (D+1)  -->
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <th rowspan="3" class="coluna_A linha">VLI</th> 
-                            <th rowspan="3" class="coluna_A linha">GRAO</th> 
-                            <td class="linha coluna_A">Ger. Vazios</td>
-                            
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.GERACAO_DE_VAZIOS %}
-                            <td class="linha">      
-                                {% if GRAOS != 0%}
-                                        
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SATURACAO_VAZIO.MIN}}</th>
-                            <th rowspan="3" >{{TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SATURACAO_VAZIO.MAX}}</th>
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha coluna_A">Alívios</td>
-                            <td class="linha"></td>
-                            {% for ALIVIO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.ALIVIO_DE_VAZIOS %}
-                            <td class="linha">      
-                                {% if ALIVIO_DE_VAZIOS != 0%}
-                                        
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            
-                        </tr>
-
-                        <tr>
-                            <td class="pula_linha "></td>
-                            <td class="linha linha-grossa coluna_A">Saldo</td>
-                            <td class="linha linha-grossa"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.LINHA_4K.SUBIDA.VLI.GRAO.SALDO_DE_VAZIOS %}
-                            <td class="linha linha-grossa">      
-                                {% if SALDO_DE_VAZIOS != 0%}
-                                        
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            
-                        </tr>
-                        <!--#endregion-->
-                        
-                        <!--#endregion-->
-
-                        <tr class="pula_linha">
-                            <td colspan=32>x</td>
-                        </tr>   
-
-                        <!--#region RUMO CONDENSADO (D+1)  -->
-
-                            <thead class="titulo">
-                                <tr>
-                                    <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                    <th colspan=2 rowspan="2">RUMO</th>
-                                    <th colspan=25>DIREITA</th>
-                                    <td colspan=2 class="pula_linha "></td>
-                                </tr>
-                                <tr>
-                                    
-                                    <th>D-1</th>
-                                    <th>01h</th>
-                                    <th>02h</th>
-                                    <th>03h</th>  
-                                    <th>04h</th>
-                                    <th>05h</th>
-                                    <th>06h</th>
-                                    <th>07h</th>
-                                    <th>08h</th>
-                                    <th>09h</th>  
-                                    <th>10h</th>
-                                    <th>11h</th>
-                                    <th>12h</th>
-                                    <th>13h</th>
-                                    <th>14h</th>
-                                    <th>15h</th>
-                                    <th>16h</th>  
-                                    <th>17h</th>
-                                    <th>18h</th>
-                                    <th>19h</th>
-                                    <th>20h</th> 
-                                    <th>21h</th>
-                                    <th>22h</th>
-                                    <th>23h</th>
-                                    <th>24h</th>
-                                    <td colspan=2 class="pula_linha "></td>
-                    
-                                </tr>
-                            </thead>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                                <td class="linha"></td>
-                                {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.GRAOS %}
-                                <td >      
-                                    {% if GRAOS != 0%}
-                                        {{GRAOS}}       
-                                    {% endif%}
-                                </td>
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                                <td class="linha"></td>
-                                {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.FERTILIZANTE %}
-                                    
-                                    {% if FERTILIZANTES != 0%}
-                                        <td class="LARANJA"> {{FERTILIZANTES}} </td>      
-                                    {% else  %}
-                                        <td class="linha"></td>
-                                    {% endif%}
-
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                                <td class="linha"></td>
-                                {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CELULOSE %}
-                                {% if CELULOSE != 0%}
-                                    <td class="CINZA-DARK "> {{CELULOSE}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                    
-                            <tr>
-                                <td colspan=2 class="pula_linha "></td>
-                                <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                                <td class="linha"></td>
-                                {% for ACUCAR in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.ACUCAR %}
-                                <td class="linha">      
-                                    {% if ACUCAR != 0%}
-                                        {{ACUCAR}}       
-                                    {% endif%}
-                                </td>
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                            
-                            <tr>
-                                <th colspan=2 class="pula_linha"></th>
-                                <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                                <td class="linha"></td>
-                                {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.RUMO.CONTEINER %}
-                                <td class="linha">      
-                                    {% if CONTEINER != 0%}
-                                        {{CONTEINER}}       
-                                    {% endif%}
-                                </td>
-                                {% endfor %}
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-
-                        <!--#endregion -->
-                        
-                        <tr class="pula_linha">
-                            <td colspan=32>x</td>
-                        </tr>
-                
-                        <!--#region MRS CONDENSADO (D+1)  -->
-                        <thead class="titulo">
-
-                            <tr>
-                                <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                <th colspan=2 rowspan="2">MRS</th>
-                                <th colspan=25>DIREITA</th>
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-
-                            <tr>
-                                
-                                <th>D-1</th>
-                                <th>01h</th>
-                                <th>02h</th>
-                                <th>03h</th>  
-                                <th>04h</th>
-                                <th>05h</th>
-                                <th>06h</th>
-                                <th>07h</th>
-                                <th>08h</th>
-                                <th>09h</th>  
-                                <th>10h</th>
-                                <th>11h</th>
-                                <th>12h</th>
-                                <th>13h</th>
-                                <th>14h</th>
-                                <th>15h</th>
-                                <th>16h</th>  
-                                <th>17h</th>
-                                <th>18h</th>
-                                <th>19h</th>
-                                <th>20h</th> 
-                                <th>21h</th>
-                                <th>22h</th>
-                                <th>23h</th>
-                                <th>24h</th>
-                                <td colspan=2 class="pula_linha "></td>
-                
-                            </tr>
-
-                        </thead>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.GRAOS %}
-                            <td>      
-                                {% if GRAOS != 0%}
-                                    {{GRAOS}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                            <td class="linha"></td>
-                            {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.FERTILIZANTE %}
-                                
-                                {% if FERTILIZANTES != 0%}
-                                    <td class="LARANJA"> {{FERTILIZANTES}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                            <td class="linha"></td>
-                            {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CELULOSE %}
-                                {% if CELULOSE != 0%}
-                                    <td class="CINZA-DARK "> {{CELULOSE}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.ACUCAR %}
-                            <td class="linha">      
-                                {% if ACUCAR != 0%}
-                                    {{ACUCAR}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                        
-                        <tr>
-                            <th colspan=2 class="pula_linha"></th>
-                            <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.MRS.CONTEINER %}
-                            <td class="linha">      
-                                {% if CONTEINER != 0%}
-                                    {{CONTEINER}}       
-                                {% endif%}
-                            </td>
-                            
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <!--#endregion-->        
-                
-                        <tr class="pula_linha">
-                            <td colspan=32>x</td>
-                        </tr>
-                
-                        <!--#region VLI CONDENSADO (D+1) -->
-                
-                        <thead class="titulo">
-                            <tr>
-                                <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                <th colspan=2 rowspan="2">VLI</th>
-                                <th colspan=25>DIREITA</th>
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                            <tr>
-                                
-                                <th>D-1</th>
-                                <th>01h</th>
-                                <th>02h</th>
-                                <th>03h</th>  
-                                <th>04h</th>
-                                <th>05h</th>
-                                <th>06h</th>
-                                <th>07h</th>
-                                <th>08h</th>
-                                <th>09h</th>  
-                                <th>10h</th>
-                                <th>11h</th>
-                                <th>12h</th>
-                                <th>13h</th>
-                                <th>14h</th>
-                                <th>15h</th>
-                                <th>16h</th>  
-                                <th>17h</th>
-                                <th>18h</th>
-                                <th>19h</th>
-                                <th>20h</th> 
-                                <th>21h</th>
-                                <th>22h</th>
-                                <th>23h</th>
-                                <th>24h</th>
-                                <td colspan=2 class="pula_linha "></td>
-                
-                            </tr>
-                        </thead>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.GRAOS %}
-                            <td>      
-                                {% if GRAOS != 0%}
-                                    {{GRAOS}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                            <td class="linha"></td>
-                            {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.FERTILIZANTE %}
-                                
-                                {% if FERTILIZANTES != 0%}
-                                    <td class="LARANJA"> {{FERTILIZANTES}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                            <td class="linha"></td>
-                            {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CELULOSE %}
-                               
-                                {% if CELULOSE != 0%}
-                                    <td class="CINZA-DARK "> {{CELULOSE}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.ACUCAR %}
-                            <td class="linha">      
-                                {% if ACUCAR != 0%}
-                                    {{ACUCAR}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                        
-                        <tr>
-                            <th colspan=2 class="pula_linha"></th>
-                            <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.VLI.CONTEINER %}
-                            <td class="linha">      
-                                {% if CONTEINER != 0%}
-                                    {{CONTEINER}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <!--#endregion -->
-                
-                        <tr class="pula_linha">
-                            <td colspan=32>x</td>
-                        </tr>
-                
-                        <!--#region TOTAL CONDENSADO (D+1) -->
-                
-                        <thead class="titulo">
-                            <tr>
-                                <td colspan=2 rowspan="2" class="pula_linha"></td>
-                                <th colspan=2 rowspan="2">SAIDAS</th>
-                                <th colspan=25>DIREITA</th>
-                                <td colspan=2 class="pula_linha "></td>
-                            </tr>
-                            <tr>
-                                
-                                <th>D-1</th>
-                                <th>01h</th>
-                                <th>02h</th>
-                                <th>03h</th>  
-                                <th>04h</th>
-                                <th>05h</th>
-                                <th>06h</th>
-                                <th>07h</th>
-                                <th>08h</th>
-                                <th>09h</th>  
-                                <th>10h</th>
-                                <th>11h</th>
-                                <th>12h</th>
-                                <th>13h</th>
-                                <th>14h</th>
-                                <th>15h</th>
-                                <th>16h</th>  
-                                <th>17h</th>
-                                <th>18h</th>
-                                <th>19h</th>
-                                <th>20h</th> 
-                                <th>21h</th>
-                                <th>22h</th>
-                                <th>23h</th>
-                                <th>24h</th>
-                                <th colspan=2 class="pula_linha"></th>
-                
-                            </tr>
-                        </thead>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">GRAOS</td> 
-                            <td class="linha"></td>
-                            {% for GRAOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.GRAO %}
-                            <td>      
-                                {% if GRAOS != 0%}
-                                    {{GRAOS}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">FERTILIZANTES</td> 
-                            <td class="linha"></td>
-                            {% for FERTILIZANTES in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.FERTILIZANTE %}
-                               
-                                {% if FERTILIZANTES != 0%}
-                                    <td class="LARANJA"> {{FERTILIZANTES}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">CELULOSE</td> 
-                            <td class="linha"></td>
-                            {% for CELULOSE in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.CELULOSE %}
-                                
-                                {% if CELULOSE != 0%}
-                                    <td class="CINZA-DARK "> {{CELULOSE}} </td>      
-                                {% else  %}
-                                    <td class="linha"></td>
-                                {% endif%}
-
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <td colspan=2 class="pula_linha "></td>
-                            <td colspan=2 class="coluna_A linha">ACUCAR</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.ACUCAR %}
-                            <td class="linha">      
-                                {% if ACUCAR != 0%}
-                                    {{ACUCAR}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                        
-                        <tr>
-                            <th colspan=2 class="pula_linha"></th>
-                            <td colspan=2 class="coluna_A linha">CONTEINER</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.CONTEINER %}
-                            <td class="linha">      
-                                {% if CONTEINER != 0%}
-                                    {{CONTEINER}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <tr>
-                            <th colspan=2 class="pula_linha"></th>
-                            <td colspan=2 class="coluna_A linha">PREFIXO</td> 
-                            <td class="linha"></td>
-                            {% for SALDO_DE_VAZIOS in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.PREFIXO %}
-                            <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA">      
-                                {% if PREFIXO != 0%}
-                                    {{PREFIXO}}       
-                                {% endif%}
-                            </td>
-                            {% endfor %}
-                            <td colspan=2 class="pula_linha "></td>
-                        </tr>
-                
-                        <!--#endregion TOTAL -->
-                
-                    </table>
-                
-                </div>
-                <!--#endregion-->
 
                 <div id="pst-pmc_d1"    class="sub-conteudo"    style="display:none">
                     Conteúdo da sub-aba PST e PMC em D+1
@@ -2982,7 +3485,7 @@ function abrirSubAba(evt, subAbaNome) {
 document.body.addEventListener('keypress', function(e) {
 
     if      ((e.which === 13) && (editando_celula === true) && (TIPO === "SALDO_TERMINAL")){
-        
+        document.body.classList.add('loading');
         NOVO_VALOR = tbEdicao.value
         
         $.ajax({
@@ -3008,7 +3511,7 @@ document.body.addEventListener('keypress', function(e) {
     }
 
     else if ((e.which === 13) && (editando_celula === true) && (TIPO === "BUFFER")){
-        
+        document.body.classList.add('loading');
         NOVO_VALOR = tbEdicao.value
 
         $.ajax({
@@ -3025,6 +3528,31 @@ document.body.addEventListener('keypress', function(e) {
                 },
                 success: function(response) {
 
+                    location.reload();
+
+                },
+                error: function(xhr) {
+                    alert("ERRO")
+                }
+        });
+    }
+    else if ((e.which === 13) && (editando_celula === true) && (TIPO === "SALDO_CONDENSADOS")){
+        document.body.classList.add('loading');
+        NOVO_VALOR = tbEdicao.value
+        
+        $.ajax({
+                url: '{% url "programacao_subida" %} ',
+                type: 'POST',
+                data: {
+                    'ACAO'          : "EDITAR_SALDO_CONDENSADOS",
+                    'MARGEM'        :  MARGEM,
+                    'FERROVIA'      :  FERROVIA,
+                    'SEGMENTO'      :  SEGMENTO,
+                    'NOVO_VALOR'    :  NOVO_VALOR,
+                    'csrfmiddlewaretoken': "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    document.body.classList.remove('loading');
                     location.reload();
 
                 },

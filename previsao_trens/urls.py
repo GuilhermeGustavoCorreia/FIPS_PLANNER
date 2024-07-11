@@ -22,7 +22,9 @@ urlpatterns = [
     path('upload/',                                    views.upload_file_view,    name='upload_file'),
 
     path('configuracao/',   views.configuracao,        name="configuracao"),
-    path('detalhe/',        views.detalhe,             name="detalhe"),
+    
+    path('detalhe/',                                views.detalhe,                  name="detalhe"),
+    path('ocupacao_terminais/',                     views.ocupacao_terminais,       name="ocupacao_terminais"),
 
     path('programacao_subida/',                     views.programacao_subida,     name="programacao_subida"),
     path('previsao_subida/',                        views.previsao_subida,        name="previsao_subida"),

@@ -59,21 +59,21 @@ def PAGINA_COMPLETA():
     with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         TERMINAIS_INFOS = json.load(ARQUIVO_DESCARGA)
   
-    lst_TERMINAIS_ATIVOS  = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
+    lst_TERMINAIS_ATIVOS    = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
     TERMINAIS_COM_RESTRICAO = RESTRICOES_ATIVAS[RESTRICOES_ATIVAS['RESTRICAO'] > 0].index.tolist()
 
     SAIDAS = {
-        "D":{  
-            "MARGENS": {},
-            "DESCARGAS": []
+        "D"     :{  
+            "MARGENS"   : {},
+            "DESCARGAS" : []
         }, 
-        "D+1":{  
-            "MARGENS": {},
-            "DESCARGAS": []
+        "D+1"   :{  
+            "MARGENS"   : {},
+            "DESCARGAS" : []
         }, 
-        "D+2":{  
-            "MARGENS": {},
-            "DESCARGAS": []
+        "D+2"   :{  
+            "MARGENS"   : {},
+            "DESCARGAS" : []
         }
     }
 
@@ -86,7 +86,7 @@ def PAGINA_COMPLETA():
     for TERMINAL in lst_TERMINAIS_ATIVOS:
 
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
-        DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS]
+        DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
 
         STATUS_RESTRICAO = TERMINAL in TERMINAIS_COM_RESTRICAO
 
@@ -116,7 +116,8 @@ def PAGINA_COMPLETA():
 
                 json_DESCARGA = json.load(ARQUIVO_DESCARGA)
                 json_DESCARGA["POSSUI_RESTRICAO"] = STATUS_RESTRICAO
-
+                
+                #É PARA PEGAR UMA RESTRICAO
                 FERROVIA_ALEATORA_DO_TERMINAL = next(iter(json_DESCARGA["DESCARGAS"]))
 
                 if STATUS_RESTRICAO: 
@@ -134,6 +135,8 @@ def PAGINA_COMPLETA():
                 for FERROVIA in json_DESCARGA["DESCARGAS"]:
                     for PRODUTO in json_DESCARGA["DESCARGAS"][FERROVIA]:
                         json_DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PRODUTIVIDADE"] = INFO_DO_TERMINAL["PRODUTIVIDADE"][FERROVIA][PRODUTO]
+
+
 
 
 

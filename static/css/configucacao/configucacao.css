@@ -1,16 +1,16 @@
 
 
-.BTN_ATUALIZAR_DESCARGA{ background-color: var(--azul-ceu-e); color: var(--neutro)}
-
-.BTN_ATUALIZAR_DESCARGA:hover{background-color: var(--azul-ceu-m);}
+.BTN_ATUALIZAR_DESCARGA         { background-color: var(--azul-ceu-e); color: var(--neutro)}
+.BTN_ATUALIZAR_DESCARGA:hover   { background-color: var(--azul-ceu-m);}
 
 
 .SECAO_CONFIGURACAO{ 
+
     border: 1px var(--cinza-chumbo-m) solid;
     margin: 1vh 0;
-   
     cursor: pointer;
     transition: background-color 0.5s ease;
+
 }
 section h2{ 
     padding: 0 1vw;
@@ -20,13 +20,14 @@ section h2{
     background-color: rgb(242, 236, 236);
 }
 
-.CONTEUDO_CONFIGURACAO{display:none; transition: none; background-color: white; padding: 0 1vw;}
+.CONTEUDO_CONFIGURACAO  {display:none; transition: none; background-color: white; padding: 0 1vw;}
 
 
 
 .TABELA_DESCARGAS_ATIVAS{ border-collapse: collapse; border: 1px solid var(--cinza-chumbo-e)}
 .TABELA_DESCARGAS_ATIVAS td,
 .TABELA_DESCARGAS_ATIVAS td{
+    
     text-align: center;
     border: 1px solid var(--cinza-chumbo-e);
     background-color: white;
@@ -35,7 +36,36 @@ section h2{
 
 .BORDA_VERDE{border: 4px green solid !important;}
 
+.TABELA__PXO .INPUT,
 .TABELA_DESCARGAS_ATIVAS .INPUT { width: 3rem ; min-height: 0px; outline: none; border: none;}
 
 .TABELA_DESCARGAS_ATIVAS thead th{ text-align: left; padding: 5px; background-color: var(--azul-profundo-e); color: white; min-width: 3rem; text-align: center;}
 .TABELA_DESCARGAS_ATIVAS tbody th{ text-align: left; padding: 0 5px; ; min-width: 8rem;border: 1px solid var(--cinza-chumbo-e); background-color:  #e7e7e7;}
+
+
+/*-------------------------------------------TABELA PXO---------------------------------------------------*/
+
+.TABELA__PXO { 
+    border-collapse: collapse; 
+    font-family: "Saira Expanded";
+    background-color: #f5f2f2;
+}
+
+.TABELA__PXO tbody th{
+    text-align: left;
+    font-weight: 400;
+}
+
+.TABELA__PXO thead{
+    background-color: var(--amarelo-ouro-m);
+} 
+
+.TABELA__PXO th, .TABELA__PXO td{
+    padding: 5px; 
+    border: 1px solid var(--cinza-chumbo-m);
+}
+.TABELA__PXO td{
+    text-align: center;
+}
+
+/*-------------------------------------------TABELA PXO---------------------------------------------------*/

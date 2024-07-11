@@ -5,8 +5,8 @@ import pandas as pd
 
 
 DIRETORIO_SUBIDA    = "previsao_trens/src/SUBIDA"
-CHAVES_SUBIDA       = ["SALDO_NAVEGACAO", "GERACAO_DE_VAZIOS", "GERACAO_EDITADA", "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO", "SALDO_DE_VAZIOS" ]
-CHAVES_L4K          = ["GERACAO_DE_VAZIOS", "GERACAO_EDITADA", "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO", "SALDO_DE_VAZIOS"]
+CHAVES_SUBIDA       = ["SALDO_NAVEGACAO",   "GERACAO_DE_VAZIOS",    "GERACAO_EDITADA",  "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO", "SALDO_DE_VAZIOS" ]
+CHAVES_L4K          = ["GERACAO_DE_VAZIOS", "GERACAO_EDITADA",      "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO",   "SALDO_DE_VAZIOS"]
 CHAVES_OCUPACAO_L4K = ["FERROVIA", "SEGMENTO", "LOTE_COMPLETO"]
 CHAVES_CONDENSADOS  = ["GRAO", "FERTILIZANTE", "CELULOSE", "ACUCAR", "CONTEINER"]
 CHAVES_BUFFERS      = ["SALDO"]
@@ -26,12 +26,12 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
             self.INFOS_LINHAS = json.load(ARQUIVO)
 
         self.TERMINAIS_SUBIDA = os.listdir(os.path.join(DIRETORIO_SUBIDA, "TERMINAIS_SUBIDA")) 
-      
+
         self.PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         self.PERIODO_VIGENTE = self.PERIODO_VIGENTE.drop(self.PERIODO_VIGENTE.index[0])
         self.LISTA_DATA_ARQ  = self.PERIODO_VIGENTE["DATA_ARQ"].tolist()
-
-        self.TERMINAIS_DO_CALCULO = [item for item in self.TERMINAIS_SUBIDA if item not in self.TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["CALCULO_SUBIDA"]]
+            
+        self.TERMINAIS_DO_CALCULO       = [item for item in self.TERMINAIS_SUBIDA if item not in self.TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["CALCULO_SUBIDA"]]
         
         self.full_TERMINAIS_DO_CALCULO  = {}
         self.full_L4K                   = {"SUBIDA": {}, "OCUPACAO": {}}
@@ -42,7 +42,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         self.jsSUBIDAS      = {}
         self.jsCONDENSADOS  = {}
         self.jsBUFFERS      = {} 
-
 
     def __MONTAR_FULL__(self): #e abrir arquivos tbm :)
 
@@ -85,7 +84,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                         
                         with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{TERMINAL}/subida_{DATA_ARQ}.json") as ARQUIVO:
-                            self.jsSUBIDAS[TERMINAL][DATA_ARQ]   = json.load(ARQUIVO)
+                            self.jsSUBIDAS[TERMINAL][DATA_ARQ] = json.load(ARQUIVO)
 
                         if DATA_ARQ == self.LISTA_DATA_ARQ[0]:
                             self.full_TERMINAIS_DO_CALCULO[MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA]["SALDO_VIRADA"] = self.jsSUBIDAS[TERMINAL][DATA_ARQ]["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_VIRADA"]
@@ -153,8 +152,11 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
             for FERROVIA in ["RUMO", "MRS", "VLI"]:     
 
                 for CHAVE in CHAVES_CONDENSADOS:
-
-                    if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = [0] * 144
+                  
+                    if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: 
+                        self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = {"SALDO": [0] * 144, "SALDO_VIRADA": self.jsCONDENSADOS[self.LISTA_DATA_ARQ[0]][MARGEM][FERROVIA][CHAVE]["SALDO_VIRADA"]}
+                    
+          
                     if not CHAVE in self.full_CONDENSADOS[MARGEM]["SAIDAS"]: self.full_CONDENSADOS[MARGEM]["SAIDAS"][CHAVE] = []
                     
                     for DATA_ARQ in self.LISTA_DATA_ARQ:
@@ -162,6 +164,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                         self.full_CONDENSADOS[MARGEM]["SAIDAS"][CHAVE].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"][CHAVE])  
 
                 for DATA_ARQ in self.LISTA_DATA_ARQ:
+                    
                     if not "FERROVIA" in self.full_CONDENSADOS[MARGEM]["SAIDAS"]: self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"] = []  
                     self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"])
 
@@ -183,6 +186,12 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                         self.full_BUFFERS[MARGEM][FERROVIA][CHAVE].extend(self.jsBUFFERS[DATA_ARQ][MARGEM][FERROVIA][CHAVE])  
 
         #endregion
+
+    def __OUTORGAR_PRODUTIVIDADE__(self):
+
+        TERMINAIS_SALDO = [item for item in self.TERMINAIS_SUBIDA if item not in self.TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["OUTORGA_SALDO"]]
+
+        pass
 
     def __CALCULAR__(self):
         
@@ -455,8 +464,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                         self.full_L4K["SUBIDA"][FERROVIA][SEGMENTO]["ALIVIO_DE_VAZIOS"][i] = VAGOES_4K
                         __SALDO__("L4K",      "DIREITA", "PCX", None,       SEGMENTO, FERROVIA, i)
 
-                        #self.full_CONDENSADOS["DIREITA"][FERROVIA][SEGMENTO][i] += VAGOES_4K
-
                 else: #mantém status
 
                     self.full_L4K["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][i] = 0
@@ -666,7 +673,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
         for DATA_ARQ in  self.LISTA_DATA_ARQ:
 
-            with open(os.path.join(f"previsao_trens/src/SUBIDA/LINHAS/LINHA_4K/linha_4K_{ DATA_ARQ }.json"), 'w') as ARQUIVO:
+            with open(os.path.join(f"previsao_trens/src/SUBIDA/LINHAS/LINHA_4K/linha_4k_{ DATA_ARQ }.json"), 'w') as ARQUIVO:
                 json.dump(self.jsL4K[DATA_ARQ], ARQUIVO, indent=4)  
 
         #endregion
@@ -680,13 +687,16 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
             for FERROVIA in (LISTAS[MARGEM].keys()):
 
                 for ITEM in CHAVES_CONDENSADOS:
-
-                    LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM][i:i + 24] for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]), 24)]
-
+                    
+                    # A CHAVE SAIDAS NAO POSSUI SALDO                   
+                    if not FERROVIA == "SAIDAS": LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]["SALDO"][i:i + 24] for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]["SALDO"]), 24)]
+                    else:                        LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM][i:i + 24]          for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]), 24)]
+                    
                     for index, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
-
-                        self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM] = LISTAS[MARGEM][FERROVIA][ITEM][index]
-
+                        
+                        # A CHAVE SAIDAS NAO POSSUI SALDO
+                        if not FERROVIA == "SAIDAS": self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM]["SALDO"] = LISTAS[MARGEM][FERROVIA][ITEM][index]
+                        else:                        self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM]          = LISTAS[MARGEM][FERROVIA][ITEM][index]
 
         for DATA_ARQ in  self.LISTA_DATA_ARQ:
 
@@ -714,14 +724,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
         #endregion
 
-    def CALCULAR(self):
-
-        self.__MONTAR_FULL__()
-        self.__CALCULAR__()
-        self.CALCULAR_CONDENSADOS()
-        self.__DESMONTAR_FULL__()
-
-    def CALCULAR_CONDENSADOS(self):
+    def __CALCULAR_CONDENSADOS__(self):
 
         #DIREITA
 
@@ -729,8 +732,11 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         TERMINAIS_PST   = list(self.full_TERMINAIS_DO_CALCULO["DIREITA"]["PST"].keys())
    
         TERMINAIS       = (TERMINAIS_PMC + TERMINAIS_PST)
-            
-        for i in range(1, 119):
+        
+        #FAZENDO PARA I = 0 
+
+
+        for i in range(119):
             
             for FERROVIA in ["RUMO", "MRS", "VLI"]:
                     
@@ -754,14 +760,17 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                     BUFFER = 0
                     if CHAVE =="GRAO": BUFFER = self.full_BUFFERS["DIREITA"][FERROVIA]["SALDO"][i]
                     
-                    self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE][i] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE][i-1] + ALIVIOS - SAIDAS - BUFFER
+                    if i == 0:
+                        self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][0] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO_VIRADA"] + ALIVIOS - SAIDAS - BUFFER
+                    else:
+                        self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i-1] + ALIVIOS - SAIDAS - BUFFER
 
         #ESQUERDA
 
         TERMINAIS_PCZ   = list(self.full_TERMINAIS_DO_CALCULO["ESQUERDA"]["PCZ"].keys())
         TERMINAIS       = TERMINAIS_PCZ
 
-        for i in range(1, 119):
+        for i in range(119):
             
             for FERROVIA in ["RUMO", "MRS", "VLI"]:
 
@@ -782,8 +791,20 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                     BUFFER = 0
                     if CHAVE =="GRAO": BUFFER = self.full_BUFFERS["ESQUERDA"][FERROVIA]["SALDO"][i]
+                      
+                    if i == 0:
+                        self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][0] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO_VIRADA"] + ALIVIOS - SAIDAS - BUFFER
+                    else:
+                        self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i-1] + ALIVIOS - SAIDAS - BUFFER
 
-                    self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE][i] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE][i-1] + ALIVIOS - SAIDAS - BUFFER
+    def CALCULAR(self):
+
+        self.__MONTAR_FULL__()
+        self.__CALCULAR__()
+        self.__CALCULAR_CONDENSADOS__()
+        self.__DESMONTAR_FULL__()
+
+
 
 class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
@@ -805,10 +826,14 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
         
         TERMINAIS_SALDO = [item for item in self.TERMINAIS_SUBIDA if item not in self.TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["OUTORGA_SALDO"]]
         
-        for DATA_ARQ in self.LISTA_DATA_ARQ:
+        #region OUTORGA DA PRODUTIVIDADE COMUM
+        for TERMINAL in TERMINAIS_SALDO:
+            
+            SALDO_VIRADA = {}
 
-            #region OUTORGA DA PRODUTIVIDADE COMUM
-            for TERMINAL in TERMINAIS_SALDO:
+            for i, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
+
+                SALDO_VIRADA[i] = {}
 
                 PRODUTOS  = self.INFOS[TERMINAL]["PRODUTOS"]
                 SEGMENTO  = self.INFOS[TERMINAL]["SEGMENTO"]
@@ -825,6 +850,8 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
                 for FERROVIA in FERROVIAS:
 
+                    if not FERROVIA in SALDO_VIRADA[i]: SALDO_VIRADA[i][FERROVIA] = {}
+                    
                     SALDOS[FERROVIA] = {}
                     SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [0] * 24
 
@@ -832,6 +859,8 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
                     PEDRAS[FERROVIA]["GERACAO_VAZIOS"]  = [0] * 24
 
                     for PRODUTO in PRODUTOS:
+
+                        if not PRODUTO in SALDO_VIRADA[i][FERROVIA]: SALDO_VIRADA[i][FERROVIA][PRODUTO] = {}
 
                         SALDOS[FERROVIA][PRODUTO] = jsDESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["SALDO"]
                         SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [sum(x) for x in zip(SALDOS[FERROVIA][PRODUTO], SALDOS[FERROVIA]["SALDO_NAVEGACAO"])]
@@ -841,12 +870,19 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
                     jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"]   = SALDOS[FERROVIA]["SALDO_NAVEGACAO"]
                     jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = PEDRAS[FERROVIA]["GERACAO_VAZIOS"]
-                    jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = [0] + jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][:-1]
+                    
+                    if not i == 0: HR_01 = [SALDO_VIRADA[i-1][FERROVIA][PRODUTO]]
+                    else:          HR_01 = [0]
+ 
+                    SALDO_VIRADA[i][FERROVIA][PRODUTO] = jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][23]
+
+                    jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = HR_01 + jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][:-1]
                     jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["ALIVIO_DE_VAZIOS"]  = [0] * 24
 
                 with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{TERMINAL}/subida_{DATA_ARQ}.json", 'w') as ARQUIVO:
                     json.dump(jsSUBIDA, ARQUIVO, indent=4)
-                    
+
+                
             #endregion
 
             #region OUTORGA PRODUTIVIDADE ADM
@@ -885,7 +921,7 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
             
             #endregion
 
-    def ATUALIZAR(self):
+    def ATUALIZAR(self): #BOTAO ATUALIZAR SUBIDA
 
         self.__OUTORGAR_PRODUTIVIDADE__()
 
@@ -893,6 +929,8 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
         CALCULOS_SUBIDA.CALCULAR()
        
 def EDITAR_SALDO_VIRADA_TERMINAL(PARAMETROS): #AQUI PARA PODER AGILIZAR A ENTREGA, TAMBÉM ENVIA SALDO DE VIRADA DA LINHA 4K TERMINAL = L4K    
+
+    if PARAMETROS["NOVO_VALOR"] == "": PARAMETROS["NOVO_VALOR"] = 0
 
     if not PARAMETROS["TERMINAL"] == "L4K":
 
@@ -925,7 +963,9 @@ def EDITAR_SALDO_VIRADA_TERMINAL(PARAMETROS): #AQUI PARA PODER AGILIZAR A ENTREG
 def EDITAR_BUFFER(PARAMETROS):
 
     PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-
+    
+    if PARAMETROS["NOVO_VALOR"] == "": PARAMETROS["NOVO_VALOR"] = 0
+    
     if not PARAMETROS["HORA"] == "SALDO_VIRADA":
 
         LINHA       = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]]
@@ -938,12 +978,29 @@ def EDITAR_BUFFER(PARAMETROS):
         VALOR       = PARAMETROS["NOVO_VALOR"]
 
         with open(f"previsao_trens/src/SUBIDA/BUFFER/buffer_{ DATA_ARQ }.json") as ARQUIVO:
-            jsCONDENSADOS = json.load(ARQUIVO)
+            jsBUFFER = json.load(ARQUIVO)
 
-        jsCONDENSADOS[MARGEM][FERROVIA]["SALDO"][HORA] = int(VALOR)
+        jsBUFFER[MARGEM][FERROVIA]["SALDO"][HORA] = int(VALOR)
 
         with open(f"previsao_trens/src/SUBIDA/BUFFER/buffer_{ DATA_ARQ }.json", 'w') as ARQUIVO:
-            json.dump(jsCONDENSADOS, ARQUIVO, indent=4) 
+            json.dump(jsBUFFER, ARQUIVO, indent=4) 
+
+def EDITAR_SALDO_CONDENSADO(PARAMETROS):
+
+    PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+    LINHA       = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == "D"]
+    DATA_ARQ    = LINHA['DATA_ARQ'].values[0]
+
+    if PARAMETROS["NOVO_VALOR"] == "": PARAMETROS["NOVO_VALOR"] = 0
+
+    with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ DATA_ARQ }.json") as ARQUIVO:
+            jsBUFFER = json.load(ARQUIVO)
+
+    jsBUFFER[PARAMETROS["MARGEM"]][PARAMETROS["FERROVIA"]][PARAMETROS["SEGMENTO"]]["SALDO_VIRADA"] = int(PARAMETROS["NOVO_VALOR"])
+
+    with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ DATA_ARQ }.json", 'w') as ARQUIVO:
+        json.dump(jsBUFFER, ARQUIVO, indent=4) 
+
 
 class Condensados():
 

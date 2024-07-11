@@ -14,8 +14,9 @@ from .forms         import TremForm, RestricaoForm, TremVazioForm
 from django.contrib import messages
 
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
-from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS
+from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
+from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA
 
 from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import VALIDAR_NOVA_PREVISAO, VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
 from    previsao_trens.packages.CRIAR_TREM.CARREGAMENTOS     import CARREGAR_PREVISOES
@@ -27,8 +28,10 @@ from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCAR
 from previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA, CARREGAR_PREVISAO_SUBIDA
 from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
 
-from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, Condensados
+from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO, Condensados
 from previsao_trens.packages.DETELHE.CARREGAR_PAGINA            import CARREGAR_RELATORIO_DETALHE
+from previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA import CARREGAR_RELATORIO_OCUPACAO
+from previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML   import DESCARGA_HTML
 from previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDAR_RESTRICAO
 
 from    .forms      import UploadFileForm
@@ -38,6 +41,19 @@ import  json
 import  pandas as pd
 
 import  csv
+
+from django.http import QueryDict
+
+
+def REQUEST_PARA_DICT(request):
+    # Combina os parâmetros GET e POST em um único dicionário
+    request_params = QueryDict('', mutable=True)
+    request_params.update(request.GET)
+    request_params.update(request.POST)
+    
+    # Converte o QueryDict para um dicionário normal
+    return dict(request_params)
+
 
 def redirect_to_login(request):
     
@@ -51,8 +67,6 @@ def navegacao(request):
                
             REQUISICAO =  dict(request.POST)
             ACAO = REQUISICAO["ACAO"][0]
-
-            print(f"REQUISICAO {REQUISICAO}")
 
             if ACAO == "EDITAR_PRODUTIVIDADE":
 
@@ -326,8 +340,9 @@ def dividir_trem(request, trem_id):
 
     if request.method == 'POST':
         with transaction.atomic():
-            #PRIMEIRO VAMOS DEFINIR AS POSICOES DE CADA ELEMENTO DIVIDIDO
-
+            
+            # PRIMEIRO VAMOS DEFINIR AS POSICOES DE CADA ELEMENTO DIVIDIDO
+            # Definindo dados dos novos trens
             TREM_01 = {
                 "prefixo"          : TREM_ORIGINAL.prefixo,
                 "os"               : TREM_ORIGINAL.os,
@@ -386,11 +401,11 @@ def dividir_trem(request, trem_id):
 
                 TREM_ORIGINAL.delete()
                 
-                TREM_SALVO_NO_BANCO_01 = TREM_01.save()
-                TREM_SALVO_NO_BANCO_02 = TREM_02.save()
+                TREM_01.save()
+                TREM_02.save()
                 
-                dict_TREM_01["ID"] = TREM_SALVO_NO_BANCO_01.id
-                dict_TREM_02["ID"] = TREM_SALVO_NO_BANCO_02.id
+                dict_TREM_01["ID"] = TREM_01.id
+                dict_TREM_02["ID"] = TREM_02.id
 
                 #EDITANDO NA DESCARGA
                 NAVEGACAO_A = NAVEGACAO_DESCARGA(dict_TREM_ORIGINAL["terminal"], dict_TREM_ORIGINAL["ferrovia"], dict_TREM_ORIGINAL["mercadoria"]) #1
@@ -610,7 +625,7 @@ def configuracao(request):
         
         ACAO = request.POST.get('ACAO', 0)
 
-        if ACAO == "DESCARGAS_ATIVAS":
+        if      ACAO == "DESCARGAS_ATIVAS":
 
             PARAMETROS = {
                 "NOVO_VALOR":   request.POST.get('novo_valor',  0),
@@ -618,11 +633,10 @@ def configuracao(request):
                 "COLUNA":       request.POST.get('coluna',      0),
                 "TABELA":       request.POST.get('tabela',      0),
             }
-            print(PARAMETROS)
 
             return HttpResponse(EDITAR_PARAMETROS(PARAMETROS))
 
-        elif ACAO == "SUBIDAS_ATIVAS":
+        elif    ACAO == "SUBIDAS_ATIVAS":
 
             PARAMETROS = {
                 "NOVO_VALOR":   request.POST.get('NOVO_VALOR', 0),
@@ -631,8 +645,18 @@ def configuracao(request):
             }
 
             return HttpResponse(EDITAR_PARAMOS_SUBIDAS(PARAMETROS))
+        
+        elif    ACAO == "PXO":
 
-        if ACAO == "ATUALIZAR_DESCARGA":
+            PARAMETROS = {
+                "NOVO_VALOR":   request.POST.get('NOVO_VALOR', 0),
+                "TIPO":         request.POST.get('TIPO'  , 0),
+                "TERMINAL":     request.POST.get('TERMINAL'  , 0)
+            }
+
+            return HttpResponse(EDITAR_PARAMOS_PXO(PARAMETROS))
+
+        elif    ACAO == "ATUALIZAR_DESCARGA":
 
             ATUALIZAR_DESCARGA()
 
@@ -640,7 +664,13 @@ def configuracao(request):
         
     TERMIANIS_ATIVOS = ABRIR_TERMINAIS_ATIVOS()
 
+    if request.method == 'GET':
 
+        ACAO = request.GET.get('ACAO', 0)
+
+        if ACAO == "BAIXAR_PLANILHA":
+
+            BAIXAR_PLANILHA(request.user)
 
     return render(request, 'configuracao.html', {'terminais_ativos': TERMIANIS_ATIVOS, "FORM_CSV": FORM_CSV})
 
@@ -669,6 +699,7 @@ def programacao_subida(request):
                 }
                 
                 EDITAR_SALDO_VIRADA_TERMINAL(PARAMETROS)
+                SUBIDA_DE_VAZIOS().ATUALIZAR()
 
             if ACAO == "CRIAR_TREM_SUBIDA":
                 
@@ -706,7 +737,7 @@ def programacao_subida(request):
                     Condensados().inserirTrem(PARAMETROS)
 
                 else:
-                    print(FORM_NOVO_TREM.errors)
+
                     messages.error(request, FORM_NOVO_TREM.errors)
 
             if ACAO == "EDITAR_BUFFER":
@@ -720,10 +751,21 @@ def programacao_subida(request):
                 }
 
                 EDITAR_BUFFER(PARAMETROS)
-        
-        else:
+                SUBIDA_DE_VAZIOS().ATUALIZAR()
 
-            SUBIDA_DE_VAZIOS().ATUALIZAR()
+            if ACAO == "EDITAR_SALDO_CONDENSADOS":
+
+                PARAMETROS = {
+
+                    "MARGEM"        : REQUISICAO["MARGEM"][0],
+                    "SEGMENTO"      : REQUISICAO["SEGMENTO"][0],
+                    "FERROVIA"      : REQUISICAO["FERROVIA"][0],
+                    "NOVO_VALOR"    : REQUISICAO["NOVO_VALOR"][0]
+                    
+                }
+                EDITAR_SALDO_CONDENSADO(PARAMETROS)
+                SUBIDA_DE_VAZIOS().ATUALIZAR()
+            
    
     
     TABELAS_SUBIDA = CARREGAR_PROG_SUBIDA()
@@ -740,7 +782,37 @@ def editar_trem_subida(request, id):
     TABELAS = CARREGAR_PREVISAO_SUBIDA()
 
     return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': FORM, "TABELAS": TABELAS, 'MODAL_OPEN': True})
-   
+
+@login_required
+def ocupacao_terminais(request):
+  
+    REQUISICAO = REQUEST_PARA_DICT(request)
+    
+
+    if "ACAO" in  REQUISICAO:
+        
+        ACAO = REQUISICAO["ACAO"][0]
+
+        if ACAO == "VIZUALIZAR_DESCARGA":
+
+            if REQUISICAO["TERMINAL"][0] == "MOEGA X" or REQUISICAO["TERMINAL"][0] == "MOEGA V":
+
+                DESCARGA = DESCARGA_HTML("MOEGA X", REQUISICAO["DIA_LOGISTICO"][0]) + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("MOEGA V", REQUISICAO["DIA_LOGISTICO"][0])
+                
+                return HttpResponse(DESCARGA) 
+            
+            else:
+
+                DESCARGA = DESCARGA_HTML(REQUISICAO["TERMINAL"][0], REQUISICAO["DIA_LOGISTICO"][0])
+                return HttpResponse(DESCARGA)
+
+    else:
+
+        #CARREGA A PAGINA
+        RELATORIO = CARREGAR_RELATORIO_OCUPACAO()
+        return render(request, 'RELATORIO_OCUPACAO.html', {"RELATORIO": RELATORIO}) 
+
 @login_required
 def previsao_subida(request):
     
@@ -785,7 +857,6 @@ def previsao_subida(request):
 
             ID_TREM = REQUISICAO["ID_TREM"][0]
             TREM_ANTIGO = TremVazio.objects.get(pk=ID_TREM) 
-            print(TREM_ANTIGO)
 
             DATA_ARQ = TREM_ANTIGO.previsao.strftime("%Y-%m-%d")
             try:
