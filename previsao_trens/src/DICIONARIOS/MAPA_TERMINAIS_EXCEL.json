@@ -13,9 +13,9 @@
     },
     "TEAG": {
         "LIMITES"   : {"INICIO": 75, "FIM":   109},
-        "RUMO"      : {"FARELO": 80, "MILHO": 89, "SOJA": 98}, 
-        "MRS"       : {"FARELO": 83, "MILHO": 92, "SOJA": 101},
-        "VLI"       : {"FARELO": 86, "MILHO": 95, "SOJA": 104}
+        "RUMO"      : {"FARELO": 80, "MILHO":  89, "SOJA": 98}, 
+        "MRS"       : {"FARELO": 83, "MILHO":  92, "SOJA": 101},
+        "VLI"       : {"FARELO": 86, "MILHO":  95, "SOJA": 104}
     },
     "TEAG ACUCAR": {
         "LIMITES"   : {"INICIO": 111, "FIM":   127},
@@ -126,7 +126,7 @@
         "VLI"       : {"UREIA":  608, "KCL": 617, "OUTROS": 626}
     },
     "TERMAG": {
-        "LIMITES"   : {"INICIO": 633, "FIM":   667},
+        "LIMITES"   : {"INICIO": 633, "FIM": 667},
         "RUMO"      : {"UREIA":  638, "KCL": 647, "OUTROS": 656}, 
         "MRS"       : {"UREIA":  641, "KCL": 650, "OUTROS": 659},
         "VLI"       : {"UREIA":  644, "KCL": 653, "OUTROS": 662}

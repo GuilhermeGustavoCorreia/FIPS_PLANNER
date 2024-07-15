@@ -69,3 +69,18 @@ section h2{
 }
 
 /*-------------------------------------------TABELA PXO---------------------------------------------------*/
+
+.conteudo-carregando img{
+    height: 70px;
+
+}
+.conteudo-carregando{
+    top:       50%;
+    left:       50%;
+    transform:  translate(-50%, -50%);
+    position: absolute;
+
+    align-items: center;
+    text-align: center;
+}
+.loading {display: none;background: rgba(0, 0, 0, .7); backdrop-filter: blur(10px); position: absolute; width: 100%; height: 100%; z-index: 100;}

@@ -2,8 +2,8 @@ table{
 
     border-collapse: collapse;
 }
-table  th{border:     1px black solid}
-table td{}
+table  th   {border:     1px black solid}
+
 table td, th{ 
     
     text-align: center;

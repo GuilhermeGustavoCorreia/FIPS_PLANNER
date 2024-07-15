@@ -1029,9 +1029,19 @@ class Condensados():
 
                     for CHAVE in CHAVES_CONDENSADOS:
 
-                        if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = []
+                        #if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = []
 
-                        self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][CHAVE])
+                        #self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][CHAVE])
+
+                        if not FERROVIA == "SAIDAS": 
+                            
+                            if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = {"SALDO": []}
+                            self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE]["SALDO"].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][CHAVE]["SALDO"])
+                        else:                        
+                            
+                            if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = []
+                            self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][CHAVE])
+                   
 
                 if not "FERROVIA" in self.full_CONDENSADOS[MARGEM]["SAIDAS"]: self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"] = []  
                 self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"])
@@ -1050,10 +1060,17 @@ class Condensados():
 
                 for ITEM in CHAVES_CONDENSADOS:
 
-                    LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM][i:i + 24] for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]), 24)]
+                    if not FERROVIA == "SAIDAS": LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]["SALDO"][i:i + 24] for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]["SALDO"]), 24)]
+                    else:                        LISTAS[MARGEM][FERROVIA][ITEM] = [self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM][i:i + 24]          for i in range(0, len(self.full_CONDENSADOS[MARGEM][FERROVIA][ITEM]         ), 24)]
+                    
+                    
 
                     for index, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
-                        self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM] = LISTAS[MARGEM][FERROVIA][ITEM][index]
+
+                        # A CHAVE SAIDAS NAO POSSUI SALDO
+                        if not FERROVIA == "SAIDAS": self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM]["SALDO"] = LISTAS[MARGEM][FERROVIA][ITEM][index]
+                        else:                        self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][ITEM]          = LISTAS[MARGEM][FERROVIA][ITEM][index]
+                                                    
 
 
         for DATA_ARQ in  self.LISTA_DATA_ARQ:

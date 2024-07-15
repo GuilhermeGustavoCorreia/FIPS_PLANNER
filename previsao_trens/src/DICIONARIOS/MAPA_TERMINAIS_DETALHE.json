@@ -1,0 +1,88 @@
+{
+    "TGG": {
+        "RUMO"      : {"FARELO": 4, "MILHO": 7, "SOJA": 10}, 
+        "MRS"       : {"FARELO": 5, "MILHO": 8, "SOJA": 11},
+        "VLI"       : {"FARELO": 6, "MILHO": 9, "SOJA": 12}
+    },
+    "TEG": {
+        "RUMO"      : {"FARELO": 14, "MILHO": 17, "SOJA": 20}, 
+        "MRS"       : {"FARELO": 15, "MILHO": 18, "SOJA": 21},
+        "VLI"       : {"FARELO": 16, "MILHO": 19, "SOJA": 22}
+    },
+    "TEAG": {
+        "RUMO"      : {"FARELO": 24, "MILHO": 27, "SOJA": 30, "ACUCAR": 33}, 
+        "MRS"       : {"FARELO": 25, "MILHO": 28, "SOJA": 31, "ACUCAR": 34},
+        "VLI"       : {"FARELO": 26, "MILHO": 29, "SOJA": 32, "ACUCAR": 35}
+    },
+    "CUTRALE": {
+        "RUMO"      : {"FARELO": 37, "MILHO": 40, "SOJA": 43}, 
+        "MRS"       : {"FARELO": 38, "MILHO": 41, "SOJA": 44},
+        "VLI"       : {"FARELO": 39, "MILHO": 42, "SOJA": 45}
+    },
+    "T39": {
+        "RUMO"      : {"FARELO": 60, "MILHO": 63, "SOJA": 66}, 
+        "MRS"       : {"FARELO": 61, "MILHO": 64, "SOJA": 67},
+        "VLI"       : {"FARELO": 62, "MILHO": 65, "SOJA": 68}
+    },
+    "TES": {
+        "RUMO"      : {"FARELO": 73, "MILHO": 76, "SOJA": 79}, 
+        "MRS"       : {"FARELO": 74, "MILHO": 77, "SOJA": 80},
+        "VLI"       : {"FARELO": 75, "MILHO": 78, "SOJA": 81}
+    },
+    "MOEGA V": {
+        "RUMO"      : {"FARELO": 86, "MILHO": 89, "SOJA": 92}, 
+        "MRS"       : {"FARELO": 87, "MILHO": 90, "SOJA": 93},
+        "VLI"       : {"FARELO": 88, "MILHO": 91, "SOJA": 94}
+    },
+    "MOEGA X": {
+        "RUMO"      : {"FARELO":  99, "MILHO": 102, "SOJA": 105}, 
+        "MRS"       : {"FARELO": 100, "MILHO": 103, "SOJA": 106},
+        "VLI"       : {"FARELO": 101, "MILHO": 104, "SOJA": 107}
+    },
+    "TGRAO": {
+        "RUMO"      : {"FARELO": 112, "MILHO": 115, "SOJA": 118}, 
+        "MRS"       : {"FARELO": 113, "MILHO": 116, "SOJA": 119},
+        "VLI"       : {"FARELO": 114, "MILHO": 117, "SOJA": 120}
+    },
+    "CLI": {
+        "RUMO"      : {"FARELO": 125, "MILHO": 128, "SOJA": 131, "ACUCAR": 134}, 
+        "MRS"       : {"FARELO": 126, "MILHO": 129, "SOJA": 132, "ACUCAR": 135},
+        "VLI"       : {"FARELO": 127, "MILHO": 130, "SOJA": 133, "ACUCAR": 136}
+    },
+    "TAC": {
+        "RUMO"      : {"FARELO": 138, "MILHO": 141, "SOJA": 144, "ACUCAR": 147}, 
+        "MRS"       : {"FARELO": 139, "MILHO": 142, "SOJA": 145, "ACUCAR": 148},
+        "VLI"       : {"FARELO": 140, "MILHO": 143, "SOJA": 146, "ACUCAR": 149}
+    },
+    "T12A": {
+        "RUMO"      : {"FARELO": 151, "MILHO": 154, "SOJA": 157}, 
+        "MRS"       : {"FARELO": 152, "MILHO": 155, "SOJA": 158},
+        "VLI"       : {"FARELO": 153, "MILHO": 156, "SOJA": 159}
+    },
+    "ELDORADO": {
+        "RUMO"      : {"CELULOSE": 168}, 
+        "MRS"       : {"CELULOSE": 169},
+        "VLI"       : {"CELULOSE": 170}
+    },
+    "BRACELL": {
+        "RUMO"      : {"CELULOSE": 164}, 
+        "MRS"       : {"CELULOSE": 165},
+        "VLI"       : {"CELULOSE": 166}
+    },
+    "HIDROVIAS":{
+        "RUMO"      : {"UREIA":  197, "KCL": 194, "OUTROS": 200}, 
+        "MRS"       : {"UREIA":  198, "KCL": 195, "OUTROS": 201},
+        "VLI"       : {"UREIA":  199, "KCL": 196, "OUTROS": 202}
+    },
+    "TERMAG":   {
+        "RUMO"      : {"UREIA":  187, "KCL": 184, "OUTROS": 190}, 
+        "MRS"       : {"UREIA":  188, "KCL": 185, "OUTROS": 191},
+        "VLI"       : {"UREIA":  189, "KCL": 186, "OUTROS": 192}
+    },
+    "SBR":      {
+        "MRS"       : {"CONTEINER": 182}
+    },
+    "ECOPORTO": {
+        "MRS"       : {"CONTEINER": 180}
+    }
+}

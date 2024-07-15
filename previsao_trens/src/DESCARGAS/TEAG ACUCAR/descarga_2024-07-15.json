@@ -85,8 +85,10 @@
             []
         ],
         [
-            0,
-            []
+            "R52",
+            [
+                2098
+            ]
         ],
         [
             0,
@@ -183,8 +185,10 @@
             []
         ],
         [
-            0,
-            []
+            81,
+            [
+                2098
+            ]
         ],
         [
             0,
@@ -223,7 +227,7 @@
         0,
         0,
         0,
-        0
+        4
     ],
     "RESTRICAO_MOTIVO": [
         0,
@@ -348,8 +352,8 @@
                         0
                     ],
                     [
-                        0,
-                        0
+                        81,
+                        2098
                     ]
                 ],
                 "SALDO": [
@@ -376,7 +380,7 @@
                     0,
                     0,
                     0,
-                    0
+                    81
                 ],
                 "PRODUTIVIDADE": [
                     0,
@@ -402,7 +406,7 @@
                     0,
                     0,
                     0,
-                    0
+                    4
                 ],
                 "EDITADO": [
                     0,
@@ -454,7 +458,7 @@
                     0,
                     0,
                     0,
-                    0
+                    2098
                 ],
                 "FILA": [
                     0,
@@ -516,16 +520,16 @@
                         0,
                         0,
                         0,
-                        0
+                        81
                     ],
                     "PEDRA": [
                         0,
                         0,
                         0,
-                        0
+                        4
                     ],
-                    "TOTAL_CHEGADA": 0,
-                    "TOTAL_PRODUTIVIDADE": 0,
+                    "TOTAL_CHEGADA": 81,
+                    "TOTAL_PRODUTIVIDADE": 4,
                     "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
@@ -559,7 +563,7 @@
                         0,
                         0,
                         0,
-                        0
+                        4
                     ],
                     "GERACAO_EDITADA": [
                         0,
@@ -1502,15 +1506,15 @@
         }
     },
     "INDICADORES": {
-        "TOTAL_SALDO": 0,
+        "TOTAL_SALDO": 81,
         "SALDO_DE_VIRADA_TOTAL": 0,
-        "TOTAL_PEDRA": 0,
+        "TOTAL_PEDRA": 4,
         "PEDRAS": {
             "RUMO": {
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 0
+                "P4": 4
             },
             "MRS": {
                 "P1": 0,
@@ -1528,7 +1532,7 @@
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 0
+                "P4": 4
             }
         },
         "SALDO_DE_VIRADA_VAZIOS": {

@@ -62,12 +62,14 @@
     <h1>PROGRAMAÇÃO DE SUBIDA</h1>
 
     <form method="post"  action="{% url 'programacao_subida' %}">
+        
         {% csrf_token %}
+        <input  type="hidden" name="ACAO" value="ATUALIZAR_SUBIDA">
         <button type="submit" class="BOTAO VERDE">Recalcular Tabela</button>
+
     </form>
     
     {% if TABELAS_SUBIDA %} 
-
 
         <!--#region ABAS DE NAVEGACAO-->
         

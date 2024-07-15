@@ -3,6 +3,8 @@ from    openpyxl                import load_workbook
 from    datetime                import datetime
 from    previsao_trens.models   import Trem, Restricao
 import  pandas as pd
+from    django.conf import settings
+import  os
 
 class EXPORTAR_PLANILHA():
 
@@ -19,7 +21,6 @@ class EXPORTAR_PLANILHA():
         
         PREVISAO = self.PLANILHA['PREVISAO']    
         PREVISAO['X5'].value = DATETIME_D
-
 
     def inserir_previsao(self):
 
@@ -221,19 +222,26 @@ class EXPORTAR_PLANILHA():
         HOME.cell(row = 7, column=5,  value=USUARIO_LOGADO.email )
         HOME.cell(row = 8, column=5,  value=datetime.today())
 
-    
     def salvar(self):
         
-        self.PLANILHA.save("previsao_trens/src/DOWNLOADS/PLANILHA_DESCARGA.xlsm")
-        
+        caminho_static  = os.path.join(settings.BASE_DIR, 'static', 'downloads')
+        caminho_arquivo = os.path.join(caminho_static, "PLANILHA_DESCARGA.xlsm")
+        self.PLANILHA.save(caminho_arquivo)
 
 def BAIXAR_PLANILHA(USUARIO_LOGADO):
+    
+    try:
+        PLANILHA = EXPORTAR_PLANILHA()
 
-    PLANILHA = EXPORTAR_PLANILHA()
+        PLANILHA.inserir_previsao()
+        PLANILHA.inserir_navegacao()
+        PLANILHA.inserir_restricao()
+        PLANILHA.inserir_folha_capa(USUARIO_LOGADO)
+        PLANILHA.salvar()
+        
+        return {"success": True, "mensagem": "planilha baixada"}
+    
+    except Exception as e:
 
-    PLANILHA.inserir_previsao()
-    PLANILHA.inserir_navegacao()
-    PLANILHA.inserir_restricao()
-    PLANILHA.inserir_folha_capa(USUARIO_LOGADO)
-    PLANILHA.salvar()
-
+        return {"success": False, "mensagem": f"Erro ao baixar planilha: {str(e)}"}
+   

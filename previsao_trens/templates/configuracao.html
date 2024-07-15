@@ -7,6 +7,16 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/configucacao/configucacao.css' %}"> 
 <script src="{% static 'javascript/CONFIGURACAO/main.js' %}" defer></script>
 
+
+<div id="overlay" class="loading">
+    
+    <div class="conteudo-carregando">
+      <img src="{% static 'imagens/loading.gif' %}" alt="">
+      <p style="color: white">Carregando...</p>
+    </div>
+
+  </div>
+
 <div class="CONTEUDO__PADRAO">  
   
     <h1>CONFIGURAÇÕES</h1>
@@ -113,7 +123,7 @@
                     
                     <th>        </th>
                     <th>PROD.   </th>
-                    <th>OSC.    </th>
+                    <th>OCIO.    </th>
 
                 </thead>
 
@@ -139,15 +149,12 @@
         <div id="CONTEUDO_DOWNLOADS" class="CONTEUDO_CONFIGURACAO">
 
             <h1>DOWNLOADS</h1>
+
             <p>Clique no botão abaixo para baixar uma versão do sistema em planilha Excel.</p>
+            <button class="BOTAO VERDE" type="submit" onclick="BAIXAR_PLANILHA()">Baixar Planilha</button>
 
-            <form method="GET" enctype="multipart/form-data" action="{% url 'configuracao' %}">
-                
-                {% csrf_token %}
-                <input  type="hidden" name="ACAO" value="BAIXAR_PLANILHA">
-                <button class="BOTAO VERDE" type="submit">Baixar Planilha</button>
-
-            </form>  
+            <p>Clique no botão abaixo para baixar o relatório DETALHE em Excel.</p> 
+            <button class="BOTAO VERDE" type="submit" onclick="BAIXAR_DETALHE()">Baixar Detalhe</button>
 
         </div>
     </section>
@@ -242,20 +249,93 @@
         }
 });
 
-function ATUALIZAR_DESCARGA(){
+    function ATUALIZAR_DESCARGA(){
 
+        $.ajax({
+        url: '/configuracao/',
+        type: 'POST',
+        data: {
+            'ACAO': "ATUALIZAR_DESCARGA",
+            'csrfmiddlewaretoken': "{{ csrf_token }}"
+        },
+            success:  function(response)  {alert("FOI")},
+            error:    function(xhr)       {alert("ERR")}
+        });
+    
+    }
+
+function BAIXAR_PLANILHA(){
+    
+    var overlay = document.getElementById('overlay');
+
+    overlay.style.display = 'block';
     $.ajax({
-      url: '/configuracao/',
-      type: 'POST',
-      data: {
-          'ACAO': "ATUALIZAR_DESCARGA",
-          'csrfmiddlewaretoken': "{{ csrf_token }}"
-      },
-      success:  function(response)  {alert("FOI")},
-      error:    function(xhr)       {alert("ERR")}
-  });
-  
-  }
+    url: '/configuracao/',
+    type: 'GET',
+    data: {
+        'ACAO': "BAIXAR_PLANILHA",
+        'csrfmiddlewaretoken': "{{ csrf_token }}"
+    },
+    success:  function(response)  {
+
+        fetch("{% static 'downloads/PLANILHA_DESCARGA.xlsm' %}")
+        .then(response => response.blob())
+        .then(blob => {
+            
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            
+            a.href = url;
+            a.download = 'PLANILHA_DESCARGA.xlsm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+        })
+        .catch(error => console.error('Erro no download:', error));
+        overlay.style.display = 'none';
+    },
+    error:function(xhr) 
+        {alert("ERR")}
+    });
+}
+
+function BAIXAR_DETALHE(){
+    
+    var overlay = document.getElementById('overlay');
+
+    overlay.style.display = 'block';
+    $.ajax({
+    url: '/configuracao/',
+    type: 'GET',
+    data: {
+        'ACAO': "BAIXAR_DETALHE",
+        'csrfmiddlewaretoken': "{{ csrf_token }}"
+    },
+    success:  function(response)  {
+
+        fetch("{% static 'downloads/RELATORIO_DETALHE.xlsx' %}")
+        .then(response => response.blob())
+        .then(blob => {
+            
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            
+            a.href = url;
+            a.download = 'RELATORIO_DETALHE.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+        })
+        .catch(error => console.error('Erro no download:', error));
+        overlay.style.display = 'none';
+    },
+    error:function(xhr) 
+        {alert("ERR")}
+    });
+}
+
 
 </script>
 

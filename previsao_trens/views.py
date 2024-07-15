@@ -16,7 +16,9 @@ from django.contrib import messages
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
 from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
-from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA
+from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA 
+from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import BAIXAR_DETALHE
+
 
 from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import VALIDAR_NOVA_PREVISAO, VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
 from    previsao_trens.packages.CRIAR_TREM.CARREGAMENTOS     import CARREGAR_PREVISOES
@@ -665,12 +667,20 @@ def configuracao(request):
     TERMIANIS_ATIVOS = ABRIR_TERMINAIS_ATIVOS()
 
     if request.method == 'GET':
-
+        print(request)
         ACAO = request.GET.get('ACAO', 0)
 
         if ACAO == "BAIXAR_PLANILHA":
 
-            BAIXAR_PLANILHA(request.user)
+            DONWLOAD_STATUS = BAIXAR_PLANILHA(request.user)
+
+            JsonResponse(DONWLOAD_STATUS)
+
+        if ACAO == "BAIXAR_DETALHE":
+
+            DONWLOAD_STATUS = BAIXAR_DETALHE()
+
+            JsonResponse(DONWLOAD_STATUS)
 
     return render(request, 'configuracao.html', {'terminais_ativos': TERMIANIS_ATIVOS, "FORM_CSV": FORM_CSV})
 
@@ -766,6 +776,8 @@ def programacao_subida(request):
                 EDITAR_SALDO_CONDENSADO(PARAMETROS)
                 SUBIDA_DE_VAZIOS().ATUALIZAR()
             
+            if ACAO == "ATUALIZAR_SUBIDA":
+                SUBIDA_DE_VAZIOS().ATUALIZAR()
    
     
     TABELAS_SUBIDA = CARREGAR_PROG_SUBIDA()

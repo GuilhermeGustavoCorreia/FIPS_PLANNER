@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
-
 class Usuario(AbstractUser):
 
     cargo       = models.CharField(max_length=200, null=True)
@@ -36,7 +34,6 @@ class Trem(models.Model):
     def __str__(self):
         return self.prefixo
     
-    
 class Restricao(models.Model):
 
     terminal    = models.CharField(max_length=50)
@@ -53,8 +50,6 @@ class Restricao(models.Model):
     def __str__(self):
 
         return (f"{ self.terminal } - { self.motivo }")
-
-
 
 class TremVazio(models.Model):
 

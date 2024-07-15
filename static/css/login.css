@@ -60,7 +60,7 @@ p{margin-left: 5vw;  width: 15vw; margin-top: 0px}
 } 
 
 .form__email__linha,
-.form__senha__linha{        display: table-row; font-family: 'Saira Expanded', Arial, sans-serif;}
+.form__senha__linha{        display: table-row; font-family: 'Saira Expanded', Arial, Helvetica, 'Century Gothic';}
 
 .form__email__linha label,
 .form__senha__linha label{text-align: left; padding-right: 1vw; }
