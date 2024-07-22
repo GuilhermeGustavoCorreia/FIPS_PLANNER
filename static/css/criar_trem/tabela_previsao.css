@@ -20,7 +20,8 @@
 .LISTA__TRENS tbody tr:nth-child(odd)         {background-color: #ffff;  }
 .LISTA__TRENS tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
 .LISTA__TRENS tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
-
+.LISTA__TRENS thead th{ height: 2.5rem;}
+.LISTA__TRENS tbody tr{ height: 2rem;}
 
 .LISTA__TRENS td{ padding:0.2rem 0; }
 .LISTA__TRENS th{ padding:0.5rem 0;}

@@ -10,8 +10,9 @@ function TOOGLE_FORMULARIO(TIPO=null, ID_RESTRICAO=null){
 
     if (TIPO === "CRIAR_RESTRICAO"){
 
-        TITULO_FORMULARIO.textContent = "Criar Restrição"
-        TIPO_FORMULARIO.value = "CRIAR"
+        TITULO_FORMULARIO.textContent   = "Criar Restrição"
+        TIPO_FORMULARIO.value           = "CRIAR"
+        FORMULARIO.action               = "criar_restricao"
     }
     if (TIPO === "EDITAR_RESTRICAO"){
 

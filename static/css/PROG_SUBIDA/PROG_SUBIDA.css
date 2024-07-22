@@ -1,4 +1,5 @@
 .CONTEUDO__SUBIDA{
+    
     left: 50%;
     transform: translateX(-50%);
     margin-top: 12vh;
@@ -164,7 +165,7 @@ table    th   { border: 1px var(--cinza-chumbo-c) solid;  border-bottom: 2px var
     }
 
 }
-
+.VERDE{margin-top: 1rem;}
 /*--------------------------------------DIALOG---------------------------------------*/
 
 
@@ -191,6 +192,7 @@ dialog::backdrop{
 /*-----------------------------------------------------------------------------------*/
 
 .abas {
+    margin-top: 2rem;
     display: flex;
 }
 

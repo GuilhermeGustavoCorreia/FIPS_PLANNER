@@ -6,20 +6,22 @@ urlpatterns = [
 
     path('', views.redirect_to_login),
 
-    path('restricao/',  views.restricao,    name="restricao"),
-
-    path('restricao/excluir/<int:id>/', views.excluir_restricao,        name="excluir_restricao"),
+    path('restricao/',                  views.restricoes_view,      name="restricao"),
+    path('restricao/criar_restricao',   views.criar_restricao_view, name="criar_restricao"),
+    path('restricao/excluir_restricao/<int:id>/', views.excluir_restricao_view,        name="excluir_restricao"),
+    
     path('restricao/editar/<int:id>/',  views.editar_restricao,         name="editar_restricao"),
 
     path('navegacao/',  views.navegacao,    name="navegacao"),
     path('profile/',    views.profile,      name="profile"),
 
-    path('previsao/criar_trem',                        views.criar_trem,          name="criar_trem"),
-    path('previsao/criar_trem/novo_trem_previsao',     views.novo_trem_previsao,  name="novo_trem_previsao"),
-    path('previsao/criar_trem/excluir_trem/<int:id>/', views.excluir_trem,        name="excluir_trem"),
-    path('editar_trem/<int:trem_id>/',                 views.editar_trem,         name='editar_trem'),
-    path('dividir_trem/<int:trem_id>/',                views.dividir_trem,        name="dividir_trem"),
-    path('upload/',                                    views.upload_file_view,    name='upload_file'),
+    path('previsao/previsao_trens',                         views.previsao_trens_view,  name="previsao_trens"),
+    path('previsao/previsao_trens/novo_trem_previsao',      views.criar_trem_view,      name="novo_trem_previsao"),
+    path('previsao/previsao_trens/alterar_posicao',         views.alterar_posicao_view, name="alterar_posicao"),
+    path('previsao/previsao_trens/excluir_trem/<int:id>/',  views.excluir_trem_view,    name="excluir_trem"),
+    path('editar_trem/<int:trem_id>/',                      views.editar_trem,          name='editar_trem'),
+    path('dividir_trem/<int:trem_id>/',                     views.dividir_trem,         name="dividir_trem"),
+    path('upload/',                                         views.upload_file_view,     name='upload_file'),
 
     path('configuracao/',   views.configuracao,        name="configuracao"),
     

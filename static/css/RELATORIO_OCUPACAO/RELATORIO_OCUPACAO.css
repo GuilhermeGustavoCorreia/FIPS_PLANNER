@@ -16,7 +16,7 @@ body{
     text-align: center;
 }
 
-table{ border-collapse: collapse; font-family: "Saira Expanded"; }
+table{ border-collapse: collapse; font-family: "Saira Expanded" , Arial, sans-serif; }
 thead th, thead td{ background-color: var(--azul-profundo-m); color: white; font-size: 0.8rem; padding: 0 5px; text-align: center; border: 1px solid white }
 thead{ border: 1px solid lightgray;}
 .logo__ocupacao{ height: 60px; margin: 10px 5px;}

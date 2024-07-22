@@ -10,7 +10,6 @@ def EDITAR_PARAMETROS(PARAMETROS, ACAO="INSERIR"):
         
         if PARAMETROS["LINHA"] in DATAFRAME.index and PARAMETROS["COLUNA"] in DATAFRAME.columns:
             
-
             if ACAO == "SOMAR":
                 PARAMETROS["NOVO_VALOR"] = DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] + int(PARAMETROS["NOVO_VALOR"])
         

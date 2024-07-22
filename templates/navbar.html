@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load permission_tags %}
 {% if request.path != '/accounts/login/' and request.user.is_authenticated %}   
 
 <link   rel="stylesheet" type="text/css" href="{% static 'css/header/header.css' %}"> 
@@ -19,7 +19,7 @@
           
             <ul class="submenu">
                 <li class="submenu-lista"><a class="subitem">Nitro        </a></li>
-                <li class="submenu-lista"><a href="{% url 'criar_trem' %}" class="subitem">Criar Trem   </a></li>
+                <li class="submenu-lista"><a href="{% url 'previsao_trens' %}" class="subitem">Criar Trem   </a></li>
             </ul>
 
         </li>
@@ -51,7 +51,11 @@
             <label  class="primeiro__nome"  >{{ user.first_name }}</label>
             <label  class="sobremnoe"       >{{ user.last_name }} </label>
           </div>  
-          <img    class="usuario-foto" src="{{  user.foto.url }}" alt="Foto de usuário">
+          {% if user.foto %}
+              <img class="usuario-foto" src="{{ user.foto.url }}" alt="Foto de usuário">
+          {% else %}
+              <img class="usuario-foto" src="URL_DA_IMAGEM_PADRAO" alt="Foto de usuário">
+          {% endif %}
       </div>
 
 </header>
@@ -59,9 +63,11 @@
 <ul id="menu__usuario" class="menu__usuario hidden">
   
     <li><a class="menu__usuario__ancora" href="{% url 'profile' %}" >Minha conta           </a></li>
+    {% if user|can:'editar_itens' %}
     <li><a class="menu__usuario__ancora" href="" >Criar Novo usuário    </a></li>
     <li><a class="menu__usuario__ancora" href="" >Ver todos os usuários </a></li>
     <li><a class="menu__usuario__ancora" href="{% url 'configuracao' %}" >Configurações         </a></li>
+    {% endif %}
     <li><form id="logout-form" action="{% url 'logout' %}" method="post">
       
       {% csrf_token %}

@@ -1,10 +1,12 @@
 {% extends 'main.html' %}
 {% block content %}
 {% load static %}
+{% load permission_tags %}
 
+{% if user|can:'editar_itens' %}
 <script src="{% static 'javascript/NAVEGACAO/EDITAR_PRODUTIVIDADE.js' %}" defer></script>
 <script src="{% static 'javascript/NAVEGACAO/ATUALIZAR_DESCARGA.js' %}" defer></script>
-
+{% endif %}
 <div id="conteudo__navegacao" class="conteudo__navegacao">  
   
     <link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/navegacao.css' %}"> 
@@ -385,7 +387,7 @@
 </div>
 
 </div>
-
+{% if user|can:'editar_itens' %}
 <script>
 
     document.body.addEventListener('keypress', function(e) {
@@ -484,5 +486,5 @@
      
     
 </script>
-
+{% endif %}
 {% endblock %}

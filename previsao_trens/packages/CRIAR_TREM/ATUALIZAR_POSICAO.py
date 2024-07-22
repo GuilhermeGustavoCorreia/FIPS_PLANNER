@@ -4,7 +4,10 @@ from django.db.models       import F
 from previsao_trens.models  import Trem
 import pandas as pd
 from datetime import datetime
+
 def AJUSTAR_POSICAO_CHEGADA(**kwargs):
+
+    print(f"AJUSTANDO { kwargs }")
 
     if  kwargs["ACAO"] == "INSERIR TREM":
 
@@ -18,15 +21,12 @@ def AJUSTAR_POSICAO_CHEGADA(**kwargs):
                 ).update(posicao_previsao=F('posicao_previsao') + 1)
 
 
-    elif kwargs["ACAO"] == "EXLUIR TREM":
+    elif kwargs["ACAO"] == "EXCLUIR TREM":
+        
 
         with transaction.atomic():  # Garante que as mudanças sejam atômicas
-            Trem.objects.filter(
-                posicao_previsao__gt=kwargs["POSICAO"],
-                previsao__date=kwargs["PREVISAO_TREM_EXCLUIDO"]
-            ).update(
-                posicao_previsao=F('posicao_previsao') - 1
-            )
+            Trens = Trem.objects.filter(posicao_previsao__gt=kwargs["POSICAO"], previsao__date=kwargs["PREVISAO_TREM_EXCLUIDO"])
+            Trens.update(posicao_previsao=F('posicao_previsao') - 1)
 
 
     elif kwargs["ACAO"] == "EDITAR TREM":
@@ -181,17 +181,6 @@ def AJUSTAR_POSICAO_CHEGADA(**kwargs):
 
 
 def ALTERAR_POSICAO(PARAMETROS):
-
-    PERIODO_VIGENTE     = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
-    DATA_ARQ            = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]].iloc[0]['DATA_ARQ']
-
-    print(f"PARAMETROS: { PARAMETROS }")
-
-
-    
-    DIRECAO : str
-
-    
 
     if PARAMETROS["POSICAO_B"] > PARAMETROS["POSICAO_A"]:   DIRECAO = "BAIXO"
     else:                                                   DIRECAO = "CIMA"

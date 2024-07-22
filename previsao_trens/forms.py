@@ -47,10 +47,11 @@ class TremForm(forms.ModelForm):
 
         super(TremForm, self).__init__(*args, **kwargs)
         
-        self.fields['ferrovia'].choices             = [('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')]
+        self.fields['ferrovia'].choices             = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
+        self.fields['ferrovia'].initial             = 'RUMO'
         self.fields['comentario'].required          = False
         self.fields['posicao_previsao'].required    = False 
-
+        self.fields['created_by'].required          = False 
 
 class RestricaoForm(forms.ModelForm):
 
@@ -74,6 +75,10 @@ class RestricaoForm(forms.ModelForm):
             'comentario':  Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
 
         }
+    def __init__(self, *args, **kwargs):
+
+        super(RestricaoForm, self).__init__(*args, **kwargs)
+        self.fields['created_by'].required          = False 
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()

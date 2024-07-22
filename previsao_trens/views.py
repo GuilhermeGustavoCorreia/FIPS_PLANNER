@@ -18,10 +18,10 @@ from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PA
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
 from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA 
 from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import BAIXAR_DETALHE
-
+from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    BAIXAR_DADOS
+from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER       import    lerDados
 
 from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import VALIDAR_NOVA_PREVISAO, VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
-from    previsao_trens.packages.CRIAR_TREM.CARREGAMENTOS     import CARREGAR_PREVISOES
 from    previsao_trens.packages.CRIAR_TREM.ATUALIZAR_POSICAO import AJUSTAR_POSICAO_CHEGADA, ALTERAR_POSICAO
 
 import  previsao_trens.packages.descarga.CARREGAR_PAGINA as CARREGAR_DESCARGA
@@ -56,11 +56,12 @@ def REQUEST_PARA_DICT(request):
     # Converte o QueryDict para um dicionário normal
     return dict(request_params)
 
-
 def redirect_to_login(request):
     
     return redirect(reverse('login'))
 
+
+#region NAVEGACAO
 @login_required
 def navegacao(request):
     
@@ -128,6 +129,8 @@ def navegacao(request):
 
     DESCARGAS = CARREGAR_DESCARGA.PAGINA_COMPLETA()
     return render(request, 'navegacao.html', {"CONTEUDO_NAVEGACAO": DESCARGAS})
+#endregion
+
 
 @login_required
 def profile(request):
@@ -136,129 +139,102 @@ def profile(request):
 
 #region PAGINA CRIAR TREM
 
+tipo_formulario : str
+trem_form       : object
+
+
+def carregar_tabela_de_previsoes():
+    
+    PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
+    periodo_vigente = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
+    
+    tabelas_de_previsoes = {}
+
+    for _, linha in periodo_vigente.iterrows():
+
+            DATA = datetime.strptime(linha['DATA_ARQ'], '%Y-%m-%d')
+
+            queryset = Trem.objects.filter(
+                previsao__year=DATA.year,
+                previsao__month=DATA.month,
+                previsao__day=DATA.day
+            ).order_by('posicao_previsao')
+            if queryset.exists():  # Adiciona ao dicionário apenas se o queryset não estiver vazio
+                tabelas_de_previsoes[linha['NM_DIA']] = queryset
+
+    return tabelas_de_previsoes
+
+def carregar_previsao_trens(request, trem_form, tipo_formulario):
+
+    tabelas_de_previsoes = carregar_tabela_de_previsoes()
+
+    return render(request, 'previsao/criar_trem.html', {'TABELAS': tabelas_de_previsoes, 'form': trem_form, "TIPO_FORMULARIO": tipo_formulario})
+
 @login_required
-def criar_trem(request):
+def previsao_trens_view(request):
 
-    form = TremForm()  # Instancia um formulário vazio para ser usado no modal
+    trem_form            = TremForm()
+    tipo_formulario      = None
     
-    
-    TABELAS = CARREGAR_PREVISOES()
+    return carregar_previsao_trens(request, trem_form, tipo_formulario)
 
-    if request.method == 'POST':
+@login_required
+def alterar_posicao_view(request):
 
-        ACAO = request.POST.get('ACAO')
-
-        if ACAO == "REORDENAR_TABELA":
- 
-            PARAMETROS = {
+    PARAMETROS = {
                 "DIA_LOGISTICO" : request.POST.get('DIA_LOGISTICO'),
                 "POSICAO_A"     : int(request.POST.get('POSICAO_A')),
                 "POSICAO_B"     : int(request.POST.get('POSICAO_B')),
                 "TREM"          : request.POST.get('TREM'),
             }
-            ALTERAR_POSICAO(PARAMETROS)
-
-
-    return render(request, 'previsao/criar_trem.html', {'TABELAS': TABELAS, 'form': form})
+    
+    ALTERAR_POSICAO(PARAMETROS)
+    
+    return redirect('previsao_trens')
 
 @login_required
-def novo_trem_previsao(request):
+def criar_trem_view(request):
     
-    TABELAS = CARREGAR_PREVISOES()
-    form = TremForm()
-    TIPO_FORMULARIO = "CRIAR_TREM"
+    if request.method == 'POST':    
+       
+        trem_form = TremForm()
+        resultado = Trem.criar_trem(request.POST, request.user)
+
+        if resultado["status"]:
+            messages.success(request, resultado["descricao"])
+            return redirect('previsao_trens')
+        
+        else:
+
+            if resultado["descricao"]:  messages.error(request, resultado["descricao"])
+            if resultado["errors"]:     messages.error(request, resultado["errors"])
+            
+            tipo_formulario = "CRIAR_TREM"
+            trem_form = TremForm(request.POST)
+
+
+        return carregar_previsao_trens(request, trem_form, tipo_formulario)
     
-    if request.method == 'POST':
-
-        with transaction.atomic():
-
-            #ABSTRAINDO OS DADOS DO NOVO TREM
-            FORM_NOVO_TREM = TremForm(request.POST)
-            FORM_NOVO_TREM.posicao_previsao = 0
-    
-            #VALIDAR O TREM NA DESCARGA
-            if FORM_NOVO_TREM.is_valid(): 
-
-                #VALIDAR
-                #1. EXISTE UM TREM CHEGANDO NESTA HORA NESTE TERMINAL (É O MESMO TREM?)
-                #2. O TREM ESTA CHEGANDO EM UM PERÍODO VÁLIDO? (DATA EM D-2 ou D-1 em 00:00  OU DATA > D+4)
-
-                NOVO_TREM = FORM_NOVO_TREM.cleaned_data
-
-                CRITERIOS_AVALIADOS = VALIDAR_NOVA_PREVISAO(NOVO_TREM)
-
-                if CRITERIOS_AVALIADOS["STATUS"] == False:
-
-                    messages.error(request, CRITERIOS_AVALIADOS["DESCRICAO"])
-                    return render(request, 'previsao/criar_trem.html', {'TABELAS': TABELAS, 'form': FORM_NOVO_TREM, "TIPO_FORMULARIO": TIPO_FORMULARIO})
-
-                AJUSTAR_POSICAO_CHEGADA(ACAO="INSERIR TREM",TREM=NOVO_TREM)
-                TREM_SALVO_NO_BANCO = FORM_NOVO_TREM.save()
-                
-                NOVO_TREM["ID"] = TREM_SALVO_NO_BANCO.id
-
-                NAVEGACAO = NAVEGACAO_DESCARGA(NOVO_TREM["terminal"], NOVO_TREM["ferrovia"], NOVO_TREM["mercadoria"]) #4
-                NAVEGACAO.EDITAR_TREM(NOVO_TREM, "INSERIR")
-
-                TABELAS = CARREGAR_PREVISOES()
-
-                messages.success(request, 'Trem adicionado com sucesso!')
-                return redirect('criar_trem')  
-
-            else:
-                messages.error(request, NOVO_TREM.errors)
-    else:
-
-        form = TremForm()
-
-    return render(request, 'previsao/criar_trem.html', {'TABELAS': TABELAS,  'form': FORM_NOVO_TREM, "TIPO_FORMULARIO": TIPO_FORMULARIO})
+    else: 
+        
+        return redirect('previsao_trens')
 
 @login_required
-def excluir_trem(request, id):
-
-    # Tenta encontrar o trem pelo ID e excluí-lo.
-    # CUIDADO AO EXCLUIR UM TREM QUE NÃO ESTA NA DESCARGA
-
-    try:
-        with transaction.atomic():
-            trem = Trem.objects.get(pk=id)
-            
-            trem.delete()
-            
-            TREM_ANTIGO = model_to_dict(trem)
-            try:
-
-                try:
-                    
-                    NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"]) #5
-                    NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
-                
-                except:
-                    
-                    NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"], DIA_ANTERIOR=True) #5
-                    NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
-           
-            except IndexError:
-                pass
-
-            POSICAO_TREM  = trem.posicao_previsao
-            PREVISAO_TREM = trem.previsao.date()
-
-            AJUSTAR_POSICAO_CHEGADA(ACAO="EXLUIR TREM", PREVISAO_TREM_EXCLUIDO=PREVISAO_TREM, POSICAO=POSICAO_TREM)
-
-            messages.success(request, 'Trem excluído com sucesso!')
-
-    except Trem.DoesNotExist:
-
-        messages.error(request, 'Trem não encontrado.')
+def excluir_trem_view(request, id):
     
-    # Redireciona para a página da lista de trens.
-    return redirect('criar_trem')
+    if request.method == 'POST': 
+
+        trem = get_object_or_404(Trem, pk=id)
+        trem.excluir_trem()
+        
+        return redirect('previsao_trens')
+    
+    else: return redirect('previsao_trens')
 
 @login_required
 def editar_trem(request, trem_id):
 
-    TABELAS = CARREGAR_PREVISOES()
+    TABELAS = carregar_tabela_de_previsoes()
     TIPO_FORMULARIO = "EDITAR_TREM"
     #ESTA ENVIANDO A EDICAO
     if request.method == 'POST':
@@ -279,6 +255,7 @@ def editar_trem(request, trem_id):
                 dict_TREM_ANTIGO = model_to_dict(TREM_ANTIGO)       
                 
                 NOVO_TREM   = FORMULARIO_NOVO_TREM.save(commit=False)
+                NOVO_TREM.created_by = request.user
                 NOVO_TREM.posicao_previsao = AJUSTAR_POSICAO_CHEGADA(ACAO="EDITAR TREM", TREM_ANTIGO = TREM_ANTIGO, NOVO_TREM=NOVO_TREM)
                 dict_NOVO_TREM = model_to_dict(NOVO_TREM)
                 
@@ -306,7 +283,7 @@ def editar_trem(request, trem_id):
                     NAVEGACAO_B.EDITAR_TREM(dict_NOVO_TREM, "INSERIR")
 
                 messages.success(request, "Trem editado com sucesso.")
-                return redirect('criar_trem')
+                return redirect('previsao_trens')
             else:
                 messages.error(request, FORMULARIO_NOVO_TREM.errors)
                 return render(request, 'previsao/criar_trem.html', {'TABELAS': TABELAS, 'form': FORMULARIO_NOVO_TREM, "TIPO_FORMULARIO": TIPO_FORMULARIO})
@@ -394,6 +371,9 @@ def dividir_trem(request, trem_id):
                 TREM_01 = FRM_TREM_01.save(commit = False)
                 TREM_02 = FRM_TREM_02.save(commit = False)
 
+                TREM_01.created_by = request.user
+                TREM_02.created_by = request.user
+
                 TREM_01.posicao_previsao = POSICOES["POSICAO_01"]
                 TREM_02.posicao_previsao = POSICOES["POSICAO_02"]
 
@@ -423,7 +403,7 @@ def dividir_trem(request, trem_id):
 
                 return JsonResponse({'error': 'Dados inválidos'}, status=400)
 
-            return redirect("criar_trem")
+            return redirect("previsao_trens")
 
     else:
         trem_data = {
@@ -479,8 +459,8 @@ def upload_file_view(request):
                         previsao=previsao_datetime,
                         ferrovia=row['FERROVIA'],
                         comentario='Ola',  # Valor padrão ou adicione lógica para comentários
-                        posicao_previsao=index  # Definindo o índice da linha como posicao_previsao
-                        
+                        posicao_previsao=index,  # Definindo o índice da linha como posicao_previsao
+                        created_by = request.user
                     )
                     trem.save()
                     
@@ -498,7 +478,53 @@ def upload_file_view(request):
 
 #endregion
 
+
+
+#region RESTRICOES
 @login_required
+
+def carregar_restricoes(request, restricao_form, tipo_formulario):
+
+    restricoes = Restricao.objects.all()
+
+    return render(request, 'RESTRICOES.html', {'RESTRICOES': restricoes, 'FORMULARIO': restricao_form, "TIPO_FORMULARIO": tipo_formulario})
+
+def restricoes_view(request):
+
+    restricao_form  = RestricaoForm()
+    tipo_formulario = None
+
+    return carregar_restricoes(request, restricao_form, tipo_formulario)
+
+def criar_restricao_view(request):
+    
+    if request.method == 'POST':
+        
+        resultado = Restricao.criar_restricao(request.POST, request.user)
+        
+        if resultado["status"]: 
+            
+            return redirect('restricao')
+        
+        else:
+
+            if resultado["descricao"]:  messages.error(request, resultado["descricao"])
+            if resultado["errors"]:     messages.error(request, resultado["errors"])
+
+            return carregar_restricoes(request, resultado["form"], "CRIAR")
+
+    else: return redirect('restricao')
+   
+@login_required
+def excluir_restricao_view(request, id):
+
+    restricao = get_object_or_404(Restricao, pk=id)
+    
+    try: restricao.excluir_restricao() 
+    except Exception as e:  pass
+
+    return redirect('restricao')
+
 def restricao(request):
 
     FORMULARIO = RestricaoForm()
@@ -521,9 +547,12 @@ def restricao(request):
                         messages.error(request, VALIDAR["DESCRICAO"])
                         return render(request, 'RESTRICOES.html', {'RESTRICOES': RESTRICOES, 'FORMULARIO': FORM_NOVA_RESTRICAO, "TIPO_FORMULARIO": TIPO_FORMULARIO})
 
-
-                    NAVEGACAO = NAVEGACAO_DESCARGA(NOVA_RESTRICAO["terminal"], None, NOVA_RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
-                    NAVEGACAO.EDITAR_RESTRICAO(NOVA_RESTRICAO, "INSERIR")
+                    try:
+                        NAVEGACAO = NAVEGACAO_DESCARGA(NOVA_RESTRICAO["terminal"], None, NOVA_RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
+                        NAVEGACAO.EDITAR_RESTRICAO(NOVA_RESTRICAO, "INSERIR")
+                    except KeyError:
+                        NAVEGACAO = NAVEGACAO_DESCARGA(NOVA_RESTRICAO["terminal"], None, NOVA_RESTRICAO["mercadoria"], DIA_ANTERIOR=True) #RESTRICAO NAO TEM FERROVIA
+                        NAVEGACAO.EDITAR_RESTRICAO(NOVA_RESTRICAO, "INSERIR")
 
                     FORM_NOVA_RESTRICAO.save()
 
@@ -552,29 +581,23 @@ def restricao(request):
                     NAVEGACAO = NAVEGACAO_DESCARGA(RESTRICAO_ANTIGA["terminal"], None, RESTRICAO_ANTIGA["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
                     NAVEGACAO.EDITAR_RESTRICAO(RESTRICAO_ANTIGA, "REMOVER")
 
-                    NAVEGACAO = NAVEGACAO_DESCARGA(EDICAO_RESTRICAO["terminal"], None, EDICAO_RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
-                    NAVEGACAO.EDITAR_RESTRICAO(EDICAO_RESTRICAO, "INSERIR")
+                    try:
+                        
+                        NAVEGACAO = NAVEGACAO_DESCARGA(EDICAO_RESTRICAO["terminal"], None, EDICAO_RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
+                        NAVEGACAO.EDITAR_RESTRICAO(EDICAO_RESTRICAO, "INSERIR")
+
+                    except KeyError:
+
+                        NAVEGACAO = NAVEGACAO_DESCARGA(EDICAO_RESTRICAO["terminal"], None, EDICAO_RESTRICAO["mercadoria"], DIA_ANTERIOR=True) #RESTRICAO NAO TEM FERROVIA
+                        NAVEGACAO.EDITAR_RESTRICAO(EDICAO_RESTRICAO, "INSERIR")
+
+                    
 
                     FORM_EDICAO_RESTRICAO.save()
             
             return render(request, 'RESTRICOES.html', {'RESTRICOES': RESTRICOES, 'FORMULARIO': FORM_EDICAO_RESTRICAO, "TIPO_FORMULARIO": TIPO_FORMULARIO})
 
     return render(request, 'RESTRICOES.html', {'RESTRICOES': RESTRICOES, 'FORMULARIO': FORMULARIO})
-
-@login_required
-def excluir_restricao(request, id):
-
-    with transaction.atomic():
-        
-        RESTRICAO = Restricao.objects.get(pk=id)
-
-        RESTRICAO.delete()
-            
-        RESTRICAO_ANTIGA = model_to_dict(RESTRICAO)
-        NAVEGACAO = NAVEGACAO_DESCARGA(RESTRICAO_ANTIGA["terminal"], None, RESTRICAO_ANTIGA["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
-        NAVEGACAO.EDITAR_RESTRICAO(RESTRICAO_ANTIGA, "REMOVER")
-
-        return redirect('restricao')
 
 @login_required
 def editar_restricao(request, id):
@@ -610,6 +633,9 @@ def editar_restricao(request, id):
         
         # Retorna os dados como JSON
         return JsonResponse(DADOS_RESTRICAO)
+
+#endregion
+
 
 @login_required
 def detalhe(request):
@@ -664,23 +690,38 @@ def configuracao(request):
 
             return HttpResponse("FUNCAO OK")
         
+        elif    ACAO == "INSERIR_DADOS_OFFLINE":
+            
+            FORM = UploadFileForm(request.POST, request.FILES)
+            if FORM.is_valid():
+                    
+                ARQUIVO = TextIOWrapper(request.FILES['file'].file, encoding=request.encoding)
+                JSON    = json.load(ARQUIVO)
+                lerDados(JSON, request.user)
+
+       
+
     TERMIANIS_ATIVOS = ABRIR_TERMINAIS_ATIVOS()
 
     if request.method == 'GET':
         print(request)
         ACAO = request.GET.get('ACAO', 0)
 
-        if ACAO == "BAIXAR_PLANILHA":
+        if  ACAO == "BAIXAR_PLANILHA":
 
             DONWLOAD_STATUS = BAIXAR_PLANILHA(request.user)
 
             JsonResponse(DONWLOAD_STATUS)
 
-        if ACAO == "BAIXAR_DETALHE":
+        elif  ACAO == "BAIXAR_DETALHE":
 
             DONWLOAD_STATUS = BAIXAR_DETALHE()
 
             JsonResponse(DONWLOAD_STATUS)
+        
+        elif  ACAO == "GERAR_DADOS_OFFLINE":
+
+            BAIXAR_DADOS()
 
     return render(request, 'configuracao.html', {'terminais_ativos': TERMIANIS_ATIVOS, "FORM_CSV": FORM_CSV})
 

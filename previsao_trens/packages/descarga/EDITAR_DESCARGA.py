@@ -401,8 +401,7 @@ class NAVEGACAO_DESCARGA:
 
         def __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO):
 
-            
-
+        
             VAGOES          : int
             HORA_ENCOSTE    : int
             DATA_ARQ_ENCOSTE: str
@@ -417,15 +416,16 @@ class NAVEGACAO_DESCARGA:
                 TREM_ID = TREM["ID"]
 
             POSICAO_DIA = self.LISTA_DATA_ARQ.index(DATA_ARQ_CHEGADA)
+            try:
+                if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
 
-            if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
+                    HORA_ENCOSTE     = HORA_ENCOSTE - 24
+                    DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
 
-                HORA_ENCOSTE     = HORA_ENCOSTE - 24
-                DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
-
-            self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
-            self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
-            
+                self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
+                self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
+            except IndexError:
+                pass
         def __ATIVAR_TERMINAL__(ACAO):
             
             DESC_ATV = -1

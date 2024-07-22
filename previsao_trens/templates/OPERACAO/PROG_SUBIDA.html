@@ -3,9 +3,9 @@
 {% load     static %}
 {% load     permission_tags %}
 
-
+{% if user|can:'editar_subida' %}
 <script src="{% static 'javascript/PROGRAMACAO_SUBIDA/main.js' %}" defer></script>
-
+{% endif %}
 <dialog class="DIALOG_TREM_VAZIO">
     
     <h2 id="TITULO_MODAL"></h2>
@@ -60,7 +60,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/PROG_SUBIDA/PROG_SUBIDA.css' %}"> 
 
     <h1>PROGRAMAÇÃO DE SUBIDA</h1>
-
+    {% if user|can:'editar_subida' %}
     <form method="post"  action="{% url 'programacao_subida' %}">
         
         {% csrf_token %}
@@ -68,7 +68,7 @@
         <button type="submit" class="BOTAO VERDE">Recalcular Tabela</button>
 
     </form>
-    
+    {% endif %}
     {% if TABELAS_SUBIDA %} 
 
         <!--#region ABAS DE NAVEGACAO-->
@@ -3481,7 +3481,7 @@ function abrirSubAba(evt, subAbaNome) {
 }
 
 </script>
-
+{% if user|can:'editar_subida' %}
 <script>
 
 document.body.addEventListener('keypress', function(e) {
@@ -3567,5 +3567,5 @@ document.body.addEventListener('keypress', function(e) {
 })
 
 </script> 
-
+{% endif %}
 {% endblock %}

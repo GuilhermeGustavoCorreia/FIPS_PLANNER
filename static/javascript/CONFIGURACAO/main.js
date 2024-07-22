@@ -32,11 +32,18 @@ $(document).ready(function(){
   });
 });
 
-
 $(document).ready(function(){
   $("#SECAO_DOWNLOADS").click(function(){
 
     $("#CONTEUDO_DOWNLOADS").slideToggle();
+
+  });
+});
+
+$(document).ready(function(){
+  $("#SECAO_INTEGRACAO").click(function(){
+
+    $("#CONTEUDO_INTEGRACAO").slideToggle();
 
   });
 });

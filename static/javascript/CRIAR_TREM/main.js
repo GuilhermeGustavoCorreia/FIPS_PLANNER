@@ -20,8 +20,8 @@ function TOOGLE_COMENTARIO(){
 
     COLUNA_BOTOES.classList.toggle('DESATIVADO');
 
-
 }
+
 
 
 
