@@ -191,12 +191,34 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "previsao_trens/media/")
 
 
 
+
 LOGIN_REDIRECT_URL = '/navegacao'
 
 ROLEPERMISSIONS_MODULE = "setup.roles" 
 
 ROLEPERMISSIONS_REGISTER_ADMIN = False
 
+
+
+#region STATIC FILES
+
+# URL prefixo para os arquivos estáticos. Este é o URL que será usado no navegador.
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+
+# Diretório onde os arquivos estáticos serão coletados pelo comando collectstatic.
+# Este é o diretório que será usado para servir arquivos estáticos em produção.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Lista de diretórios onde o Django irá procurar por arquivos estáticos adicionais.
+# Estes são os diretórios usados durante o desenvolvimento e onde você armazena seus arquivos estáticos.
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Aponta para o diretório 'static' dentro do diretório base do projeto.
+]
+
+# Define a classe de armazenamento para arquivos estáticos.
+# 'CompressedManifestStaticFilesStorage' é uma subclasse de armazenamento do WhiteNoise que
+# cria um manifesto de arquivos estáticos com os arquivos versionados para permitir cache de longo prazo.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+#endregion

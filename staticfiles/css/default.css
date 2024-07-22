@@ -1,0 +1,151 @@
+:root {
+    /*PRIMÁRIAS*/
+    --azul-profundo-e: #002A68;
+    --azul-profundo-m: #004B9B;
+    --azul-profundo-c: #658EC9;
+    
+    --cinza-chumbo-e: #333B41;
+    --cinza-chumbo-m: #7B8C96;
+    --cinza-chumbo-c: #C0CCD2;
+
+    /*SECUNDÁRIAS*/
+    --azul-ceu-e: #0090D0;
+    --azul-ceu-m: #93BDE4;
+    --azul-ceu-c: #D3E3F4;
+
+    --verde-floresta-e: #00904C;
+    --verde-floresta-m: #00C64C;
+    --verde-floresta-c: #8BE5AD;
+
+    --amarelo-ouro-e: #F6921E;
+    --amarelo-ouro-m: #FDC24E;
+    --amarelo-ouro-c: #FFE4B8;
+    
+    --neutro: #E8EBFF;
+
+    /*CORES FERROVIAS*/
+    
+    
+    --azul-rumo: #003865;
+    --azul-claro-rumo: #32A6E6;
+
+
+    --amarelo-mrs: #fecb0a;
+    --azul-mrs:#00355b;
+
+
+    --laranja-vli: #ff6900;
+    --azul-vli : #0074C0;
+
+    --cinza-vli-txt: #393939;
+    --cinza-vli: #97B1B8;
+
+}
+
+.CONTEUDO__PADRAO{
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 12vh;
+    position: absolute;
+
+    width: 80vw;
+    padding-bottom: 10vh;
+}
+
+h1, h3{
+    font-family: "Saira Expanded", Arial, sans-serif;;
+    color: var(--cinza-chumbo-e);
+    margin: 0;
+    font-size: 1.5rem;
+}
+h2{
+    font-family: "Saira Expanded", Arial, sans-serif;;
+    color: var(--azul-ceu-e);
+    margin: 0;
+}
+
+.BOTAO{
+
+    font-family: 'Saira Expanded', Arial, sans-serif;;
+    font-weight: 600;
+    border: none;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+.VERDE{ background-color:var(--verde-floresta-m); color: var(--neutro);}
+.VERDE:hover{ background-color:var(--verde-floresta-e)}
+
+.OVERLAY{ 
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(64, 64, 64, 0.4);
+    backdrop-filter: blur(10px);
+    display: none;
+}
+
+.INPUT { 
+    box-sizing: border-box;
+    min-height: 3.7vh;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.MODAL{
+    
+    display: none;
+
+    width: fit-content;
+    padding: 1rem;
+    border-radius: 10px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    background-color: white;
+}
+.MODAL p, .ckbox {margin: 0; padding: 0;margin: 0.5rem 0;}
+
+.MODAL .BOTAO {margin: 0.5rem 0;}
+
+@media screen and (orientation: portrait) {
+    
+    .CONTEUDO__PADRAO{
+        left:       50%;
+        transform:  translateX(-50%);
+        margin-top: 5vh;
+        position:   absolute;    
+        width:      80vw;
+    }
+
+    .INPUT { 
+        box-sizing: border-box;
+        min-height: 1.7vh;
+        font-size:  1rem;
+        text-align: center;
+    }
+    
+}
+
+
+dialog::backdrop {
+
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(10px);
+
+}
+
+dialog{ overflow: hidden; border-radius: 5px; border: none; }

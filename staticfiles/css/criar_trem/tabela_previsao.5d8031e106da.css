@@ -1,0 +1,131 @@
+
+
+
+
+.LISTA__TRENS {
+    border-collapse: collapse;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+    user-select: none;
+    margin-bottom: 2vh;
+    font-size: 0.8rem;
+}
+.LISTA__TRENS th, .LISTA__TRENS td{text-align: center;}
+.LISTA__TRENS thead{
+    background-color: var(--azul-profundo-m);
+    color: var(--neutro)
+}
+
+.LISTA__TRENS tbody tr:nth-child(even)        {background-color: #f2f2f2;}
+.LISTA__TRENS tbody tr:nth-child(odd)         {background-color: #ffff;  }
+.LISTA__TRENS tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
+.LISTA__TRENS tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
+.LISTA__TRENS thead th{ height: 2.5rem;}
+.LISTA__TRENS tbody tr{ height: 2rem;}
+
+.LISTA__TRENS td{ padding:0.2rem 0; }
+.LISTA__TRENS th{ padding:0.5rem 0;}
+
+.COL_PP{min-width: 3rem;}
+.COL_P{min-width: 4rem;}
+.COL_M{width: 8rem;}
+.COL_G{width: 15rem;}
+
+
+.BTN__CRIAR__TREM{
+    background-color: var(--amarelo-ouro-e);
+    color: var(--neutro);
+    margin: 1rem 0;
+}
+
+.BTN__CRIAR__TREM:hover{ background-color: var(--amarelo-ouro-m);}
+
+
+.ICONE_DELETAR{ 
+    height: 1.5rem; 
+    cursor: pointer; 
+    fill: var(--cinza-chumbo-c);     
+    padding: 0 0.5rem;
+}
+
+.ICONE_DELETAR:hover{fill: darkred;}
+
+.ICONE_EDITAR       {  width: 1.5rem; fill: var(--cinza-chumbo-c); cursor: pointer; padding: 0 0.2rem;}
+.ICONE_EDITAR:hover {  fill: var(--cinza-chumbo-m); }
+
+.ICONE_DIVIDIR {width: 2.5rem; color: var(--cinza-chumbo-c); cursor: pointer;    margin-left: 0.5rem;}
+.ICONE_DIVIDIR:hover path{stroke: var(--cinza-chumbo-e) ;}
+
+.COMENTARIO{cursor: pointer;}
+.COMENTARIO:hover .cls-1{stroke: var(--amarelo-ouro-m)}
+.CONTEUDO_COMENTARIO {padding: 0.4rem 0.9rem;}
+
+
+.DESATIVADO{display: none;}
+
+
+
+.INPUT_P{max-width: 10.9rem; min-width:  10.9rem;}
+.INPUT_M{max-width: 16.5rem; min-width:  16.5rem;}
+.INPUT_G{max-width: 33.2rem; min-width: 33.2rem; margin-top: 0.5vh;}
+
+
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+    
+    width: 20%;
+}
+
+.FERROVIAS, #id_margem{padding: 0.5rem  0 2rem  0}
+.FERROVIAS div{ display: flex;  float: left; width: 100%;} 
+
+#id_margem div{ display: flex;  float: left; width: 50%;} 
+
+#DIVIDIR_TREM .BOTAO{    
+    margin-left: 100%;
+    transform: translateX(-100%);
+}
+
+.TABELA_DIVIDIR_TREM th{ 
+    padding: 0.5rem 0; 
+    background-color: var(--cinza-chumbo-e); 
+    color: var(--neutro)
+}
+
+.TABELA_DIVIDIR_TREM{
+    border-collapse: collapse;  
+    margin:            2rem 0;  
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+}
+
+.TABELA_DIVIDIR_TREM td{
+    padding: 0.5rem;
+}
+
+.TABELA_DIVIDIR_TREM .INPUT_P{ min-width: 4.9rem; max-width: 4.9rem !important}
+.TABELA_DIVIDIR_TREM .INPUT_G{ min-width: 10rem !important}
+.TABELA_DIVIDIR_TREM .INPUT_M{ min-width: 10rem !important}
+
+.FUNDO_LARANJA{background-color: var(--amarelo-ouro-m) !important ; height: 2rem;}
+
+#FORM_DIVIDIR_TREM, #FORM_TREM_PADRAO {display: none}
+
+.modal_trem_vazio .BOTAO {margin-top: 1rem;}
+
+
+.letra_pqn{font-size: 0.7rem !important; padding: 0px 5px !important;}
+.frm_botao{ margin: 0; padding: 0;}
+.btn_inivsivel{
+
+    border: none;
+    margin: 0; 
+    padding: 0;
+    background-color: transparent ;
+}

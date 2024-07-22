@@ -1,0 +1,19 @@
+.profile-foto-usuario{
+    height: 20vh;
+    padding: 3px;
+    background-color: var(--cinza-chumbo-m);
+    border-radius: 100%;
+    margin-left: 1vw;
+}
+
+.conteudo{
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 12vh;
+    position: absolute;
+    text-align: center;
+    width: 80vw;
+    background-color: var(--neutro);
+    border-radius: 10px;
+    padding: 4vh 0vw;
+}
