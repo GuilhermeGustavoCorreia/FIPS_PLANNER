@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from rolepermissions.roles import get_user_roles, assign_role, clear_roles, RolesManager
 from .models import Usuario, Trem, TremVazio, Restricao
-from setup.roles import CurtoPrazo, UsuarioComum  # Certifique-se de que o caminho para roles.py está correto
+from setup.roles import CurtoPrazo, UsuarioComum, CelulaOperacao  # Certifique-se de que o caminho para roles.py está correto
 
 # Função para obter todos os papéis disponíveis
 def get_roles_names():
@@ -14,13 +14,13 @@ def get_roles_names():
 class UserChangeForm(forms.ModelForm):
     # Campo adicional para selecionar os papéis do usuário
     roles = forms.MultipleChoiceField(
-        choices=get_roles_names(),  # Opções são todos os nomes de papéis disponíveis
-        required=False,  # Campo não é obrigatório
-        label='Roles'  # Rótulo do campo no formulário
+        choices  = get_roles_names(),  # Opções são todos os nomes de papéis disponíveis
+        required = False,  # Campo não é obrigatório
+        label    = 'Roles'  # Rótulo do campo no formulário
     )
 
     class Meta:
-        model = Usuario
+        model  = Usuario
         fields = '__all__'  # Incluir todos os campos do modelo Usuario
 
 # Classe personalizada para a administração do modelo Usuario

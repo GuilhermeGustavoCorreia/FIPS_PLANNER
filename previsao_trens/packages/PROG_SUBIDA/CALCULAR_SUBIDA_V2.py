@@ -260,6 +260,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                 TABELA_DE_ALIVIOS["ALIVIAR_4K"] = False
                 TABELA_DE_ALIVIOS  = TABELA_DE_ALIVIOS[TABELA_DE_ALIVIOS["VAGOES"] > 0]
+                
                 if len(TABELA_DE_ALIVIOS) == 0          : return [False, None]
                 if LINHA["VAGOES"] >= LINHA["UM_TREM"]  : return [False, None] #VAGOES SUFICIENTES NA LINHA
                
@@ -466,19 +467,36 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                 else: #mantém status
 
-                    self.full_L4K["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][i] = 0
-
                     FERROVIA = self.full_L4K["OCUPACAO"]["FERROVIA"][i-1]
                     SEGMENTO = self.full_L4K["OCUPACAO"]["SEGMENTO"][i-1]
                     LOTE     = self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i-1]
 
-                    self.full_L4K["OCUPACAO"]["FERROVIA"][i]        = FERROVIA
-                    self.full_L4K["OCUPACAO"]["SEGMENTO"][i]        = SEGMENTO
-                    self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i]   = LOTE
+                    if (not FERROVIA == "") and (not SEGMENTO == ""): 
+                        print(f"[{ i }] -> { FERROVIA } - { SEGMENTO } - { LOTE }")
+                        
+                        self.full_L4K["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][i] = 0
 
-                    self.full_L4K["OCUPACAO"]["FERROVIA"][i+1]      = FERROVIA
-                    self.full_L4K["OCUPACAO"]["SEGMENTO"][i+1]      = SEGMENTO
-                    self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i+1] = LOTE
+                        self.full_L4K["OCUPACAO"]["FERROVIA"][i]        = FERROVIA
+                        self.full_L4K["OCUPACAO"]["SEGMENTO"][i]        = SEGMENTO
+                        self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i]   = LOTE
+
+                        self.full_L4K["OCUPACAO"]["FERROVIA"][i+1]      = FERROVIA
+                        self.full_L4K["OCUPACAO"]["SEGMENTO"][i+1]      = SEGMENTO
+                        self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i+1] = LOTE
+
+                    else:
+                        self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i-1]   = False
+
+                        self.full_L4K["OCUPACAO"]["FERROVIA"][i]        = ""
+                        self.full_L4K["OCUPACAO"]["SEGMENTO"][i]        = ""
+                        self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i]   = False
+
+                        self.full_L4K["OCUPACAO"]["FERROVIA"][i+1]      = ""
+                        self.full_L4K["OCUPACAO"]["SEGMENTO"][i+1]      = ""
+                        self.full_L4K["OCUPACAO"]["LOTE_COMPLETO"][i+1] = False
+
+
+
 
         def __PSN_PMC__():
 

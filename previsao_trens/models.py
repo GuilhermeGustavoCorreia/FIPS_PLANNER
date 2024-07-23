@@ -116,9 +116,9 @@ class Trem(models.Model):
 
                 return {"status": True, "descricao": "Trem adicionado com sucesso!", "errors": None}
             else:
+                
                 return {"status": False, "descricao": None, "errors": form.errors}
-
-        pass        
+ 
 
     def __str__(self):
         return self.prefixo
