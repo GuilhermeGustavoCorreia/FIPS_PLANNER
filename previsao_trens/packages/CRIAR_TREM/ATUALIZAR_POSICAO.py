@@ -7,8 +7,6 @@ from datetime import datetime
 
 def AJUSTAR_POSICAO_CHEGADA(**kwargs):
 
-    print(f"AJUSTANDO { kwargs }")
-
     if  kwargs["ACAO"] == "INSERIR TREM":
 
         DATA = kwargs["TREM"]["previsao"]

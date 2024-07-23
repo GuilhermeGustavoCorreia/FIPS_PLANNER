@@ -1,6 +1,6 @@
-from previsao_trens.models import Trem
-from django.db.models import Q
-import pandas as pd
+from    previsao_trens.models import Trem
+from    django.db.models import Q
+import  pandas as pd
 
 def VALIDAR_DIVISAO_PREVISAO(ID_TREM, TREM_01, TREM_02):
 

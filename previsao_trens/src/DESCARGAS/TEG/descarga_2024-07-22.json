@@ -1207,9 +1207,9 @@
                     0
                 ],
                 "PRODUTIVIDADE": [
-                    8,
-                    8,
-                    5,
+                    0,
+                    0,
+                    0,
                     0,
                     0,
                     0,
@@ -1338,7 +1338,7 @@
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
-                    "SALDO_DE_VIRADA": 21,
+                    "SALDO_DE_VIRADA": 0,
                     "PRODUTIVIDADE": 0,
                     "RECEBIMENTOS": [
                         0,

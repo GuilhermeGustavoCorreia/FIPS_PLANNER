@@ -183,27 +183,22 @@ TEMPLATES = [
 ]
 
 
-
-
-
 MEDIA_URL  = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "previsao_trens/media/")
 
-
-
-
+    
 LOGIN_REDIRECT_URL = '/navegacao'
 
 ROLEPERMISSIONS_MODULE = "setup.roles" 
 
 ROLEPERMISSIONS_REGISTER_ADMIN = False
 
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 #region STATIC FILES
 
 # URL prefixo para os arquivos estáticos. Este é o URL que será usado no navegador.
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Diretório onde os arquivos estáticos serão coletados pelo comando collectstatic.
 # Este é o diretório que será usado para servir arquivos estáticos em produção.

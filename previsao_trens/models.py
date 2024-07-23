@@ -103,9 +103,16 @@ class Trem(models.Model):
                 trem_objeto.save()
 
                 novo_trem["ID"] = trem_objeto.id
-
-                navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"])
-                navegacao.EDITAR_TREM(novo_trem, "INSERIR")
+                
+                try:
+                    
+                    navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"])
+                    navegacao.EDITAR_TREM(novo_trem, "INSERIR")
+                
+                except IndexError:
+                    
+                    navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"], DIA_ANTERIOR=True)
+                    navegacao.EDITAR_TREM(novo_trem, "INSERIR")
 
                 return {"status": True, "descricao": "Trem adicionado com sucesso!", "errors": None}
             else:
@@ -154,7 +161,7 @@ class Restricao(models.Model):
             restricao_antiga = model_to_dict(self)
             self.delete()
 
-        try: 
+        try: #CASO ESTEJA FORA DA DATA
             try:
                 
                 navegacao = NAVEGACAO_DESCARGA(restricao_antiga["terminal"], None, restricao_antiga["mercadoria"])
@@ -176,27 +183,39 @@ class Restricao(models.Model):
         from .forms                                             import RestricaoForm
 
         with transaction.atomic():
+            
             restricao_form = RestricaoForm(data)
+            
             if restricao_form.is_valid():
+
                 restricao = restricao_form.cleaned_data
                 é_valida = VALIDAR_RESTRICAO(restricao)
 
                 if not é_valida["STATUS"]:
                     return {"status": False, "descricao": é_valida["DESCRICAO"], "errors": None, "form": restricao_form}
-
-                try:
-                    navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"])
-                    navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
-                except KeyError:
-                    navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"], DIA_ANTERIOR=True)
-                    navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
+            
+                try: #CASO ESTEJA FORA DA DATA
+                    
+                    try:
+                        
+                        navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"])
+                        navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
+                    
+                    except KeyError:
+                        
+                        navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"], DIA_ANTERIOR=True)
+                        navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
+                    
+                    restricao_objeto = restricao_form.save(commit=False)
+                    restricao_objeto.created_by = user
+                    restricao_objeto.save()
                 
-                restricao_objeto = restricao_form.save(commit=False)
-                restricao_objeto.created_by = user
-                restricao_objeto.save()
+                except IndexError:
+                    pass
 
                 return {"status": True, "descricao": "Restrição criada com sucesso!", "errors": None, "form": restricao_form}
             else:
+
                 return {"status": False, "descricao": None, "errors": restricao_form.errors, "form": restricao_form}
 
     def __str__(self):

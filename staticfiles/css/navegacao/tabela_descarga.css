@@ -4,10 +4,10 @@
     border-collapse: collapse;
     text-align: center;
     min-width: 2.5rem;
-    
+
 }
 
-.tabela__descarga tr{max-height: 1rem;}
+.tabela__descarga tr{height: 2rem}
 
 .tabela__descarga {
     background-color: white;
@@ -123,11 +123,11 @@
 
 
 
-.EXCLAMACAO_RESTRICAO{ background: linear-gradient(to right, #961a1a, rgb(255, 183, 183));}
+.EXCLAMACAO_RESTRICAO{ background: linear-gradient(to right, #961a1a, rgb(255, 183, 183)); color: white}
 .FIM_RESTRICAO          {background: linear-gradient(to left, #961a1a, rgb(255, 183, 183));}
 .LINHA_MOTIVO       {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
 .LINHA_PCT          {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50)}
-.RESTRICAO_ATIVA    {/*border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e);*/ font-weight: bold; color: var(#961a1a)}
+.RESTRICAO_ATIVA    {/*border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e);*/ font-weight: bold}
 
 
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/

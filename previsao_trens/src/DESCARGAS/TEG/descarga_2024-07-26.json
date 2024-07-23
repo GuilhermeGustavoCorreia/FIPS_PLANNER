@@ -97,10 +97,8 @@
             []
         ],
         [
-            "I06",
-            [
-                1019
-            ]
+            0,
+            []
         ]
     ],
     "CHEGADA": [
@@ -197,10 +195,8 @@
             []
         ],
         [
-            81,
-            [
-                1019
-            ]
+            0,
+            []
         ]
     ],
     "PEDRA": [
@@ -227,7 +223,7 @@
         0,
         0,
         0,
-        8
+        0
     ],
     "RESTRICAO_MOTIVO": [
         0,
@@ -1234,7 +1230,7 @@
                     0,
                     0,
                     0,
-                    8
+                    0
                 ],
                 "EDITADO": [
                     0,
@@ -1354,10 +1350,10 @@
                         0,
                         0,
                         0,
-                        8
+                        0
                     ],
                     "TOTAL_CHEGADA": 0,
-                    "TOTAL_PRODUTIVIDADE": 8,
+                    "TOTAL_PRODUTIVIDADE": 0,
                     "TOTAL_PEDRA": 0
                 },
                 "PEDRAS": [
@@ -1391,7 +1387,7 @@
                         0,
                         0,
                         0,
-                        8
+                        0
                     ],
                     "GERACAO_EDITADA": [
                         0,
@@ -3992,13 +3988,13 @@
     "INDICADORES": {
         "TOTAL_SALDO": 0,
         "SALDO_DE_VIRADA_TOTAL": 0,
-        "TOTAL_PEDRA": 8,
+        "TOTAL_PEDRA": 0,
         "PEDRAS": {
             "RUMO": {
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 8
+                "P4": 0
             },
             "MRS": {
                 "P1": 0,
@@ -4016,7 +4012,7 @@
                 "P1": 0,
                 "P2": 0,
                 "P3": 0,
-                "P4": 8
+                "P4": 0
             }
         },
         "SALDO_DE_VIRADA_VAZIOS": {

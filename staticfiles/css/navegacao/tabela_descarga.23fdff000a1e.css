@@ -1,0 +1,134 @@
+
+
+.tabela__descarga td{
+    border-collapse: collapse;
+    text-align: center;
+    min-width: 2rem;
+ 
+}
+
+.tabela__descarga tr{height: 2rem}
+
+.tabela__descarga {
+    background-color: white;
+    border-collapse: collapse;
+    font-family: "Saira Expanded", Arial, sans-serif;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+    0 1px 2px rgba(0,0,0,0.24);
+    
+}
+
+.TITLO_TOTAIS       {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold;}
+.NOME_TERMINAL      {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 9rem; }
+.DIA_TERMINAL       {color:white;   background-color: var(--azul-profundo-m); font-weight: bold;}
+.PERIODO_TERMINAL   {color: white;  background-color: var(--azul-profundo-e); font-weight: bold;}
+
+.LINHA_HORAS        {color: white; background-color: var(--azul-profundo-c);font-weight: bold}
+
+.LINHA_SALDO    {color: var(--cinza-chumbo-e); background-color: var(--azul-ceu-c);         font-weight: bold;}
+.LINHA_CHEGADA  {color: var(--cinza-chumbo-e); background-color: var(--azul-ceu-c);         font-weight: bold;}
+.LINHA_PEDRA    {color: white; background-color: var(--azul-profundo-m);    font-weight: bold;}
+
+.PRODUTIVIDADE_PADRAO_RUMO  {color: var(--cinza-chumbo-e);  background-color: var(--azul-claro-rumo);    font-weight: bold;}
+.PRODUTIVIDADE_PADRAO_MRS   {color: var(--azul-ceu-e);      background-color: var(--amarelo-ouro-c);     font-weight: bold;}
+.PRODUTIVIDADE_PADRAO_VLI   {color: var(--cinza-chumbo-e);  background-color: var(--azul-ceu-c);         font-weight: bold;}
+
+.LINHA_PRODUTIVIDADE_RUMO   {background-color: rgb(221, 235, 247);  font-weight: bold;} 
+.LINHA_PRODUTIVIDADE_MRS    {background-color: rgb(255, 255, 204);  font-weight: bold;}
+.LINHA_PRODUTIVIDADE_VLI    {background-color: rgb(230, 230, 231);  font-weight: bold;}
+
+.FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);       min-width: 3.2rem !important; padding:0 10px}
+.FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs);     min-width: 3.2rem !important; padding:0 10px}
+.FERROVIA_VLI {color: white; background-color: var(--azul-vli);                   min-width: 3.2rem !important; padding:0 10px}
+
+.TOTAL_FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold;  }
+.TOTAL_FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold; }
+.TOTAL_FERROVIA_VLI {color: white;          background-color: var(--azul-vli);    font-weight: bold; }
+
+.PRODUTO{color: var(--cinza-chumbo-e); background-color: var(--cinza-chumbo-c);min-width: 4.5rem !important;}
+
+.LINHAS_TOTAIS_PEDRAS {background-color: var(--neutro);}
+
+/*LINHAS QUE DIVIDREM OS PERIODOS*/
+.LINHA_TILOS td:nth-child(3),
+.LINHA_TILOS td:nth-child(4),
+.LINHA_TILOS td:nth-child(5),
+
+.LINHA_HORAS td:nth-child(6),
+.LINHA_HORAS td:nth-child(12),
+.LINHA_HORAS td:nth-child(18),
+
+.LINHA_SALDO td:nth-child(7),
+.LINHA_SALDO td:nth-child(13),
+.LINHA_SALDO td:nth-child(19),
+
+.LINHA_CHEGADA td:nth-child(7),
+.LINHA_CHEGADA td:nth-child(13),
+.LINHA_CHEGADA td:nth-child(19),
+
+.LINHA_PEDRA td:nth-child(7),
+.LINHA_PEDRA td:nth-child(13),
+.LINHA_PEDRA td:nth-child(19),
+
+.LINHA_PEDRA td:nth-child(7),
+.LINHA_PEDRA td:nth-child(13),
+.LINHA_PEDRA td:nth-child(19),
+
+.LINHA_ENCOSTE td:nth-child(9),
+.LINHA_ENCOSTE td:nth-child(15),
+.LINHA_ENCOSTE td:nth-child(21),
+
+.LINHA_SALDO_DESCARGA td:nth-child(7),
+.LINHA_SALDO_DESCARGA td:nth-child(13),
+.LINHA_SALDO_DESCARGA td:nth-child(19),
+
+.LINHA_PRODUTIVIDADE_RUMO td:nth-child(8),
+.LINHA_PRODUTIVIDADE_RUMO td:nth-child(14),
+.LINHA_PRODUTIVIDADE_RUMO td:nth-child(20),
+
+.LINHA_PRODUTIVIDADE_MRS td:nth-child(8),
+.LINHA_PRODUTIVIDADE_MRS td:nth-child(14),
+.LINHA_PRODUTIVIDADE_MRS td:nth-child(20),
+
+.LINHA_PRODUTIVIDADE_VLI td:nth-child(8),
+.LINHA_PRODUTIVIDADE_VLI td:nth-child(14),
+.LINHA_PRODUTIVIDADE_VLI td:nth-child(20)
+{ border-right: 1px solid darkgrey;}
+
+
+.SETA_PRODUTIVIDADE_RUMO    {background-color: var(--azul-rumo); font-weight: bold; border-radius:  0 20px  20px 0; color: white;}
+.VALOR_PRODUTIVIDADE_RUMO   {font-weight: bold; color: var(--azul-rumo)}
+
+.TITULO_CHEGADA_RUMO        {background-color: rgb(241, 241, 241);  color: var(--azul-rumo);}
+.VALOR_ENCOSTE_RUMO         {background-color: rgb(241, 241, 241);  color: var(--azul-rumo);}
+
+.SETA_PRODUTIVIDADE_MRS     {background-color: var(--amarelo-mrs); font-weight: bold; border-radius:  0 20px  20px 0; color: var(--azul-mrs);}
+.VALOR_PRODUTIVIDADE_MRS    {font-weight: bold; color: var(--azul-mrs)}
+
+.TITULO_CHEGADA_MRS         {background-color: rgb(241, 241, 241);  color: var(--azul-mrs);}
+.VALOR_ENCOSTE_MRS          {background-color: rgb(241, 241, 241);  color: var(--azul-mrs);}
+
+.SETA_PRODUTIVIDADE_VLI     {background-color: var(--azul-vli); font-weight: bold; border-radius:  0 20px  20px 0;   color: white;}
+.VALOR_PRODUTIVIDADE_VLI    {font-weight: bold;color: var(--azul-vli)}
+
+.TITULO_CHEGADA_VLI         {background-color: rgb(241, 241, 241);  color: var(--azul-vli);}
+.VALOR_ENCOSTE_VLI          {background-color: rgb(241, 241, 241);  color: var(--azul-vli);}
+/*===========================LINHAS DE PRODUTIVIDADE==================================*/
+
+
+.CELULA_SELECIONADA {border-top:   2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100;}
+.PRIMEIRA           {border-left:  2px solid var(--verde-floresta-m)}
+.ULTIMA             {border-right: 2px solid var(--verde-floresta-m)}
+
+
+
+
+.EXCLAMACAO_RESTRICAO{ background: linear-gradient(to right, #961a1a, rgb(255, 183, 183)); color: white}
+.FIM_RESTRICAO          {background: linear-gradient(to left, #961a1a, rgb(255, 183, 183));}
+.LINHA_MOTIVO       {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
+.LINHA_PCT          {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50)}
+.RESTRICAO_ATIVA    {/*border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e);*/ font-weight: bold;}
+
+
+/*===========================LINHAS DE PRODUTIVIDADE==================================*/
+ 

@@ -411,21 +411,25 @@ class NAVEGACAO_DESCARGA:
 
             VAGOES = 0
             TREM_ID = 0
+            
             if ACAO == "INSERIR": 
+
                 VAGOES = TREM["vagoes"]
                 TREM_ID = TREM["ID"]
 
             POSICAO_DIA = self.LISTA_DATA_ARQ.index(DATA_ARQ_CHEGADA)
-            try:
-                if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
 
-                    HORA_ENCOSTE     = HORA_ENCOSTE - 24
-                    DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
+            
+            if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
+
+                HORA_ENCOSTE     = HORA_ENCOSTE - 24
+                DATA_ARQ_ENCOSTE = self.LISTA_DATA_ARQ[ POSICAO_DIA + 1]
 
                 self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
                 self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
-            except IndexError:
-                pass
+
+  
+        
         def __ATIVAR_TERMINAL__(ACAO):
             
             DESC_ATV = -1
@@ -447,12 +451,17 @@ class NAVEGACAO_DESCARGA:
         
         TREM_DATA_ARQ    = TREM['previsao'].strftime('%Y-%m-%d')
         HORA             = TREM['previsao'].hour
-
+        
+        print(f"PREVISAO : { TREM_DATA_ARQ } às { HORA }h")
+        
         __ATIVAR_TERMINAL__(ACAO)
 
         HORA_CHEGADA, DATA_ARQ_CHEGADA = __CHEGADA__(HORA, TREM_DATA_ARQ)
-        __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO)
 
+        print(f"CHEGADA  : { DATA_ARQ_CHEGADA } às { HORA_CHEGADA }h")
+
+        __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO)
+        
         self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
