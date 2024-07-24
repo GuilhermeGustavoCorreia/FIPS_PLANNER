@@ -249,7 +249,7 @@
         0,
         0,
         0,
-        0
+        "MP"
     ],
     "DESCARGAS": {
         "RUMO": {
@@ -1334,7 +1334,7 @@
                     0,
                     0,
                     0,
-                    0
+                    100
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
@@ -2578,7 +2578,7 @@
                     0,
                     0,
                     0,
-                    0
+                    100
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
@@ -3822,7 +3822,7 @@
                     0,
                     0,
                     0,
-                    0
+                    100
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,

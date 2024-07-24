@@ -61,6 +61,7 @@ class Trem(models.Model):
                         
                         NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"]) #5
                         NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
+                    
                     except:
 
                         NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"], DIA_ANTERIOR=True) #5
@@ -91,6 +92,7 @@ class Trem(models.Model):
         with transaction.atomic():
             
             form = TremForm(data)
+            
             if form.is_valid():
                 novo_trem = form.cleaned_data
                 criterios_avaliados = VALIDAR_NOVA_PREVISAO(novo_trem)
@@ -106,12 +108,14 @@ class Trem(models.Model):
                 novo_trem["ID"] = trem_objeto.id
                 
                 try:
-                    
+
+                    print("tentando sem dia anterior...")    
                     navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"])
                     navegacao.EDITAR_TREM(novo_trem, "INSERIR")
                 
                 except IndexError:
-                    
+
+                    print("com dia anterior...") 
                     navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"], DIA_ANTERIOR=True)
                     navegacao.EDITAR_TREM(novo_trem, "INSERIR")
 
