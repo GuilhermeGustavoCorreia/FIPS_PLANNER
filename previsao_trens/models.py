@@ -53,6 +53,7 @@ class Trem(models.Model):
             with transaction.atomic():
                 
                 TREM_ANTIGO = model_to_dict(self)
+                print(f"Deletando: { TREM_ANTIGO }")
                 self.delete()
 
                 try:  

@@ -222,15 +222,12 @@ def criar_trem_view(request):
 @login_required
 def excluir_trem_view(request, id):
     
-    if request.method == 'POST': 
 
-        trem = get_object_or_404(Trem, pk=id)
-        trem.excluir_trem()
-        
-        return redirect('previsao_trens')
+    trem = get_object_or_404(Trem, pk=id)
+    trem.excluir_trem()
     
-    else: return redirect('previsao_trens')
-
+    return redirect('previsao_trens')
+    
 @login_required
 def editar_trem(request, trem_id):
 

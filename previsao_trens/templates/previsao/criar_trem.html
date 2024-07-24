@@ -112,10 +112,13 @@
 <div class="CONTEUDO__PADRAO">  
 
     <h1>PREVISÃO DE TRENS</h1>
+    
     {% if user|can:'editar_itens' %}
+    
     <button type="button"  data-acao="CRIAR_TREM" data-criar-trem-url="{% url 'novo_trem_previsao' %}" class="BOTAO BTN__CRIAR__TREM" data-toggle="modal" data-target="#modalAdicionarTrem" onclick="TOOGLE_FORM(this)">
         Novo Trem
     </button>
+
     {% endif %}
     
     {% if TABELAS %}

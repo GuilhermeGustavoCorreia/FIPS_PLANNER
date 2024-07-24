@@ -24,7 +24,7 @@ body{user-select:    none;}
 
 table{
 
-    font-size: 0.7rem;
+
     font-family: "Saira Expanded", Arial, sans-serif;
     background-color: rgb(237, 237, 237);
     margin-bottom: 2rem;
@@ -32,6 +32,33 @@ table{
     margin-left: 50%;
 
 }
+#tbl_vgs_form{
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 15px;
+    background-color: transparent;
+    
+}
+
+#tbl_vgs_form td    {  text-align: center;      background-color: rgb(237, 237, 237);    }
+#tbl_vgs_form th    { padding: 5px; background-color: var(--amarelo-ouro-e); color: white; border-radius: 15px 15px 0  0; border: none !important;}
+
+tr .titulo_frm_vgs  { border-radius: 15px 15px 0  0;}
+
+
+
+#tbl_vgs_form tbody tr td:first-child               {text-align: left !important; padding-left: 10px;  border-right: 1px var(--cinza-chumbo-c) solid; border-bottom: 1px var(--cinza-chumbo-c) solid;} 
+#tbl_vgs_form tbody tr td:nth-child(2)              {padding-left: 10px;  border-right: 1px var(--cinza-chumbo-c) solid; border-bottom: 1px var(--cinza-chumbo-c) solid; }
+#tbl_vgs_form tbody tr td:nth-child(3)              {padding-left: 10px;  border-bottom: 1px var(--cinza-chumbo-c) solid;width: 30%;}
+
+
+#tbl_vgs_form tbody tr:last-child td:first-child    {text-align: left !important; padding-left: 10px;  border-right: 1px var(--cinza-chumbo-c) solid; border-bottom: none !important;}
+#tbl_vgs_form tbody tr:last-child td:nth-child(2)   {padding-left: 10px;  border-right: 1px var(--cinza-chumbo-c) solid; border-bottom: none !important;}
+#tbl_vgs_form tbody tr:last-child td:nth-child(3)   {padding-left: 10px;  border-bottom: none !important;}
+ 
+#tbl_vgs_form tbody tr input                        {margin: 2px !important;}
+.last-e {border-radius: 0  0 0 15px ;  }
+.last-d {border-radius: 0  0 15px 0 ;  }
 
 
 .titulo th  { border: 1px solid var(--azul-profundo-e); font-weight: bold;  padding: 0 3px;  color: white; text-align: center; background-color: var(--azul-profundo-m); min-width: 1.5rem;}

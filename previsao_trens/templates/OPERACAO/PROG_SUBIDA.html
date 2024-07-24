@@ -29,16 +29,18 @@
             {{ FORM.loco_4     }}</br>
             {{ FORM.loco_5     }}
 
-            <p>*Vagões</p>
-            <div class="VAGOES_FORM">
+            <table id="tbl_vgs_form">
+                <tr class="titulo_frm_vgs"><th colspan="3">Vagões</th></tr>
 
-                {{ FORM.qt_graos     }} / <label id="FRM_QT_GRAO">0</label>         </br>
-                {{ FORM.qt_ferti     }} / <label id="FRM_QT_FERTILIZANTE">0</label> </br>
-                {{ FORM.qt_celul     }} / <label id="FRM_QT_CELULOSE">0</label>     </br>
-                {{ FORM.qt_acuca     }} / <label id="FRM_QT_ACUCAR">0</label>       </br>
-                {{ FORM.qt_contei    }} / <label id="FRM_QT_CONTEINER">0</label>
-
-            </div>   
+                    <tbody>
+                        <tr> <td class="produto">Grãos      </td>    <td>{{ FORM.qt_graos     }}</td> <td><label id="FRM_QT_GRAO">0</label>         </td> </tr> 
+                        <tr> <td class="produto">Ferti.     </td>    <td>{{ FORM.qt_ferti     }}</td> <td><label id="FRM_QT_FERTILIZANTE">0</label> </td> </tr> 
+                        <tr> <td class="produto">Celulose   </td>    <td>{{ FORM.qt_celul     }}</td> <td><label id="FRM_QT_CELULOSE">0</label>     </td> </tr> 
+                        <tr> <td class="produto">Açúcar     </td>    <td>{{ FORM.qt_acuca     }}</td> <td><label id="FRM_QT_ACUCAR">0</label>       </td> </tr> 
+                        <tr> <td class=" last-e produto">Conteiners </td>    <td>{{ FORM.qt_contei    }}</td> <td class=" last-d"><label id="FRM_QT_CONTEINER">0</label>    </td> </tr> 
+                    </tbody>
+                    
+            </table>
 
         </div>
 

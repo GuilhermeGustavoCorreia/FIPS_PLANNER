@@ -18,6 +18,9 @@ def DICIONARIO_MERCADORIAS():
 
 MERCADORIAS = DICIONARIO_MERCADORIAS()
 
+
+
+
 class TremForm(forms.ModelForm):
 
     MERCADORIAS = DICIONARIO_MERCADORIAS()
@@ -27,31 +30,26 @@ class TremForm(forms.ModelForm):
         fields = '__all__'
         
         widgets = {
-
             'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
             'os':           NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'OS'}),
             'origem':       TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Origem'}),
             'local':        TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Local'}),
             'destino':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Destino'}),
-
             'mercadoria':   Select(choices=[(k, k) for k in MERCADORIAS.keys()], attrs={'class': 'INPUT INPUT_G', 'onchange': 'updateTerminals()'}),
             'terminal':     Select(choices=[(k, k) for k in MERCADORIAS["ACUCAR"]], attrs={'class': 'INPUT INPUT_M'}),
-
             'vagoes':       NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
             'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}),
             'comentario':   Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
-            'ferrovia':     RadioSelect(attrs={'name': 'ferrovia'})
+            'ferrovia':     RadioSelect(attrs={'class': 'INPUT INPUT_RADIO'})
         }
 
     def __init__(self, *args, **kwargs):
-
         super(TremForm, self).__init__(*args, **kwargs)
-        
-        self.fields['ferrovia'].choices             = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
-        self.fields['ferrovia'].initial             = 'RUMO'
-        self.fields['comentario'].required          = False
-        self.fields['posicao_previsao'].required    = False 
-        self.fields['created_by'].required          = False 
+        self.fields['ferrovia'].choices = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
+        self.fields['ferrovia'].initial = 'RUMO'
+        self.fields['comentario'].required = False
+        self.fields['posicao_previsao'].required = False 
+        self.fields['created_by'].required = False
 
 class RestricaoForm(forms.ModelForm):
 
@@ -103,11 +101,11 @@ class TremVazioForm(forms.ModelForm):
             'loco_4':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 04'}),
             'loco_5':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 05'}),
 
-            'qt_graos':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'GRAO',            'placeholder': 'Grãos', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_ferti':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'FERTILIZANTE',    'placeholder': 'Ferti', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_celul':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE',        'placeholder': 'Celulose', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_acuca':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR',          'placeholder': 'Açúcar', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_contei':      NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER',       'placeholder': 'Conteiner', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_graos':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'GRAO',             'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_ferti':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'FERTILIZANTE',     'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_celul':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE',         'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_acuca':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR',           'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_contei':      NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER',        'onchange': 'VALIDAR_QUANTIDADE(this)'}),
 
             'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}, format='%Y-%m-%dT%H:%M'),
             'margem':       RadioSelect(attrs={'name': 'margem'})
