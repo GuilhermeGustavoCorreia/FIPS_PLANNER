@@ -32,6 +32,7 @@ class Trem(models.Model):
     mercadoria  = models.CharField(max_length=50)
     vagoes      = models.IntegerField()
     previsao    = models.DateTimeField()
+    #encoste     = models.DateTimeField() PRECISAMOS DE UM MODELO TERMINAL PARA QUE ISTO FUNCIONE
     ferrovia    = models.CharField(max_length=50, choices=[('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')])
     comentario  = models.CharField(max_length=100)
     
@@ -124,7 +125,6 @@ class Trem(models.Model):
                 
                 return {"status": False, "descricao": None, "errors": form.errors}
  
-
     def __str__(self):
         return self.prefixo
     

@@ -47,8 +47,10 @@ class AtualizandoSistema:
                 
                 novos_trens[dia_log].reverse()
                 for dict_trem in novos_trens[dia_log]:
-                    print(dict_trem)
+                    
+                    
                     dict_trem = _ajustar_trem(dict_trem)
+
                     form_trem = _json_to_form_data(dict_trem)
                     
                     Trem.criar_trem(form_trem, usuario_logado)
@@ -237,6 +239,7 @@ class AtualizandoSistema:
                         produtividade_offline = [int(float(x)) for x in produtividade_offline]
 
                         DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["PRODUTIVIDADE"] = produtividade_offline
+                        DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["EDITADO"] = [1] * 24
                     except KeyError:
                         pass
                 

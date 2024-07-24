@@ -1365,7 +1365,7 @@
                                     {% for PREFIXO in TABELAS_SUBIDA.D.CONDENSADOS.DIREITA.SAIDAS.PREFIXO %}
                 
                                         {% if PREFIXO != 0 %}
-                                            <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{PREFIXO}} </td>      
+                                            <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{ PREFIXO |slice:":3"}} </td>      
                                         {% else  %}
                                             <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"></td>
                                         {% endif %}
@@ -2642,7 +2642,7 @@
                                 {% for PREFIXO in TABELAS_SUBIDA.D1.CONDENSADOS.DIREITA.SAIDAS.PREFIXO %}
                     
                                     {% if PREFIXO != 0 %}
-                                        <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{PREFIXO}} </td>      
+                                        <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA"> {{ PREFIXO |slice:":3"}} </td>      
                                     {% else  %}
                                         <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="DIREITA" name="CRIAR_TREM_SUBIDA"></td>
                                     {% endif %}
@@ -3422,6 +3422,22 @@
                                 </td>
                                 {% endfor %}
                                 <td colspan=2 class="pula_linha "></td>
+                            </tr>
+
+                            <tr>
+                                <th colspan=2 class="pula_linha"></th>
+                                <td colspan=2 class="coluna_A linha">PREFIXO</td> 
+                                <td class="linha"></td>
+                                {% for PREFIXO in TABELAS_SUBIDA.D.CONDENSADOS.ESQUERDA.SAIDAS.PREFIXO %}
+            
+                                    {% if PREFIXO != 0 %}
+                                        <!--name="CRIAR_TREM_SUBIDA"--><td class="VERDE " data-hora={{ forloop.counter }} data-dia="D" data-margem="ESQUERDA"> {{ PREFIXO |slice:":3"}} </td>      
+                                    {% else  %}
+                                        <td class="linha CRIAR_TREM_SUBIDA" data-hora={{ forloop.counter }} data-dia="D" data-margem="ESQUERDA" name="CRIAR_TREM_SUBIDA"></td>
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                                <th colspan=2 class="pula_linha " data-hora={{ forloop.counter }} data-dia="D" data-margem="ESQUERDA" name="CRIAR_TREM_SUBIDA"></th>
                             </tr>
         
                         <!--#endregion -->

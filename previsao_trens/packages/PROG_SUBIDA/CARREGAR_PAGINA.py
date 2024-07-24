@@ -62,7 +62,9 @@ def CARREGAR_PROG_SUBIDA_OLD():
     lst_LINHAS           = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
 
     for TERMINAL in lst_TERMINAIS_ATIVOS:
-
+        
+        print(TERMINAL)
+        
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
         DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS]
 
@@ -201,7 +203,7 @@ def CARREGAR_PROG_SUBIDA():
                 jsSUBIDA = json.load(ARQUIVO_DESCARGA)
 
             PATIO = jsSUBIDA["PATIO"]
-
+            if PATIO == "PCX" and i == 0: print(f"TERMINAL DE PCX { TERMINAL }")
             #APENAS COLOCA NA DESCARGA A INFORMACAO DO QUE ESTA ATIVO NO TERMINAL (FERROVIA E PRODUTO)        
             jsSUBIDA["SUBIDA"] = {chave: valor for chave, valor in jsSUBIDA["SUBIDA"].items() if chave in FERROVIAS_ATIVAS}
             
@@ -212,8 +214,10 @@ def CARREGAR_PROG_SUBIDA():
 
                 SEGMENTOS = list(jsSUBIDA["SUBIDA"][FERROVIA].keys())
                 for SEGMENTO in SEGMENTOS:
-
+                    
                     if TERMINAL in TERMINAIS_ADAPTADOS:
+                        
+                        
 
                         #region TERMINAIS ESPECIAIS [rgb(255,77,197, 0.3)]
                         for ITEM in TERMINAIS_ESPECIAIS:
@@ -226,7 +230,7 @@ def CARREGAR_PROG_SUBIDA():
 
                                         jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MIN"] = TERMINAIS_ESPECIAIS["JUNTAR"][TERMINAL_ESPECIAL]["SAIDA"]["SATURACAO_VAZIO"][FERROVIA]["MIN"]
                                         jsSUBIDA["SUBIDA"][FERROVIA][SEGMENTO]["SATURACAO_VAZIO"]["MAX"] = TERMINAIS_ESPECIAIS["JUNTAR"][TERMINAL_ESPECIAL]["SAIDA"]["SATURACAO_VAZIO"][FERROVIA]["MAX"]
-                    
+
                         #endregion
 
                     else:    
@@ -236,7 +240,7 @@ def CARREGAR_PROG_SUBIDA():
 
 
             #endregion
-
+            
             SAIDA[CHAVES[i]]["TERMINAIS"][PATIO].append(jsSUBIDA)  
         #endregion 
 
