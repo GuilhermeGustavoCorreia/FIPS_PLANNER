@@ -187,7 +187,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
         #endregion
 
-
     def __CALCULAR__(self):
         
         def __SALDO__(TIPO, MARGEM, PATIO, TERMINAL, SEGMENTO, FERROVIA, i):
@@ -743,8 +742,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
    
         TERMINAIS       = (TERMINAIS_PMC + TERMINAIS_PST)
         
-        #FAZENDO PARA I = 0 
-
 
         for i in range(119):
             
@@ -813,7 +810,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         self.__CALCULAR__()
         self.__CALCULAR_CONDENSADOS__()
         self.__DESMONTAR_FULL__()
-
 
 
 class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
@@ -1042,6 +1038,8 @@ def EDITAR_SALDO_CONDENSADO(PARAMETROS):
     with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ DATA_ARQ }.json", 'w') as ARQUIVO:
         json.dump(jsBUFFER, ARQUIVO, indent=4) 
 
+    CALCULOS_SUBIDA = CALCULAR_SALDO()
+    CALCULOS_SUBIDA.CALCULAR()
 
 class Condensados():
 
@@ -1055,7 +1053,7 @@ class Condensados():
         self.full_CONDENSADOS   = {"DIREITA":  {"RUMO": {}, "MRS": {}, "VLI": {}, "SAIDAS": {}}, "ESQUERDA": {"RUMO": {}, "MRS": {}, "VLI": {}, "SAIDAS": {}}}
         self.jsCONDENSADOS      = {}
         
-    def __abrir__(self):
+    def __abrir(self):
 
         #region MONTANDO CONDENSADOS (full)
 
@@ -1069,10 +1067,6 @@ class Condensados():
                 for FERROVIA in list(self.full_CONDENSADOS[MARGEM].keys()): # ['RUMO', 'MRS', 'VLI', 'SAIDAS']
 
                     for CHAVE in CHAVES_CONDENSADOS:
-
-                        #if not CHAVE in self.full_CONDENSADOS[MARGEM][FERROVIA]: self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE] = []
-
-                        #self.full_CONDENSADOS[MARGEM][FERROVIA][CHAVE].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM][FERROVIA][CHAVE])
 
                         if not FERROVIA == "SAIDAS": 
                             
@@ -1089,7 +1083,7 @@ class Condensados():
 
         #endregion
     
-    def __salvar__(self):
+    def __salvar(self):
 
         #region CONDENSADOS
 
@@ -1121,6 +1115,10 @@ class Condensados():
 
         #endregion
 
+    def __calcular(self):
+
+        pass
+
     def inserirTrem(self, PARAMETROS):
 
 
@@ -1137,7 +1135,7 @@ class Condensados():
         FERROVIA    = PARAMETROS["FERROVIA"]
         PREFIXO     = PARAMETROS["PREFIXO"]
         
-        self.__abrir__()
+        self.__abrir()
         
         for i, SEGMENTO in enumerate(TIPO_VAGOES):
 
@@ -1151,7 +1149,6 @@ class Condensados():
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]  = PREFIXO
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"][HORA] = FERROVIA
 
-        self.__salvar__()
+        self.__salvar()
 
         SUBIDA_DE_VAZIOS().ATUALIZAR()
-

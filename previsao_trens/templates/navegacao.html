@@ -4,12 +4,14 @@
 {% load permission_tags %}
 
 {% if user|can:'editar_itens' %}
-<script src="{% static 'javascript/NAVEGACAO/EDITAR_PRODUTIVIDADE.js' %}" defer></script>
-<script src="{% static 'javascript/NAVEGACAO/ATUALIZAR_DESCARGA.js' %}" defer></script>
-<script src="{% static 'javascript/NAVEGACAO/CALCULADORA.js' %}" defer></script>
 
-
+    <script src="{% static 'javascript/NAVEGACAO/EDITAR_PRODUTIVIDADE.js' %}"   defer></script>
+    <script src="{% static 'javascript/NAVEGACAO/ATUALIZAR_DESCARGA.js' %}"     defer></script>
+    
 {% endif %}
+
+<script src="{% static 'javascript/NAVEGACAO/CALCULADORA.js' %}"            defer></script>
+
 <div id="conteudo__navegacao" class="conteudo__navegacao">  
   
     <link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/navegacao.css' %}"> 

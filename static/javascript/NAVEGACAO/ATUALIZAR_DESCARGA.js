@@ -18,14 +18,6 @@ function LIMPAR_SELECOES(){
     CELULAS_ULTIMA.forEach(function(CELULA)         {CELULA.classList.remove('ULTIMA');});
     CELULAS_SELECIONADAS.forEach(function(CELULA)   {CELULA.classList.remove('CELULA_SELECIONADA');});
 
-    /*PARAMETROS_EDITADOS = {
-        "TERMINAL": "",
-        "DATA_ARQ": "",
-        "CELULAS" : [],
-        "VALOR"   : 0
-    }*/
-
-
     let LINHA_PRODUTIVIDADE = document.getElementById('LINHA_EM_EDICAO')
     if (LINHA_PRODUTIVIDADE !== null) {LINHA_PRODUTIVIDADE.removeAttribute('id')}
 
@@ -126,6 +118,7 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
             //#endregion
 
             for (let FERROVIA in DESCARGAS_ATIVAS){
+                
                 for (let j = 0; j < DESCARGAS_ATIVAS[FERROVIA].length; j++){
                     
                     let PRODUTO = DESCARGAS_ATIVAS[FERROVIA][j]
@@ -135,8 +128,8 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
                     let FILTRO_SALDO_VIRADA         = `td[data-ferrovia="${FERROVIA}"][data-produto="${PRODUTO}"][headers="SALDO_VIRADA"]`
 
                     let ELEMENTO_SALDO_VIRADA       = TABELA_DESCARGA.querySelector(FILTRO_SALDO_VIRADA);
-                    if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]) !== 0)
-                    {ELEMENTO_SALDO_VIRADA.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]}
+
+                    ELEMENTO_SALDO_VIRADA.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]
 
                     //#endregion
 

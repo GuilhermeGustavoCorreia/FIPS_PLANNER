@@ -125,9 +125,9 @@ def CARREGAR_RELATORIO_OCUPACAO():
             SAIDAS[DIA][MARGEM][TERMINAL]["PXO"]["META_OCIOSIDADE"]     = INFOS[TERMINAL]["PXO"]["OCIOSIDADE"]
 
             CONT_TRENS = len([num for num in DESCARGA["PREFIXO"] if num != 0])
-            CONT_FILA  = len([num for num in LINHA_FILA_TOTAL if num != 0])
+            CONT_FILA  = len([num for num in LINHA_FILA_TOTAL    if num != 0])
             
-            if CONT_FILA != 0:  SAIDAS[DIA][MARGEM][TERMINAL]["FILA_MEDIA"]           = round(CONT_TRENS / CONT_FILA, 1)
+            if CONT_FILA != 0:  SAIDAS[DIA][MARGEM][TERMINAL]["FILA_MEDIA"] = round(CONT_TRENS / CONT_FILA, 1)
             else:               SAIDAS[DIA][MARGEM][TERMINAL]["FILA_MEDIA"] =   0
 
             SAIDAS[DIA][MARGEM][TERMINAL]["CAPACIDADE"] =  24 * SAIDAS[DIA][MARGEM][TERMINAL]["PXO"]["PRODUTIVIDADE"] * 0.8

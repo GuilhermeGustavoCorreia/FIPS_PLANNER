@@ -4,6 +4,7 @@ var EDITAR_SALDO_VIRADA = false
 var EDITAR_PRODUTIVIADE = false
 var NOVO_VALOR_SALDO = ""
 var NOVO_VALOR          = ""
+
 var PARAMETROS_EDITADOS = {
     "TERMINAL": "",
     "DATA_ARQ": "",

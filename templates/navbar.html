@@ -46,17 +46,17 @@
       </ul>
     </nav>
 
-      <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
-          <div class="nome__do__usuario">
-            <label  class="primeiro__nome"  >{{ user.first_name }}</label>
-            <label  class="sobremnoe"       >{{ user.last_name }} </label>
-          </div>  
-          {% if user.foto %}
-              <img class="usuario-foto" src="{{ user.foto.url }}" alt="Foto de usuário">
-          {% else %}
-              <img class="usuario-foto" src="URL_DA_IMAGEM_PADRAO" alt="Foto de usuário">
-          {% endif %}
-      </div>
+    <div class="bloco__do__usuario" id="bloco__do__usuario" onclick="toggleList()">
+        <div class="nome__do__usuario">
+          <label  class="primeiro__nome"  >{{ user.first_name }}</label>
+          <label  class="sobremnoe"       >{{ user.last_name }} </label>
+        </div>  
+        {% if user.foto %}
+            <img class="usuario-foto" src="{{ user.foto.url }}" alt="Foto de usuário">
+        {% else %}
+            <img class="usuario-foto" src="URL_DA_IMAGEM_PADRAO" alt="Foto de usuário">
+        {% endif %}
+    </div>
 
 </header>
 

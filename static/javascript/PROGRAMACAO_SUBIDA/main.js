@@ -47,6 +47,7 @@ class mudarElemento {
   var DIA_LOGISTICO = null
 
   var PARAMETROS_BUFFER = {}
+  
 function celula_modo_edicao(celula_selecionada){
 
     //console.log(`EDITANDO CÉLULA: ${editando_celula} CELULA SELECIONADA: ${celula_selecionada.getAttribute('name')}`)
@@ -159,9 +160,6 @@ document.body.addEventListener('click', async function(event) {
 
 });
 
-
-
-
 //#region CRIAR TREM
 
 const CELULAS_PREFIXO       = document.querySelectorAll('[name="CRIAR_TREM_SUBIDA"]');
@@ -273,8 +271,64 @@ function VALIDAR_QUANTIDADE(INPUT){
 
 //#endregion
 
-//#region EDITAR BUFFER
+//#region MANTER A ABA ATUAL AO RECARREGAR A PAGINA
 
+document.addEventListener('DOMContentLoaded', function() {
+    var abaAtiva = localStorage.getItem('abaAtiva');
+    if (abaAtiva) {
+        document.querySelector(`[onclick="abrirAba(event, '${abaAtiva}')"]`).click();
+    }
+    
+    var subAbaAtiva = localStorage.getItem('subAbaAtiva');
+    if (subAbaAtiva) {
+        document.querySelector(`[onclick="abrirSubAba(event, '${subAbaAtiva}')"]`).click();
+    }
+});
 
+//#endregion
+
+function abrirAba(evt, abaNome) {
+    var i, conteudo, abas;
+    conteudo = document.getElementsByClassName("conteudo");
+    for (i = 0; i < conteudo.length; i++) {
+        conteudo[i].style.display = "none";
+    }
+
+    abas = document.getElementsByClassName("aba");
+    for (i = 0; i < abas.length; i++) {
+        abas[i].className = abas[i].className.replace(" ativa", "");
+    }
+
+    document.getElementById(abaNome).style.display = "block";
+    evt.currentTarget.className += " ativa";
+    // Salvar a aba ativa no localStorage
+    localStorage.setItem('abaAtiva', abaNome);
+}
+
+function abrirSubAba(evt, subAbaNome) {
+    var i, subConteudo, subAbas;
+
+    subConteudo = document.getElementsByClassName("sub-conteudo");
+    for (i = 0; i < subConteudo.length; i++) {
+        subConteudo[i].style.display = "none";
+    }
+
+    subAbas = document.getElementsByClassName("sub-aba");
+    for (i = 0; i < subAbas.length; i++) {
+        subAbas[i].className = subAbas[i].className.replace(" sub-ativa", "");
+    }
+
+    document.getElementById(subAbaNome).style.display = "block";
+    evt.currentTarget.className += " sub-ativa";
+    // Salvar a sub-aba ativa no localStorage
+    localStorage.setItem('subAbaAtiva', subAbaNome);
+}
+
+//#region DESATIVAR BOTAO FORM NOVO TREM VAZIO AO ENVIAR FORMULARIO
+
+function disableButton() {
+    document.getElementById('BTN_CRIAR_TREM_SUBIDA').disabled = true;
+    document.getElementById('BTN_CRIAR_TREM_SUBIDA').innerText = 'Salvando...';
+}
 
 //#endregion

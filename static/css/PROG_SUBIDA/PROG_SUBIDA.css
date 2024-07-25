@@ -232,7 +232,7 @@ dialog::backdrop{
     background-color: #f2f2f2;
 }
 
-.ativa{font-weight: bold;}
+
 
 .sub-aba {
     padding: 5px 10px;
@@ -258,3 +258,6 @@ dialog::backdrop{
 .loading {
     cursor: wait;
 }
+
+.sub-ativa,
+.ativa{ background-color: #dddddd !important;font-weight: bold;}

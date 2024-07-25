@@ -131,7 +131,6 @@ def navegacao(request):
     return render(request, 'navegacao.html', {"CONTEUDO_NAVEGACAO": DESCARGAS})
 #endregion
 
-
 @login_required
 def profile(request):
 
@@ -475,8 +474,6 @@ def upload_file_view(request):
 
 #endregion
 
-
-
 #region RESTRICOES
 @login_required
 
@@ -632,7 +629,6 @@ def editar_restricao(request, id):
         return JsonResponse(DADOS_RESTRICAO)
 
 #endregion
-
 
 @login_required
 def detalhe(request):
@@ -809,12 +805,14 @@ def programacao_subida(request):
                     "SEGMENTO"      : REQUISICAO["SEGMENTO"][0],
                     "FERROVIA"      : REQUISICAO["FERROVIA"][0],
                     "NOVO_VALOR"    : REQUISICAO["NOVO_VALOR"][0]
-                    
+                
                 }
+                
                 EDITAR_SALDO_CONDENSADO(PARAMETROS)
                 SUBIDA_DE_VAZIOS().ATUALIZAR()
             
             if ACAO == "ATUALIZAR_SUBIDA":
+                
                 SUBIDA_DE_VAZIOS().ATUALIZAR()
    
     
@@ -822,6 +820,7 @@ def programacao_subida(request):
     FORM_NOVO_TREM = TremVazioForm()
     
     return render(request, 'OPERACAO/PROG_SUBIDA.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
+
 
 @login_required
 def editar_trem_subida(request, id):
