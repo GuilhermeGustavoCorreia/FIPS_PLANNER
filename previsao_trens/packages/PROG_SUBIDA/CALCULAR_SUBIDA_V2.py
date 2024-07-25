@@ -897,7 +897,11 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
         #region OUTORGA PRODUTIVIDADE ADM
         MOEGAS_ADM = ["MOEGA X", "MOEGA V"]
-
+        
+        PRODUTOS  = self.INFOS["MOEGA X"]["PRODUTOS"]
+        SEGMENTO  = self.INFOS["MOEGA X"]["SEGMENTO"]
+        FERROVIAS = self.INFOS["MOEGA X"]["FERROVIA"]
+        
         for MOEGA in MOEGAS_ADM:
             
             
@@ -916,9 +920,6 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
                 SALDO_VIRADA[i] = {}
 
-                PRODUTOS  = self.INFOS["MOEGA X"]["PRODUTOS"]
-                SEGMENTO  = self.INFOS["MOEGA X"]["SEGMENTO"]
-                FERROVIAS = self.INFOS["MOEGA X"]["FERROVIA"]
 
                 with open(f"previsao_trens/src/DESCARGAS/{ MOEGA }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
                     jsDESCARGA = json.load(ARQUIVO)
