@@ -901,10 +901,9 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
         PRODUTOS  = self.INFOS["MOEGA X"]["PRODUTOS"]
         SEGMENTO  = self.INFOS["MOEGA X"]["SEGMENTO"]
         FERROVIAS = self.INFOS["MOEGA X"]["FERROVIA"]
-        
+
         for MOEGA in MOEGAS_ADM:
-            
-            
+               
             SALDO_VIRADA = {}
             
             for i, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
