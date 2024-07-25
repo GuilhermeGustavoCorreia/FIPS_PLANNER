@@ -6,6 +6,9 @@
 {% if user|can:'editar_itens' %}
 <script src="{% static 'javascript/NAVEGACAO/EDITAR_PRODUTIVIDADE.js' %}" defer></script>
 <script src="{% static 'javascript/NAVEGACAO/ATUALIZAR_DESCARGA.js' %}" defer></script>
+<script src="{% static 'javascript/NAVEGACAO/CALCULADORA.js' %}" defer></script>
+
+
 {% endif %}
 <div id="conteudo__navegacao" class="conteudo__navegacao">  
   
@@ -385,6 +388,11 @@
     <!--#endregion-->
 
 </div>
+
+<div id="CALCULADORA" class="oculto">
+   <p> Soma:        <label id="CALCULADORA_VALOR"></label></p>
+</div>
+
 
 </div>
 {% if user|can:'editar_itens' %}

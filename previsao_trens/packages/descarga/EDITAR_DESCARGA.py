@@ -604,6 +604,7 @@ class NAVEGACAO_DESCARGA:
         DIAS_AFETADOS = DIAS_AFETADOS.days
         
         DATAS_AFETADAS = {}
+        
         #region MONTANDO O DICIONARIO COM AS LISTAS DE RESTRICOES QUE VAMOS INSERIR
         if DIAS_AFETADOS > 0:
             for DIA in range(DIAS_AFETADOS + 1):
@@ -638,11 +639,13 @@ class NAVEGACAO_DESCARGA:
             for FERROVIA in FERROVIAS:
 
                 self.FERROVIA = FERROVIA
-                self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["RESTRICAO"] = DATAS_AFETADAS[DATA_ARQ]
-                self.DESCARGAS[DATA_ARQ]["RESTRICAO_MOTIVO"] = [MOTIVO if valor > 0 else valor for valor in DATAS_AFETADAS[DATA_ARQ]]
-                
-                self.__CALCULAR_DESCARGA__()
-
+                try: #FORA DO PERIODO DA DESCARGA
+                    self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["RESTRICAO"] = DATAS_AFETADAS[DATA_ARQ]
+                    self.DESCARGAS[DATA_ARQ]["RESTRICAO_MOTIVO"] = [MOTIVO if valor > 0 else valor for valor in DATAS_AFETADAS[DATA_ARQ]]
+                    
+                    self.__CALCULAR_DESCARGA__()
+                except KeyError:
+                    pass
         #endregion
         
         self.__CALCULAR_TOTAIS__()

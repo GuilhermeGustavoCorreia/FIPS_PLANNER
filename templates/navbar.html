@@ -63,15 +63,14 @@
 <ul id="menu__usuario" class="menu__usuario hidden">
   
     <li><a class="menu__usuario__ancora" href="{% url 'profile' %}" >Minha conta           </a></li>
-    {% if user|can:'editar_itens' %}
+    {% if user|can:'editar_itens' or user|can:'editar_subida' %}
     <li><a class="menu__usuario__ancora" href="" >Criar Novo usuário    </a></li>
     <li><a class="menu__usuario__ancora" href="" >Ver todos os usuários </a></li>
     <li><a class="menu__usuario__ancora" href="{% url 'configuracao' %}" >Configurações         </a></li>
     {% endif %}
 
-    {% if user|can:'editar_subida' %}
-    <li><a class="menu__usuario__ancora" href="{% url 'configuracao' %}" >Configurações         </a></li>
-    {% endif %}
+
+
     <li><form id="logout-form" action="{% url 'logout' %}" method="post">
       
       {% csrf_token %}

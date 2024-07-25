@@ -64,9 +64,7 @@ class AtualizandoSistema:
             restricao.excluir_restricao()
 
     def inserirNovasRestricoes(novas_restricoes, usuario_logado):
-        PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-        linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == "D"]
-        DATA_ARQ        = linha['DATA_ARQ'].values[0]
+
         for dict_restricao in novas_restricoes:
 
             form_restricao = Restricao.json_to_form(dict_restricao)
@@ -196,8 +194,6 @@ class AtualizandoSistema:
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
                 DESCARGAS = Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)    
                   
-
-
         
     def inserirProdutividade(json_descargas):
 
@@ -230,14 +226,16 @@ class AtualizandoSistema:
 
                 for ATIVO in DESCARGAS_ATIVAS:
 
-                    if TERMINAL == "SBR"     and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
-                    if TERMINAL == "TECONDI" and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
+                    
                     
                     try:
-                        DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["PRODUTIVIDADE"]
+
                         produtividade_offline = descarga_offline.loc[f"{ATIVO[0]}_{ATIVO[1]}_prod"].tolist()
                         produtividade_offline = [int(float(x)) for x in produtividade_offline]
-
+                        
+                        if TERMINAL == "SBR"     and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
+                        if TERMINAL == "TECONDI" and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
+                        
                         DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["PRODUTIVIDADE"] = produtividade_offline
                         DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["EDITADO"] = [1] * 24
                     except KeyError:

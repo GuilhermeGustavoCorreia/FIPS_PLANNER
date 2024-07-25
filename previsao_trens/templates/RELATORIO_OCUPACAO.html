@@ -99,7 +99,7 @@
                         {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
         
                             {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ITEM}}</td>
+                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                             {% else %}
                                 <td class="item__prefixo item-branco">. </td>
                             {% endif %}
@@ -209,7 +209,7 @@
                         {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
         
                             {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ITEM}}</td>
+                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                             {% else %}
                                 <td class="item__prefixo item-branco">. </td>
                             {% endif %}
@@ -423,7 +423,7 @@
                             {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
             
                                 {% if ITEM != 0 %}
-                                    <td class="item__prefixo">{{ITEM}}</td>
+                                    <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                                 {% else %}
                                     <td class="item__prefixo item-branco">. </td>
                                 {% endif %}
@@ -531,7 +531,7 @@
                             {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
             
                                 {% if ITEM != 0 %}
-                                    <td class="item__prefixo">{{ITEM}}</td>
+                                    <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                                 {% else %}
                                     <td class="item__prefixo item-branco">. </td>
                                 {% endif %}
@@ -654,12 +654,12 @@
         
                     <tr>
                         <th colspan="2" rowspan="2"> <img src="{% static 'imagens/logo-fips-vertical.png' %}" class="logo__ocupacao"></th>
-                        <th colspan="24">D</th>
-                        <th colspan="2">PLANO</th>
-                        <th colspan="2">PxO</th>
-                        <th>FILA </br> MÉD</th>
-                        <th>OPORT.</th>
-                        <th>CAP.</th>
+                        <th colspan="24">   D       </th>
+                        <th colspan="2">    PLANO   </th>
+                        <th colspan="2">    PxO     </th>
+                        <th>FILA </br>      MÉD     </th>
+                        <th>OPORT.                  </th>
+                        <th>CAP.                    </th>
                     </tr>
         
                     <tr>
@@ -719,7 +719,7 @@
                         {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
         
                             {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ITEM}}</td>
+                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                             {% else %}
                                 <td class="item__prefixo item-branco">. </td>
                             {% endif %}
@@ -827,7 +827,7 @@
                         {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
         
                             {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ITEM}}</td>
+                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                             {% else %}
                                 <td class="item__prefixo item-branco">. </td>
                             {% endif %}
