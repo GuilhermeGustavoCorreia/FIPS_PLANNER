@@ -916,9 +916,9 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
 
                 SALDO_VIRADA[i] = {}
 
-                PRODUTOS  = self.INFOS[TERMINAL]["PRODUTOS"]
-                SEGMENTO  = self.INFOS[TERMINAL]["SEGMENTO"]
-                FERROVIAS = self.INFOS[TERMINAL]["FERROVIA"]
+                PRODUTOS  = self.INFOS["MOEGA X"]["PRODUTOS"]
+                SEGMENTO  = self.INFOS["MOEGA X"]["SEGMENTO"]
+                FERROVIAS = self.INFOS["MOEGA X"]["FERROVIA"]
 
                 with open(f"previsao_trens/src/DESCARGAS/{ MOEGA }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
                     jsDESCARGA = json.load(ARQUIVO)
