@@ -37,3 +37,8 @@ function handleOutsideClick(event) {
       hideList(list);
     }
 }
+
+document.getElementById('navbar-toggle').addEventListener('click', function () {
+  var menu = document.getElementById('nav__menu__principal');
+  menu.classList.toggle('active');
+});

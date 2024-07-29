@@ -141,3 +141,16 @@
     padding: 0;
     background-color: transparent ;
 }
+
+
+
+@media (max-width: 768px) {
+
+    .COL_PP {min-width: 1.7rem !important;}
+    .COL_P {min-width: 1rem !important;}
+    .CONTEUDO__PADRAO{ width: 95vw;}
+    .BTN__CRIAR__TREM, .os, .origem,.local,.destino, .COMENTARIO, .botoes {display: none;}
+
+
+    
+}

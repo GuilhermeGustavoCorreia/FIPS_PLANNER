@@ -244,7 +244,21 @@ ul.submenu li {
 }
 
 /*#endregion*/
+.navbar-toggle {
+    display: none;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    
+    background: var(--azul-profundo-e);
+    border-radius: 5px;
 
+    align-self: center;
+    margin: 10px;
+    float: left;
+
+}
 /*#region ORIENTACAO*/
 @media screen and (orientation: portrait) {
     header{
@@ -416,6 +430,53 @@ ul.submenu li {
     }
 
     /*#endregion*/
-  }
+}
+
+
+@media (max-width: 768px) {
+
+    .nome__do__usuario,.nav__menu__principal, .header__logo{ display: none;}
+    .navbar-toggle {
+        display: block;
+    }
+
+    header{
+        height: 7vh  !important;  
+        position: fixed;
+        z-index: 100;
+    }
+    .usuario-foto{
+        cursor: pointer;
+        border: 2px;
+        height: 9vw;
+        width: 9vw;
+        border-radius: 100%;
+        
+        padding: 3px;
+        margin-left: 0vw;
+    }
+    .nav__menu__principal{
+        background-color: #545353;
+        background: rgb(123, 123, 123);
+        left: -13vw;
+        top: 7vh; 
+        height: fit-content;
+    }
+
+    ul.submenu{
+        width: 100%;
+        top: 0px !important;
+    }
+    .submenu-lista{
+        width: 100%;
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    }
+    .menu__principal            { display: block; background: black;}
+    .item__do__menu             { width: 100vw; font-size: 1rem;}
+    .nav__menu__principal li    { background: darkgray; height: 5vh;}
+}
+
   
 /*#endregion*/

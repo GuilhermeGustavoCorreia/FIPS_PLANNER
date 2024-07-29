@@ -46,9 +46,9 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
     def __MONTAR_FULL__(self): #e abrir arquivos tbm :)
 
         #region MONTANDO TERMINAIS_SUBIDA   (full)
-
+        
         for TERMINAL in self.TERMINAIS_DO_CALCULO:
-            
+            print(TERMINAL)
             try:    
             
                 SEGMENTO  = self.INFOS[TERMINAL]["SEGMENTO"]
@@ -86,6 +86,10 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                         
                         with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{TERMINAL}/subida_{DATA_ARQ}.json") as ARQUIVO:
                             self.jsSUBIDAS[TERMINAL][DATA_ARQ] = json.load(ARQUIVO)
+                        
+                        if DATA_ARQ == self.LISTA_DATA_ARQ[0] and TERMINAL == "ADM":
+                            print(f" E - ({DATA_ARQ}) - {self.jsSUBIDAS[TERMINAL][DATA_ARQ]["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"]}")
+                            
 
                         if DATA_ARQ == self.LISTA_DATA_ARQ[0]:
                             self.full_TERMINAIS_DO_CALCULO[MARGEM][PATIO][TERMINAL][SEGMENTO][FERROVIA]["SALDO_VIRADA"] = self.jsSUBIDAS[TERMINAL][DATA_ARQ]["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_VIRADA"]
@@ -136,8 +140,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                 self.full_L4K["OCUPACAO"][ITEM].extend(self.jsL4K[DATA_ARQ]["OCUPACAO"][ITEM])
 
-                
-
         #endregion
 
         #region MONTANDO CONDENSADOS        (full)
@@ -167,8 +169,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                     
                     if not "FERROVIA" in self.full_CONDENSADOS[MARGEM]["SAIDAS"]: self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"] = []  
                     self.full_CONDENSADOS[MARGEM]["SAIDAS"]["FERROVIA"].extend(self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"])
-
-        
+      
         #endregion
 
         #region MONTANDO BUFFERS            (full)
@@ -833,8 +834,8 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
         TERMINAIS_SALDO = [item for item in self.TERMINAIS_SUBIDA if item not in self.TERMINAIS_ESPECIAIS["DESCONSIDERAR"]["OUTORGA_SALDO"]]
         
         #region OUTORGA DA PRODUTIVIDADE COMUM
-        for TERMINAL in TERMINAIS_SALDO:
-            
+        for TERMINAL in TERMINAIS_SALDO: #AQUI TEM MOEGA V E MOGA X MAS NAO TEM ADM
+
             SALDO_VIRADA = {}
 
             for i, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
@@ -892,69 +893,44 @@ class SUBIDA_DE_VAZIOS: #BAIXA A PRODUTIVIDADE
         #endregion
 
         #region OUTORGA PRODUTIVIDADE ADM
-        MOEGAS_ADM = ["MOEGA X", "MOEGA V"]
+        MOEGAS_ADM  = ["MOEGA X", "MOEGA V"]
+        SEGMENTO    = "GRAO"
+        PEDRAS      = {}
+        SALDOS      = {}
+   
+        for i, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
         
-        PRODUTOS  = self.INFOS["MOEGA X"]["PRODUTOS"]
-        SEGMENTO  = self.INFOS["MOEGA X"]["SEGMENTO"]
-        FERROVIAS = self.INFOS["MOEGA X"]["FERROVIA"]
+            with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/ADM/subida_{ DATA_ARQ }.json") as ARQUIVO:
+                        jsSUBIDA_ADM   = json.load(ARQUIVO)
 
-        for MOEGA in MOEGAS_ADM:
-               
-            SALDO_VIRADA = {}
-            
-            for i, DATA_ARQ in enumerate(self.LISTA_DATA_ARQ):
+            for FERROVIA in ["RUMO", "MRS", "VLI"]:
+
+                jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"]   = [0] * 24
+                jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = [0] * 24
+                jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["ALIVIO_DE_VAZIOS"]  = [0] * 24
+
+                SALDOS[FERROVIA] = {}
+                SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [0] * 24
                 
-                with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/ADM/subida_{ DATA_ARQ }.json") as ARQUIVO:
-                    jsSUBIDA_ADM   = json.load(ARQUIVO)
-                
-                if MOEGA == "MOEGA X": #LIMPANDO DA PRIMEIRA VEZ QUE ABRIR
+                PEDRAS[FERROVIA] = {}
+                PEDRAS[FERROVIA]["GERACAO_VAZIOS"]  = [0] * 24
 
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"]   = [0] * 24
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = [0] * 24
-    
+                for MOEGA in MOEGAS_ADM:
+                    
+                    with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{ MOEGA }/subida_{ DATA_ARQ }.json") as ARQUIVO:
+                        jsSUBIDA_MOEGA   = json.load(ARQUIVO)
 
-                SALDO_VIRADA[i] = {}
+                    SALDOS[FERROVIA][PRODUTO] = jsSUBIDA_MOEGA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"]
+                    SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [sum(x) for x in zip(SALDOS[FERROVIA][PRODUTO], SALDOS[FERROVIA]["SALDO_NAVEGACAO"])]
 
+                    PEDRAS[FERROVIA][PRODUTO] = jsSUBIDA_MOEGA["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"]
+                    PEDRAS[FERROVIA]["GERACAO_VAZIOS"]  = [sum(x) for x in zip(PEDRAS[FERROVIA][PRODUTO], PEDRAS[FERROVIA]["GERACAO_VAZIOS"])]
 
-                with open(f"previsao_trens/src/DESCARGAS/{ MOEGA }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
-                    jsDESCARGA = json.load(ARQUIVO)
+                jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"]    = SALDOS[FERROVIA]["SALDO_NAVEGACAO"]   
+                jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"]  = PEDRAS[FERROVIA]["GERACAO_VAZIOS"]
 
-                PEDRAS = {}
-                SALDOS = {}
-
-                for FERROVIA in ["RUMO", "MRS", "VLI"]:
-
-                    if not FERROVIA in SALDO_VIRADA[i]: SALDO_VIRADA[i][FERROVIA] = {}
-
-                    SALDOS[FERROVIA] = {}
-                    SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [0] * 24
-
-                    PEDRAS[FERROVIA] = {}
-                    PEDRAS[FERROVIA]["GERACAO_VAZIOS"]  = [0] * 24
-
-                    for PRODUTO in PRODUTOS:
-
-                        if not PRODUTO in SALDO_VIRADA[i][FERROVIA]: SALDO_VIRADA[i][FERROVIA][PRODUTO] = {}
-
-                        SALDOS[FERROVIA][PRODUTO] = jsDESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["SALDO"]
-                        SALDOS[FERROVIA]["SALDO_NAVEGACAO"] = [sum(x) for x in zip(SALDOS[FERROVIA][PRODUTO], SALDOS[FERROVIA]["SALDO_NAVEGACAO"])]
-
-                        PEDRAS[FERROVIA][PRODUTO] = jsDESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["PRODUTIVIDADE"]
-                        PEDRAS[FERROVIA]["GERACAO_VAZIOS"]  = [sum(x) for x in zip(PEDRAS[FERROVIA][PRODUTO], PEDRAS[FERROVIA]["GERACAO_VAZIOS"])]
-
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"]   = [sum(x) for x in zip(jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["SALDO_NAVEGACAO"],   SALDOS[FERROVIA]["SALDO_NAVEGACAO"])]
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = [sum(x) for x in zip(jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"], PEDRAS[FERROVIA]["GERACAO_VAZIOS"])]
-
-                    if not i == 0: HR_01 = [SALDO_VIRADA[i-1][FERROVIA][PRODUTO]]
-                    else:          HR_01 = [0]
-
-                    SALDO_VIRADA[i][FERROVIA][PRODUTO] = jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][23]
-
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"] = HR_01 + jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"][:-1]
-                    jsSUBIDA_ADM["SUBIDA"][FERROVIA][SEGMENTO]["ALIVIO_DE_VAZIOS"]  = [0] * 24
-      
-                with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/ADM/subida_{ DATA_ARQ }.json", 'w') as ARQUIVO:
-                    json.dump(jsSUBIDA_ADM, ARQUIVO, indent=4)
+            with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/ADM/subida_{ DATA_ARQ }.json", 'w') as ARQUIVO:
+                json.dump(jsSUBIDA_ADM, ARQUIVO, indent=4)
 
         #endregion
 

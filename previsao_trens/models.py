@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.utils import timezone
-
+import pandas as pd
 from    django.forms.models                                  import model_to_dict
 
 
@@ -54,7 +54,6 @@ class Trem(models.Model):
             with transaction.atomic():
                 
                 TREM_ANTIGO = model_to_dict(self)
-                print(f"Deletando: { TREM_ANTIGO }")
                 self.delete()
 
                 try:  
@@ -76,8 +75,7 @@ class Trem(models.Model):
 
 
                 AJUSTAR_POSICAO_CHEGADA(ACAO="EXCLUIR TREM", PREVISAO_TREM_EXCLUIDO=PREVISAO_TREM, POSICAO=POSICAO_TREM)
-
-
+    
         except Trem.DoesNotExist:
             # Lidar com o caso onde o trem não é encontrado
             pass
@@ -246,6 +244,40 @@ class TremVazio(models.Model):
     qt_contei    = models.IntegerField(blank=True, null=True)
 
     margem       = models.CharField(max_length=100, blank=True)
+
+    def excluir_trem(self):
+        
+        from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import Condensados
+      
+        DATA_ARQ = self.previsao.strftime("%Y-%m-%d")
+        try:
+            PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+            LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
+            DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
+            
+            PARAMETROS = {
+
+                        "PREFIXO"       : 0,
+                        "FERROVIA"      : self.ferrovia,
+                        "HORA"          : self.previsao.hour,
+                        "MARGEM"        : self.margem,
+                        "DIA_LOGISTICO" : DIA_LOGISTICO,
+                        "QT_GRAOS"      : 0,
+                        "QT_FERTI"      : 0,
+                        "QT_CELUL"      : 0,
+                        "QT_ACUCA"      : 0,
+                        "QT_CONTE"      : 0,
+
+            }
+            
+            Condensados().inserirTrem(PARAMETROS)
+
+        except IndexError:
+            pass
+            
+
+        
+        self.delete()
 
     def __str__(self):
         return self.prefixo

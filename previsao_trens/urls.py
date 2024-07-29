@@ -28,7 +28,7 @@ urlpatterns = [
     path('detalhe/',                                views.detalhe,                  name="detalhe"),
     path('ocupacao_terminais/',                     views.ocupacao_terminais,       name="ocupacao_terminais"),
 
-    path('programacao_subida/',                     views.programacao_subida,     name="programacao_subida"),
-    path('previsao_subida/',                        views.previsao_subida,        name="previsao_subida"),
-    path('editar_trem_subida/<int:id>/',            views.editar_trem_subida,     name="editar_trem_subida"),
+    path('programacao_subida/',                     views.programacao_subida,       name="programacao_subida"),
+    path('previsao_subida/',                        views.previsao_subida_view,     name="previsao_subida"),
+    path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida"),
 ]

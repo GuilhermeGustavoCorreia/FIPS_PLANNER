@@ -27,14 +27,14 @@ from    previsao_trens.packages.CRIAR_TREM.ATUALIZAR_POSICAO import AJUSTAR_POSI
 import  previsao_trens.packages.descarga.CARREGAR_PAGINA as CARREGAR_DESCARGA
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
 
-from previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA, CARREGAR_PREVISAO_SUBIDA
-from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
+from    previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA, CARREGAR_PREVISAO_SUBIDA
+from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
 
-from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO, Condensados
-from previsao_trens.packages.DETELHE.CARREGAR_PAGINA            import CARREGAR_RELATORIO_DETALHE
-from previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA import CARREGAR_RELATORIO_OCUPACAO
-from previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML   import DESCARGA_HTML
-from previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDAR_RESTRICAO
+from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO, Condensados
+from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA            import CARREGAR_RELATORIO_DETALHE
+from    previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA import CARREGAR_RELATORIO_OCUPACAO
+from    previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML   import DESCARGA_HTML
+from    previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDAR_RESTRICAO
 
 from    .forms      import UploadFileForm
 from    io          import TextIOWrapper
@@ -821,7 +821,6 @@ def programacao_subida(request):
     
     return render(request, 'OPERACAO/PROG_SUBIDA.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
 
-
 @login_required
 def editar_trem_subida(request, id):
 
@@ -861,6 +860,8 @@ def ocupacao_terminais(request):
         #CARREGA A PAGINA
         RELATORIO = CARREGAR_RELATORIO_OCUPACAO()
         return render(request, 'RELATORIO_OCUPACAO.html', {"RELATORIO": RELATORIO}) 
+
+#region PREVISAO DE SUBIDA
 
 @login_required
 def previsao_subida(request):
@@ -958,3 +959,26 @@ def previsao_subida(request):
     TABELAS = CARREGAR_PREVISAO_SUBIDA()
 
     return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': form, "TABELAS": TABELAS, 'MODAL_OPEN': MODAL_OPEN})
+
+def carregar_tabela_de_previsoes_subida():
+
+    trens_margem_direita  = TremVazio.objects.filter(margem='DIREITA')
+    trens_margem_esquerda = TremVazio.objects.filter(margem='ESQUERDA')
+
+    return {"direita": trens_margem_direita, "esquerda": trens_margem_esquerda}
+
+@login_required
+def previsao_subida_view(request):
+
+    previsoes = carregar_tabela_de_previsoes_subida()
+
+    return render(request, 'previsao_subida.html', {'previsoes': previsoes})
+
+
+def excluir_trem_subida_view(request, id_trem_vazio):
+
+    trem = TremVazio.objects.get(pk=id_trem_vazio)
+    trem.excluir_trem()
+
+    return redirect('previsao_subida')
+#endregion

@@ -9,9 +9,13 @@
 
 <header class="header">
     
+    <button class="navbar-toggle" id="navbar-toggle">
+      ☰
+    </button>
+
     <img src="{% static 'imagens/logo-fips-horizontal.png' %}" class="header__logo">
   
-    <nav class="nav__menu__principal">
+    <nav id="nav__menu__principal" class="nav__menu__principal">
       
         <ul class="menu__principal">
         <li class="item__do__menu"><a href="{% url 'restricao' %}"> Restrições </a></li>
@@ -36,9 +40,11 @@
         <li class="item__do__menu"><a>  Operação  </a>
           
           <ul class="submenu">
+            
             <li class="submenu-lista"><a class="subitem"  href="{% url 'previsao_subida' %}">Previsão de Subida    </a></li>
             <li class="submenu-lista"><a class="subitem"  href="{% url 'programacao_subida' %}">Programação de Subida </a></li>
-            <li class="submenu-lista"><a class="subitem">Ocupação de Linhas    </a></li>
+            <!--<li class="submenu-lista"><a class="subitem">Ocupação de Linhas    </a></li>-->
+
           </ul>
 
         </li>

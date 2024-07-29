@@ -148,4 +148,20 @@ dialog::backdrop {
 
 }
 
+.active{
+    display: block;
+}
+
 dialog{ overflow: hidden; border-radius: 5px; border: none; }
+
+@media (max-width: 768px) {
+
+    .CONTEUDO__PADRAO{margin-top: 9vh;}
+    .navbar-toggle {
+        display: block;
+    }
+
+    header{
+        height: 7vh  !important;  
+    }
+}

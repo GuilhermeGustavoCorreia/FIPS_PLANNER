@@ -1,0 +1,40 @@
+body{user-select: none;}
+.tbl-prev-subida        { 
+    
+    border-collapse: collapse;
+    text-align:      center; 
+    overflow:        hidden;
+    box-shadow:      0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius:   7px;
+    
+}
+
+h2  { margin-top: 20px;}
+
+.tbl-prev-subida thead  { background-color: var(--azul-profundo-m); color: white; }
+.tbl-prev-subida tbody  { font-size: 0.9rem; }
+.tbl-prev-subida td,
+.tbl-prev-subida th     {padding: 5px 10px }
+
+.tbl-prev-subida tbody td:nth-child(11),
+.tbl-prev-subida tbody td:nth-child(12),
+.tbl-prev-subida tbody td:nth-child(13),
+.tbl-prev-subida tbody td:nth-child(14),
+.tbl-prev-subida tbody td:nth-child(15){min-width: 50px;}
+
+.tbl-prev-subida tbody tr:nth-child(even)        { background-color: #f2f2f2; }
+.tbl-prev-subida tbody tr:nth-child(odd)         { background-color: #ffff;   }
+
+.tbl-prev-subida tbody tr:nth-child(even):hover  { background-color: var(--neutro); }
+.tbl-prev-subida tbody tr:nth-child(odd):hover   { background-color: var(--neutro); }
+
+.icone-excluir{ 
+
+    height:     1.5rem; 
+    cursor:     pointer; 
+    fill:       var(--cinza-chumbo-c);     
+    padding:    0 0.5rem;
+
+}
+
+.icone-excluir:hover{fill: darkred;}
