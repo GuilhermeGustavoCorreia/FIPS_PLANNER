@@ -816,8 +816,6 @@ class SUBIDA_DE_VAZIOS:
                 
                 if len(TABELA_DE_PST) > 0:
                     
-                    print(TABELA_DE_PST)
-                    
                     TABELA_LOTES_FINAIS = TABELA_DE_PST[TABELA_DE_PST["SALDO"] == 0]
 
                     if len(TABELA_LOTES_FINAIS) > 0:
@@ -825,15 +823,6 @@ class SUBIDA_DE_VAZIOS:
                         ID_LINHA_MAIS_PROXIMA = TABELA_LOTES_FINAIS['DIFERENCA_VAGOES'].idxmin()
                         TIPO_DESC_SELECIONADO = TABELA_LOTES_FINAIS.loc[ID_LINHA_MAIS_PROXIMA]
                         ALIVIAR  = True
-
-
-                    # TABELA_DE_PST = TABELA_DE_PST[TABELA_DE_PST["DIFERENCA_VAGOES"] >= 0]
-                    
-                    # elif len(TABELA_DE_PST) > 0:
-        
-                    #     ID_LINHA_MAIS_PROXIMA = TABELA_DE_PST['DIFERENCA_VAGOES'].idxmin()
-                    #     TIPO_DESC_SELECIONADO = TABELA_DE_PST.loc[ID_LINHA_MAIS_PROXIMA]
-                    #     TIPO_DESC_SELECIONADO["VAGOES"] = TIPO_DESC_SELECIONADO["VAGOES_NESC."]
 
                     else: return None, None, 
 
@@ -1660,10 +1649,7 @@ class SUBIDA_DE_VAZIOS:
                 FIFO = __GESTAO_DE_FIFO_VALONGO_MRS__(VAGOES_NOS_TEMRINAS, VAGOES_DA_LINHA_4000, PARAMETROS_LINHA_VALONGO)
                 ALIVIO = FIFO[0]
                 ALIVIAR_LINHA = FIFO[1]
-                
-                if i < 24: 
 
-                    print(f"[{i}] - {ALIVIO}")
 
 
 

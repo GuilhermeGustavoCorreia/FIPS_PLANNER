@@ -244,40 +244,30 @@ class TremVazio(models.Model):
     qt_contei    = models.IntegerField(blank=True, null=True)
 
     margem       = models.CharField(max_length=100, blank=True)
-
-    def excluir_trem(self):
+    
+    def save(self, *args, **kwargs):
         
+        from  previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2 import Condensados
+
+        super().save(*args, **kwargs)
+
+        dict_trem = model_to_dict(self)
+        Condensados().inserirTrem(dict_trem)
+
+    def delete(self, *args, **kwargs):
+
         from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import Condensados
-      
-        DATA_ARQ = self.previsao.strftime("%Y-%m-%d")
+        from django.forms.models import model_to_dict
+
         try:
-            PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-            LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
-            DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
             
-            PARAMETROS = {
-
-                        "PREFIXO"       : 0,
-                        "FERROVIA"      : self.ferrovia,
-                        "HORA"          : self.previsao.hour,
-                        "MARGEM"        : self.margem,
-                        "DIA_LOGISTICO" : DIA_LOGISTICO,
-                        "QT_GRAOS"      : 0,
-                        "QT_FERTI"      : 0,
-                        "QT_CELUL"      : 0,
-                        "QT_ACUCA"      : 0,
-                        "QT_CONTE"      : 0,
-
-            }
-            
-            Condensados().inserirTrem(PARAMETROS)
+            dict_trem = model_to_dict(self)
+            Condensados().excluirTrem(dict_trem)
 
         except IndexError:
             pass
-            
 
-        
-        self.delete()
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.prefixo

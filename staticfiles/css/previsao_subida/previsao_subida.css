@@ -38,3 +38,15 @@ h2  { margin-top: 20px;}
 }
 
 .icone-excluir:hover{fill: darkred;}
+
+.SEM_NAVEGACAO{
+
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.SEM_NAVEGACAO img{
+    
+    width: 20%;
+}

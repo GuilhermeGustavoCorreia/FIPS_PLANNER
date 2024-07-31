@@ -20,3 +20,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# “Para se livrar dos nossos medos e sofrimentos deve-se fazer exatamente o que se teme. Enfrentando seu medo. 
+# Se fizer isso, descobrirá que nada do que temia aconteceu.
+# As impressões dolorosas desaparecerão à medida que as boas e agradáveis irão se verificando.”

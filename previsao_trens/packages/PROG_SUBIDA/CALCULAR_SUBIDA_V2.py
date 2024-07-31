@@ -2,7 +2,7 @@
 import os
 import json
 import pandas as pd
-
+from datetime import timedelta
 
 DIRETORIO_SUBIDA    = "previsao_trens/src/SUBIDA"
 CHAVES_SUBIDA       = ["SALDO_NAVEGACAO",   "GERACAO_DE_VAZIOS",    "GERACAO_EDITADA",  "ALIVIO_DE_VAZIOS", "ALIVIO_EDITADO", "SALDO_DE_VAZIOS" ]
@@ -48,7 +48,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         #region MONTANDO TERMINAIS_SUBIDA   (full)
         
         for TERMINAL in self.TERMINAIS_DO_CALCULO:
-            print(TERMINAL)
+
             try:    
             
                 SEGMENTO  = self.INFOS[TERMINAL]["SEGMENTO"]
@@ -86,9 +86,6 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                         
                         with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{TERMINAL}/subida_{DATA_ARQ}.json") as ARQUIVO:
                             self.jsSUBIDAS[TERMINAL][DATA_ARQ] = json.load(ARQUIVO)
-                        
-                        if DATA_ARQ == self.LISTA_DATA_ARQ[0] and TERMINAL == "ADM":
-                            print(f" E - ({DATA_ARQ}) - {self.jsSUBIDAS[TERMINAL][DATA_ARQ]["SUBIDA"][FERROVIA][SEGMENTO]["GERACAO_DE_VAZIOS"]}")
                             
 
                         if DATA_ARQ == self.LISTA_DATA_ARQ[0]:
@@ -1025,7 +1022,6 @@ class Condensados():
         self.PERIODO_VIGENTE    = self.PERIODO_VIGENTE.drop(self.PERIODO_VIGENTE.index[0])
         self.LISTA_DATA_ARQ     = self.PERIODO_VIGENTE["DATA_ARQ"].tolist()
         
-
         self.full_CONDENSADOS   = {"DIREITA":  {"RUMO": {}, "MRS": {}, "VLI": {}, "SAIDAS": {}}, "ESQUERDA": {"RUMO": {}, "MRS": {}, "VLI": {}, "SAIDAS": {}}}
         self.jsCONDENSADOS      = {}
         
@@ -1095,36 +1091,76 @@ class Condensados():
 
         pass
 
-    def inserirTrem(self, PARAMETROS):
+    def inserirTrem(self, dict_trem):
 
+        TIPO_VAGOES      = ["QT_GRAOS", "QT_FERTI", "QT_CELUL", "QT_ACUCA", "QT_CONTE"]
+        TIPO_VAGOES_TREM = ["qt_graos", "qt_acuca","qt_celul", "qt_contei", "qt_ferti", "qt_graos"]
+        SEGMENTOS        = ["GRAO", "FERTILIZANTE", "CELULOSE", "ACUCAR", "CONTEINER"] 
 
-        TIPO_VAGOES = ["QT_GRAOS", "QT_FERTI", "QT_CELUL", "QT_ACUCA", "QT_CONTE"]
-        SEGMENTOS   = ["GRAO", "FERTILIZANTE", "CELULOSE", "ACUCAR", "CONTEINER"] 
+        dict_trem["previsao"]  = dict_trem["previsao"] - timedelta(hours=1)
 
+        DATA_ARQ    = dict_trem['previsao'].strftime('%Y-%m-%d')
 
-        LINHA       = self.PERIODO_VIGENTE[self.PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]]
-        DATA_ARQ    = LINHA['DATA_ARQ'].values[0]
+        LINHA       = self.PERIODO_VIGENTE[self.PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]    
         INDEX       = LINHA.index[0]
         
-        HORA        = (int(PARAMETROS["HORA"]) - 1)
-        MARGEM      = PARAMETROS["MARGEM"]
-        FERROVIA    = PARAMETROS["FERROVIA"]
-        PREFIXO     = PARAMETROS["PREFIXO"]
+        HORA        = int(dict_trem["previsao"].hour)
+
+        MARGEM      = dict_trem["margem"]
+        FERROVIA    = dict_trem["ferrovia"]
+        PREFIXO     = dict_trem["prefixo"]
         
         self.__abrir()
-        
+
+        print(f"ESTAMOS AQUI: { dict_trem }")
+
+        #AQUI INSERE OS VAGOES, ACONTECE UM FOR POR QUE VC PODE INSERIR MAIS DE UM TIPO DE VAGAO POR TREM QUE SOBE
         for i, SEGMENTO in enumerate(TIPO_VAGOES):
 
             COLUNA = HORA + (24 * (INDEX - 1))
 
-            if not PARAMETROS[SEGMENTO] == "":
+            if not dict_trem[TIPO_VAGOES_TREM[i]] == "" and not dict_trem[TIPO_VAGOES_TREM[i]] == None:
 
-                VAGOES = int(PARAMETROS[SEGMENTO])
+                VAGOES = int(dict_trem[TIPO_VAGOES_TREM[i]])
                 self.full_CONDENSADOS[MARGEM]["SAIDAS"][SEGMENTOS[i]][COLUNA] = VAGOES
+
+        
+
 
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]  = PREFIXO
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"][HORA] = FERROVIA
 
+        print(f"Inserindo: {PREFIXO} {MARGEM} {DATA_ARQ} {HORA} em {self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]}")
         self.__salvar()
 
+        SUBIDA_DE_VAZIOS().ATUALIZAR()
+
+    def excluirTrem(self, dict_trem):
+
+        TIPO_VAGOES         = ["QT_GRAOS", "QT_FERTI", "QT_CELUL", "QT_ACUCA", "QT_CONTE"]
+        SEGMENTOS           = ["GRAO", "FERTILIZANTE", "CELULOSE", "ACUCAR", "CONTEINER"] 
+
+        dict_trem["previsao"]  = dict_trem["previsao"] - timedelta(hours=1)
+
+        DATA_ARQ    = dict_trem['previsao'].strftime('%Y-%m-%d')
+        LINHA       = self.PERIODO_VIGENTE[self.PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]    
+        INDEX       = LINHA.index[0]
+
+        HORA        = int(dict_trem["previsao"].hour)
+        MARGEM      = dict_trem["margem"]
+
+
+        self.__abrir()
+
+        for i, SEGMENTO in enumerate(TIPO_VAGOES):
+
+            COLUNA = HORA + (24 * (INDEX - 1))
+
+            self.full_CONDENSADOS[MARGEM]["SAIDAS"][SEGMENTOS[i]][COLUNA] = 0
+
+
+        self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]  = 0
+        self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"][HORA] = 0
+
+        self.__salvar()
         SUBIDA_DE_VAZIOS().ATUALIZAR()

@@ -50,9 +50,7 @@ class mudarElemento {
   
 function celula_modo_edicao(celula_selecionada){
 
-    //console.log(`EDITANDO CÉLULA: ${editando_celula} CELULA SELECIONADA: ${celula_selecionada.getAttribute('name')}`)
-
-    //#region CONDENSADOS 
+      //#region CONDENSADOS 
 
     if ((editando_celula === false) && (celula_selecionada.getAttribute('name') === "SALDO_VIRADA_CONDENSADOS")) {
         
@@ -173,62 +171,66 @@ CELULAS_PREFIXO.forEach(CELULA => {
 
 let HORA   = ""
 
-function MOSTRAR_VAGOES_FORMULARIO(MARGEM, FERROVIA, HORA){
+function MOSTRAR_VAGOES_FORMULARIO(MARGEM, FERROVIA, HORA, DIA_LOGISTICO){
 
     let NAME    = `CONDENSADOS_${FERROVIA}`;
     let CELULAS = document.querySelectorAll(`[name="${NAME}"]`);
 
-    let CELULAS_FILTRADAS = Array.from(CELULAS).filter(CELULA => CELULA.dataset.margem === MARGEM && CELULA.dataset.hora === HORA);
+    let CELULAS_FILTRADAS = Array.from(CELULAS).filter(CELULA => CELULA.dataset.margem === MARGEM && CELULA.dataset.hora === HORA && CELULA.dataset.dia === DIA_LOGISTICO);
     
-
     let CELULA_GRAO = CELULAS_FILTRADAS.find(CELULA => CELULA.dataset.segmento === "GRAO");
-    if (CELULA_GRAO)    {document.getElementById("FRM_QT_GRAO").innerHTML = CELULA_GRAO.innerHTML;} 
-    else                {document.getElementById("FRM_QT_GRAO").innerHTML = 0 }
+    if (CELULA_GRAO)    { document.getElementById("FRM_QT_GRAO").innerHTML = CELULA_GRAO.innerHTML; } 
+    else                { document.getElementById("FRM_QT_GRAO").innerHTML = 0 }
 
     let CELULA_FERT = CELULAS_FILTRADAS.find(CELULA => CELULA.dataset.segmento === "FERTILIZANTE");
-    if (CELULA_FERT)    {document.getElementById("FRM_QT_FERTILIZANTE").innerHTML = CELULA_FERT.innerHTML;} 
-    else                {document.getElementById("FRM_QT_FERTILIZANTE").innerHTML = 0 }
+    if (CELULA_FERT)    { document.getElementById("FRM_QT_FERTILIZANTE").innerHTML = CELULA_FERT.innerHTML; } 
+    else                { document.getElementById("FRM_QT_FERTILIZANTE").innerHTML = 0 }
 
     let CELULA_CELU = CELULAS_FILTRADAS.find(CELULA => CELULA.dataset.segmento === "CELULOSE");
-    if (CELULA_CELU)    {document.getElementById("FRM_QT_CELULOSE").innerHTML = CELULA_CELU.innerHTML;} 
-    else                {document.getElementById("FRM_QT_CELULOSE").innerHTML = 0 }
+    if (CELULA_CELU)    { document.getElementById("FRM_QT_CELULOSE").innerHTML = CELULA_CELU.innerHTML; } 
+    else                { document.getElementById("FRM_QT_CELULOSE").innerHTML = 0 }
     
     let FRM_QT_ACUCAR = CELULAS_FILTRADAS.find(CELULA => CELULA.dataset.segmento === "ACUCAR");
-    if (FRM_QT_ACUCAR)  {document.getElementById("FRM_QT_ACUCAR").innerHTML = FRM_QT_ACUCAR.innerHTML;} 
-    else                {document.getElementById("FRM_QT_ACUCAR").innerHTML = 0 } 
-
-    //console.log(`NOME: ${NAME} - MARGEM: ${MARGEM} HORA: ${HORA}`)
-    //console.log(`CELULAS:           ${CELULAS}`)
-    
-    /*console.log(`CELULAS FILTRADAS: ${CELULAS_FILTRADAS}`)
-    console.log(`EXEMPLO: ${CELULAS[0]}`)
-    console.log(CELULAS[0].tagName); // Retorna a tag do elemento (no caso, "TD" ou "TH" para células de tabela)
-    console.log(CELULAS[0].colSpan); // Retorna o número de colunas que a célula ocupa em uma tabela
-    console.log(CELULAS[0].rowSpan); // Retorna o número de linhas que a célula ocupa em uma tabela
-    console.log(CELULAS[0].classList);*/
-
-    /*console.log(`GRAOS:         ${CELULA_GRAO}`)
-    console.log(`FERTILIZANTE:  ${CELULA_FERT}`)
-    console.log(`CELULOSE:      ${CELULA_CELU}`)
-    console.log(`ACUCAR:        ${FRM_QT_ACUCAR}`)*/
+    if (FRM_QT_ACUCAR)  { document.getElementById("FRM_QT_ACUCAR").innerHTML = FRM_QT_ACUCAR.innerHTML; } 
+    else                { document.getElementById("FRM_QT_ACUCAR").innerHTML = 0 } 
 
 }   
 
 const modal = document.querySelector(".DIALOG_TREM_VAZIO");
+
+function formartar_hora(data){
+
+        const year      = data.getFullYear();
+        const month     = String(data.getMonth() + 1).padStart(2, '0');
+        const day       = String(data.getDate()).padStart(2, '0');
+        const hours     = String(data.getHours()).padStart(2, '0');
+        const minutes   = String(data.getMinutes()).padStart(2, '0');
+        const seconds   = String(data.getSeconds()).padStart(2, '0');
+
+
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
+}
+
 function criar_trem_subida(event) {
     
     let TITULO          = document.getElementById("TITULO_MODAL")
     let COLUNA          = event.target.dataset.hora;
     let ACAO            = document.getElementById("ACAO_FORMULARIO_TREM_VAZIO");
-    let DIA_LOGISTICO   = document.getElementById("DIA_LOGISTICO_FORM");
+    let lbl_DIA_LOGISTICO   = document.getElementById("DIA_LOGISTICO_FORM");
     let HORA_FRM        = document.getElementById("HORA_FORM");
-    let MARGEM_FRM      = document.getElementById("MARGEM_FORM");
+    let MARGEM_FRM      = document.getElementById("margem_form_subida");
 
-    
+    document.getElementById("id_ferrovia_0").checked = true
 
-    DIA_LOGISTICO.value = event.target.dataset.dia;
-    ACAO.value          = "CRIAR_TREM_SUBIDA";
-    MARGEM              = event.target.dataset.margem;
+    let previsao = new Date(`${event.target.parentNode.dataset.data_arq}T00:00:00`);   
+    previsao.setHours(Number(COLUNA));
+    DIA_LOGISTICO = event.target.dataset.dia
+    document.getElementById('id_previsao').value = formartar_hora(previsao);
+    document.getElementById('id_margem').value   = MARGEM;
+
+    lbl_DIA_LOGISTICO.value     = DIA_LOGISTICO;
+    ACAO.value              = "CRIAR_TREM_SUBIDA";
+    MARGEM                  = event.target.dataset.margem;
     HORA_FRM.value          = COLUNA;
     HORA                    = COLUNA;
     MARGEM_FRM.value    = MARGEM;
@@ -236,14 +238,16 @@ function criar_trem_subida(event) {
 
     BTN_CRIAR_TREM_SUBIDA.disabled = true
 
-    MOSTRAR_VAGOES_FORMULARIO(MARGEM, "RUMO", COLUNA)
+    MOSTRAR_VAGOES_FORMULARIO(MARGEM, "RUMO", COLUNA, DIA_LOGISTICO)
     modal.showModal()
 
 }
 
 function ATUALIZAR_VAGOES() {
+    
     let FERROVIA = document.querySelector('input[name="ferrovia"]:checked').value;
-    MOSTRAR_VAGOES_FORMULARIO(MARGEM, FERROVIA, HORA)
+    MOSTRAR_VAGOES_FORMULARIO(MARGEM, FERROVIA, HORA, DIA_LOGISTICO)
+
 }
 
 document.querySelector('dialog').addEventListener('mousedown', event => {

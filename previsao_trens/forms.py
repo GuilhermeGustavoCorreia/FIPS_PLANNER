@@ -85,43 +85,34 @@ class TremVazioForm(forms.ModelForm):
 
     class Meta:
 
-        model   = TremVazio
-        fields  = '__all__'
+        model = TremVazio
+        fields = '__all__'
+        
         widgets = {
-
             'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
-            
             'eot':          TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'EOT'}),
-            
             'ferrovia':     RadioSelect(attrs={'name': 'ferrovia', 'onclick': 'ATUALIZAR_VAGOES()'}),
-
-            'loco_1':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 01'}),
-            'loco_2':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 02'}),
-            'loco_3':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 03'}),
-            'loco_4':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 04'}),
-            'loco_5':      TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 05'}),
-
-            'qt_graos':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'GRAO',             'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_ferti':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'FERTILIZANTE',     'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_celul':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE',         'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_acuca':       NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR',           'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-            'qt_contei':      NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER',        'onchange': 'VALIDAR_QUANTIDADE(this)'}),
-
-            'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}, format='%Y-%m-%dT%H:%M'),
-            'margem':       RadioSelect(attrs={'name': 'margem'})
+            'loco_1':       TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 01'}),
+            'loco_2':       TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 02'}),
+            'loco_3':       TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 03'}),
+            'loco_4':       TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 04'}),
+            'loco_5':       TextInput(attrs={'class': 'INPUT INPUT_P ', 'placeholder': 'Loco 05'}),
+            'qt_graos':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'GRAO', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_ferti':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'FERTILIZANTE', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_celul':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_acuca':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'qt_contei':    NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER', 'onchange': 'VALIDAR_QUANTIDADE(this)'}),
+            'previsao':     DateTimeInput(attrs={'type': 'hidden', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}, format='%Y-%m-%dT%H:%M'),
+            'margem':       RadioSelect(attrs={'type': 'hidden', 'name': 'margem'})
         }
 
-
     def __init__(self, *args, **kwargs):
-        
+
         super(TremVazioForm, self).__init__(*args, **kwargs)
-        self.fields['ferrovia'].choices = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
-        self.fields['margem'].choices   = [('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')]
 
-        # Definindo o valor inicial para 'ferrovia' como 'RUMO'
-        self.initial['ferrovia'] = 'RUMO'
-
-        # Tornando os campos específicos não obrigatórios
+        self.fields['ferrovia'].choices     = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
+        self.fields['margem'].choices       = [('DIREITA', 'DIREITA'), ('ESQUERDA', 'ESQUERDA')]
+        self.initial['ferrovia']            = 'RUMO'
         self.fields['loco_2'].required      = False
         self.fields['loco_3'].required      = False
         self.fields['loco_4'].required      = False
@@ -131,7 +122,14 @@ class TremVazioForm(forms.ModelForm):
         self.fields['qt_celul'].required    = False
         self.fields['qt_acuca'].required    = False
         self.fields['qt_contei'].required   = False
-
         self.fields['previsao'].required    = False
         self.fields['margem'].required      = False
 
+    def clean_previsao(self):
+
+        previsao = self.cleaned_data.get('previsao')
+        
+        if TremVazio.objects.filter(previsao=previsao).exists():
+            raise forms.ValidationError('Já existe um trem com esta previsão.')
+        
+        return previsao

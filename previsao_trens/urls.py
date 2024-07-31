@@ -30,5 +30,7 @@ urlpatterns = [
 
     path('programacao_subida/',                     views.programacao_subida,       name="programacao_subida"),
     path('previsao_subida/',                        views.previsao_subida_view,     name="previsao_subida"),
-    path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida"),
+
+    path('previsao_subida/criar_trem_subida',                  views.criar_trem_subida_view,        name="criar_trem_subida"),
+    path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida")
 ]

@@ -63,7 +63,6 @@ def CARREGAR_PROG_SUBIDA_OLD():
 
     for TERMINAL in lst_TERMINAIS_ATIVOS:
         
-        print(TERMINAL)
         
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
         DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS]
@@ -140,6 +139,7 @@ def CARREGAR_PROG_SUBIDA():
 
     SAIDA = {
         "D": {
+            "DATA_ARQ": "",
             "LINHA_4K": "",
             "TERMINAIS": {
 
@@ -152,6 +152,7 @@ def CARREGAR_PROG_SUBIDA():
             "CONDENSADOS": {}
         },
         "D1": {
+            "DATA_ARQ": "",
             "LINHA_4K": "",
             "TERMINAIS": {
 
@@ -193,17 +194,22 @@ def CARREGAR_PROG_SUBIDA():
     
     for i, DIA_LOGISTICO in enumerate(DIAS_LOGISTICOS):
         
+       
+        PERIODO_VIGENTE = PERIODO_VIGENTE.drop(PERIODO_VIGENTE.index[0])
+        DATA_ARQ        = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO].iloc[0]['DATA_ARQ']
+        
+        SAIDA[CHAVES[i]]["DATA_ARQ"] = DATA_ARQ
+        print(DATA_ARQ)
         #region ABRINDO TERMINAIS   [rgb(255,77,197, 0.1)]
         for TERMINAL in lst_TERMINAIS_ATIVOS:
             
             FERROVIAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
-            DATA_ARQ = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO].iloc[0]['DATA_ARQ']
+           
             
             with open(f"previsao_trens/src/SUBIDA/TERMINAIS_SUBIDA/{ TERMINAL }/subida_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
                 jsSUBIDA = json.load(ARQUIVO_DESCARGA)
 
             PATIO = jsSUBIDA["PATIO"]
-            if PATIO == "PCX" and i == 0: print(f"TERMINAL DE PCX { TERMINAL }")
             #APENAS COLOCA NA DESCARGA A INFORMACAO DO QUE ESTA ATIVO NO TERMINAL (FERROVIA E PRODUTO)        
             jsSUBIDA["SUBIDA"] = {chave: valor for chave, valor in jsSUBIDA["SUBIDA"].items() if chave in FERROVIAS_ATIVAS}
             

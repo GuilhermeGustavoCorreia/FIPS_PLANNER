@@ -468,6 +468,7 @@ def upload_file_view(request):
 
                     
                 return redirect('configuracao')
+    
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form})
@@ -697,7 +698,7 @@ def configuracao(request):
     TERMIANIS_ATIVOS = ABRIR_TERMINAIS_ATIVOS()
 
     if request.method == 'GET':
-        print(request)
+
         ACAO = request.GET.get('ACAO', 0)
 
         if  ACAO == "BAIXAR_PLANILHA":
@@ -745,45 +746,6 @@ def programacao_subida(request):
                 EDITAR_SALDO_VIRADA_TERMINAL(PARAMETROS)
                 SUBIDA_DE_VAZIOS().ATUALIZAR()
 
-            if ACAO == "CRIAR_TREM_SUBIDA":
-                
-                FORM_NOVO_TREM = TremVazioForm(request.POST)
-                
-                if FORM_NOVO_TREM.is_valid():
-
-                    PARAMETROS = {
-
-                        "PREFIXO"       : REQUISICAO['prefixo'][0],
-                        "FERROVIA"      : REQUISICAO['ferrovia'][0],
-                        "HORA"          : REQUISICAO['HORA'][0],
-                        "MARGEM"        : REQUISICAO['MARGEM'][0],
-                        "DIA_LOGISTICO" : REQUISICAO['DIA_LOGISTICO'][0],
-                        "QT_GRAOS"      : REQUISICAO['qt_graos'][0],
-                        "QT_FERTI"      : REQUISICAO['qt_ferti'][0],
-                        "QT_CELUL"      : REQUISICAO['qt_celul'][0],
-                        "QT_ACUCA"      : REQUISICAO['qt_acuca'][0],
-                        "QT_CONTE"      : REQUISICAO['qt_contei'][0],
-
-                    }
-
-                    NOVO_TREM        = FORM_NOVO_TREM.save(commit=False)
-                    NOVO_TREM.margem = PARAMETROS["MARGEM"]
-
-                    PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-                    LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == PARAMETROS["DIA_LOGISTICO"]]
-                    DATA_ARQ            = LINHA['DATA_ARQ'].values[0]
-
-                    DATA = datetime.strptime(DATA_ARQ, "%Y-%m-%d")
-                    HORA = time(int(PARAMETROS["HORA"]), 0)
-                    NOVO_TREM.previsao = datetime.combine(DATA, HORA)
-
-                    NOVO_TREM.save()
-                    Condensados().inserirTrem(PARAMETROS)
-
-                else:
-
-                    messages.error(request, FORM_NOVO_TREM.errors)
-
             if ACAO == "EDITAR_BUFFER":
 
                 PARAMETROS = {
@@ -819,7 +781,7 @@ def programacao_subida(request):
     TABELAS_SUBIDA = CARREGAR_PROG_SUBIDA()
     FORM_NOVO_TREM = TremVazioForm()
     
-    return render(request, 'OPERACAO/PROG_SUBIDA.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
+    return render(request, 'programacao_subida.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
 
 @login_required
 def editar_trem_subida(request, id):
@@ -861,104 +823,8 @@ def ocupacao_terminais(request):
         RELATORIO = CARREGAR_RELATORIO_OCUPACAO()
         return render(request, 'RELATORIO_OCUPACAO.html', {"RELATORIO": RELATORIO}) 
 
-#region PREVISAO DE SUBIDA
 
-@login_required
-def previsao_subida(request):
-    
-    MODAL_OPEN = False
-
-    form = TremVazioForm()
-    
-    if request.method == 'POST': 
-        
-        REQUISICAO  = dict(request.POST) 
-        ACAO        = REQUISICAO["ACAO"][0]
-
-        if ACAO == "CRIAR_TREM":
-
-            with transaction.atomic():
-                
-                FORM_NOVO_TREM = TremVazioForm(request.POST)
-                
-                if FORM_NOVO_TREM.is_valid():
-
-                    FORM_NOVO_TREM.save()
-
-                else:
-
-                    messages.error(request, FORM_NOVO_TREM.errors)  
-
-        if ACAO == "EDITAR_TREM":  
-
-            with transaction.atomic():
-                
-                ID_TREM = REQUISICAO["ID_TREM"][0]
-
-                FORM_NOVO_TREM = TremVazioForm(request.POST) 
-                if FORM_NOVO_TREM.is_valid():
-
-                    TREM_ANTIGO = TremVazio.objects.get(pk=ID_TREM) 
-                    TREM_ANTIGO.delete()
-
-                    FORM_NOVO_TREM.save()
-                    
-        if ACAO == "EXCLUIR_TREM": 
-
-            ID_TREM = REQUISICAO["ID_TREM"][0]
-            TREM_ANTIGO = TremVazio.objects.get(pk=ID_TREM) 
-
-            DATA_ARQ = TREM_ANTIGO.previsao.strftime("%Y-%m-%d")
-            try:
-                PERIODO_VIGENTE     = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-                LINHA               = PERIODO_VIGENTE[PERIODO_VIGENTE['DATA_ARQ'] == DATA_ARQ]
-                DIA_LOGISTICO       = LINHA['NM_DIA'].values[0]
-                
-                PARAMETROS = {
-
-                            "PREFIXO"       : 0,
-                            "FERROVIA"      : TREM_ANTIGO.ferrovia,
-                            "HORA"          : TREM_ANTIGO.previsao.hour,
-                            "MARGEM"        : TREM_ANTIGO.margem,
-                            "DIA_LOGISTICO" : DIA_LOGISTICO,
-                            "QT_GRAOS"      : 0,
-                            "QT_FERTI"      : 0,
-                            "QT_CELUL"      : 0,
-                            "QT_ACUCA"      : 0,
-                            "QT_CONTE"      : 0,
-
-                }
-                
-                Condensados().inserirTrem(PARAMETROS)
-
-            except IndexError:
-                pass
-                
-
-            
-            TREM_ANTIGO.delete()
-
-    elif request.method == 'GET': 
-
-        REQUISICAO  = dict(request.GET)
-
-        if "ACAO" in REQUISICAO: 
-
-            ACAO = REQUISICAO["ACAO"][0]
-
-            if ACAO == "ACESSAR_TREM":
-
-                ID_TREM = REQUISICAO["ID_TREM"][0]
-                
-                TREM = TremVazio.objects.get(pk=ID_TREM)
-                TREM = model_to_dict(TREM)
-                TREM["previsao"] = TREM["previsao"].strftime('%Y-%m-%d %H:%M')
-
-                return JsonResponse(TREM)
-
-    TABELAS = CARREGAR_PREVISAO_SUBIDA()
-
-    return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': form, "TABELAS": TABELAS, 'MODAL_OPEN': MODAL_OPEN})
+#region PROGRAMACAO DE SUBIDA
 
 def carregar_tabela_de_previsoes_subida():
 
@@ -975,10 +841,34 @@ def previsao_subida_view(request):
     return render(request, 'previsao_subida.html', {'previsoes': previsoes})
 
 
+def criar_trem_subida_view(request):
+
+    if request.method == 'POST':
+
+        form = TremVazioForm(request.POST)
+        
+        if form.is_valid():
+            
+            form.save()
+            return redirect('programacao_subida')
+        
+        else:
+            
+            tabelas = CARREGAR_PROG_SUBIDA()
+            return render(request, 'programacao_subida.html', {'form': form, "TABELAS_SUBIDA": tabelas})  # Renderiza com erros
+    
+    else:
+        
+        form = TremForm()
+    
+    tabelas = CARREGAR_PROG_SUBIDA()
+    return render(request, 'programacao_subida.html', {'form': form, "TABELAS_SUBIDA":tabelas})       
+    
 def excluir_trem_subida_view(request, id_trem_vazio):
 
     trem = TremVazio.objects.get(pk=id_trem_vazio)
-    trem.excluir_trem()
+    trem.delete()
 
     return redirect('previsao_subida')
+
 #endregion
