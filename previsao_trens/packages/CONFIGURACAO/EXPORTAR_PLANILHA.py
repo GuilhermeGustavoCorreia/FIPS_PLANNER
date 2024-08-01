@@ -224,15 +224,15 @@ class EXPORTAR_PLANILHA():
 
     def salvar(self):
         
-        caminho_static  = os.path.join(settings.BASE_DIR, 'static', 'downloads')
+        caminho_static  = os.path.join(settings.STATIC_URL, 'static', 'downloads')
         caminho_arquivo = os.path.join(caminho_static, "PLANILHA_DESCARGA.xlsm")
         self.PLANILHA.save(caminho_arquivo)
 
 def BAIXAR_PLANILHA(USUARIO_LOGADO):
     
     try:
-        PLANILHA = EXPORTAR_PLANILHA()
 
+        PLANILHA = EXPORTAR_PLANILHA()
         PLANILHA.inserir_previsao()
         PLANILHA.inserir_navegacao()
         PLANILHA.inserir_restricao()

@@ -1,6 +1,6 @@
 
 
-.BTN_ATUALIZAR_DESCARGA         { background-color: var(--azul-ceu-e); color: var(--neutro)}
+.BTN_ATUALIZAR_DESCARGA         { background-color: var(--azul-ceu-e); color: white; margin: 14px 0;}
 .BTN_ATUALIZAR_DESCARGA:hover   { background-color: var(--azul-ceu-m);}
 
 

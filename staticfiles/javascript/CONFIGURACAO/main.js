@@ -1,5 +1,5 @@
 
-
+//#region TOOGLES
 $(document).ready(function(){
     $("#SECAO_DESCARGAS_ATIVAS").click(function(){
 
@@ -47,6 +47,7 @@ $(document).ready(function(){
 
   });
 });
+//#endregion
 
 class mudarElemento {
 

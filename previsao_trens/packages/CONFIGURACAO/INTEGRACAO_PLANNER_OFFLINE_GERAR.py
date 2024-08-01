@@ -31,7 +31,7 @@ def BAIXAR_DADOS():
 
     JSON = {
         "HEADER"     : {},
-        "RESTRICOES" : [],
+        "RESTRICOES" : [], 
         "PREVISOES"  : {"D": [],"D+1": [],"D+2": [],"D+3": [],"D+4": [], "SEM_PREVISAO": []},
         "DESCARGAS"	 : {"D": {},"D+1": {},"D+2": {},"D+3": {},"D+4": {}}
     }
@@ -71,7 +71,6 @@ def BAIXAR_DADOS():
 
             JSON["DESCARGAS"][DIA_LOGISTICO][TERMINAL] = f"""{ DESCARGA }"""
 
-            print(type(JSON))
     #endregion
 
     #region INSERINDO AS PREVISOES (nao existem trem sem previsoes)
@@ -81,9 +80,9 @@ def BAIXAR_DADOS():
         DATA = datetime.strptime(LINHA['DATA_ARQ'], '%Y-%m-%d')
 
         queryset = Trem.objects.filter(
-            previsao__year=DATA.year,
-            previsao__month=DATA.month,
-            previsao__day=DATA.day
+            previsao__year  = DATA.year,
+            previsao__month = DATA.month,
+            previsao__day   = DATA.day
         ).order_by('posicao_previsao')
         if queryset.exists():  # Adiciona ao dicionário apenas se o queryset não estiver vazio
     
@@ -112,8 +111,13 @@ def BAIXAR_DADOS():
 
     #endregion
 
-    caminho_static  = os.path.join(settings.BASE_DIR, 'static', 'downloads')
+    caminho_static  = os.path.join(settings.STATIC_ROOT, 'downloads')
     caminho_arquivo = os.path.join(caminho_static, "DADOS.json")
-
+    
+    print(caminho_static)
+    
     with open(caminho_arquivo, 'w') as ARQUIVO_NOME:
         json.dump(JSON, ARQUIVO_NOME, indent=4)
+
+
+    return caminho_arquivo  

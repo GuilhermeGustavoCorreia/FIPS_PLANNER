@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ncma313p1ssm%ao*u24bnmt#tp1*g63um)gneel(6xw8yd+qk1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
 
+ALLOWED_HOSTS = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # settings.py
 LOGGING = {
     'version': 1,
@@ -209,7 +210,14 @@ STATIC_URL = 'static/'
 
 # Diretório onde os arquivos estáticos serão coletados pelo comando collectstatic.
 # Este é o diretório que será usado para servir arquivos estáticos em produção.
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+if not DEBUG:
+    # Diretório onde os arquivos estáticos serão coletados em produção
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+else:
+    # Em desenvolvimento, servimos os arquivos estáticos diretamente
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Lista de diretórios onde o Django irá procurar por arquivos estáticos adicionais.
 # Estes são os diretórios usados durante o desenvolvimento e onde você armazena seus arquivos estáticos.
@@ -220,7 +228,6 @@ STATICFILES_DIRS = [
 # Define a classe de armazenamento para arquivos estáticos.
 # 'CompressedManifestStaticFilesStorage' é uma subclasse de armazenamento do WhiteNoise que
 # cria um manifesto de arquivos estáticos com os arquivos versionados para permitir cache de longo prazo.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 #endregion

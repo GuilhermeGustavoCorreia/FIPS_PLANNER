@@ -27,7 +27,7 @@ urlpatterns = [
     
     path('detalhe/',                                views.detalhe,                  name="detalhe"),
     path('ocupacao_terminais/',                     views.ocupacao_terminais,       name="ocupacao_terminais"),
-
+   
     path('programacao_subida/',                     views.programacao_subida,       name="programacao_subida"),
     path('previsao_subida/',                        views.previsao_subida_view,     name="previsao_subida"),
 

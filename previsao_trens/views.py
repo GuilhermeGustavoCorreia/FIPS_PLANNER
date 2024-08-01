@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http   import require_http_methods
 from django.shortcuts               import redirect
 from django.urls                    import reverse
 from django.forms.models            import model_to_dict
@@ -21,18 +22,18 @@ from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import BAIXAR_DE
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    BAIXAR_DADOS
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER       import    lerDados
 
-from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import VALIDAR_NOVA_PREVISAO, VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
+from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import  VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
 from    previsao_trens.packages.CRIAR_TREM.ATUALIZAR_POSICAO import AJUSTAR_POSICAO_CHEGADA, ALTERAR_POSICAO
 
 import  previsao_trens.packages.descarga.CARREGAR_PAGINA as CARREGAR_DESCARGA
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
 
 from    previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA, CARREGAR_PREVISAO_SUBIDA
-from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA    import editarSaldoViradaVazios, editarSaldoViradaVaziosNaLinha
 
-from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO, Condensados
+from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO
 from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA            import CARREGAR_RELATORIO_DETALHE
 from    previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA import CARREGAR_RELATORIO_OCUPACAO
+from    previsao_trens.packages.RELATORIO_OCUPACAO.carregar_totais_detalhe import  totais_detalhe
 from    previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML   import DESCARGA_HTML
 from    previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDAR_RESTRICAO
 
@@ -715,7 +716,10 @@ def configuracao(request):
         
         elif  ACAO == "GERAR_DADOS_OFFLINE":
 
-            BAIXAR_DADOS()
+            file_url = BAIXAR_DADOS()
+
+            return JsonResponse({'file_url': file_url})
+        
 
     return render(request, 'configuracao.html', {'terminais_ativos': TERMIANIS_ATIVOS, "FORM_CSV": FORM_CSV})
 
@@ -793,17 +797,30 @@ def editar_trem_subida(request, id):
 
     return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': FORM, "TABELAS": TABELAS, 'MODAL_OPEN': True})
 
+
+#region RELATORIO OCUPACAO
 @login_required
 def ocupacao_terminais(request):
   
     REQUISICAO = REQUEST_PARA_DICT(request)
-    
-
-    if "ACAO" in  REQUISICAO:
+    print(REQUISICAO)
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         
-        ACAO = REQUISICAO["ACAO"][0]
+        acao = request.GET.get('acao')
+        
+        if acao == "baixar_total_detalhe":
+           
+            dia_logistico = request.GET.get('dia_logistico')
+            print("REQUISICAO")
+            html_totais_relatorio_detalhe = totais_detalhe(dia_logistico)
+            
+            return JsonResponse({"html_totais_relatorio_detalhe": html_totais_relatorio_detalhe})
 
-        if ACAO == "VIZUALIZAR_DESCARGA":
+    if "acao" in  REQUISICAO:
+        
+        ACAO = REQUISICAO["acao"][0]
+
+        if ACAO == "vizualizar_descarga":
 
             if REQUISICAO["TERMINAL"][0] == "MOEGA X" or REQUISICAO["TERMINAL"][0] == "MOEGA V":
 
@@ -824,6 +841,9 @@ def ocupacao_terminais(request):
         return render(request, 'RELATORIO_OCUPACAO.html', {"RELATORIO": RELATORIO}) 
 
 
+
+#endregion
+
 #region PROGRAMACAO DE SUBIDA
 
 def carregar_tabela_de_previsoes_subida():
@@ -840,7 +860,7 @@ def previsao_subida_view(request):
 
     return render(request, 'previsao_subida.html', {'previsoes': previsoes})
 
-
+@login_required
 def criar_trem_subida_view(request):
 
     if request.method == 'POST':
@@ -863,7 +883,8 @@ def criar_trem_subida_view(request):
     
     tabelas = CARREGAR_PROG_SUBIDA()
     return render(request, 'programacao_subida.html', {'form': form, "TABELAS_SUBIDA":tabelas})       
-    
+
+@login_required   
 def excluir_trem_subida_view(request, id_trem_vazio):
 
     trem = TremVazio.objects.get(pk=id_trem_vazio)

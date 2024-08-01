@@ -176,7 +176,7 @@
             <button class="BOTAO VERDE" type="submit" onclick="BAIXAR_INTEGRACAO_PARA_OFFLINE()">Baixar Dados</button>
 
 
-            <p>Insira abaixo o arquivo gerado pelo Planner Destop.</p>
+            <p>Insira abaixo o arquivo gerado pelo Planner Desktop.</p>
             
             <form method="post" enctype="multipart/form-data" action="{% url 'configuracao' %}">
                 
@@ -193,107 +193,107 @@
 </div>
 
 <script>
-    
-    document.body.addEventListener('keypress', function(e) {
-            
-        if ((editando_celula === true) && (e.which === 13) && (ACAO === "DESCARGAS_ATIVAS")){
 
-            NOVO_VALOR = tbEdicao.value
-
-            $.ajax({
-                url: '/configuracao/',
-                type: 'POST',
-                data: {
-                    'novo_valor':   Number(NOVO_VALOR),
-                    'coluna':       celula_selecionada.getAttribute("headers"),
-                    'linha':        celula_selecionada.id,
-                    'tabela':       tbEdicao.parentNode.parentNode.parentNode.parentNode.id,
-                    'ACAO':         "DESCARGAS_ATIVAS",
-                    'csrfmiddlewaretoken': "{{ csrf_token }}"
-                },
-                success: function(response) {
-
-                    elementoTransformado.voltar_ao_nomral();
-                    celula_selecionada.textContent = response;
-                    editando_celula = false;
-                },
-                error: function(xhr) {
-                    alert("ERRO")
-                }
-            });
-
-        }
+document.body.addEventListener('keypress', function(e) {
         
-        if ((editando_celula === true) && (e.which === 13) && (ACAO === "SUBIDAS_ATIVAS")){
+    if ((editando_celula === true) && (e.which === 13) && (ACAO === "DESCARGAS_ATIVAS")){
 
-            NOVO_VALOR = tbEdicao.value
-
-            $.ajax({
-                url: '/configuracao/',
-                type: 'POST',
-                data: {
-
-                    'NOVO_VALOR':   NOVO_VALOR,
-                    'FERROVIA'  :   FERROVIA,
-                    'TERMINAL'  :   TERMINAL,
-                    'ACAO'      :   "SUBIDAS_ATIVAS",
-                    'csrfmiddlewaretoken': "{{ csrf_token }}"
-
-                },
-                success: function(response) {
-
-                    elementoTransformado.voltar_ao_nomral();
-                    celula_selecionada.textContent = response;
-                    editando_celula = false;
-                },
-                error: function(xhr) {
-                    alert("ERRO")
-                }
-            });
-        }
-        
-        if ((editando_celula === true) && (e.which === 13) && (ACAO === "PXO")){
-
-            NOVO_VALOR = tbEdicao.value
-
-            $.ajax({
-                url: '/configuracao/',
-                type: 'POST',
-                data: {
-                    'NOVO_VALOR':   Number(NOVO_VALOR),
-                    'TIPO':       TIPO_PXO,
-                    'TERMINAL':   TERMINAL,
-                    'ACAO': "PXO",
-                    'csrfmiddlewaretoken': "{{ csrf_token }}"
-                },
-                success: function(response) {
-
-                    elementoTransformado.voltar_ao_nomral();
-                    celula_selecionada.textContent = response;
-                    editando_celula = false;
-                },
-                error: function(xhr) {
-                    alert("ERRO")
-                }
-            });
-
-        }
-});
-
-    function ATUALIZAR_DESCARGA(){
+        NOVO_VALOR = tbEdicao.value
 
         $.ajax({
-        url: '/configuracao/',
-        type: 'POST',
-        data: {
-            'ACAO': "ATUALIZAR_DESCARGA",
-            'csrfmiddlewaretoken': "{{ csrf_token }}"
-        },
-            success:  function(response)  {alert("FOI")},
-            error:    function(xhr)       {alert("ERR")}
+            url: "{% url 'configuracao' %}",
+            type: 'POST',
+            data: {
+                'novo_valor':   Number(NOVO_VALOR),
+                'coluna':       celula_selecionada.getAttribute("headers"),
+                'linha':        celula_selecionada.id,
+                'tabela':       tbEdicao.parentNode.parentNode.parentNode.parentNode.id,
+                'ACAO':         "DESCARGAS_ATIVAS",
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(response) {
+
+                elementoTransformado.voltar_ao_nomral();
+                celula_selecionada.textContent = response;
+                editando_celula = false;
+            },
+            error: function(xhr) {
+                alert("ERRO")
+            }
         });
-    
+
     }
+    
+    if ((editando_celula === true) && (e.which === 13) && (ACAO === "SUBIDAS_ATIVAS")){
+
+        NOVO_VALOR = tbEdicao.value
+
+        $.ajax({
+            url: "{% url 'configuracao' %}",
+            type: 'POST',
+            data: {
+
+                'NOVO_VALOR':   NOVO_VALOR,
+                'FERROVIA'  :   FERROVIA,
+                'TERMINAL'  :   TERMINAL,
+                'ACAO'      :   "SUBIDAS_ATIVAS",
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+
+            },
+            success: function(response) {
+
+                elementoTransformado.voltar_ao_nomral();
+                celula_selecionada.textContent = response;
+                editando_celula = false;
+            },
+            error: function(xhr) {
+                alert("ERRO")
+            }
+        });
+    }
+    
+    if ((editando_celula === true) && (e.which === 13) && (ACAO === "PXO")){
+
+        NOVO_VALOR = tbEdicao.value
+
+        $.ajax({
+            url: "{% url 'configuracao' %}",
+            type: 'POST',
+            data: {
+                'NOVO_VALOR':   Number(NOVO_VALOR),
+                'TIPO':       TIPO_PXO,
+                'TERMINAL':   TERMINAL,
+                'ACAO': "PXO",
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+            },
+            success: function(response) {
+
+                elementoTransformado.voltar_ao_nomral();
+                celula_selecionada.textContent = response;
+                editando_celula = false;
+            },
+            error: function(xhr) {
+                alert("ERRO")
+            }
+        });
+
+    }
+});
+
+function ATUALIZAR_DESCARGA(){
+
+    $.ajax({
+    url: "{% url 'configuracao' %}",
+    type: 'POST',
+    data: {
+        'ACAO': "ATUALIZAR_DESCARGA",
+        'csrfmiddlewaretoken': "{{ csrf_token }}"
+    },
+        success:  function(response)  {alert("FOI")},
+        error:    function(xhr)       {alert("ERR")}
+    });
+
+}
 
 function BAIXAR_PLANILHA(){
     
@@ -301,7 +301,7 @@ function BAIXAR_PLANILHA(){
 
     overlay.style.display = 'block';
     $.ajax({
-    url: '/configuracao/',
+    url: "{% url 'configuracao' %}",
     type: 'GET',
     data: {
         'ACAO': "BAIXAR_PLANILHA",
@@ -314,7 +314,7 @@ function BAIXAR_PLANILHA(){
         .then(blob => {
             
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            const a   = document.createElement('a');
             
             a.href = url;
             a.download = 'PLANILHA_DESCARGA.xlsm';
@@ -337,7 +337,7 @@ function BAIXAR_DETALHE(){
 
     overlay.style.display = 'block';
     $.ajax({
-    url: '/configuracao/',
+    url: "{% url 'configuracao' %}",
     type: 'GET',
     data: {
         'ACAO': "BAIXAR_DETALHE",
@@ -350,7 +350,7 @@ function BAIXAR_DETALHE(){
         .then(blob => {
             
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            const a   = document.createElement('a');
             
             a.href = url;
             a.download = 'RELATORIO_DETALHE.xlsx';
@@ -373,7 +373,7 @@ function BAIXAR_INTEGRACAO_PARA_OFFLINE(){
 
     overlay.style.display = 'block';
     $.ajax({
-    url: '/configuracao/',
+    url: "{% url 'configuracao' %}",
     type: 'GET',
     data: {
         'ACAO'                  : "GERAR_DADOS_OFFLINE",
@@ -381,7 +381,10 @@ function BAIXAR_INTEGRACAO_PARA_OFFLINE(){
     },
     success:  function(response)  {
 
-        fetch("{% static 'downloads/DADOS.json' %}")
+        var fileUrl = response.file_url;
+        
+        alert(fileUrl)
+        fetch(fileUrl)
         .then(response => response.blob())
         .then(blob => {
             
@@ -389,7 +392,7 @@ function BAIXAR_INTEGRACAO_PARA_OFFLINE(){
             const a     = document.createElement('a');
             
             a.href      = url;
-            a.download  = 'DADOS.json';
+            a.download  = 'DADOS_ONLINE.json';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -403,6 +406,7 @@ function BAIXAR_INTEGRACAO_PARA_OFFLINE(){
     });
 
 }
+
 </script>
 
 {% endblock %}

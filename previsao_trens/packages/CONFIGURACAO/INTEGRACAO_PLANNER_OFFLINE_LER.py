@@ -207,6 +207,7 @@ class AtualizandoSistema:
             linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO]
             DATA_ARQ        = linha['DATA_ARQ'].values[0]
 
+            print(f"terminais: {list(json_descargas[DIA_LOGISTICO].keys())}")
             for TERMINAL in lst_terminais_ativos:
 
                 
@@ -216,8 +217,8 @@ class AtualizandoSistema:
                 with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
                     DESCARGA = json.load(ARQUIVO)  
                 
-                json_string      = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
-                json_string = json_string.replace('\'', '"')
+                json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
+                json_string     = json_string.replace('\'', '"')
 
                 descarga_dict    = json.loads(json_string)
                 descarga_offline = pd.DataFrame.from_dict(descarga_dict, orient='index') 

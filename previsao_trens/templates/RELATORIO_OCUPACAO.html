@@ -21,328 +21,325 @@
     </div>
       
         <div id="D" class="tabcontent">
+            <div id="D">
 
-        <div id="D">
-
-        
             <h2>D</h2>
             
-            <table>
+                <table>
                 
-                <thead>
-                
-                    <tr>
-                        <th colspan="2" rowspan="2"> <img src="{% static 'imagens/logo-fips-vertical.png' %}" class="logo__ocupacao"></th>
-                        <th colspan="24">D</th>
-                        <th colspan="2">PLANO</th>
-                        <th colspan="2">PxO</th>
-                        <th>FILA </br> MÉD</th>
-                        <th>OPORT.</th>
-                        <th>CAP.</th>
-                    </tr>
-        
-                    <tr>
-                        <td>01h</td>
-                        <td>02h</td>
-                        <td>03h</td>    
-                        <td>04h</td>
-                        <td>05h</td>
-                        <td>06h</td>
-                        <td>07h</td>
-                        <td>08h</td>
-                        <td>09h</td>  
-                        <td>10h</td>
-                        <td>11h</td>
-                        <td>12h</td>
-                        <td>13h</td>
-                        <td>14h</td>
-                        <td>15h</td>
-                        <td>16h</td>  
-                        <td>17h</td>
-                        <td>18h</td>
-                        <td>19h</td>
-                        <td>20h</td> 
-                        <td>21h</td>
-                        <td>22h</td>
-                        <td>23h</td>
-                        <td>24h</td>
-                        
-                        <td>OF</br> (vgs)</td>
-                        <td>PD</br> (vgs)</td>
-        
-                        <td>PROD </br> (vgs/h)  </td>
-                        <td>OCIOS</br> (h)      </td>
-                        <td> (h/vg)             </td>
-        
-                        <td>(vgs)   </td>
-                        <td>80%     </td>
-                    </tr>
-        
-                </thead>
-
-                <tbody>
-        
-                    {%for TERMINAL, CONTEUDO_TERMINAL in RELATORIO.D.PSN.items %}
-
-                        <!--#region PREFIXO -->
-
-                        {% if forloop.first %}
-                            {% with rowspan_value=RELATORIO.D.PSN|length|add:"0" %}
-                                {% with rowspan_value=rowspan_value|times:4 %}
-                                    <th rowspan="{{ rowspan_value }}" class="MARGEM">PSN</th>
-                                {% endwith %}
-                            {% endwith %}
-                        {% endif %}
+                    <thead>
+                    
+                        <tr>
+                            <th colspan="2" rowspan="2"> <img src="{% static 'imagens/logo-fips-vertical.png' %}" class="logo__ocupacao"></th>
+                            <th colspan="24">D</th>
+                            <th colspan="2">PLANO</th>
+                            <th colspan="2">PxO</th>
+                            <th>FILA </br> MÉD</th>
+                            <th>OPORT.</th>
+                            <th>CAP.</th>
+                        </tr>
             
-                        <th class="TERMINAL" data-terminal="{{ TERMINAL }}" data-dia="D" rowspan=4 onclick="ABRIR_DESCARGA(this)">{{TERMINAL}}</th>
-        
-                        {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
-        
-                            {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
-                            {% else %}
-                                <td class="item__prefixo item-branco">. </td>
-                            {% endif %}
+                        <tr>
+                            <td>01h</td>
+                            <td>02h</td>
+                            <td>03h</td>    
+                            <td>04h</td>
+                            <td>05h</td>
+                            <td>06h</td>
+                            <td>07h</td>
+                            <td>08h</td>
+                            <td>09h</td>  
+                            <td>10h</td>
+                            <td>11h</td>
+                            <td>12h</td>
+                            <td>13h</td>
+                            <td>14h</td>
+                            <td>15h</td>
+                            <td>16h</td>  
+                            <td>17h</td>
+                            <td>18h</td>
+                            <td>19h</td>
+                            <td>20h</td> 
+                            <td>21h</td>
+                            <td>22h</td>
+                            <td>23h</td>
+                            <td>24h</td>
                             
-                        {% endfor %}
-                            
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.OFERTA }}         </td>
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.PEDRA }}          </td>
-                        
-                        
-
-                        {% if CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE %}
-                            
-                            <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                        
-                        {% else %}
-
-                            {% if CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE %}
-                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                            {% else %}  
-                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                            {% endif %}
-
-                        {% endif %}
-
-                        {% if CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE > CONTEUDO_TERMINAL.PXO.OCIOSIDADE  %}
-                            
-                            <td rowspan=4 class="OCIOSIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                    
-                        {% else %}
-
-                            {% if CONTEUDO_TERMINAL.PXO.OCIOSIDADE > CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE %}
-                                <td rowspan=4 class="OCIOSIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                            {% else %}  
-                                <td rowspan=4 class="OCIOSIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                            {% endif %}
-
-                        {% endif %}
-                    
-
-                        <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.FILA_MEDIA }}      </td>
-                        <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA"> {{ CONTEUDO_TERMINAL.OPORTUNIDADE }}    </td>
-                        <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.CAPACIDADE }}      </td>
-        
+                            <td>OF</br> (vgs)</td>
+                            <td>PD</br> (vgs)</td>
+            
+                            <td>PROD </br> (vgs/h)  </td>
+                            <td>OCIOS</br> (h)      </td>
+                            <td> (h/vg)             </td>
+            
+                            <td>(vgs)   </td>
+                            <td>80%     </td>
                         </tr>
-                        <!--#endregion-->
+            
+                    </thead>
 
-                        <!--#region FILA --> 
-                        {% for ITEM in CONTEUDO_TERMINAL.FILA %}
-                            
-                            {% if ITEM > 0 %}
-                                <td class="item__fila cinza">{{ITEM}}</td>
-                            {% else %}
-                                <td class="item__fila">.</td>
+                    <tbody>
+            
+                        {%for TERMINAL, CONTEUDO_TERMINAL in RELATORIO.D.PSN.items %}
+
+                            <!--#region PREFIXO -->
+
+                            {% if forloop.first %}
+                                {% with rowspan_value=RELATORIO.D.PSN|length|add:"0" %}
+                                    {% with rowspan_value=rowspan_value|times:4 %}
+                                        <th rowspan="{{ rowspan_value }}" class="MARGEM">PSN</th>
+                                    {% endwith %}
+                                {% endwith %}
                             {% endif %}
-        
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion-->   
-
-                        <!--#region OCUPACAO -->
-                        {% for ITEM in CONTEUDO_TERMINAL.OCUPACAO %}
-                            
-                            {% if ITEM == "V" %}
-                                <td class="item__ocupacao item-verde">{{ITEM}}</td>
-                            {% else %}
-        
-                                {% if ITEM == "A" %}
-                                    <td class="item__ocupacao item-amarelo">{{ITEM}}</td>
+                
+                            <th class="TERMINAL" data-terminal="{{ TERMINAL }}" data-dia="D" rowspan=4 onclick="ABRIR_DESCARGA(this)">{{TERMINAL}}</th>
+            
+                            {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
+            
+                                {% if ITEM != 0 %}
+                                    <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
                                 {% else %}
-                                    <td class="item__ocupacao vazio">.</td>
+                                    <td class="item__prefixo item-branco">. </td>
                                 {% endif %}
-        
-                            {% endif %}
-        
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion--> 
-
-                        <!--#region RESTRICAO --> 
-                        {% for ITEM in CONTEUDO_TERMINAL.RESTRICAO %}
-        
-                            {% if ITEM != 0 %}
-                                <td class="item__restricao "><div class="restricao">.</div></td>
-                            {% else %}
-                                <td class="item__restricao item-branco">. </td>
-                            {% endif %}
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion-->
-
-                    {% endfor %}
-        
-                    {%for TERMINAL, CONTEUDO_TERMINAL in RELATORIO.D.PCZ.items %}
-                    
-                        <!--#region PREFIXO -->
-                        {% if forloop.first %}
-                            {% with rowspan_value=RELATORIO.D.PCZ|length|add:"0" %}
-                                {% with rowspan_value=rowspan_value|times:4 %}
-                                    <th rowspan="{{ rowspan_value }}" class="MARGEM">PCZ</th>
-                                {% endwith %}
-                            {% endwith %}
-                        {% endif %}
-            
-                        <th class="TERMINAL" data-terminal="{{ TERMINAL }}" data-dia="D" rowspan=4 onclick="ABRIR_DESCARGA(this)">{{TERMINAL}}</th>
-                       
-                        {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
-        
-                            {% if ITEM != 0 %}
-                                <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
-                            {% else %}
-                                <td class="item__prefixo item-branco">. </td>
-                            {% endif %}
-        
-                        {% endfor %}
-        
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.OFERTA }}         </td>
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.PEDRA }}          </td>
-        
-                        {% if CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE %}
                                 
-                            <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                    
-                        {% else %}
-        
-                            {% if CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE %}
-                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                            {% else %}  
-                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
-                            {% endif %}
-        
-                        {% endif %}
-        
-                        {% if CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE > CONTEUDO_TERMINAL.PXO.OCIOSIDADE  %}
+                            {% endfor %}
+                                
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.OFERTA }}         </td>
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.PEDRA }}          </td>
                             
-                            <td rowspan=4 class="OCIOSIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                    
-                        {% else %}
-        
-                            {% if CONTEUDO_TERMINAL.PXO.OCIOSIDADE > CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE %}
-                                <td rowspan=4 class="OCIOSIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                            {% else %}  
-                                <td rowspan=4 class="OCIOSIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
-                            {% endif %}
-        
-                        {% endif %}
-        
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
-                        <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
-                        </tr>
-                        <!--#endregion-->
+                            
 
-                        <!--#region FILA -->
-                        {% for ITEM in CONTEUDO_TERMINAL.FILA %}
-        
-                            {% if ITEM > 0 %}
-                                <td class="item__fila cinza">{{ITEM}}</td>
+                            {% if CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE %}
+                                
+                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
+                            
                             {% else %}
-                                <td class="item__fila"></td>
-                            {% endif %}
-        
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion-->
 
-                        <!--#region OCUPACAO -->
-                        {% for ITEM in CONTEUDO_TERMINAL.OCUPACAO %}
-                            {% if ITEM == "V" %}
-                                <td class="item__ocupacao item-verde">{{ITEM}}</td>
-                            {% else %}
-        
-                                {% if ITEM == "A" %}
-                                    <td class="item__ocupacao item-amarelo">{{ITEM}}</td>
-                                {% else %}
-                                    <td class="item__ocupacao vazio">.</td>
+                                {% if CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE %}
+                                    <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
+                                {% else %}  
+                                    <td rowspan=4 class="PRODUTIVIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
                                 {% endif %}
-        
-                            {% endif %}
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion-->
 
-                        <!--#region RESTRICAO -->
-                        {% for ITEM in CONTEUDO_TERMINAL.RESTRICAO %}
-                            {% if ITEM != 0 %}
-                                <td class="item__restricao "><div class="restricao">.</div></td>
-                            {% else %}
-                                <td class="item__restricao item-branco">. </td>
                             {% endif %}
-                        {% endfor %}
-                        </tr>
-                        <!--#endregion-->
 
-                    {% endfor %}
+                            {% if CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE > CONTEUDO_TERMINAL.PXO.OCIOSIDADE  %}
+                                
+                                <td rowspan=4 class="OCIOSIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
                         
-                    <!--#region TOTAIS-->
+                            {% else %}
 
-                    <tr>
+                                {% if CONTEUDO_TERMINAL.PXO.OCIOSIDADE > CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE %}
+                                    <td rowspan=4 class="OCIOSIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
+                                {% else %}  
+                                    <td rowspan=4 class="OCIOSIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
+                                {% endif %}
 
-                        <td colspan="26" class="linha__total">TOTAL</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PLANO.OFERTA        |formata_milhar }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PLANO.PEDRA         |formata_milhar }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.FILA_MEDIA          |formata_milhar }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.OPORTUNIDADE                        }}</td>
-                        <td class="coluna__total">{{ RELATORIO.D.TOTAIS.CAPACIDADE          |formata_milhar }}</td>
+                            {% endif %}
+                        
+
+                            <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.FILA_MEDIA }}      </td>
+                            <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA"> {{ CONTEUDO_TERMINAL.OPORTUNIDADE }}    </td>
+                            <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.CAPACIDADE }}      </td>
             
-                    </tr>
+                            </tr>
+                            <!--#endregion-->
 
-                    <tr><td colspan="33" class="pula__linha">x</td></tr>
-                    
+                            <!--#region FILA --> 
+                            {% for ITEM in CONTEUDO_TERMINAL.FILA %}
+                                
+                                {% if ITEM > 0 %}
+                                    <td class="item__fila cinza">{{ITEM}}</td>
+                                {% else %}
+                                    <td class="item__fila">.</td>
+                                {% endif %}
+            
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion-->   
 
-                    <tr>
-                        <td colspan="26" class="linha__total__margens">TOTAL DIREITA   </td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.PLANO.OFERTA         |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.PLANO.PEDRA          |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.FILA_MEDIA           |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.OPORTUNIDADE        |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.CAPACIDADE           |formata_milhar }}</td>
-                    </tr>
+                            <!--#region OCUPACAO -->
+                            {% for ITEM in CONTEUDO_TERMINAL.OCUPACAO %}
+                                
+                                {% if ITEM == "V" %}
+                                    <td class="item__ocupacao item-verde">{{ITEM}}</td>
+                                {% else %}
+            
+                                    {% if ITEM == "A" %}
+                                        <td class="item__ocupacao item-amarelo">{{ITEM}}</td>
+                                    {% else %}
+                                        <td class="item__ocupacao vazio">.</td>
+                                    {% endif %}
+            
+                                {% endif %}
+            
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion--> 
 
-                    <tr>
-                        <td colspan="26" class="linha__total__margens">TOTAL ESQUERDA  </td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.PLANO.OFERTA         |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.PLANO.PEDRA          |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.FILA_MEDIA           |formata_milhar }}</td>
-                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.OPORTUNIDADE        |formata_milhar }}</td>
-                        <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.CAPACIDADE           |formata_milhar }}</td>
-                    </tr>
+                            <!--#region RESTRICAO --> 
+                            {% for ITEM in CONTEUDO_TERMINAL.RESTRICAO %}
+            
+                                {% if ITEM != 0 %}
+                                    <td class="item__restricao "><div class="restricao">.</div></td>
+                                {% else %}
+                                    <td class="item__restricao item-branco">. </td>
+                                {% endif %}
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion-->
 
-                    <!--#endregion-->
-
-                </tbody>
-                </table>
+                        {% endfor %}
+            
+                        {%for TERMINAL, CONTEUDO_TERMINAL in RELATORIO.D.PCZ.items %}
+                        
+                            <!--#region PREFIXO -->
+                            {% if forloop.first %}
+                                {% with rowspan_value=RELATORIO.D.PCZ|length|add:"0" %}
+                                    {% with rowspan_value=rowspan_value|times:4 %}
+                                        <th rowspan="{{ rowspan_value }}" class="MARGEM">PCZ</th>
+                                    {% endwith %}
+                                {% endwith %}
+                            {% endif %}
                 
-            </div>   
+                            <th class="TERMINAL" data-terminal="{{ TERMINAL }}" data-dia="D" rowspan=4 onclick="ABRIR_DESCARGA(this)">{{TERMINAL}}</th>
+                        
+                            {% for ITEM in CONTEUDO_TERMINAL.PREFIXO %}
+            
+                                {% if ITEM != 0 %}
+                                    <td class="item__prefixo">{{ ITEM|slice:":3" }}</td>
+                                {% else %}
+                                    <td class="item__prefixo item-branco">. </td>
+                                {% endif %}
+            
+                            {% endfor %}
+            
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.OFERTA }}         </td>
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.PLANO.PEDRA }}          </td>
+            
+                            {% if CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE %}
+                                    
+                                <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
+                        
+                            {% else %}
+            
+                                {% if CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE >  CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE %}
+                                    <td rowspan=4 class="PRODUTIVIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
+                                {% else %}  
+                                    <td rowspan=4 class="PRODUTIVIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_PRODUTIVIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.PRODUTIVIDADE }}    </td>
+                                {% endif %}
+            
+                            {% endif %}
+            
+                            {% if CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE > CONTEUDO_TERMINAL.PXO.OCIOSIDADE  %}
+                                
+                                <td rowspan=4 class="OCIOSIDADE_COLUNA cor-verde"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
+                        
+                            {% else %}
+            
+                                {% if CONTEUDO_TERMINAL.PXO.OCIOSIDADE > CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE %}
+                                    <td rowspan=4 class="OCIOSIDADE_COLUNA cor-vermelha"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
+                                {% else %}  
+                                    <td rowspan=4 class="OCIOSIDADE_COLUNA"  title="{{ CONTEUDO_TERMINAL.PXO.META_OCIOSIDADE }}"> {{ CONTEUDO_TERMINAL.PXO.OCIOSIDADE }}    </td>
+                                {% endif %}
+            
+                            {% endif %}
+            
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
+                            <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
+                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
+                            </tr>
+                            <!--#endregion-->
 
+                            <!--#region FILA -->
+                            {% for ITEM in CONTEUDO_TERMINAL.FILA %}
+            
+                                {% if ITEM > 0 %}
+                                    <td class="item__fila cinza">{{ITEM}}</td>
+                                {% else %}
+                                    <td class="item__fila"></td>
+                                {% endif %}
+            
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion-->
+
+                            <!--#region OCUPACAO -->
+                            {% for ITEM in CONTEUDO_TERMINAL.OCUPACAO %}
+                                {% if ITEM == "V" %}
+                                    <td class="item__ocupacao item-verde">{{ITEM}}</td>
+                                {% else %}
+            
+                                    {% if ITEM == "A" %}
+                                        <td class="item__ocupacao item-amarelo">{{ITEM}}</td>
+                                    {% else %}
+                                        <td class="item__ocupacao vazio">.</td>
+                                    {% endif %}
+            
+                                {% endif %}
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion-->
+
+                            <!--#region RESTRICAO -->
+                            {% for ITEM in CONTEUDO_TERMINAL.RESTRICAO %}
+                                {% if ITEM != 0 %}
+                                    <td class="item__restricao "><div class="restricao">.</div></td>
+                                {% else %}
+                                    <td class="item__restricao item-branco">. </td>
+                                {% endif %}
+                            {% endfor %}
+                            </tr>
+                            <!--#endregion-->
+
+                        {% endfor %}
+                            
+                        <!--#region TOTAIS-->
+
+                        <tr>
+
+                            <td colspan="26" class="linha__total" onclick="abrir_total_detalhe('D')">TOTAL</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PLANO.OFERTA        |formata_milhar }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PLANO.PEDRA         |formata_milhar }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.FILA_MEDIA          |formata_milhar }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.OPORTUNIDADE                        }}</td>
+                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.CAPACIDADE          |formata_milhar }}</td>
+                
+                        </tr>
+
+                        <tr><td colspan="33" class="pula__linha">x</td></tr>
+                        
+
+                        <tr>
+                            <td colspan="26" class="linha__total__margens">TOTAL DIREITA   </td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.PLANO.OFERTA         |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.PLANO.PEDRA          |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.FILA_MEDIA           |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.OPORTUNIDADE        |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.CAPACIDADE           |formata_milhar }}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="26" class="linha__total__margens">TOTAL ESQUERDA  </td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.PLANO.OFERTA         |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.PLANO.PEDRA          |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.FILA_MEDIA           |formata_milhar }}</td>
+                            <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.OPORTUNIDADE        |formata_milhar }}</td>
+                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.CAPACIDADE           |formata_milhar }}</td>
+                        </tr>
+
+                        <!--#endregion-->
+
+                    </tbody>
+                
+                </table>        
+            </div>   
         </div>
         
         <div id="D1" class="tabcontent">
@@ -621,7 +618,7 @@
                         <!--#region TOTAIS-->    
                         <tr>
                             {{RELATORIO.D1.TOTitems}}
-                            <td colspan="26" class="linha__total">TOTAL</td>
+                            <td colspan="26" class="linha__total" onclick="abrir_total_detalhe('D+1')">TOTAL</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PLANO.OFERTA }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PLANO.PEDRA }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PXO.PRODUTIVIDADE }}</td>
@@ -634,9 +631,10 @@
                         <!--#endregion-->
                     
                     </tbody>
-            </table>
+
+                </table>
             
-        </div>  
+            </div>  
 
         </div>
       
@@ -650,8 +648,7 @@
             <table>
                 
                 <thead>
-                
-        
+            
                     <tr>
                         <th colspan="2" rowspan="2"> <img src="{% static 'imagens/logo-fips-vertical.png' %}" class="logo__ocupacao"></th>
                         <th colspan="24">   D       </th>
@@ -809,7 +806,7 @@
                         </tr>
                         <!--#endregion-->
                     
-                        {% endfor %}
+                    {% endfor %}
         
                     {%for TERMINAL, CONTEUDO_TERMINAL in RELATORIO.D2.PCZ.items %}
 
@@ -912,13 +909,13 @@
                         {% endfor %}
                         </tr>
                         <!--#endregion-->
-                    
-                        {% endfor %}
+                       
+                    {% endfor %}
                 
                 <!--#region TOTAIS-->        
                 <tr>
                     {{RELATORIO.D2.TOTitems}}
-                    <td colspan="26" class="linha__total">TOTAL</td>
+                    <td colspan="26" class="linha__total" onclick="abrir_total_detalhe('D+2')">TOTAL</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PLANO.OFERTA }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PLANO.PEDRA }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PXO.PRODUTIVIDADE }}</td>
@@ -958,6 +955,26 @@
 </dialog>
 
 <script>
+
+    function abrir_total_detalhe(dia_logistico){
+        $.ajax({
+            url: '{% url "ocupacao_terminais" %}',
+            type: 'GET',
+            data: {
+                'acao'                  : "baixar_total_detalhe",
+                'csrfmiddlewaretoken'   : "{{ csrf_token }}",
+                'dia_logistico'         : dia_logistico
+            },
+            success:  function(response)  {
+
+                const dialog = document.querySelector("#MODAL_DESCARGA");
+                dialog.showModal()
+                dialog.innerHTML = response.html_totais_relatorio_detalhe
+            
+            },
+            error:    function(xhr)       {alert("ERR")}
+        });
+    }
 
     function ABRIR_DESCARGA(CELULA_CLICADA){
 

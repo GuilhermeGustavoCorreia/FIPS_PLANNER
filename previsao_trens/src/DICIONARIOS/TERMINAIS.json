@@ -1806,15 +1806,15 @@
         "SATURACAO": 50,
         "SATURACAO_VAZIO": {
             "RUMO": {
-                "MIN": 64,
+                "MIN": 63,
                 "MAX": 67
             },
             "MRS": {
-                "MIN": 64,
+                "MIN": 63,
                 "MAX": 67
             },
             "VLI": {
-                "MIN": 64,
+                "MIN": 63,
                 "MAX": 67
             }
         },

@@ -28,8 +28,8 @@ tbody td{ padding: 0; }
 .item__prefixo      {font-size: 0.6rem; font-weight: bold;}
 .item__fila         {font-size: 0.2rem; font-weight: bold;}
 
-.linha__total   {background-color: var(--azul-profundo-m); color: white; font-size: 1rem; padding: 5px; text-align: center; font-weight: bold;}
-
+.linha__total       { background-color: var(--azul-profundo-m); color: white; font-size: 1rem; padding: 5px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer;}
+.linha__total:hover { background-color: var(--azul-profundo-e); }
 
 .item__restricao    {font-size: 0.2rem; font-weight: bold; border-bottom: 1px lightgray solid; padding: 1px }
 .restricao          {background-color: darkred; color: darkred;}
