@@ -19,7 +19,7 @@ from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PA
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
 from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA 
 from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import BAIXAR_DETALHE
-from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    BAIXAR_DADOS
+from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    dados_integracao
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER       import    lerDados
 
 from    previsao_trens.packages.CRIAR_TREM.VALIDAR           import  VALIDAR_EDICAO_PREVISAO, VALIDAR_DIVISAO_PREVISAO
@@ -797,6 +797,14 @@ def editar_trem_subida(request, id):
 
     return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': FORM, "TABELAS": TABELAS, 'MODAL_OPEN': True})
 
+def baixar_integracao_view(request):
+
+    json_data = dados_integracao
+
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="data.json"'
+
+    return response
 
 #region RELATORIO OCUPACAO
 @login_required

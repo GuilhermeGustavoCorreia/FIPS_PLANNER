@@ -18,7 +18,7 @@ def formatar_restricao(restricao):
         'COMENTARIO'    : restricao.comentario
     }
 
-def BAIXAR_DADOS():
+def dados_integracao():
 
 
     PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
@@ -116,8 +116,11 @@ def BAIXAR_DADOS():
     
     print(caminho_static)
     
-    with open(caminho_arquivo, 'w') as ARQUIVO_NOME:
-        json.dump(JSON, ARQUIVO_NOME, indent=4)
+    #with open(caminho_arquivo, 'w') as ARQUIVO_NOME:
+    #    json.dump(JSON, ARQUIVO_NOME, indent=4)
+
+    json_data = json.dumps(JSON)
+
 
 
     return caminho_arquivo  
