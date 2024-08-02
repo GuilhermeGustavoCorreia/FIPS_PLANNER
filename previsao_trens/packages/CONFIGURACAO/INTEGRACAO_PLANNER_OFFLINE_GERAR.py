@@ -36,6 +36,11 @@ def dados_integracao():
         "DESCARGAS"	 : {"D": {},"D+1": {},"D+2": {},"D+3": {},"D+4": {}}
     }
 
+
+    json_data = json.dumps(JSON)
+
+    print(json_data)
+
     with open("previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         DICT_TERMINAIS = json.load(ARQUIVO_DESCARGA)
 
@@ -123,4 +128,4 @@ def dados_integracao():
 
 
 
-    return caminho_arquivo  
+    return json_data       

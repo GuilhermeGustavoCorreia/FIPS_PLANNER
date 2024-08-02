@@ -799,8 +799,8 @@ def editar_trem_subida(request, id):
 
 def baixar_integracao_view(request):
 
-    json_data = dados_integracao
-
+    json_data = dados_integracao()
+    
     response = HttpResponse(json_data, content_type='application/json')
     response['Content-Disposition'] = 'attachment; filename="data.json"'
 
