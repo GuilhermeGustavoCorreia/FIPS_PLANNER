@@ -1,7 +1,7 @@
 from django import forms
 from .models import Trem, Restricao, TremVazio
 from django.forms.widgets import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
-
+from django.contrib.auth.forms import AuthenticationForm
 import os
 import json
 
@@ -18,7 +18,12 @@ def DICIONARIO_MERCADORIAS():
 
 MERCADORIAS = DICIONARIO_MERCADORIAS()
 
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': True}))
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        return username.upper()  # Converte o nome de usuário para maiúsculas
 
 
 class TremForm(forms.ModelForm):

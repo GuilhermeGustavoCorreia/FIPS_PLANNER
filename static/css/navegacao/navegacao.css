@@ -5,7 +5,7 @@ body{
     display:        flex;
     cursor:      default;
     overflow:     hidden;
-
+    font-size:   0.7rem;
 }
 .conteudo__navegacao{
     width:     100vw;
@@ -20,11 +20,13 @@ body{
 .um__dia{
     height: fit-content;
     padding: 0 1rem;
-
+    /*border: 1px red dashed;
+    background-color: rgba(255, 0, 0, 0.263);*/
 
 }
 .uma__descarga{
-
+    /*border: 1px rgb(17, 255, 0) dashed;
+    background-color: rgba(0, 255, 72, 0.263);*/
     padding: 0.5rem;
 }
 
@@ -42,11 +44,12 @@ body{
 }
 
 .header__navegacao{
-    
+    /*border: 1px rgb(255, 0, 217) dashed;
+    background-color: rgba(255, 0, 204, 0.263);  */  
     
     width: 100%;
     position: fixed;
-    height: 6rem;
+    height: 4.5rem;
     background-color: rgb(235, 234, 234);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     display: inline;
@@ -76,10 +79,10 @@ body{
 }
 
 .tabela__margens td{ 
-
+    padding: 0.064rem;
     text-align: center; 
-    min-width: 2.5rem;
-    max-width: 2.5rem
+    min-width: 1.5rem;
+    max-width: 1.5rem
     /*font-size: 0.7rem; */
 }
 
@@ -87,17 +90,14 @@ body{
     position: -webkit-sticky;
     position: sticky;
     /* font-size: 20px;*/
-   top:5px;
-
-
-    
+    top: 0.5rem;
     padding: 0 0.5rem;
     height: 100%;
     
 }
 
 .tabela__margens .COL_01{
-    min-width: 4rem;
+    min-width: 2.85rem 
 }
 
 .um__dia .uma__descarga:nth-child(2) {
@@ -139,8 +139,8 @@ body{
     color:rgb(235, 234, 234)
 }
 
-.margens_aux_1{min-width: 3.2rem;padding: 0 10px;}
-.margens_aux_2{min-width: 4.5rem !important;}
+.margens_aux_1{min-width: 2.2rem;padding: 0 10px;}
+.margens_aux_2{min-width: 3.5rem!important;}
 
 #CALCULADORA {
     background-color: rgb(90, 89, 89);
@@ -162,3 +162,81 @@ body{
 .oculto {bottom: -100px !important;}
 
 .item_somado {background-color: rgb(185, 255, 176);}
+
+/*#region NAVEGADOR*/
+
+.hidden {
+    transition:  0.3s;
+    transform: translateX(-93%); /* Ajuste o valor conforme necessário */
+}
+
+#navegador__terminais{
+    display: flex;
+    margin-top: 9vh;
+    position:   absolute;
+    z-index:    10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 0 5px 5px 0;
+    transition:  0.3s;
+}
+
+#navegador__terminais .table  {
+    
+    background-color: #ddd;
+    padding: 0.5vh  0.3vw 0.5vh 0.3vw; 
+
+}
+#navegador__terminais .table table {
+    
+    background-color: var(--cinza-chumbo-c);
+    border-collapse: collapse;
+
+}
+
+#navegador__terminais .table table  td {
+    
+    border: 1px solid var(--cinza-chumbo-m);
+    font-size: 1.2vh; 
+    text-align: center;
+    min-width: 2vw;
+
+}
+
+#navegador__terminais .aba__toogle    {
+
+    background-color: var(--azul-ceu-e);
+    border-radius: 0 5px 5px 0;
+    padding: 0 0.1vw;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+#navegador__terminais .aba__toogle:hover{background-color: #046d9a;}
+
+#navegador__terminais .aba__toogle svg {
+    top: 50%;
+    margin-top: -50%;
+    position: relative;
+
+    transition: transform 0.6s;
+
+}
+
+.open .aba__toogle svg
+{transform: rotate(180deg);}
+
+.dia_logistico_highlight,
+.highlight{
+    background-color: var(--verde-floresta-m);
+    color: rgb(236, 234, 234);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dia_logistico_highlight:hover,
+.highlight:hover{
+    background-color: var(--verde-floresta-e);
+    color: white;
+}
+
+/*#endregion*/

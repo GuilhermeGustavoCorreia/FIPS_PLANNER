@@ -5,7 +5,7 @@ import  json
 from    django.conf import settings
 
 
-def BAIXAR_DETALHE():
+def gerar_planilha_detalhe():
     
     COLUNAS = {
         0: {
@@ -70,6 +70,6 @@ def BAIXAR_DETALHE():
 
     caminho_static  = os.path.join(settings.BASE_DIR, 'static', 'downloads')
     caminho_arquivo = os.path.join(caminho_static, "RELATORIO_DETALHE.xlsx")
-    RELATORIO_DETALHE.save(caminho_arquivo)
+    #RELATORIO_DETALHE.save(caminho_arquivo)
 
-    return {"success": True, "mensagem": "planilha baixada"}
+    return RELATORIO_DETALHE

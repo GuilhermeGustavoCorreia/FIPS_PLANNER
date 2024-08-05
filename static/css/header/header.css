@@ -68,6 +68,7 @@ header{
 }
 
 .item__do__menu a{
+    text-decoration: none;
     text-align: center; 
     color:white;   
     width: 9vw;
@@ -82,7 +83,7 @@ header{
     list-style: none;
     margin-left: 2vw;
     font-size: 2.5vh;
-    font-weight: 400;
+    font-weight: lighter;
     margin: 0;
     transition: background-color 0.5s ease;   
     width: 9vw;
@@ -90,6 +91,7 @@ header{
 }
 
 .item__do__menu:hover{
+    
     cursor: pointer;
     background-color: #002A68;
     font-weight: 400;

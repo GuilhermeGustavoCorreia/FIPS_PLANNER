@@ -1,7 +1,7 @@
 import  json
 from    openpyxl                import load_workbook
 from    datetime                import datetime
-from    previsao_trens.models   import Trem, Restricao
+from    previsao_trens.models   import Trem, Restricao, TremVazio
 import  pandas as pd
 from    django.conf import settings
 import  os
@@ -10,7 +10,7 @@ class EXPORTAR_PLANILHA():
 
     def __init__(self):
 
-        self.PLANILHA           = load_workbook("previsao_trens/src/DICIONARIOS/teste_planilha.xlsx", keep_vba=True) 
+        self.PLANILHA           = load_workbook("previsao_trens/src/DICIONARIOS/planilha_planner.xlsx", keep_vba=True) 
         self.PERIODO_VIGENTE    = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         
     def atualizar_a_data(self):
@@ -60,7 +60,6 @@ class EXPORTAR_PLANILHA():
                     CRIAR_TREM.cell(row = j, column=11 + (11 * i),   value=TREM.ferrovia)
 
     def inserir_navegacao(self):
-
 
         NAVEGACAO = self.PLANILHA['NAVEGACAO']  
         COLUNAS   = { "D": 5, "D+1": 35, "D+2": 65, "D+3": 95, "D+4": 125 }
@@ -222,26 +221,80 @@ class EXPORTAR_PLANILHA():
         HOME.cell(row = 7, column=5,  value=USUARIO_LOGADO.email )
         HOME.cell(row = 8, column=5,  value=datetime.today())
 
+    def inserir_previsao_subida(self):
+
+        SUBIDA = self.PLANILHA['SUBIDA']
+
+        QUERYSET = TremVazio.objects.filter(margem  = "DIREITA").order_by('previsao')
+
+        for j, TREM in enumerate(QUERYSET):
+
+            j = j + 4 # É PQ COMEÇA NA LINHA 5
+
+            SUBIDA.cell(row = j, column=2,   value=j - 4)
+            SUBIDA.cell(row = j, column=3,   value=TREM.prefixo)
+            SUBIDA.cell(row = j, column=4,   value=TREM.ferrovia)
+            SUBIDA.cell(row = j, column=5,   value=TREM.previsao.replace(tzinfo=None))
+            SUBIDA.cell(row = j, column=6,   value=TREM.eot)
+
+            SUBIDA.cell(row = j, column=7,    value=TREM.qt_graos)
+            SUBIDA.cell(row = j, column=8,    value=TREM.qt_ferti)
+            SUBIDA.cell(row = j, column=9,    value=TREM.qt_celul)
+            SUBIDA.cell(row = j, column=10,   value=TREM.qt_acuca)
+            SUBIDA.cell(row = j, column=11,   value=TREM.qt_contei)
+
+            SUBIDA.cell(row = j, column=12,   value=TREM.loco_1)
+            SUBIDA.cell(row = j, column=13,   value=TREM.loco_2)
+            SUBIDA.cell(row = j, column=14,   value=TREM.loco_3)
+            SUBIDA.cell(row = j, column=15,   value=TREM.loco_4)
+            SUBIDA.cell(row = j, column=16,   value=TREM.loco_5)
+
+        QUERYSET = TremVazio.objects.filter(margem  = "ESQUERDA").order_by('previsao')
+
+        for j, TREM in enumerate(QUERYSET):
+
+            j = j + 4 # É PQ COMEÇA NA LINHA 5
+
+            SUBIDA.cell(row = j, column=18,   value=j - 4)
+            SUBIDA.cell(row = j, column=19,   value=TREM.prefixo)
+            SUBIDA.cell(row = j, column=20,   value=TREM.ferrovia)
+            SUBIDA.cell(row = j, column=21,   value=TREM.previsao.replace(tzinfo=None))
+            SUBIDA.cell(row = j, column=22,   value=TREM.eot)
+
+            SUBIDA.cell(row = j, column=23,   value=TREM.qt_graos)
+            SUBIDA.cell(row = j, column=24,   value=TREM.qt_ferti)
+            SUBIDA.cell(row = j, column=25,   value=TREM.qt_celul)
+            SUBIDA.cell(row = j, column=26,   value=TREM.qt_acuca)
+            SUBIDA.cell(row = j, column=27,   value=TREM.qt_contei)
+
+            SUBIDA.cell(row = j, column=28,   value=TREM.loco_1)
+            SUBIDA.cell(row = j, column=29,   value=TREM.loco_2)
+            SUBIDA.cell(row = j, column=30,   value=TREM.loco_3)
+            SUBIDA.cell(row = j, column=31,   value=TREM.loco_4)
+            SUBIDA.cell(row = j, column=32,   value=TREM.loco_5)
+
+
+
     def salvar(self):
         
-        caminho_static  = os.path.join(settings.STATIC_URL, 'static', 'downloads')
+        caminho_static  = os.path.join(settings.STATIC_URL, 'downloads')
         caminho_arquivo = os.path.join(caminho_static, "PLANILHA_DESCARGA.xlsm")
         self.PLANILHA.save(caminho_arquivo)
 
-def BAIXAR_PLANILHA(USUARIO_LOGADO):
+def gerar_planilha(USUARIO_LOGADO):
     
-    try:
 
-        PLANILHA = EXPORTAR_PLANILHA()
-        PLANILHA.inserir_previsao()
-        PLANILHA.inserir_navegacao()
-        PLANILHA.inserir_restricao()
-        PLANILHA.inserir_folha_capa(USUARIO_LOGADO)
-        PLANILHA.salvar()
-        
-        return {"success": True, "mensagem": "planilha baixada"}
+
+
+    PLANILHA = EXPORTAR_PLANILHA()
+    PLANILHA.inserir_previsao()
+    PLANILHA.inserir_navegacao()
+    PLANILHA.inserir_restricao()
+    PLANILHA.inserir_previsao_subida()
+    PLANILHA.inserir_folha_capa(USUARIO_LOGADO)
+    #PLANILHA.salvar()
     
-    except Exception as e:
+    return PLANILHA.PLANILHA
+    
 
-        return {"success": False, "mensagem": f"Erro ao baixar planilha: {str(e)}"}
-   
+

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
 
     path('', views.redirect_to_login),
+    path('accounts/login/', views.custom_login_view, name='login'),
 
     path('restricao/',                  views.restricoes_view,      name="restricao"),
     path('restricao/criar_restricao',   views.criar_restricao_view, name="criar_restricao"),
@@ -23,9 +24,13 @@ urlpatterns = [
     path('dividir_trem/<int:trem_id>/',                     views.dividir_trem,         name="dividir_trem"),
     path('upload/',                                         views.upload_file_view,     name='upload_file'),
 
+    #PAGINA CONFIGURACAO
     path('configuracao/',               views.configuracao,                 name="configuracao"),
-    path('baixar_integracao/',          views.baixar_integracao_view,       name="baixar_integracao"),
-    
+    path('baixar_integracao/',          views.baixar_integracao_view,       name="baixar_integracao"), 
+    path('baixar_planilha/',            views.baixar_planilha_view,         name="baixar_planilha"),
+    path('baixar_detalhe/',             views.baixar_planilha_detalhe_view, name="baixar_detalhe"),
+
+    #RELATORIOS
     path('detalhe/',                                views.detalhe,                  name="detalhe"),
     path('ocupacao_terminais/',                     views.ocupacao_terminais,       name="ocupacao_terminais"),
    

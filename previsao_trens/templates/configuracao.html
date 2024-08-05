@@ -157,10 +157,10 @@
             <h1>DOWNLOADS</h1>
 
             <p>Clique no botão abaixo para baixar uma versão do sistema em planilha Excel.</p>
-            <button class="BOTAO VERDE" type="submit" onclick="BAIXAR_PLANILHA()">Baixar Planilha</button>
+            <a class="BOTAO VERDE" href="{% url 'baixar_planilha' %}">Baixar Planilha</a> 
 
             <p>Clique no botão abaixo para baixar o relatório DETALHE em Excel.</p> 
-            <button class="BOTAO VERDE" type="submit" onclick="BAIXAR_DETALHE()">Baixar Detalhe</button>
+            <a class="BOTAO VERDE" href="{% url 'baixar_detalhe' %}">Baixar Detalhe</a> 
 
         </div>
     </section>
@@ -290,118 +290,6 @@ function ATUALIZAR_DESCARGA(){
     },
         success:  function(response)  {alert("FOI")},
         error:    function(xhr)       {alert("ERR")}
-    });
-
-}
-
-function BAIXAR_PLANILHA(){
-    
-    var overlay = document.getElementById('overlay');
-
-    overlay.style.display = 'block';
-    $.ajax({
-    url: "{% url 'configuracao' %}",
-    type: 'GET',
-    data: {
-        'ACAO': "BAIXAR_PLANILHA",
-        'csrfmiddlewaretoken': "{{ csrf_token }}"
-    },
-    success:  function(response)  {
-
-        fetch("{% static 'downloads/PLANILHA_DESCARGA.xlsm' %}")
-        .then(response => response.blob())
-        .then(blob => {
-            
-            const url = window.URL.createObjectURL(blob);
-            const a   = document.createElement('a');
-            
-            a.href = url;
-            a.download = 'PLANILHA_DESCARGA.xlsm';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-        })
-        .catch(error => console.error('Erro no download:', error));
-        overlay.style.display = 'none';
-    },
-    error:function(xhr) 
-        {alert("ERR")}
-    });
-}
-
-function BAIXAR_DETALHE(){
-    
-    var overlay = document.getElementById('overlay');
-
-    overlay.style.display = 'block';
-    $.ajax({
-    url: "{% url 'configuracao' %}",
-    type: 'GET',
-    data: {
-        'ACAO': "BAIXAR_DETALHE",
-        'csrfmiddlewaretoken': "{{ csrf_token }}"
-    },
-    success:  function(response)  {
-
-        fetch("{% static 'downloads/RELATORIO_DETALHE.xlsx' %}")
-        .then(response => response.blob())
-        .then(blob => {
-            
-            const url = window.URL.createObjectURL(blob);
-            const a   = document.createElement('a');
-            
-            a.href = url;
-            a.download = 'RELATORIO_DETALHE.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-        })
-        .catch(error => console.error('Erro no download:', error));
-        overlay.style.display = 'none';
-    },
-    error:function(xhr) 
-        {alert("ERR")}
-    });
-}
-
-function BAIXAR_INTEGRACAO_PARA_OFFLINE(){
-
-    var overlay = document.getElementById('overlay');
-
-    overlay.style.display = 'block';
-    $.ajax({
-    url: "{% url 'configuracao' %}",
-    type: 'GET',
-    data: {
-        'ACAO'                  : "GERAR_DADOS_OFFLINE",
-        'csrfmiddlewaretoken'   : "{{ csrf_token }}"
-    },
-    success:  function(response)  {
-
-        var fileUrl = response.file_url;
-        
-        alert(fileUrl)
-        fetch(fileUrl)
-        .then(response => response.blob())
-        .then(blob => {
-            
-            const url   = window.URL.createObjectURL(blob);
-            const a     = document.createElement('a');
-            
-            a.href      = url;
-            a.download  = 'DADOS_ONLINE.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-        })
-        .catch(error => console.error('Erro no download:', error));
-        overlay.style.display = 'none';
-    },
-    error:function(xhr) 
-        {alert("ERR")}
     });
 
 }

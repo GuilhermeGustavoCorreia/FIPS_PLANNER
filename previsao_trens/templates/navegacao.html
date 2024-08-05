@@ -12,6 +12,44 @@
 
 <script src="{% static 'javascript/NAVEGACAO/CALCULADORA.js' %}"            defer></script>
 
+<div id="navegador__terminais" class="hidden">
+
+    <div class="table">
+    <table>
+        <tr> <td> TGG      </td> <td> TGRAO   </td> <td> T39      </td> <td> S. BRASIL </td> <td>
+
+        <tr> <td> TEG      </td> <td> CLI     </td> <td> TES      </td> <td> TERMAG    </td> <td></td> </tr>
+        <tr> <td> TEAG     </td> <td> TAC     </td> <td> SUZANO   </td> <td> HIDROVIAS </td> <td></td> </tr>
+        <tr> <td> CUTRALE  </td> <td> T12A    </td> <td> MOEGA X  </td> <td>           </td> <td></td> </tr>
+        <tr> <td> ECOPORTO </td> <td> BRACELL </td> <td> MOEGA V  </td> <td>           </td> <td></td> </tr>
+        
+        <tr><td colspan="5" style="border: none; color: var(--cinza-chumbo-c); background-color: ddd;">.</td></tr>    
+        
+        <tr> <td> D </td> <td> D+1 </td> <td> D+2  </td> <td>    D+3       </td> <td>D+4</td> </tr>
+    </table>
+    </div>
+    
+    <div  class="aba__toogle" onclick="toggleAnimation()"> 
+        <svg width="2vh" height="2vh" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            
+            <g id="Complete">         
+            <g id="F-Push">          
+            <g id="Right">          
+            <g>
+            
+                <polyline fill="none" id="Down" points="6.1 19 13.1 12 6.1 5" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>         
+                <line fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="17.9" x2="17.9" y1="19" y2="5"/>
+            
+            </g>           
+            </g>
+            </g>           
+            </g>          
+            </svg>
+    </div>
+
+
+</div>
+
 <div id="conteudo__navegacao" class="conteudo__navegacao">  
   
     <link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/navegacao.css' %}"> 
@@ -32,12 +70,12 @@
     {% endif %}
 
     <!--#region uma tabela de descarga-->
-    {% if CONTEUDO_NAVEGACAO %}            
+    {% if CONTEUDO_NAVEGACAO.CONTEUDO %}            
         
         <div class="header__navegacao">
         </div>
 
-        {% for DIA, DADOS in CONTEUDO_NAVEGACAO.items %}
+        {% for DIA, DADOS in CONTEUDO_NAVEGACAO.CONTEUDO.items %}
                 
         <div class="um__dia">      
             
@@ -108,7 +146,7 @@
 
             <div class="uma__descarga">
                 
-                <table class="tabela__descarga" id="{{DESCARGA.TERMINAL}}_{{DESCARGA.DATA}}">
+                <table class="tabela__descarga" id="{{DESCARGA.TERMINAL}}_{{DESCARGA.DATA}}" data-terminal="{{DESCARGA.TERMINAL}}" data-dia_logistico="{{DIA}}">
                     
                     <input type="hidden" id="DESCARGAS_ATIVAS" value="{{ DESCARGA.DESCARGAS_ATIVAS }}">
 
@@ -347,7 +385,7 @@
                             
                             {% endfor %}
                             <td colspan=2 rowspan="2" class="FIM_RESTRICAO">
-                                <svg fill="#FFFFFF" height="50px" width="50px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-24.86 -24.86 360.53 360.53" xml:space="preserve" stroke="#FFFFFFF" stroke-width="6.21612">
+                                <svg fill="#FFFFFF" height="32px" width="32px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-24.86 -24.86 360.53 360.53" xml:space="preserve" stroke="#FFFFFFF" stroke-width="6.21612">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier"> <path d="M305.095,229.104L186.055,42.579c-6.713-10.52-18.172-16.801-30.652-16.801c-12.481,0-23.94,6.281-30.651,16.801 L5.711,229.103c-7.145,11.197-7.619,25.39-1.233,37.042c6.386,11.647,18.604,18.883,31.886,18.883h238.079 c13.282,0,25.5-7.235,31.888-18.886C312.714,254.493,312.24,240.301,305.095,229.104z M155.403,253.631 c-10.947,0-19.82-8.874-19.82-19.82c0-10.947,8.874-19.821,19.82-19.821c10.947,0,19.82,8.874,19.82,19.821 C175.223,244.757,166.349,253.631,155.403,253.631z M182.875,115.9l-9.762,65.727c-1.437,9.675-10.445,16.353-20.119,14.916 c-7.816-1.161-13.676-7.289-14.881-14.692l-10.601-65.597c-2.468-15.273,7.912-29.655,23.185-32.123 c15.273-2.468,29.655,7.912,32.123,23.185C183.284,110.192,183.268,113.161,182.875,115.9z"></path> </g>
                                 </svg>
@@ -495,6 +533,102 @@
 
      
     
+</script>
+
+<script>
+let isBoxMoved = false;
+window.toggleAnimation = function() {
+
+const box = document.getElementById('navegador__terminais');
+
+if (isBoxMoved) {
+    box.classList.remove('hidden');
+    box.classList.add('open');
+} else {
+    box.classList.add('hidden');
+    box.classList.remove('open');
+}
+
+isBoxMoved = !isBoxMoved;
+}
+
+window.addEventListener('load', function(){
+
+    {% autoescape off %}
+
+    var terminais_ativos    = {{CONTEUDO_NAVEGACAO.HEADER.TERMINAIS}}
+    var dias_pre_carregados = {{CONTEUDO_NAVEGACAO.HEADER.DIAS_LOGISTICOS}}
+
+    {% endautoescape %}
+
+    var terminais_navegador = ["TEG", "TEAG", "CUTRALE", "ECOPORTO", "CLI", "TAC", "T12A", "BRACELL", "TES", "SUZANO", "MOEGA X", "MOEGA V", "TERMAG", "HIDROVIAS"]
+    
+    // Função para encontrar a intersecção
+    terminais_ativos.filter(value => terminais_navegador.includes(value));
+
+    var tds = document.querySelectorAll('.table td');
+
+    //#region INSERE O FUNDO VERDE NO MENU DE NAVEACAO Itera sobre as células e aplica a estilização
+    tds.forEach(td => {
+        if (terminais_ativos.includes(td.innerText)) {
+            td.classList.add('highlight');
+        }
+    });
+    //#endregion
+
+    //#region INSERE O EVENTO DE SCROLL AOS BOTOES ATIVOS
+    document.querySelectorAll('.highlight').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const conteudo = document.getElementById('conteudo__navegacao') 
+    const terminal = this.innerText;
+        
+      if (terminal) {
+        const targetElement = document.querySelectorAll(`table[data-terminal='${terminal}']`)[0]
+
+        if (targetElement) {
+            conteudo.scrollTo({
+            top: targetElement.offsetTop -  ((window.innerHeight * 30) / 100),
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+    });
+    //#endregion
+
+    //#region INSERE O FUNDO VERDE NO MENU DE NAVEACAO Itera sobre as células e aplica a estilização
+    tds.forEach(td => {
+        if (dias_pre_carregados.includes(td.innerText)) {
+            td.classList.add('dia_logistico_highlight');
+        }
+    });
+    //#endregion
+
+    document.querySelectorAll('.dia_logistico_highlight').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const conteudo = document.getElementById('conteudo__navegacao') 
+    const dia_logistico = this.innerText;
+        
+      if (dia_logistico) {
+       
+        const targetElement = document.querySelectorAll(`table[data-dia_logistico='${dia_logistico}']`)[0]
+        
+        if (targetElement) {
+            conteudo.scrollTo({
+                left: targetElement.offsetLeft - ((window.innerWidth) / 100),
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+    });
+})
+
+
 </script>
 {% endif %}
 {% endblock %}

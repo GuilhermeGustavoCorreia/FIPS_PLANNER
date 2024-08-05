@@ -63,17 +63,31 @@ def PAGINA_COMPLETA():
     TERMINAIS_COM_RESTRICAO = RESTRICOES_ATIVAS[RESTRICOES_ATIVAS['RESTRICAO'] > 0].index.tolist()
 
     SAIDAS = {
-        "D"     :{  
-            "MARGENS"   : {},
-            "DESCARGAS" : []
-        }, 
-        "D+1"   :{  
-            "MARGENS"   : {},
-            "DESCARGAS" : []
-        }, 
-        "D+2"   :{  
-            "MARGENS"   : {},
-            "DESCARGAS" : []
+        "HEADER":{
+            "TERMINAIS": [],
+            "DIAS_LOGISTICOS": []
+            },
+        "CONTEUDO":{
+            "D"     :{  
+                "MARGENS"   : {},
+                "DESCARGAS" : []
+            }, 
+            "D+1"   :{  
+                "MARGENS"   : {},
+                "DESCARGAS" : []
+            }, 
+            "D+2"   :{  
+                "MARGENS"   : {},
+                "DESCARGAS" : []
+            },
+             "D+3"   :{  
+                "MARGENS"   : {},
+                "DESCARGAS" : []
+            },
+             "D+4"   :{  
+                "MARGENS"   : {},
+                "DESCARGAS" : []
+            }
         }
     }
 
@@ -83,6 +97,9 @@ def PAGINA_COMPLETA():
         
         return
     
+    SAIDAS["HEADER"]["TERMINAIS"]       = json.dumps(lst_TERMINAIS_ATIVOS)
+    SAIDAS["HEADER"]["DIAS_LOGISTICOS"] = json.dumps(list(SAIDAS["CONTEUDO"].keys()))
+
     for TERMINAL in lst_TERMINAIS_ATIVOS:
 
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
@@ -106,11 +123,11 @@ def PAGINA_COMPLETA():
                 if ATIVO[0] == FERROVIA: FERROVIAS_ATIVAS[FERROVIA].append(ATIVO[1]) 
     
 
-        for DIA in SAIDAS.keys():
+        for DIA in SAIDAS["CONTEUDO"].keys():
 
             DATA_ARQ = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA].iloc[0]['DATA_ARQ']
             
-            SAIDAS[DIA]["MARGENS"] = CARREGAR_CHEGADA_MARGENS(DATA_ARQ)
+            SAIDAS["CONTEUDO"][DIA]["MARGENS"] = CARREGAR_CHEGADA_MARGENS(DATA_ARQ)
            
             with open(f"previsao_trens/src/DESCARGAS/{TERMINAL}/descarga_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
 
@@ -128,16 +145,13 @@ def PAGINA_COMPLETA():
                     json_DESCARGA["DESCARGAS"][FERROVIA] = {chave: valor for chave, valor in json_DESCARGA["DESCARGAS"][FERROVIA].items() if chave in FERROVIAS_ATIVAS[FERROVIA]}
                 
                 json_DESCARGA["DESCARGAS_ATIVAS"] = FERROVIAS_ATIVAS
-                SAIDAS[DIA]["DESCARGAS"].append(json_DESCARGA)
+                SAIDAS["CONTEUDO"][DIA]["DESCARGAS"].append(json_DESCARGA)
 
 
                 #INSERE O VALOR DA PRODUTIVIDADE (POIS ELE VEM DE OUTRA TABELA)
                 for FERROVIA in json_DESCARGA["DESCARGAS"]:
                     for PRODUTO in json_DESCARGA["DESCARGAS"][FERROVIA]:
                         json_DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["PRODUTIVIDADE"] = INFO_DO_TERMINAL["PRODUTIVIDADE"][FERROVIA][PRODUTO]
-
-
-
 
 
     return SAIDAS

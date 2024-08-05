@@ -87,6 +87,7 @@ tbody           { background-color: rgb(247, 242, 242);}
   
   /* Style the buttons that are used to open the tab content */
   .tab button {
+    min-width: 70px;
     background-color: inherit;
     float: left;
     border: none;

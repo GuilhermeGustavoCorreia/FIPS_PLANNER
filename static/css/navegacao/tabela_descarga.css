@@ -3,20 +3,23 @@
 .tabela__descarga td{
     border-collapse: collapse;
     text-align: center;
-    min-width: 2.5rem;
+    min-width: 1.5rem;
 
 }
 
-.tabela__descarga tr{height: 2rem}
+.tabela__descarga tr{height: 1rem}
 
 .tabela__descarga {
+    
     background-color: white;
-    border-collapse: collapse;
-    font-family: "Saira Expanded", Arial, sans-serif;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
-    0 1px 2px rgba(0,0,0,0.24);
+    border-collapse:    collapse;
+    font-family:        "Saira Expanded", Arial, sans-serif;
+    box-shadow:         0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     
 }
+
+
+.tabela__descarga, .tabela__margens {font-size: 0.7rem;}
 
 .TITLO_TOTAIS       {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold;}
 .NOME_TERMINAL      {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 9rem; }
@@ -37,15 +40,15 @@
 .LINHA_PRODUTIVIDADE_MRS    {background-color: rgb(255, 255, 204);  font-weight: bold; color: green;}
 .LINHA_PRODUTIVIDADE_VLI    {background-color: rgb(230, 230, 231);  font-weight: bold;}
 
-.FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);       min-width: 3.2rem !important; padding:0 10px}
-.FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs);     min-width: 3.2rem !important; padding:0 10px}
-.FERROVIA_VLI {color: white; background-color: var(--azul-vli);                   min-width: 3.2rem !important; padding:0 10px}
+.FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);       min-width: 2.2rem !important; padding:0 10px}
+.FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs);     min-width: 2.2rem !important; padding:0 10px; font-weight: bold}
+.FERROVIA_VLI {color: white;            background-color: var(--azul-vli);        min-width: 2.2rem !important; padding:0 10px}
 
-.TOTAL_FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold;  }
+.TOTAL_FERROVIA_RUMO{color: var(--neutro);      background-color: var(--azul-rumo);   font-weight: bold; }
 .TOTAL_FERROVIA_MRS {color: var(--azul-mrs);    background-color: var(--amarelo-mrs); font-weight: bold; }
-.TOTAL_FERROVIA_VLI {color: white;          background-color: var(--azul-vli);    font-weight: bold; }
+.TOTAL_FERROVIA_VLI {color: white;            background-color: var(--azul-vli);    font-weight: bold; }
 
-.PRODUTO{color: var(--cinza-chumbo-e); background-color: var(--cinza-chumbo-c);min-width: 4.5rem !important;}
+.PRODUTO{color: var(--cinza-chumbo-e); background-color: var(--cinza-chumbo-c); min-width: 3.5rem !important;}
 
 .LINHAS_TOTAIS_PEDRAS {background-color: var(--neutro);}
 
@@ -113,21 +116,19 @@
 
 .TITULO_CHEGADA_VLI         {background-color: rgb(241, 241, 241);  color: var(--azul-vli);}
 .VALOR_ENCOSTE_VLI          {background-color: rgb(241, 241, 241);  color: var(--azul-vli);}
+
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/
 
 
-.CELULA_SELECIONADA {border-top:   2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100;}
-.PRIMEIRA           {border-left:  2px solid var(--verde-floresta-m)}
-.ULTIMA             {border-right: 2px solid var(--verde-floresta-m)}
+.CELULA_SELECIONADA { border-top:   2px solid var(--verde-floresta-m); border-bottom: 2px solid var(--verde-floresta-m); z-index: 100; }
+.PRIMEIRA           { border-left:  2px solid var(--verde-floresta-m); }
+.ULTIMA             { border-right: 2px solid var(--verde-floresta-m); }
 
-
-
-
-.EXCLAMACAO_RESTRICAO{ background: linear-gradient(to right, #961a1a, rgb(255, 183, 183)); color: white}
-.FIM_RESTRICAO          {background: linear-gradient(to left, #961a1a, rgb(255, 183, 183));}
-.LINHA_MOTIVO       {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
-.LINHA_PCT          {background-color: rgb(255, 183, 183); color: rgb(134, 50, 50)}
-.RESTRICAO_ATIVA    {/*border: 1px rgb(151, 111, 0) dashed; background-color: var(--amarelo-ouro-e);*/ font-weight: bold}
+.EXCLAMACAO_RESTRICAO   { background: linear-gradient(to right, #961a1a, rgb(255, 183, 183)); color: white; }
+.FIM_RESTRICAO          { background: linear-gradient(to left,  #961a1a, rgb(255, 183, 183)); }
+.LINHA_MOTIVO           { background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
+.LINHA_PCT              { background-color: rgb(255, 183, 183); color: rgb(134, 50, 50); }
+.RESTRICAO_ATIVA        { font-weight: bold }
 
 
 /*===========================LINHAS DE PRODUTIVIDADE==================================*/

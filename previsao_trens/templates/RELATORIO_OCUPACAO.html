@@ -957,23 +957,23 @@
 <script>
 
     function abrir_total_detalhe(dia_logistico){
-        $.ajax({
-            url: '{% url "ocupacao_terminais" %}',
-            type: 'GET',
-            data: {
-                'acao'                  : "baixar_total_detalhe",
-                'csrfmiddlewaretoken'   : "{{ csrf_token }}",
-                'dia_logistico'         : dia_logistico
-            },
-            success:  function(response)  {
+        // $.ajax({
+        //     url: '{% url "ocupacao_terminais" %}',
+        //     type: 'GET',
+        //     data: {
+        //         'acao'                  : "baixar_total_detalhe",
+        //         'csrfmiddlewaretoken'   : "{{ csrf_token }}",
+        //         'dia_logistico'         : dia_logistico
+        //     },
+        //     success:  function(response)  {
 
-                const dialog = document.querySelector("#MODAL_DESCARGA");
-                dialog.showModal()
-                dialog.innerHTML = response.html_totais_relatorio_detalhe
+        //         const dialog = document.querySelector("#MODAL_DESCARGA");
+        //         dialog.showModal()
+        //         dialog.innerHTML = response.html_totais_relatorio_detalhe
             
-            },
-            error:    function(xhr)       {alert("ERR")}
-        });
+        //     },
+        //     error:    function(xhr)       {alert("ERR")}
+        // });
     }
 
     function ABRIR_DESCARGA(CELULA_CLICADA){

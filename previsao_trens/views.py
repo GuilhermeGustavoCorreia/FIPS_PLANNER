@@ -1,24 +1,26 @@
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http   import require_http_methods
 from django.shortcuts               import redirect
 from django.urls                    import reverse
 from django.forms.models            import model_to_dict
-
+import os
+from tempfile import NamedTemporaryFile
 from django.db import transaction
 
 from .models        import Trem, Restricao, TremVazio
-from .forms         import TremForm, RestricaoForm, TremVazioForm
+from .forms         import TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm
 from django.contrib import messages
 
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
 from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
-from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import BAIXAR_PLANILHA 
-from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import BAIXAR_DETALHE
+from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import gerar_planilha 
+from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import gerar_planilha_detalhe
+
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    dados_integracao
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER       import    lerDados
 
@@ -39,13 +41,14 @@ from    previsao_trens.packages.RESTRICAO.VALIDAR                  import VALIDA
 
 from    .forms      import UploadFileForm
 from    io          import TextIOWrapper
-from    datetime    import datetime, time
-import  json
-import  pandas as pd
+from    datetime    import datetime
+from    django.http import QueryDict
 
-import  csv
+import json
+import csv
+import os
+import pandas as pd
 
-from django.http import QueryDict
 
 
 def REQUEST_PARA_DICT(request):
@@ -131,6 +134,29 @@ def navegacao(request):
     DESCARGAS = CARREGAR_DESCARGA.PAGINA_COMPLETA()
     return render(request, 'navegacao.html', {"CONTEUDO_NAVEGACAO": DESCARGAS})
 #endregion
+
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
+
+def custom_login_view(request):
+
+    if request.user.is_authenticated:
+        
+        return redirect('navegacao')
+    
+    if request.method == 'POST':
+        
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+
+            auth_login(request, form.get_user())
+            return redirect('navegacao')
+        
+    else:
+
+        form = AuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form})
 
 @login_required
 def profile(request):
@@ -477,14 +503,15 @@ def upload_file_view(request):
 #endregion
 
 #region RESTRICOES
-@login_required
 
+@login_required
 def carregar_restricoes(request, restricao_form, tipo_formulario):
 
     restricoes = Restricao.objects.all()
 
     return render(request, 'RESTRICOES.html', {'RESTRICOES': restricoes, 'FORMULARIO': restricao_form, "TIPO_FORMULARIO": tipo_formulario})
 
+@login_required
 def restricoes_view(request):
 
     restricao_form  = RestricaoForm()
@@ -492,6 +519,7 @@ def restricoes_view(request):
 
     return carregar_restricoes(request, restricao_form, tipo_formulario)
 
+@login_required
 def criar_restricao_view(request):
     
     if request.method == 'POST':
@@ -639,6 +667,8 @@ def detalhe(request):
 
     return render(request, 'RELATORIO_DETALHE.html', {"RELATORIO": RELATORIO})
 
+
+#region CONFIGURACAO
 @login_required
 def configuracao(request):
 
@@ -694,34 +724,69 @@ def configuracao(request):
                 JSON    = json.load(ARQUIVO)
                 lerDados(JSON, request.user)
 
-       
-
     TERMIANIS_ATIVOS = ABRIR_TERMINAIS_ATIVOS()
 
-    if request.method == 'GET':
-
-        ACAO = request.GET.get('ACAO', 0)
-
-        if  ACAO == "BAIXAR_PLANILHA":
-
-            DONWLOAD_STATUS = BAIXAR_PLANILHA(request.user)
-
-            JsonResponse(DONWLOAD_STATUS)
-
-        elif  ACAO == "BAIXAR_DETALHE":
-
-            DONWLOAD_STATUS = BAIXAR_DETALHE()
-
-            JsonResponse(DONWLOAD_STATUS)
-        
-        elif  ACAO == "GERAR_DADOS_OFFLINE":
-
-            file_url = BAIXAR_DADOS()
-
-            return JsonResponse({'file_url': file_url})
-        
-
     return render(request, 'configuracao.html', {'terminais_ativos': TERMIANIS_ATIVOS, "FORM_CSV": FORM_CSV})
+
+@login_required
+def baixar_integracao_view(request):
+
+    json_data = dados_integracao()
+    
+    response = HttpResponse(json_data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="data.json"'
+
+    return response
+
+@login_required
+def baixar_planilha_view(request):
+  
+    try:
+        planilha_sistema = gerar_planilha(request.user)
+
+        with NamedTemporaryFile(delete=False, suffix=".xlsm") as tmp:
+            
+            planilha_sistema.save(tmp.name)
+            tmp.seek(0)
+
+            response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_planner.xlsm")}'
+
+            tmp.close()
+
+            try:    os.unlink(tmp.name)
+            except PermissionError: pass
+
+            return response
+    except Exception as e:
+        raise Http404(f"Erro ao baixar o arquivo: {e}")
+
+@login_required
+def baixar_planilha_detalhe_view(request):
+
+    try:
+        planilha_detalhe = gerar_planilha_detalhe()
+
+        with NamedTemporaryFile(delete=False, suffix=".xlsx") as tmp:
+
+            planilha_detalhe.save(tmp.name)
+            tmp.seek(0)
+
+            response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/RELATORIO_DETALHE.xlsx")}'
+
+            tmp.close()
+
+            try:    os.unlink(tmp.name)
+            except PermissionError: pass
+
+            return response
+        
+    except Exception as e:
+
+        raise Http404(f"Erro ao baixar o arquivo: {e}")
+
+#endregion
 
 @login_required
 def programacao_subida(request):
@@ -786,25 +851,7 @@ def programacao_subida(request):
     FORM_NOVO_TREM = TremVazioForm()
     
     return render(request, 'programacao_subida.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
-
-@login_required
-def editar_trem_subida(request, id):
-
-    TREM = TremVazio.objects.get(pk=id)
-    FORM = TremVazioForm(instance=TREM)
-
-    TABELAS = CARREGAR_PREVISAO_SUBIDA()
-
-    return render(request, 'OPERACAO/PREVISAO_SUBIDA.html', {'form': FORM, "TABELAS": TABELAS, 'MODAL_OPEN': True})
-
-def baixar_integracao_view(request):
-
-    json_data = dados_integracao()
-    
-    response = HttpResponse(json_data, content_type='application/json')
-    response['Content-Disposition'] = 'attachment; filename="data.json"'
-
-    return response
+  
 
 #region RELATORIO OCUPACAO
 @login_required
@@ -847,8 +894,6 @@ def ocupacao_terminais(request):
         #CARREGA A PAGINA
         RELATORIO = CARREGAR_RELATORIO_OCUPACAO()
         return render(request, 'RELATORIO_OCUPACAO.html', {"RELATORIO": RELATORIO}) 
-
-
 
 #endregion
 
