@@ -971,57 +971,7 @@
             }
         }
     },
-    "DPW SUZANO": {
-        "ORDEM": 17,
-        "TIPO": [
-            "DESCARGA"
-        ],
-        "MARGEM": "ESQUERDA",
-        "PATIO": "IBA",
-        "FILA": 4,
-        "MIN_ALIVIO": 0,
-        "SEGMENTO": "CELULOSE",
-        "SATURACAO": 50,
-        "SATURACAO_VAZIO": {
-            "RUMO": {
-                "MIN": 18,
-                "MAX": 64
-            },
-            "MRS": {
-                "MIN": 18,
-                "MAX": 64
-            },
-            "VLI": {
-                "MIN": 18,
-                "MAX": 64
-            }
-        },
-        "PXO": {
-            "PRODUTIVIDADE": 0,
-            "OCIOSIDADE": 0
-        },
-        "ALIVIO": 30,
-        "PRODUTOS": [
-            "CELULOSE"
-        ],
-        "FERROVIA": [
-            "RUMO",
-            "MRS"
-        ],
-        "SLA": 2,
-        "PRODUTIVIDADE": {
-            "RUMO": {
-                "CELULOSE": 0
-            },
-            "MRS": {
-                "CELULOSE": 0
-            },
-            "VLI": {
-                "CELULOSE": 0
-            }
-        }
-    },
-    "DPW GRAOS": {
+    "DPW": {
         "ORDEM": 18,
         "TIPO": [
             "DESCARGA"
@@ -1065,7 +1015,7 @@
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 0,
-                "MILHO": 0,
+                "MILHO": 5,
                 "SOJA": 0
             },
             "MRS": {
@@ -1077,6 +1027,56 @@
                 "FARELO": 0,
                 "MILHO": 0,
                 "SOJA": 0
+            }
+        }
+    },
+    "DPW SUZANO": {
+        "ORDEM": 17,
+        "TIPO": [
+            "DESCARGA"
+        ],
+        "MARGEM": "ESQUERDA",
+        "PATIO": "IBA",
+        "FILA": 4,
+        "MIN_ALIVIO": 0,
+        "SEGMENTO": "CELULOSE",
+        "SATURACAO": 50,
+        "SATURACAO_VAZIO": {
+            "RUMO": {
+                "MIN": 18,
+                "MAX": 64
+            },
+            "MRS": {
+                "MIN": 18,
+                "MAX": 64
+            },
+            "VLI": {
+                "MIN": 18,
+                "MAX": 64
+            }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 0,
+            "OCIOSIDADE": 0
+        },
+        "ALIVIO": 30,
+        "PRODUTOS": [
+            "CELULOSE"
+        ],
+        "FERROVIA": [
+            "RUMO",
+            "MRS"
+        ],
+        "SLA": 2,
+        "PRODUTIVIDADE": {
+            "RUMO": {
+                "CELULOSE": 10
+            },
+            "MRS": {
+                "CELULOSE": 0
+            },
+            "VLI": {
+                "CELULOSE": 0
             }
         }
     },
@@ -1176,7 +1176,7 @@
             "RUMO": {
                 "FARELO": 0,
                 "MILHO": 0,
-                "SOJA": 0
+                "SOJA": 10
             },
             "MRS": {
                 "FARELO": 0,
@@ -1231,7 +1231,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "ACUCAR": 0
+                "ACUCAR": 10
             },
             "MRS": {
                 "ACUCAR": 0
@@ -1284,7 +1284,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "KCL": 0,
+                "KCL": 10,
                 "UREIA": 0,
                 "OUTROS": 0
             },
@@ -1342,7 +1342,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "CONTEINER": 0
+                "CONTEINER": 10
             },
             "MRS": {
                 "CONTEINER": 0
@@ -1447,7 +1447,7 @@
         "SLA": 2,
         "PRODUTIVIDADE": {
             "RUMO": {
-                "KCL": 0,
+                "KCL": 5,
                 "UREIA": 0,
                 "OUTROS": 0
             },

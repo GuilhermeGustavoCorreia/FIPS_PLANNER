@@ -24,6 +24,7 @@ def CARREGAR_RELATORIO_DETALHE():
     }
 
     #OBTENDO OS VALORES DA DETALHADA
+
     for TERMINAL in lst_TERMINAIS_ATIVOS:  #CADA TERMINAL
         RELATORIO_DETALHE["PRINCIPAL"][TERMINAL] = {}
 
@@ -293,7 +294,6 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
 
-
                             #LINHA TOTAIS GRAOS RUMO
                             TOTAIS["RUMO"]["RESUMO_GRAOS"][PRODUTO][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
                             TOTAIS["RUMO"]["RESUMO_GRAOS"][PRODUTO][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
@@ -371,7 +371,69 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
-                
+                              
+                if PRODUTO == "CELULOSE" and MARGEM == "PCZ":
+
+                    if not "CELULOSE" in TOTAIS["RUMO"]: 
+                        TOTAIS["RUMO"]["CELULOSE"] = {"PCZ": copy.deepcopy(LINHA_DETALHE), "TOTAL_CELULOSE": copy.deepcopy(LINHA_DETALHE)}
+
+                    for i in range(5):
+                        for COLUNA in COLUNAS:
+                            
+                            TOTAIS["RUMO"]["CELULOSE"][MARGEM][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["RUMO"]["CELULOSE"][MARGEM][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["RUMO"]["CELULOSE"][MARGEM][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["RUMO"]["CELULOSE"][MARGEM][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
+                            #LINHA TOTAL
+                            TOTAIS["RUMO"]["CELULOSE"]["TOTAL_CELULOSE"][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["RUMO"]["CELULOSE"]["TOTAL_CELULOSE"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["RUMO"]["CELULOSE"]["TOTAL_CELULOSE"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["RUMO"]["CELULOSE"]["TOTAL_CELULOSE"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
+                            #LINHA TOTAL MARGENS
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+                            
+                            #LINHA TOTAL GERAL FERROVIAS
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
+                if PRODUTO == "CONTEINER" and MARGEM == "PCZ":
+
+                    if not "CONTEINER" in TOTAIS["RUMO"]: 
+                        TOTAIS["RUMO"]["CONTEINER"] = {"PCZ": copy.deepcopy(LINHA_DETALHE), "TOTAL_CONTEINER": copy.deepcopy(LINHA_DETALHE)}
+
+                    for i in range(5):
+                        for COLUNA in COLUNAS:
+                            
+                            TOTAIS["RUMO"]["CONTEINER"][MARGEM][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["RUMO"]["CONTEINER"][MARGEM][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["RUMO"]["CONTEINER"][MARGEM][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["RUMO"]["CONTEINER"][MARGEM][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
+                            #LINHA TOTAL
+                            TOTAIS["RUMO"]["CONTEINER"]["TOTAL_CONTEINER"][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["RUMO"]["CONTEINER"]["TOTAL_CONTEINER"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["RUMO"]["CONTEINER"]["TOTAL_CONTEINER"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["RUMO"]["CONTEINER"]["TOTAL_CONTEINER"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
+                            #LINHA TOTAL MARGENS
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["TOTAIS"][MARGEM][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+                            
+                            #LINHA TOTAL GERAL FERROVIAS
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+
                 if PRODUTO in FERTILIZANTES:
                     for i in range(5):
 
@@ -854,6 +916,21 @@ def CARREGAR_RELATORIO_DETALHE():
     #endregion
 
 
+
+    #region REORDENANDO
+
+    itens_sem_acucar = []
+
+    # Iterar sobre os itens e remover "ACUCAR"
+    for item in lst_TERMINAIS_ATIVOS:
+        item_sem_acucar = item.replace(" ACUCAR", "")
+        if item_sem_acucar not in itens_sem_acucar:
+            itens_sem_acucar.append(item_sem_acucar)
+
+
+    #endregion
+
+    RELATORIO_DETALHE["PRINCIPAL"] = {chave: RELATORIO_DETALHE["PRINCIPAL"][chave] for chave in itens_sem_acucar}
 
 
     #endregion

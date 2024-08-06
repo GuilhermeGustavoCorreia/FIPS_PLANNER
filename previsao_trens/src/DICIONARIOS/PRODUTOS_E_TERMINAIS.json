@@ -1,11 +1,11 @@
 {
-    "ACUCAR":       ["TAC ACUCAR", "CLI ACUCAR", "TEAG ACUCAR"],
-    "SOJA":         ["CLI", "TAC", "MOEGA V",  "MOEGA X", "CUTRALE", "TEG", "TEAG", "TGG", "TES", "T39", "TGRAO", "T12A"],
-    "MILHO":        ["CLI", "TAC", "MOEGA V",  "MOEGA X", "CUTRALE", "TEG", "TEAG", "TGG", "TES", "T39", "TGRAO", "T12A"],
-    "FARELO":       ["MOEGA V",  "MOEGA X", "TGG", "TES", "T39"],
-    "CELULOSE":     ["BRACELL", "ELDORADO"],
-    "CONTEINER":    ["DPW", "TERLOC", "SBR", "ECOPORTO"],
-    "KCL":          ["TERMAG", "HIDROVIAS"],
-    "UREIA":        ["TERMAG", "HIDROVIAS"],
-    "OUTROS":       ["TERMAG", "HIDROVIAS"]
+    "ACUCAR":       ["TAC ACUCAR", "CLI ACUCAR", "TEAG ACUCAR", "TIPLAM ACUCAR", "TEC ACUCAR"],
+    "SOJA":         ["CLI", "TAC", "MOEGA V",  "MOEGA X", "CUTRALE", "TEG", "TEAG", "TGG", "TES", "T39", "TGRAO", "T12A", "TIPLAM", "TERLOC", "DPW", "TEC"],
+    "MILHO":        ["CLI", "TAC", "MOEGA V",  "MOEGA X", "CUTRALE", "TEG", "TEAG", "TGG", "TES", "T39", "TGRAO", "T12A", "TIPLAM", "TERLOC", "DPW", "TEC"],
+    "FARELO":       ["MOEGA V",  "MOEGA X", "TGG", "TES", "T39", "TIPLAM", "TERLOC", "DPW", "TEC"],
+    "CELULOSE":     ["BRACELL", "ELDORADO", "DPW SUZANO", "T31", "SUZANO"],
+    "CONTEINER":    ["TERLOC", "SBR", "ECOPORTO", "DPW CONTEINER"],
+    "KCL":          ["TERMAG", "HIDROVIAS", "TIPLAM FERTILIZANTES", "TERLOC FERTILIZANTES", "STS-53"],
+    "UREIA":        ["TERMAG", "HIDROVIAS", "TIPLAM FERTILIZANTES", "TERLOC FERTILIZANTES", "STS-53"],
+    "OUTROS":       ["TERMAG", "HIDROVIAS", "TIPLAM FERTILIZANTES", "TERLOC FERTILIZANTES", "STS-53"]
 }

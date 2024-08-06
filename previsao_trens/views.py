@@ -740,7 +740,7 @@ def baixar_integracao_view(request):
 
 @login_required
 def baixar_planilha_view(request):
-  
+    
     try:
         planilha_sistema = gerar_planilha(request.user)
 
@@ -758,6 +758,7 @@ def baixar_planilha_view(request):
             except PermissionError: pass
 
             return response
+        
     except Exception as e:
         raise Http404(f"Erro ao baixar o arquivo: {e}")
 

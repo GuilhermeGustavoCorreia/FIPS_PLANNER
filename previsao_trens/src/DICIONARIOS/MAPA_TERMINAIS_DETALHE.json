@@ -19,70 +19,126 @@
         "MRS"       : {"FARELO": 38, "MILHO": 41, "SOJA": 44},
         "VLI"       : {"FARELO": 39, "MILHO": 42, "SOJA": 45}
     },
+    "TIPLAM":{
+        "RUMO"      : {"FARELO": 47, "MILHO": 50, "SOJA": 53, "ACUCAR": 56 }, 
+        "MRS"       : {"FARELO": 48, "MILHO": 51, "SOJA": 54, "ACUCAR": 57 },
+        "VLI"       : {"FARELO": 49, "MILHO": 52, "SOJA": 55, "ACUCAR": 58 }      
+    },
+    "TIPLAM FERTILIZANTES":{
+        "RUMO"      : {"UREIA":  62, "KCL": 59, "OUTROS": 65}, 
+        "MRS"       : {"UREIA":  63, "KCL": 60, "OUTROS": 66},
+        "VLI"       : {"UREIA":  64, "KCL": 61, "OUTROS": 67}      
+    },
     "T39": {
-        "RUMO"      : {"FARELO": 60, "MILHO": 63, "SOJA": 66}, 
-        "MRS"       : {"FARELO": 61, "MILHO": 64, "SOJA": 67},
-        "VLI"       : {"FARELO": 62, "MILHO": 65, "SOJA": 68}
+        "RUMO"      : {"FARELO": 69, "MILHO": 72, "SOJA": 75}, 
+        "MRS"       : {"FARELO": 70, "MILHO": 73, "SOJA": 76},
+        "VLI"       : {"FARELO": 71, "MILHO": 74, "SOJA": 77}
     },
     "TES": {
-        "RUMO"      : {"FARELO": 73, "MILHO": 76, "SOJA": 79}, 
-        "MRS"       : {"FARELO": 74, "MILHO": 77, "SOJA": 80},
-        "VLI"       : {"FARELO": 75, "MILHO": 78, "SOJA": 81}
+        "RUMO"      : {"FARELO": 82, "MILHO": 85, "SOJA": 88}, 
+        "MRS"       : {"FARELO": 83, "MILHO": 86, "SOJA": 89},
+        "VLI"       : {"FARELO": 84, "MILHO": 87, "SOJA": 90}
     },
     "MOEGA V": {
-        "RUMO"      : {"FARELO": 86, "MILHO": 89, "SOJA": 92}, 
-        "MRS"       : {"FARELO": 87, "MILHO": 90, "SOJA": 93},
-        "VLI"       : {"FARELO": 88, "MILHO": 91, "SOJA": 94}
+        "RUMO"      : {"FARELO": 95, "MILHO": 98, "SOJA": 101}, 
+        "MRS"       : {"FARELO": 96, "MILHO": 99, "SOJA": 102},
+        "VLI"       : {"FARELO": 97, "MILHO": 100, "SOJA": 103}
     },
     "MOEGA X": {
-        "RUMO"      : {"FARELO":  99, "MILHO": 102, "SOJA": 105}, 
-        "MRS"       : {"FARELO": 100, "MILHO": 103, "SOJA": 106},
-        "VLI"       : {"FARELO": 101, "MILHO": 104, "SOJA": 107}
+        "RUMO"      : {"FARELO": 108, "MILHO": 111, "SOJA": 114}, 
+        "MRS"       : {"FARELO": 109, "MILHO": 112, "SOJA": 115},
+        "VLI"       : {"FARELO": 110, "MILHO": 113, "SOJA": 116}
     },
     "TGRAO": {
-        "RUMO"      : {"FARELO": 112, "MILHO": 115, "SOJA": 118}, 
-        "MRS"       : {"FARELO": 113, "MILHO": 116, "SOJA": 119},
-        "VLI"       : {"FARELO": 114, "MILHO": 117, "SOJA": 120}
+        "RUMO"      : {"FARELO": 121, "MILHO": 124, "SOJA": 127}, 
+        "MRS"       : {"FARELO": 122, "MILHO": 125, "SOJA": 128},
+        "VLI"       : {"FARELO": 123, "MILHO": 126, "SOJA": 129}
     },
     "CLI": {
-        "RUMO"      : {"FARELO": 125, "MILHO": 128, "SOJA": 131, "ACUCAR": 134}, 
-        "MRS"       : {"FARELO": 126, "MILHO": 129, "SOJA": 132, "ACUCAR": 135},
-        "VLI"       : {"FARELO": 127, "MILHO": 130, "SOJA": 133, "ACUCAR": 136}
+        "RUMO"      : {"FARELO": 134, "MILHO": 137, "SOJA": 140, "ACUCAR": 143}, 
+        "MRS"       : {"FARELO": 135, "MILHO": 138, "SOJA": 141, "ACUCAR": 144},
+        "VLI"       : {"FARELO": 136, "MILHO": 139, "SOJA": 142, "ACUCAR": 145}
     },
     "TAC": {
-        "RUMO"      : {"FARELO": 138, "MILHO": 141, "SOJA": 144, "ACUCAR": 147}, 
-        "MRS"       : {"FARELO": 139, "MILHO": 142, "SOJA": 145, "ACUCAR": 148},
-        "VLI"       : {"FARELO": 140, "MILHO": 143, "SOJA": 146, "ACUCAR": 149}
-    },
+        "RUMO"      : {"FARELO": 147, "MILHO": 150, "SOJA": 153, "ACUCAR": 156}, 
+        "MRS"       : {"FARELO": 148, "MILHO": 151, "SOJA": 154, "ACUCAR": 157},
+        "VLI"       : {"FARELO": 149, "MILHO": 152, "SOJA": 155, "ACUCAR": 158}
+    }, 
     "T12A": {
-        "RUMO"      : {"FARELO": 151, "MILHO": 154, "SOJA": 157}, 
-        "MRS"       : {"FARELO": 152, "MILHO": 155, "SOJA": 158},
-        "VLI"       : {"FARELO": 153, "MILHO": 156, "SOJA": 159}
+        "RUMO"      : {"FARELO": 160, "MILHO": 163, "SOJA": 166}, 
+        "MRS"       : {"FARELO": 161, "MILHO": 164, "SOJA": 167},
+        "VLI"       : {"FARELO": 162, "MILHO": 165, "SOJA": 168}
     },
     "ELDORADO": {
-        "RUMO"      : {"CELULOSE": 168}, 
-        "MRS"       : {"CELULOSE": 169},
-        "VLI"       : {"CELULOSE": 170}
+        "RUMO"      : {"CELULOSE": 177}, 
+        "MRS"       : {"CELULOSE": 178},
+        "VLI"       : {"CELULOSE": 179}
     },
     "BRACELL": {
-        "RUMO"      : {"CELULOSE": 164}, 
-        "MRS"       : {"CELULOSE": 165},
-        "VLI"       : {"CELULOSE": 166}
+        "RUMO"      : {"CELULOSE": 173}, 
+        "MRS"       : {"CELULOSE": 174},
+        "VLI"       : {"CELULOSE": 175}
+    },
+    "DPW": {
+        "RUMO"      : {"FARELO": 181, "MILHO": 184, "SOJA": 187}, 
+        "MRS"       : {"FARELO": 182, "MILHO": 185, "SOJA": 188},
+        "VLI"       : {"FARELO": 183, "MILHO": 186, "SOJA": 189}
+    },
+    "DPW SUZANO": {
+        "RUMO"      : {"CELULOSE": 190}, 
+        "MRS"       : {"CELULOSE": 191},
+        "VLI"       : {"CELULOSE": 192}
+    },
+    "DPW CONTEINER": {
+        "RUMO"      : {"CONTEINER": 193}, 
+        "MRS"       : {"CONTEINER": 194},
+        "VLI"       : {"CONTEINER": 195}
+    },
+    "TERLOC": {
+        "RUMO"      : {"CONTEINER": 197}, 
+        "MRS"       : {"CONTEINER": 198},
+        "VLI"       : {"CONTEINER": 199}
+    },
+    "TERLOC FERTILIZANTES":{
+        "RUMO"      : {"UREIA":  200, "KCL": 203, "OUTROS": 206}, 
+        "MRS"       : {"UREIA":  201, "KCL": 204, "OUTROS": 207},
+        "VLI"       : {"UREIA":  202, "KCL": 205, "OUTROS": 208}
     },
     "HIDROVIAS":{
-        "RUMO"      : {"UREIA":  197, "KCL": 194, "OUTROS": 200}, 
-        "MRS"       : {"UREIA":  198, "KCL": 195, "OUTROS": 201},
-        "VLI"       : {"UREIA":  199, "KCL": 196, "OUTROS": 202}
+        "RUMO"      : {"UREIA":  227, "KCL": 230, "OUTROS": 233}, 
+        "MRS"       : {"UREIA":  228, "KCL": 231, "OUTROS": 234},
+        "VLI"       : {"UREIA":  229, "KCL": 232, "OUTROS": 235}
+    },
+    "STS-53":{
+        "RUMO"      : {"UREIA":  237, "KCL": 240, "OUTROS": 243}, 
+        "MRS"       : {"UREIA":  238, "KCL": 241, "OUTROS": 244},
+        "VLI"       : {"UREIA":  239, "KCL": 242, "OUTROS": 245}
+    },
+    "SUZANO": {
+        "RUMO"      : {"CELULOSE": 251}, 
+        "MRS"       : {"CELULOSE": 252},
+        "VLI"       : {"CELULOSE": 253}
+    },
+    "T31": {
+        "RUMO"      : {"CELULOSE": 247}, 
+        "MRS"       : {"CELULOSE": 248},
+        "VLI"       : {"CELULOSE": 249}
     },
     "TERMAG":   {
-        "RUMO"      : {"UREIA":  187, "KCL": 184, "OUTROS": 190}, 
-        "MRS"       : {"UREIA":  188, "KCL": 185, "OUTROS": 191},
-        "VLI"       : {"UREIA":  189, "KCL": 186, "OUTROS": 192}
+        "RUMO"      : {"UREIA":  255, "KCL": 258, "OUTROS": 261}, 
+        "MRS"       : {"UREIA":  256, "KCL": 259, "OUTROS": 262},
+        "VLI"       : {"UREIA":  257, "KCL": 260, "OUTROS": 263}
     },
+    
     "SBR":      {
-        "MRS"       : {"CONTEINER": 182}
+        "MRS"       : {"CONTEINER": 212}
     },
     "ECOPORTO": {
-        "MRS"       : {"CONTEINER": 180}
+        "MRS"       : {"CONTEINER": 210}
+    },
+    "TEC": {
+        "RUMO"      : {"FARELO": 214, "MILHO": 217, "SOJA": 220}, 
+        "MRS"       : {"FARELO": 215, "MILHO": 218, "SOJA": 221},
+        "VLI"       : {"FARELO": 216, "MILHO": 219, "SOJA": 222}
     }
 }

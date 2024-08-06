@@ -101,17 +101,17 @@
         "MRS"       : {"ACUCAR": 533},
         "VLI"       : {"ACUCAR": 536}
     },
-    "ELDORADO": {
-        "LIMITES"   : {"INICIO":   543, "FIM": 559},
-        "RUMO"      : {"CELULOSE": 548}, 
-        "MRS"       : {"CELULOSE": 551},
-        "VLI"       : {"CELULOSE": 554}
-    },
     "BRACELL": {
         "LIMITES"   : {"INICIO":   561, "FIM": 577},
         "RUMO"      : {"CELULOSE": 566}, 
         "MRS"       : {"CELULOSE": 569},
         "VLI"       : {"CELULOSE": 572}
+    },
+    "ELDORADO": {
+        "LIMITES"   : {"INICIO":   543, "FIM": 559},
+        "RUMO"      : {"CELULOSE": 548}, 
+        "MRS"       : {"CELULOSE": 551},
+        "VLI"       : {"CELULOSE": 554}
     },
     "SUZANO": {
         "LIMITES"   : {"INICIO":   579, "FIM": 595},

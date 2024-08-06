@@ -120,7 +120,7 @@ class EXPORTAR_PLANILHA():
 
                     #region INSERINDO DESCARGAS
                     for DESCARGA_ATIVA in DESCARGAS_ATIVAS:
-
+                        
                         FERROVIA = DESCARGA_ATIVA[0]
                         PRODUTO  = DESCARGA_ATIVA[1] 
 
@@ -186,7 +186,6 @@ class EXPORTAR_PLANILHA():
         for TERMINAL in lsTERMINAIS_DESATIVADOS:
             if TERMINAL in map_TERMINAIS:
                 TAMANHO_TERMINAL = map_TERMINAIS[TERMINAL]["LIMITES"]
-                print(f"REMOVENDO: {TERMINAL} { map_TERMINAIS[TERMINAL]["LIMITES"]}")
                 for i in range(TAMANHO_TERMINAL["INICIO"], TAMANHO_TERMINAL["FIM"] +2):
                    
                     NAVEGACAO.row_dimensions[i].hidden = True            
@@ -272,9 +271,7 @@ class EXPORTAR_PLANILHA():
             SUBIDA.cell(row = j, column=30,   value=TREM.loco_3)
             SUBIDA.cell(row = j, column=31,   value=TREM.loco_4)
             SUBIDA.cell(row = j, column=32,   value=TREM.loco_5)
-
-
-
+    
     def salvar(self):
         
         caminho_static  = os.path.join(settings.STATIC_URL, 'downloads')
