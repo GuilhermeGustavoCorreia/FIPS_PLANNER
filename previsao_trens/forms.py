@@ -133,8 +133,9 @@ class TremVazioForm(forms.ModelForm):
     def clean_previsao(self):
 
         previsao = self.cleaned_data.get('previsao')
+        margem   = self.cleaned_data.get('margem')
         
-        if TremVazio.objects.filter(previsao=previsao).exists():
+        if TremVazio.objects.filter(previsao=previsao, margem=margem).exists():
             raise forms.ValidationError('Já existe um trem com esta previsão.')
         
         return previsao

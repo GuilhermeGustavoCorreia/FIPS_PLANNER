@@ -1092,9 +1092,9 @@ class Condensados():
         pass
 
     def inserirTrem(self, dict_trem):
-
+        
         TIPO_VAGOES      = ["QT_GRAOS", "QT_FERTI", "QT_CELUL", "QT_ACUCA", "QT_CONTE"]
-        TIPO_VAGOES_TREM = ["qt_graos", "qt_acuca","qt_celul", "qt_contei", "qt_ferti", "qt_graos"]
+        TIPO_VAGOES_TREM = ["qt_graos", "qt_ferti", "qt_celul", "qt_acuca", "qt_contei"]
         SEGMENTOS        = ["GRAO", "FERTILIZANTE", "CELULOSE", "ACUCAR", "CONTEINER"] 
 
         dict_trem["previsao"]  = dict_trem["previsao"] - timedelta(hours=1)
@@ -1123,7 +1123,7 @@ class Condensados():
 
                 VAGOES = int(dict_trem[TIPO_VAGOES_TREM[i]])
                 self.full_CONDENSADOS[MARGEM]["SAIDAS"][SEGMENTOS[i]][COLUNA] = VAGOES
-
+                print(f"inserindo: { VAGOES } em { SEGMENTOS[i] } - { SEGMENTO}")
         
 
 

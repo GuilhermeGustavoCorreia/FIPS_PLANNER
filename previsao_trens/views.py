@@ -669,6 +669,7 @@ def detalhe(request):
 
 
 #region CONFIGURACAO
+
 @login_required
 def configuracao(request):
 
