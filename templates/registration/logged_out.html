@@ -4,7 +4,92 @@
 
 {% load static %}
   
-  <p>Logged out!</p>
-  <a href="{% url 'login' %}">Click here to login again.</a>
+  <div class="logout-container">
+    <h2>Você saiu com sucesso!</h2>
+    <button onclick="window.location.href='{% url 'login' %}'">OK</button>
+  </div>
+
+  <style>
+    :root {
+    /*PRIMÁRIAS*/
+    --azul-profundo-e: #002A68;
+    --azul-profundo-m: #004B9B;
+    --azul-profundo-c: #658EC9;
+    
+    --cinza-chumbo-e: #333B41;
+    --cinza-chumbo-m: #7B8C96;
+    --cinza-chumbo-c: #C0CCD2;
+
+    /*SECUNDÁRIAS*/
+    --azul-ceu-e: #0090D0;
+    --azul-ceu-m: #93BDE4;
+    --azul-ceu-c: #D3E3F4;
+
+    --verde-floresta-e: #00904C;
+    --verde-floresta-m: #00C64C;
+    --verde-floresta-c: #8BE5AD;
+
+    --amarelo-ouro-e: #F6921E;
+    --amarelo-ouro-m: #FDC24E;
+    --amarelo-ouro-c: #FFE4B8;
+    
+    --neutro: white;
+
+    /*CORES FERROVIAS*/
+    
+    
+    --azul-rumo: #003865;
+    --azul-claro-rumo: #32A6E6;
+
+
+    --amarelo-mrs: #fecb0a;
+    --azul-mrs:#00355b;
+
+
+    --laranja-vli: #ff6900;
+    --azul-vli : #0074C0;
+
+    --cinza-vli-txt: #393939;
+    --cinza-vli: #97B1B8;
+
+}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family:"Saira Expanded", Arial, sans-serif;;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #acacac;
+    }
+    .logout-container {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+        max-width: 300px;
+        width: 100%;
+    }
+    .logout-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+    .logout-container button {
+        background-color: var(--verde-floresta-m);
+        color: white;
+        padding: 5px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family:"Saira Expanded", Arial, sans-serif;
+        font-size: 16px;
+    }
+    .logout-container button:hover {
+        background-color: var(--verde-floresta-e);
+    }
+</style>
 
 {% endblock %}

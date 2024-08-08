@@ -873,22 +873,21 @@ def ocupacao_terminais(request):
             
             return JsonResponse({"html_totais_relatorio_detalhe": html_totais_relatorio_detalhe})
 
-    if "acao" in  REQUISICAO:
-        
-        ACAO = REQUISICAO["acao"][0]
+        if acao == "vizualizar_descarga":
+            
+            dia_logistico   = request.GET.get('dia_logistico')
+            terminal        = request.GET.get('terminal')
 
-        if ACAO == "vizualizar_descarga":
+            if terminal == "MOEGA X" or terminal == "MOEGA V":
 
-            if REQUISICAO["TERMINAL"][0] == "MOEGA X" or REQUISICAO["TERMINAL"][0] == "MOEGA V":
-
-                DESCARGA = DESCARGA_HTML("MOEGA X", REQUISICAO["DIA_LOGISTICO"][0]) + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
-                DESCARGA = DESCARGA + DESCARGA_HTML("MOEGA V", REQUISICAO["DIA_LOGISTICO"][0])
+                DESCARGA = DESCARGA_HTML("MOEGA X", dia_logistico) + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("MOEGA V", dia_logistico)
                 
                 return HttpResponse(DESCARGA) 
             
             else:
 
-                DESCARGA = DESCARGA_HTML(REQUISICAO["TERMINAL"][0], REQUISICAO["DIA_LOGISTICO"][0])
+                DESCARGA = DESCARGA_HTML(terminal, dia_logistico)
                 return HttpResponse(DESCARGA)
 
     else:

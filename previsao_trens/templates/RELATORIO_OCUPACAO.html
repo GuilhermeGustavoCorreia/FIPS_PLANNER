@@ -4,7 +4,7 @@
 {% load custom_filters %}
 
 <link   rel="stylesheet" type="text/css" href="{% static 'css/RELATORIO_OCUPACAO/RELATORIO_OCUPACAO.css' %}"> 
-<link rel="stylesheet" type="text/css" href="{% static 'css/navegacao/tabela_descarga.css' %}"> 
+<link   rel="stylesheet" type="text/css" href="{% static 'css/navegacao/tabela_descarga.css' %}"> 
 
 <script src="{% static 'javascript/RELATORIO_OCUPACAO/RELATORIO_OCUPACAO.js' %}" defer></script>
 
@@ -338,7 +338,8 @@
 
                     </tbody>
                 
-                </table>        
+                </table>  
+                      
             </div>   
         </div>
         
@@ -346,7 +347,6 @@
 
             <div id="D1">
 
-            
                 <h2>D+1</h2>
                 
                 <table>
@@ -914,7 +914,7 @@
                 
                 <!--#region TOTAIS-->        
                 <tr>
-                    {{RELATORIO.D2.TOTitems}}
+                    
                     <td colspan="26" class="linha__total" onclick="abrir_total_detalhe('D+2')">TOTAL</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PLANO.OFERTA }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PLANO.PEDRA }}</td>
@@ -936,7 +936,6 @@
         </div>
 
     {% if RELATORIO %}
-
       
     {% else %}
 
@@ -983,10 +982,10 @@
             url: '/ocupacao_terminais/',
             type: 'GET',
             data: {
-                'ACAO'                  : "VIZUALIZAR_DESCARGA",
+                'acao'                  : "vizualizar_descarga",
                 'csrfmiddlewaretoken'   : "{{ csrf_token }}",
-                'TERMINAL'              : CELULA_CLICADA.dataset.terminal,
-                'DIA_LOGISTICO'         : CELULA_CLICADA.dataset.dia
+                'terminal'              : CELULA_CLICADA.dataset.terminal,
+                'dia_logistico'         : CELULA_CLICADA.dataset.dia
             },
             success:  function(TABELA_DESCARGA)  {
 
@@ -1010,6 +1009,7 @@
     })
 
 </script>
+
 {% endblock %}
 
 

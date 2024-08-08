@@ -5,6 +5,7 @@
     margin-top: 12vh;
     position: absolute;
     width: 94vw;
+
 }
 body{user-select:    none;}
 
@@ -14,6 +15,7 @@ body{user-select:    none;}
     height:     fit-content;
     margin:         auto;
     text-align: center;
+
 }
 
 .SEM_NAVEGACAO img{
@@ -24,7 +26,6 @@ body{user-select:    none;}
 
 table{
 
-
     font-family: "Saira Expanded", Arial, sans-serif;
     background-color: rgb(237, 237, 237);
     margin-bottom: 2rem;
@@ -33,6 +34,7 @@ table{
 
 }
 #tbl_vgs_form{
+
     margin-top: 15px;
     width: 100%;
     border-radius: 15px;
@@ -86,10 +88,6 @@ tbody th {  border: 1px solid var(--cinza-chumbo-c);
 
 /*#endregion*/
 
-
-
-
-
 .LISTA__TRENS tbody tr:last-child td:first-child {border-radius: 0 0 0 20px;}
 .LISTA__TRENS tbody tr:last-child td:last-child  {border-radius: 0 0 20px 0;}
 
@@ -115,30 +113,36 @@ table       { border-collapse: collapse;}
 .TITULO_DARK td  { border: 1px solid var(--cinza-chumbo-m); font-weight: bold;  padding: 0.1rem;  color: white; text-align: center;}
 
 .AMARELO_CLARO, .AMARELO{
+
     background-color: #ffcb32;
     color:       white;
     font-weight:    bold;
     border:         none;
     border-radius: 4px;
     text-align: center;
+
 }
 
 .AMARELO_MEDIO{
+
     background-color: #cc9800;
     color:       white;
     font-weight:    bold;
     border:         none;
     border-radius: 4px;
     text-align: center;
+
 }
 
 .AMARELO_ESCURO{
+
     background-color: #997200;
     color:       white;
     font-weight:    bold;
     border:         none;
     border-radius: 4px;
     text-align: center;
+    
 }
 
 .AZUL{ 
