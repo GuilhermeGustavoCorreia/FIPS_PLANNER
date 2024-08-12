@@ -42,10 +42,12 @@ table{
     
 }
 
-#tbl_vgs_form td    {  text-align: center;      background-color: rgb(237, 237, 237);    }
-#tbl_vgs_form th    { padding: 5px; background-color: var(--amarelo-ouro-e); color: white; border-radius: 15px 15px 0  0; border: none !important;}
+#tbl_vgs_form td    { text-align: center;      background-color: rgb(237, 237, 237); }
+#tbl_vgs_form th    { padding: 5px; background-color: var(--amarelo-ouro-e); color: white; border-radius: 15px 15px 0  0; border: none !important; height: 2.5rem;}
 
-tr .titulo_frm_vgs  { border-radius: 15px 15px 0  0;}
+#tbl_vgs_
+
+tr .titulo_frm_vgs  { border-radius: 15px 15px 0  0; }
 
 
 

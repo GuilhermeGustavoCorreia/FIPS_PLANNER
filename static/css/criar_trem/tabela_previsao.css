@@ -7,7 +7,7 @@
     user-select: none;
     margin-bottom: 2vh;
     font-size: 0.8rem;
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
                 0 1px 2px rgba(0,0,0,0.24);
@@ -21,17 +21,17 @@
 
 .LISTA__TRENS tbody tr:nth-child(even)        {background-color: #f2f2f2;}
 .LISTA__TRENS tbody tr:nth-child(odd)         {background-color: #ffff;  }
-.LISTA__TRENS tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
-.LISTA__TRENS tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
+.LISTA__TRENS tbody tr:nth-child(even):hover  {background-color: #c1d5d4;}
+.LISTA__TRENS tbody tr:nth-child(odd):hover   {background-color: #c1d5d4;}
 
 
 .LISTA__TRENS thead th{ height: 2.5rem; background-color: var(--azul-profundo-m); color: white;}
 
-.LISTA__TRENS thead th:first-child {border-radius: 20px 0 0 0;}
-.LISTA__TRENS thead th:last-child  {border-radius: 0 20px 0 0;}
+.LISTA__TRENS thead th:first-child {border-radius: 10px 0 0 0;}
+.LISTA__TRENS thead th:last-child  {border-radius: 0 10px 0 0;}
 
-.LISTA__TRENS tbody tr:last-child td:first-child {border-radius: 0 0 0 20px;}
-.LISTA__TRENS tbody tr:last-child td:last-child  {border-radius: 0 0 20px 0;}
+.LISTA__TRENS tbody tr:last-child td:first-child {border-radius: 0 0 0 10px;}
+.LISTA__TRENS tbody tr:last-child td:last-child  {border-radius: 0 0 10px 0;}
 
 .LISTA__TRENS tbody tr{ height: 2rem; }
 

@@ -79,8 +79,12 @@ h2{
 
 }
 
-.VERDE{ background-color:var(--verde-floresta-m); color: var(--neutro);}
-.VERDE:hover{ background-color:var(--verde-floresta-e)}
+.VERDE          { background-color:var(--verde-floresta-m); color: var(--neutro);}
+.VERDE:hover    { background-color:var(--verde-floresta-e)}
+
+.LARANJA        { background-color:var(--amarelo-ouro-m); color: var(--neutro);}
+.LARANJA:hover  { background-color:var(--amarelo-ouro-e)}
+
 
 .OVERLAY{ 
     z-index: 1;

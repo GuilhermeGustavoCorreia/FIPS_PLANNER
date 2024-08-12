@@ -18,7 +18,7 @@ from django.contrib import messages
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
 from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
-from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import gerar_planilha 
+from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import gerar_planilha, gerar_planilha_antiga
 from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import gerar_planilha_detalhe
 
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    dados_integracao
@@ -248,11 +248,19 @@ def criar_trem_view(request):
 @login_required
 def excluir_trem_view(request, id):
     
-
-    trem = get_object_or_404(Trem, pk=id)
-    trem.excluir_trem()
+    try:
+        
+        trem = Trem.objects.get(pk=id)
+        trem.excluir_trem()
     
-    return redirect('previsao_trens')
+    except Trem.DoesNotExist:
+     
+        pass
+
+    return redirect('previsao_trens')  #
+   
+    
+
     
 @login_required
 def editar_trem(request, trem_id):
@@ -763,6 +771,32 @@ def baixar_planilha_view(request):
     except Exception as e:
         raise Http404(f"Erro ao baixar o arquivo: {e}")
 
+@login_required
+def baixar_planilh_antiga_view(request):
+ 
+
+    try:
+        
+        planilha_antiga = gerar_planilha_antiga()
+
+        with NamedTemporaryFile(delete=False, suffix=".xlsm") as tmp:
+
+            planilha_antiga.save(tmp.name)
+            tmp.seek(0)
+
+            response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga.xlsm")}'
+
+            tmp.close()
+
+            try:    os.unlink(tmp.name)
+            except PermissionError: pass
+
+            return response
+        
+    except Exception as e:
+        raise Http404(f"Erro ao baixar o arquivo: {e}")
+ 
 @login_required
 def baixar_planilha_detalhe_view(request):
 

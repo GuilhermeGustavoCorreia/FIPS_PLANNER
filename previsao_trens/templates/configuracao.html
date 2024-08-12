@@ -157,10 +157,13 @@
             <h1>DOWNLOADS</h1>
 
             <p>Clique no botão abaixo para baixar uma versão do sistema em planilha Excel.</p>
-            <a class="BOTAO VERDE" href="{% url 'baixar_planilha' %}">Baixar Planilha</a> 
+
+            <a class="BOTAO VERDE"      href="{% url 'baixar_planilha' %}">         Baixar Planilha Nova</a> 
+            <a class="BOTAO LARANJA"    href="{% url 'baixar_planilha_antiga' %}">  Baixar Planilha Antiga</a>
 
             <p>Clique no botão abaixo para baixar o relatório DETALHE em Excel.</p> 
-            <a class="BOTAO VERDE" href="{% url 'baixar_detalhe' %}">Baixar Detalhe</a> 
+            
+            <a class="BOTAO VERDE"      href="{% url 'baixar_detalhe' %}">          Baixar Detalhe</a> 
 
         </div>
     </section>
@@ -277,6 +280,7 @@ document.body.addEventListener('keypress', function(e) {
         });
 
     }
+
 });
 
 function ATUALIZAR_DESCARGA(){

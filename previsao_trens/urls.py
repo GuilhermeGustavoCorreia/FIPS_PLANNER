@@ -25,10 +25,11 @@ urlpatterns = [
     path('upload/',                                         views.upload_file_view,     name='upload_file'),
 
     #PAGINA CONFIGURACAO
-    path('configuracao/',               views.configuracao,                 name="configuracao"),
-    path('baixar_integracao/',          views.baixar_integracao_view,       name="baixar_integracao"), 
-    path('baixar_planilha/',            views.baixar_planilha_view,         name="baixar_planilha"),
-    path('baixar_detalhe/',             views.baixar_planilha_detalhe_view, name="baixar_detalhe"),
+    path('configuracao/',               views.configuracao,                     name = "configuracao"),
+    path('baixar_integracao/',          views.baixar_integracao_view,           name = "baixar_integracao"), 
+    path('baixar_planilha/',            views.baixar_planilha_view,             name = "baixar_planilha"),
+    path('baixar_planilha_antiga/',     views.baixar_planilh_antiga_view,       name = "baixar_planilha_antiga"),
+    path('baixar_detalhe/',             views.baixar_planilha_detalhe_view,     name = "baixar_detalhe"),
 
     #RELATORIOS
     path('detalhe/',                                views.detalhe,                  name="detalhe"),
