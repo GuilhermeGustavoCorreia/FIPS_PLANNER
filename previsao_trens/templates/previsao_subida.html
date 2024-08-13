@@ -6,12 +6,98 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/previsao_subida/previsao_subida.css' %}"> 
 
 
+<dialog id="modal_criar_trem_subida">
 
+    <h2>Novo Trem</h2>
+
+    <form action='{% url 'criar_trem_subida' %}' method="POST">
+        
+        {% csrf_token %}
+
+        <fieldset class="fst-trem-info">
+            
+            <legend>Trem</legend>
+
+            {{ form.prefixo  }}
+            {{ form.previsao }}
+
+            <fieldset>  <legend>EoT         </legend>{{ form.eot }}         </fieldset> 
+            <fieldset>  <legend>Margem      </legend>{{ form.margem }}      </fieldset> 
+            <fieldset>  <legend>Ferrovia    </legend>{{ form.ferrovia }}    </fieldset> 
+
+        </fieldset>
+        
+        <fieldset class="fst-trem-locomotivas">  
+            
+            <legend>Locomotivas </legend>
+            
+            {{ form.loco_1 }}    
+            {{ form.loco_2 }}
+            {{ form.loco_3 }}
+            {{ form.loco_4 }}
+            {{ form.loco_5 }}     
+        
+        </fieldset>
+
+        <fieldset class="fst-trem-vagoes">  
+            
+            <legend>Vagões </legend>
+            
+            
+
+            <table>
+                <thead>
+                    <th colspan="3">Vagões</th>
+                </thead>
+
+                <tbody>
+                    <tr> <th name="GRAO"        class="segmento-selecionado" onclick="mudarSegmento(this)" >Grãos    </th> <td>{{ form.qt_graos  }}</td> <td class="valor_vagoes" name="GRAO"           data-segmento="Grãos">          -</td> </tr>
+                    <tr> <th name="FERTILIZANTE"                             onclick="mudarSegmento(this)" >Fertil.  </th> <td>{{ form.qt_ferti  }}</td> <td class="valor_vagoes" name="FERTILIZANTE"   data-segmento="Fertilantes">  -</td> </tr>
+                    <tr> <th name="CELULOSE"                                 onclick="mudarSegmento(this)" >Celulose </th> <td>{{ form.qt_celul  }}</td> <td class="valor_vagoes" name="CELULOSE"       data-segmento="Celulose">      -</td> </tr>
+                    <tr> <th name="ACUCAR"                                   onclick="mudarSegmento(this)" >Açúcar   </th> <td>{{ form.qt_acuca  }}</td> <td class="valor_vagoes" name="ACUCAR"         data-segmento="Açúcar">        -</td> </tr>
+                    <tr> <th name="CONTEINER"                                onclick="mudarSegmento(this)" >Conte.   </th> <td>{{ form.qt_contei }}</td> <td class="valor_vagoes" name="CONTEINER"      data-segmento="Contêineres">     -</td> </tr>
+                </tbody>
+            </table>
+
+            <table class="tbl_vagoes_disponiveis">
+                
+                <thead>
+                    <th colspan="6">GRAO</th>
+                </thead>
+
+                <tbody>
+
+                    <tr> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>
+                    <tr> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>
+                    <tr> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>
+                    <tr> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>
+
+                </tbody>
+                
+            </table>
+
+        </fieldset>
+
+        {% if messages.error %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <button type="submit" class="BOTAO VERDE" >Salvar</button>
+    </form>
+
+</dialog>
 
 <div class="CONTEUDO__PADRAO" >  
 
     <h1>PREVISÃO - IMPORTAÇÃO</h1>
-
+    
+    <button type="button"  data-acao="CRIAR_TREM" data-criar-trem-url="{% url 'novo_trem_previsao' %}" class="BOTAO LARANJA" data-toggle="modal" data-target="#modalAdicionarTrem" onclick="abriFormulario()">
+        Novo Trem
+    </button>
 
     {% if previsoes.direita or previsoes.esquerda %}
     {% if previsoes.direita %}
@@ -130,7 +216,28 @@
                         {{trem.loco_5}}  
                     {% endif %}                           
                 </td>
-    
+                
+                <td >
+                    {% if user|can:'editar_subida' %}
+                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' trem.id %}" onclick="TOOGLE_FORM(this)"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                        <title>Editar</title>
+                        <g>
+                            <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                            <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                        
+                        </g>
+                    </svg>
+                    {% endif %}
+                </td>
+
                 <td>
 
                     {% if user|can:'editar_subida' %}
@@ -145,10 +252,13 @@
                     {% endif %}
                     
                 </td> 
+
+
             </tr>
 
         {% endfor %}
         </tbody>
+
         </table>
     {% endif %}    
     
@@ -283,11 +393,34 @@
 
                     {% endif %}
                 </td> 
+
+                <td >
+                    {% if user|can:'editar_subida' %}
+                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' TREM.id %}" onclick="TOOGLE_FORM(this)" class="ICONE ICONE_EDITAR botoes" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                        <title>Editar</title>
+                        <g>
+                            <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                            <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                        
+                        </g>
+                    </svg>
+                    {% endif %}
+                </td>
+
             </tr>
 
         {% endfor %}
         
         </tbody>
+
         </table>
     {% endif %}  
     {% else %}
@@ -298,5 +431,155 @@
     </div>
     {% endif %}
     
+
+<script>
+
+    const condensados   = {{ condensados | safe }};
+    const dias          = {{ dias | safe }};
+    var   dia_logistico = "D"
+
+    function analisarRadioButton(name) {
+
+        const radios = document.getElementsByName(name);
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {return radios[i].value;}
+        }
+
+        return null;
+    }
+
+    function atualizar_tabela(){
+
+        var ferrovia = analisarRadioButton("ferrovia")
+        var margem   = analisarRadioButton("margem").toUpperCase()
+        var segmento =  document.querySelector('th.segmento-selecionado').getAttribute('name');
+        
+        const vagoes_24h = condensados[dia_logistico][margem][ferrovia][segmento]["SALDO"];
+        const cells      = document.querySelectorAll('.tbl_vagoes_disponiveis tr td');
+        
+        //console.log(`novos valores ${ferrovia} ${margem} ${segmento} ${dia_logistico}`)
+        
+        vagoes_24h.forEach((item, index) => {
+
+            if (item != 0)  { cells[index].textContent = item; } 
+            else            { cells[index].textContent = '-'   }
+
+        }); 
+
+        const nomeProduto = document.querySelectorAll('.tbl_vagoes_disponiveis th');
+        nomeProduto.forEach(th => { th.innerText = segmento; });
+    }
+
+    function mudarSegmento(botao){
+        
+        const elementosSelecionados = document.querySelectorAll('.segmento-selecionado');
+
+        // Itera sobre os elementos e remove a classe "selecionado"
+        elementosSelecionados.forEach(elemento => {
+            elemento.classList.remove('segmento-selecionado');
+        });
+
+        botao.classList.add("segmento-selecionado") 
+    
+        atualizar_tabela()
+    }
+
+    function ajustarHora(DatetimeValue){
+
+ 
+        const [datePart, timePart]  = DatetimeValue.split('T');
+        const [year, month, day]    = datePart.split('-');
+        const [hour, minute]        = timePart.split(':');
+
+
+        const datetime = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+
+        datetime.setUTCHours(datetime.getUTCHours() - 1);
+
+
+        const newDatetimeValue = datetime.toISOString().slice(0, 16);
+
+        return newDatetimeValue
+    }
+
+    function atualizarHorario(){
+
+        var ferrovia = analisarRadioButton("ferrovia")
+        var margem   = analisarRadioButton("margem").toUpperCase()
+
+        //#region selecionando na tabela da direita
+        const elementosSelecionados = document.querySelectorAll('.hora_selecionada');
+
+        elementosSelecionados.forEach(elemento => {
+            elemento.classList.remove('hora_selecionada');
+        });
+
+        var previsao = ajustarHora(document.getElementById("id_previsao").value)
+
+
+        //alert(previsao)
+
+        var data     = previsao.split('T')[0]
+        var hora     = previsao.split('T')[1].split(':')[0];
+
+        const cells = document.querySelectorAll('.tbl_vagoes_disponiveis tr td');
+        cells[Number(hora)].classList.add("hora_selecionada")
+
+        //#endregion
+    
+        //#region atualizando valores na tabela da esquerda
+
+        var valores = document.querySelectorAll('.valor_vagoes');
+
+        valores.forEach(elemento => {
+            
+            let segmento = elemento.getAttribute('name');
+            //console.log(segmento)
+            
+            let vagoes   = condensados[dia_logistico][margem][ferrovia][segmento]["SALDO"]; 
+            elemento.innerHTML = vagoes[Number(hora)]
+
+        });
+
+        //#endregion
+        
+        //alert(`comparando datas ${data} - ${JSON.stringify(dias)}`)
+
+        for (let _dia_logistico in dias) {
+
+            if (dias[_dia_logistico] === data)
+            {
+                dia_logistico = _dia_logistico
+            }
+        }
+
+        atualizar_tabela()
+    }
+
+    //#region toogle modal
+    function abriFormulario(){
+        var modal = document.getElementById("modal_criar_trem_subida")
+        modal.showModal()
+    }
+
+    document.querySelector('dialog').addEventListener('mousedown', event => {
+
+        if (event.target === event.currentTarget) {
+            event.currentTarget.close()
+        }
+
+    })
+    //#endregion
+
+    window.addEventListener('load', function() {
+
+        atualizar_tabela()
+
+    })
+
+
+</script>
 
 {% endblock %}

@@ -168,7 +168,6 @@ def profile(request):
 tipo_formulario : str
 trem_form       : object
 
-
 def carregar_tabela_de_previsoes():
     
     PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
@@ -259,9 +258,6 @@ def excluir_trem_view(request, id):
 
     return redirect('previsao_trens')  #
    
-    
-
-    
 @login_required
 def editar_trem(request, trem_id):
 
@@ -936,20 +932,42 @@ def ocupacao_terminais(request):
 
 def carregar_tabela_de_previsoes_subida():
 
-    trens_margem_direita  = TremVazio.objects.filter(margem='DIREITA')
-    trens_margem_esquerda = TremVazio.objects.filter(margem='ESQUERDA')
+    trens_margem_direita  = TremVazio.objects.filter(margem='Direita')
+    trens_margem_esquerda = TremVazio.objects.filter(margem='Esquerda')
 
     return {"direita": trens_margem_direita, "esquerda": trens_margem_esquerda}
 
-@login_required
-def previsao_subida_view(request):
+def carregar_previsao_trem_subida(request, form, tipo_formulario):
 
+    PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
+    periodo_vigente      = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
+   
+    data_arq_D           = periodo_vigente[periodo_vigente['NM_DIA'] == "D"].iloc[0]['DATA_ARQ']
+    data_arq_D1          = periodo_vigente[periodo_vigente['NM_DIA'] == "D+1"].iloc[0]['DATA_ARQ']
+
+    with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ data_arq_D }.json") as ARQUIVO:
+        condensados_d = json.load(ARQUIVO)
+        
+    with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ data_arq_D1 }.json") as ARQUIVO:
+        condensados_d1 = json.load(ARQUIVO)
+    
     previsoes = carregar_tabela_de_previsoes_subida()
 
-    return render(request, 'previsao_subida.html', {'previsoes': previsoes})
+    return render(request, 'previsao_subida.html', {'previsoes': previsoes, 'form': form, 'condensados': {'D': condensados_d, 'D+1': condensados_d1}, "dias": {"D": data_arq_D, "D+1": data_arq_D1}, 'tipo_formulario': tipo_formulario})
+
+@login_required
+def previsao_subida_view(request):
+ 
+    form      = TremVazioForm()
+    tipo_formulario = "criar_trem_subida"
+    carregar_previsao_trem_subida(request, form, tipo_formulario)
+
+    return carregar_previsao_trem_subida(request, form, tipo_formulario)
 
 @login_required
 def criar_trem_subida_view(request):
+    
+    tipo_formulario = "criar_trem_subida"
 
     if request.method == 'POST':
 
@@ -957,20 +975,25 @@ def criar_trem_subida_view(request):
         
         if form.is_valid():
             
-            form.save()
-            return redirect('programacao_subida')
+            trem  = form.save(commit=False)
+            trem.created_by = request.user
+            trem.prefixo    = trem.prefixo.upper()
+            trem.save()
+
+            return redirect('previsao_subida')
         
         else:
             
-            tabelas = CARREGAR_PROG_SUBIDA()
-            return render(request, 'programacao_subida.html', {'form': form, "TABELAS_SUBIDA": tabelas})  # Renderiza com erros
+            
+            messages.error(request, form.errors)         
+            carregar_previsao_trem_subida(request, form, tipo_formulario)
     
     else:
         
         form = TremForm()
     
-    tabelas = CARREGAR_PROG_SUBIDA()
-    return render(request, 'programacao_subida.html', {'form': form, "TABELAS_SUBIDA":tabelas})       
+    
+    return redirect('previsao_subida')     
 
 @login_required   
 def excluir_trem_subida_view(request, id_trem_vazio):

@@ -744,10 +744,13 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         for i in range(119):
             
             for FERROVIA in ["RUMO", "MRS", "VLI"]:
-                    
+                
+                if i == 12 or i == 13 or i == 14 or i == 12: print(f"[{i}] - {self.full_CONDENSADOS["DIREITA"]["SAIDAS"]["FERROVIA"][i][FERROVIA]}")    
+                
                 for CHAVE in CHAVES_CONDENSADOS:
-                    ALIVIOS = 0
                     
+                    ALIVIOS = 0 #(ALIVIOS => vagões que aliviaram do terminal)
+                    #region coletando os alivios
                     for TERMINAL in TERMINAIS:
                                 
                         try:                PATIO = self.INFOS[TERMINAL]["PATIO"]
@@ -755,12 +758,14 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                         if CHAVE in self.full_TERMINAIS_DO_CALCULO["DIREITA"][PATIO][TERMINAL]:
                             ALIVIOS += self.full_TERMINAIS_DO_CALCULO["DIREITA"][PATIO][TERMINAL][CHAVE][FERROVIA]["ALIVIO_DE_VAZIOS"][i]
+                    #endregion
 
                     if CHAVE in  self.full_L4K["SUBIDA"][FERROVIA]:
                          ALIVIOS += self.full_L4K["SUBIDA"][FERROVIA][CHAVE]["ALIVIO_DE_VAZIOS"][i]
 
-                    SAIDAS = 0
-                    if self.full_CONDENSADOS["DIREITA"]["SAIDAS"]["FERROVIA"][i] == FERROVIA: SAIDAS =  self.full_CONDENSADOS["DIREITA"]["SAIDAS"][CHAVE][i]
+                    SAIDAS = 0 #(ALIVIOS => vagões que viraram trens de subida)
+                    SAIDAS = self.full_CONDENSADOS["DIREITA"]["SAIDAS"]["FERROVIA"][i][FERROVIA][CHAVE]
+                    
                     
                     BUFFER = 0
                     if CHAVE =="GRAO": BUFFER = self.full_BUFFERS["DIREITA"][FERROVIA]["SALDO"][i]
@@ -768,7 +773,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                     if i == 0:
                         self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][0] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO_VIRADA"] + ALIVIOS - SAIDAS - BUFFER
                     else:
-                        self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i-1] + ALIVIOS - SAIDAS - BUFFER
+                        self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["DIREITA"][FERROVIA][CHAVE]["SALDO"][i-1]   + ALIVIOS - SAIDAS - BUFFER
 
         #ESQUERDA
 
@@ -780,8 +785,9 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
             for FERROVIA in ["RUMO", "MRS", "VLI"]:
 
                 for CHAVE in CHAVES_CONDENSADOS:
-                    ALIVIOS = 0
-
+                    
+                    ALIVIOS = 0 #(ALIVIOS => vagões que aliviaram do terminal)
+                    #region coletando os alivios
                     for TERMINAL in TERMINAIS:
 
                         try:                PATIO = self.INFOS[TERMINAL]["PATIO"]
@@ -789,10 +795,13 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
 
                         if CHAVE in self.full_TERMINAIS_DO_CALCULO["ESQUERDA"][PATIO][TERMINAL]:
                             ALIVIOS += self.full_TERMINAIS_DO_CALCULO["ESQUERDA"][PATIO][TERMINAL][CHAVE][FERROVIA]["ALIVIO_DE_VAZIOS"][i]
+                    #endregion
 
 
-                    SAIDAS = 0
-                    if self.full_CONDENSADOS["ESQUERDA"]["SAIDAS"]["FERROVIA"][i] == FERROVIA: SAIDAS =  self.full_CONDENSADOS["ESQUERDA"]["SAIDAS"][CHAVE][i]
+                    SAIDAS = 0 #(ALIVIOS => vagões que viraram trens de subida)
+                    SAIDAS = self.full_CONDENSADOS["ESQUERDA"]["SAIDAS"]["FERROVIA"][i][FERROVIA][CHAVE]
+                    
+                    #if self.full_CONDENSADOS["ESQUERDA"]["SAIDAS"]["FERROVIA"][i] == FERROVIA: SAIDAS =  self.full_CONDENSADOS["ESQUERDA"]["SAIDAS"][CHAVE][i]
 
                     BUFFER = 0
                     if CHAVE =="GRAO": BUFFER = self.full_BUFFERS["ESQUERDA"][FERROVIA]["SALDO"][i]
@@ -800,7 +809,7 @@ class CALCULAR_SALDO: #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
                     if i == 0:
                         self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][0] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO_VIRADA"] + ALIVIOS - SAIDAS - BUFFER
                     else:
-                        self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i-1] + ALIVIOS - SAIDAS - BUFFER
+                        self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i] = self.full_CONDENSADOS["ESQUERDA"][FERROVIA][CHAVE]["SALDO"][i-1]   + ALIVIOS - SAIDAS - BUFFER
 
     def CALCULAR(self):
 
@@ -1112,10 +1121,8 @@ class Condensados():
         
         self.__abrir()
 
-        print(f"ESTAMOS AQUI: { dict_trem }")
-
         #AQUI INSERE OS VAGOES, ACONTECE UM FOR POR QUE VC PODE INSERIR MAIS DE UM TIPO DE VAGAO POR TREM QUE SOBE
-        for i, SEGMENTO in enumerate(TIPO_VAGOES):
+        for i, _ in enumerate(TIPO_VAGOES):
 
             COLUNA = HORA + (24 * (INDEX - 1))
 
@@ -1123,14 +1130,10 @@ class Condensados():
 
                 VAGOES = int(dict_trem[TIPO_VAGOES_TREM[i]])
                 self.full_CONDENSADOS[MARGEM]["SAIDAS"][SEGMENTOS[i]][COLUNA] = VAGOES
-                print(f"inserindo: { VAGOES } em { SEGMENTOS[i] } - { SEGMENTO}")
         
-
-
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]  = PREFIXO
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"][HORA] = FERROVIA
 
-        print(f"Inserindo: {PREFIXO} {MARGEM} {DATA_ARQ} {HORA} em {self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]}")
         self.__salvar()
 
         SUBIDA_DE_VAZIOS().ATUALIZAR()
@@ -1147,20 +1150,53 @@ class Condensados():
         INDEX       = LINHA.index[0]
 
         HORA        = int(dict_trem["previsao"].hour)
-        MARGEM      = dict_trem["margem"]
-
+        MARGEM      = dict_trem["margem"].upper()
 
         self.__abrir()
 
-        for i, SEGMENTO in enumerate(TIPO_VAGOES):
+        for i, _ in enumerate(TIPO_VAGOES):
 
             COLUNA = HORA + (24 * (INDEX - 1))
 
             self.full_CONDENSADOS[MARGEM]["SAIDAS"][SEGMENTOS[i]][COLUNA] = 0
 
-
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["PREFIXO"][HORA]  = 0
         self.jsCONDENSADOS[DATA_ARQ][MARGEM]["SAIDAS"]["FERROVIA"][HORA] = 0
 
         self.__salvar()
+        SUBIDA_DE_VAZIOS().ATUALIZAR()
+
+    def atualizar_previsao(self, dict_trem):
+        
+        from previsao_trens.models  import TremVazio
+        from django.db.models       import Q, Sum, F
+        
+        
+        dict_segmentos = { "qt_graos": "GRAO", "qt_ferti": "FERTILIZANTE", "qt_celul": "CELULOSE", "qt_acuca": "ACUCAR", "qt_contei": "CONTEINER" }
+        
+        previsao    = (dict_trem["previsao"]  - timedelta(hours=1))
+        hora_inicio = dict_trem["previsao"].replace(minute=0, second=0, microsecond=0)
+        hora_fim    = hora_inicio + timedelta(hours=1)
+        
+        trens_da_previsao = TremVazio.objects.filter(Q(previsao__gte=hora_inicio) & Q(previsao__lt=hora_fim))
+           
+        data_arq = (previsao).strftime('%Y-%m-%d')
+
+        with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ data_arq }.json") as arquivo_json:
+            consensados = json.load(arquivo_json)
+
+        for ferrovia in ["RUMO", "MRS", "VLI"]:
+
+            trens_da_ferrovia = trens_da_previsao.filter(ferrovia=ferrovia)
+
+            for segmento in dict_segmentos:
+                
+                total_segmento = trens_da_ferrovia.aggregate(total=Sum(F(segmento)))['total']
+                if total_segmento == None: total_segmento = 0
+                consensados[dict_trem["margem"].upper()]["SAIDAS"]["FERROVIA"][previsao.hour][ferrovia][dict_segmentos[segmento]] = total_segmento
+
+            
+        with open(f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ data_arq }.json", 'w') as arquivo_json:
+            json.dump(consensados, arquivo_json, indent=4)
+
         SUBIDA_DE_VAZIOS().ATUALIZAR()

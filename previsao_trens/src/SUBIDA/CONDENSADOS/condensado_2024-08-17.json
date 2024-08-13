@@ -1,0 +1,2313 @@
+{
+    "DIREITA": {
+        "RUMO": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1113,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    1120,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    133,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    28,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    230,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "MRS": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    97,
+                    97,
+                    97,
+                    97,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    101,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    179,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    240,
+                    252,
+                    252,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "VLI": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    158,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "SAIDAS": {
+            "GRAO": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FERTILIZANTE": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "CELULOSE": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "ACUCAR": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "CONTEINER": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "PREFIXO": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FERROVIA": [
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                }
+            ]
+        }
+    },
+    "ESQUERDA": {
+        "RUMO": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    765,
+                    800,
+                    800,
+                    800,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    190,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "MRS": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    83,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "VLI": {
+            "GRAO": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    45,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    82,
+                    0
+                ]
+            },
+            "FERTILIZANTE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "CELULOSE": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            },
+            "ACUCAR": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    88,
+                    0
+                ]
+            },
+            "CONTEINER": {
+                "SALDO_VIRADA": 0,
+                "SALDO": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        "SAIDAS": {
+            "SALDO_VIRADA": 0,
+            "GRAO": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FERTILIZANTE": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "CELULOSE": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "ACUCAR": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "CONTEINER": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "PREFIXO": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "FERROVIA": [
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                }
+            ]
+        }
+    }
+}

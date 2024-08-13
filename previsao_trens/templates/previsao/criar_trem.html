@@ -94,12 +94,10 @@
             </table> 
         </div>  
         
-    
-        
         <button type="submit" class="BOTAO VERDE" >Salvar</button>
     </form> 
 
-    {% if messages %}
+    {% if messages.error %}
         <div class="messages">
             {% for message in messages %}
                 <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
@@ -519,9 +517,11 @@
     }
 
     var TREM_SELECIONADO = null
+
     function SELECIONAR_TREM(id_trem){
         TREM_SELECIONADO = id_trem
     }
+   
     {% if user|can:'editar_itens' %}
     $( function() {
 

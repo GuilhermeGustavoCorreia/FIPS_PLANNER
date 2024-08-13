@@ -229,21 +229,27 @@ class TremVazio(models.Model):
 
     prefixo      = models.CharField(max_length=100)
     ferrovia     = models.CharField(max_length=50, choices=[('MRS', 'MRS'), ('RUMO', 'RUMO'), ('VLI', 'VLI')])
+    eot          = models.CharField(max_length=3,  choices=[('Sim', 'Sim'), ('Nao', 'Nao')])
+    margem       = models.CharField(max_length=8,  choices=[('Direita', 'Direita'), ('Esquerda', 'Esquerda')], blank=True)
+
     loco_1       = models.CharField(max_length=100)
     loco_2       = models.CharField(max_length=100, blank=True, null=True)
     loco_3       = models.CharField(max_length=100, blank=True, null=True)
     loco_4       = models.CharField(max_length=100, blank=True, null=True)
     loco_5       = models.CharField(max_length=100, blank=True, null=True)
-    previsao     = models.DateTimeField(blank=True, null=True)
-    eot          = models.CharField(max_length=100)
     
+    previsao     = models.DateTimeField(blank=True, null=True)
+    partida_real = models.DateTimeField(blank=True, null=True)
+
     qt_graos     = models.IntegerField(blank=True, null=True)
     qt_ferti     = models.IntegerField(blank=True, null=True)
     qt_celul     = models.IntegerField(blank=True, null=True)
     qt_acuca     = models.IntegerField(blank=True, null=True)
     qt_contei    = models.IntegerField(blank=True, null=True)
 
-    margem       = models.CharField(max_length=100, blank=True)
+    comentario   = models.CharField(max_length=100, blank=True, null=True)
+    created_at   = models.DateTimeField(auto_now_add=True)
+    created_by   = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     
     def save(self, *args, **kwargs):
         
@@ -252,22 +258,25 @@ class TremVazio(models.Model):
         super().save(*args, **kwargs)
 
         dict_trem = model_to_dict(self)
-        Condensados().inserirTrem(dict_trem)
+    
+        Condensados().atualizar_previsao(dict_trem)
 
     def delete(self, *args, **kwargs):
 
         from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import Condensados
         from django.forms.models import model_to_dict
 
+        super().delete(*args, **kwargs)
+
         try:
             
             dict_trem = model_to_dict(self)
-            Condensados().excluirTrem(dict_trem)
+            Condensados().atualizar_previsao(dict_trem)
 
         except IndexError:
             pass
 
-        super().delete(*args, **kwargs)
+        
 
     def __str__(self):
         return self.prefixo
