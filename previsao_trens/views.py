@@ -781,7 +781,7 @@ def baixar_planilh_antiga_view(request):
             tmp.seek(0)
 
             response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga.xlsx")}'
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga_clean.xlsx")}'
 
             tmp.close()
 
