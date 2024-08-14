@@ -51,7 +51,6 @@ def gerar_planilha_detalhe():
         FERROVIAS.remove('MARGEM')
         FERROVIAS.remove('TOTAL')   
        
-
         for FERROVIA in FERROVIAS:
             PRODUTOS = list(DADOS_RELATORIO[TERMINAL][FERROVIA].keys()) 
 

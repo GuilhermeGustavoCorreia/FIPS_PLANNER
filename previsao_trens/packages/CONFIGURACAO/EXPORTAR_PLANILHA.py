@@ -456,7 +456,7 @@ def gerar_planilha(USUARIO_LOGADO):
 
 #############################################################################################################
 
-class PlanilhaAntiga:
+class PlanilhaAntiga_old:
 
     def __init__(self):
 
@@ -594,12 +594,137 @@ class PlanilhaAntiga:
             ws_restricao.cell(row=(primeira_linha + i), column=17, value=restricao.motivo)       
             ws_restricao.cell(row=(primeira_linha + i), column=18, value=restricao.porcentagem)
 
-def gerar_planilha_antiga():
+def gerar_planilha_antiga_old():
 
     Planilha = PlanilhaAntiga()
     Planilha.atualizar_data()
     Planilha.inserir_previsao()
     Planilha.inserir_produtividade()
     Planilha.inserir_restricao()
+
+    return Planilha.planilha
+
+#############################################################################################################
+from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA import CARREGAR_RELATORIO_DETALHE
+
+class PlanilhaAntiga:
+
+    def __init__(self):
+
+            self.planilha        = load_workbook("previsao_trens/src/DICIONARIOS/planilha_antiga_clean.xlsm", keep_vba=True)
+            self.periodo_vigente = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",    sep=";", index_col=0)
+            
+            self.periodo_vigente = self.periodo_vigente.drop(self.periodo_vigente.index[0]) 
+
+    def inserir_previsao(self):
+
+            produtos_substituir  = { "SOJA": "Soja", "ACUCAR": "Açúcar", "MILHO": "Milho", "FARELO": "Farelo", "CELULOSE": "Celulose" }
+            terminais_substituir = { "CLI": "RUMO", "CLI ACUCAR": "RUMO", "COPERSUCAR": "TAC", "TAC ACUCAR": "TAC", "MOEGA X": "Moega X", "MOEGA V": "Moega V", "T39": "Moega IV", "TGRAO": "Tgrão", "TEAG ACUCAR": "TEAG" }
+            segmento             = { "SOJA": "Grão", "FARELO": "Grão", "MILHO": "Grão", "ACUCAR": "Açúcar", "CELULOSE": "Industrial", "CONTEINER": "Industrial", "KCL": "Fertilizante", "UREIA": "Fertilizante", "OUTROS": "Fertilizante"}
+            linhas               = { "D": 15, "D+1": 54, "D+2": 100, "D+3": 173, "D+4": 250 }
+            
+
+            ws_criarTrem = self.planilha["Criar_Trem"]
+
+            for _, linha in self.periodo_vigente.iterrows():
+
+                data = datetime.strptime(linha['DATA_ARQ'], '%Y-%m-%d')
+                dia_logistico = linha['NM_DIA']
+
+                queryset = Trem.objects.filter( previsao__year=data.year, previsao__month=data.month, previsao__day=data.day ).order_by('posicao_previsao')
+
+                if queryset.exists():
+
+                    i = 0
+                    linha = linhas[dia_logistico]
+                    
+                    for trem in queryset:
+                        
+                        terminal = trem.terminal
+                        if terminal in terminais_substituir: terminal = terminais_substituir[terminal]
+                        
+                        mercadoria = trem.mercadoria
+                        if mercadoria in produtos_substituir: mercadoria = produtos_substituir[mercadoria]
+
+                        ws_criarTrem.cell(row=linha + i, column=5,  value=trem.ferrovia)
+                        ws_criarTrem.cell(row=linha + i, column=6,  value=trem.os)
+                        ws_criarTrem.cell(row=linha + i, column=7,  value=trem.prefixo)
+                        ws_criarTrem.cell(row=linha + i, column=8,  value=trem.origem)
+                        ws_criarTrem.cell(row=linha + i, column=9,  value=trem.destino)
+                        ws_criarTrem.cell(row=linha + i, column=10, value=trem.previsao.replace(tzinfo=None))
+
+                        ws_criarTrem.cell(row=linha + i, column=13, value=terminal)     
+                        ws_criarTrem.cell(row=linha + i, column=14, value=segmento[trem.mercadoria])    
+                        ws_criarTrem.cell(row=linha + i, column=15, value=mercadoria)   
+                        ws_criarTrem.cell(row=linha + i, column=16, value=trem.vagoes)
+    
+                        i = i + 1
+
+    def inserir_detalhe(self):
+
+        ws_criarDetalhe = self.planilha["Detalhe"]
+
+        COLUNAS = {
+        0: {
+            'SALDOS':       {'P1':  7, 'P2': 10, 'P3': 13, 'P4': 16},
+            'RECEBIMENTOS': {'P1':  8, 'P2': 11, 'P3': 14, 'P4': 17}, 
+            'PEDRA':        {'P1':  9, 'P2': 12, 'P3': 15, 'P4': 18}   
+        },
+        1: {
+            'SALDOS':       {'P1': 21, 'P2': 24, 'P3': 27, 'P4': 30},
+            'RECEBIMENTOS': {'P1': 22, 'P2': 25, 'P3': 28, 'P4': 31},
+            'PEDRA':        {'P1': 23, 'P2': 26, 'P3': 29, 'P4': 32}
+        },
+        2: {
+            'SALDOS':       {'P1': 35, 'P2': 38, 'P3': 41, 'P4': 44},
+            'RECEBIMENTOS': {'P1': 36, 'P2': 39, 'P3': 42, 'P4': 45},
+            'PEDRA':        {'P1': 37, 'P2': 40, 'P3': 43, 'P4': 46}
+        },
+        3: {
+            'SALDOS':       {'P1': 49, 'P2': 52, 'P3': 55, 'P4': 58},
+            'RECEBIMENTOS': {'P1': 50, 'P2': 53, 'P3': 56, 'P4': 59},
+            'PEDRA':        {'P1': 51, 'P2': 54, 'P3': 57, 'P4': 60}
+        },
+        4: {
+            'SALDOS':       {'P1': 63, 'P2': 66, 'P3': 69, 'P4': 72},
+            'RECEBIMENTOS': {'P1': 64, 'P2': 67, 'P3': 70, 'P4': 73},
+            'PEDRA':        {'P1': 65, 'P2': 68, 'P3': 71, 'P4': 74}
+        },
+    }
+
+        with open(f"previsao_trens/src/DICIONARIOS/MAPA_TERMINAIS_DETALHE.json") as ARQUIVO:
+            map_DETALHE = json.load(ARQUIVO)
+
+        DADOS_RELATORIO = CARREGAR_RELATORIO_DETALHE()  # ['PRINCIPAL', 'RUMO', 'TOTAIS', 'VLI', 'MRS']
+        DADOS_RELATORIO = DADOS_RELATORIO["PRINCIPAL"]  # ['TGG', 'TEG', 'CUTRALE', 'T39', 'TES', 'MOEGA X', 'TGRAO', 'CLI', 'TAC', 'T12A', 'BRACELL', 'SBR', 'ECOPORTO', 'HIDROVIAS', 'TEAG']
+
+        for TERMINAL in DADOS_RELATORIO:
+                
+            FERROVIAS = list(DADOS_RELATORIO[TERMINAL].keys())
+            FERROVIAS.remove('MARGEM')
+            FERROVIAS.remove('TOTAL') 
+
+            for FERROVIA in FERROVIAS:
+                
+                PRODUTOS = list(DADOS_RELATORIO[TERMINAL][FERROVIA].keys()) 
+
+                for PRODUTO in PRODUTOS:
+                    for DIA in [0, 1, 2, 3, 4]: 
+                        for TITULO_COL in list(DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA]):                       
+                            if not TITULO_COL == "TT_OF" and  not TITULO_COL == "TT_PD":                             
+                                for PERIODO in DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL]:
+
+                                    LINHA   =   map_DETALHE[TERMINAL][FERROVIA][PRODUTO] + 4
+                                    COLUNA  =   COLUNAS[DIA][TITULO_COL][PERIODO] + 7
+                                    VALOR   =   DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL][PERIODO]
+
+                                    ws_criarDetalhe.cell(row = LINHA, column= COLUNA,  value = VALOR )
+
+
+def gerar_planilha_antiga():
+
+    Planilha = PlanilhaAntiga()
+    Planilha.inserir_previsao()
+    Planilha.inserir_detalhe()
 
     return Planilha.planilha
