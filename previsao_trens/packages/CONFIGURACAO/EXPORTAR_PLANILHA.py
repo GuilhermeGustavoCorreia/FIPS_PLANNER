@@ -611,7 +611,7 @@ class PlanilhaAntiga:
 
     def __init__(self):
 
-            self.planilha        = load_workbook("previsao_trens/src/DICIONARIOS/planilha_antiga_clean.xlsm", keep_vba=True)
+            self.planilha        = load_workbook("previsao_trens/src/DICIONARIOS/planilha_antiga_clean.xlsx")
             self.periodo_vigente = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",    sep=";", index_col=0)
             
             self.periodo_vigente = self.periodo_vigente.drop(self.periodo_vigente.index[0]) 
