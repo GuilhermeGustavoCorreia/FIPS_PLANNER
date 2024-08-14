@@ -775,13 +775,13 @@ def baixar_planilh_antiga_view(request):
         
         planilha_antiga = gerar_planilha_antiga()
 
-        with NamedTemporaryFile(delete=False, suffix=".xlsm") as tmp:
+        with NamedTemporaryFile(delete=False, suffix=".xlsx") as tmp:
 
             planilha_antiga.save(tmp.name)
             tmp.seek(0)
 
             response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga.xlsm")}'
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga.xlsx")}'
 
             tmp.close()
 
