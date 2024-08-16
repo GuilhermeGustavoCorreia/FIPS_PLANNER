@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 import os
 import json
 import pandas as pd
+
 def DICIONARIO_MERCADORIAS():
 
     
@@ -24,7 +25,6 @@ class CustomAuthenticationForm(AuthenticationForm):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         return username.upper()  # Converte o nome de usuário para maiúsculas
-
 
 class TremForm(forms.ModelForm):
 
@@ -49,12 +49,17 @@ class TremForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        
         super(TremForm, self).__init__(*args, **kwargs)
+        
         self.fields['ferrovia'].choices = [('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')]
         self.fields['ferrovia'].initial = 'RUMO'
-        self.fields['comentario'].required = False
-        self.fields['posicao_previsao'].required = False 
-        self.fields['created_by'].required = False
+
+        self.fields['comentario'].required          = False
+        self.fields['posicao_previsao'].required    = False 
+        self.fields['created_by'].required          = False 
+        self.fields['encoste'].required             = False
+        self.fields['translogic'].required          = False
 
 class RestricaoForm(forms.ModelForm):
 
@@ -86,9 +91,6 @@ class RestricaoForm(forms.ModelForm):
 class UploadFileForm(forms.Form):
     file = forms.FileField()
 
-from django         import forms
-from .models        import TremVazio
-from django.forms   import TextInput, RadioSelect, NumberInput, DateTimeInput
 
 class TremVazioForm(forms.ModelForm):
 

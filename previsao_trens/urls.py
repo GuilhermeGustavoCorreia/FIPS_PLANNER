@@ -16,13 +16,15 @@ urlpatterns = [
     path('navegacao/',  views.navegacao,    name="navegacao"),
     path('profile/',    views.profile,      name="profile"),
 
-    path('previsao/previsao_trens',                         views.previsao_trens_view,  name="previsao_trens"),
-    path('previsao/previsao_trens/novo_trem_previsao',      views.criar_trem_view,      name="novo_trem_previsao"),
-    path('previsao/previsao_trens/alterar_posicao',         views.alterar_posicao_view, name="alterar_posicao"),
-    path('previsao/previsao_trens/excluir_trem/<int:id>/',  views.excluir_trem_view,    name="excluir_trem"),
-    path('editar_trem/<int:trem_id>/',                      views.editar_trem,          name='editar_trem'),
-    path('dividir_trem/<int:trem_id>/',                     views.dividir_trem,         name="dividir_trem"),
-    path('upload/',                                         views.upload_file_view,     name='upload_file'),
+    path('previsao/previsao_trens',                             views.previsao_trens_view,  name="previsao_trens"),
+    path('previsao/previsao_trens/novo_trem_previsao',          views.criar_trem_view,      name="novo_trem_previsao"),
+    path('previsao/previsao_trens/alterar_posicao',             views.alterar_posicao_view, name="alterar_posicao"),
+    path('previsao/previsao_trens/excluir_trem/<int:id>/',      views.excluir_trem_view,    name="excluir_trem"),
+    path('previsao/previsao_trens/excluir_tabela/<str:dia_logistico>',   views.excluir_dia_inteiro,  name="excluir_dia_inteiro"),
+    path('editar_trem/<int:trem_id>/',                          views.editar_trem,          name='editar_trem'),
+    path('dividir_trem/<int:trem_id>/',                         views.dividir_trem,         name="dividir_trem"),
+    
+    path('upload/',                                             views.upload_file_view,     name='upload_file'),
 
     #PAGINA CONFIGURACAO
     path('configuracao/',               views.configuracao,                     name = "configuracao"),

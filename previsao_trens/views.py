@@ -504,6 +504,25 @@ def upload_file_view(request):
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form})
 
+@login_required
+def excluir_dia_inteiro(request, dia_logistico):
+
+    PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
+    periodo_vigente      = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
+   
+    data_arq             = periodo_vigente[periodo_vigente['NM_DIA'] == dia_logistico].iloc[0]['DATA_ARQ']
+    data                 = datetime.strptime(data_arq, '%Y-%m-%d')
+
+    trens = Trem.objects.filter(previsao__year=data.year, previsao__month=data.month, previsao__day=data.day).order_by('posicao_previsao')
+    
+    if trens.exists(): 
+        
+        for trem in trens:
+
+            trem.excluir_trem()
+
+    return redirect('previsao_trens')
+
 #endregion
 
 #region RESTRICOES
@@ -671,7 +690,6 @@ def detalhe(request):
 
     return render(request, 'RELATORIO_DETALHE.html', {"RELATORIO": RELATORIO})
 
-
 #region CONFIGURACAO
 
 @login_required
@@ -770,7 +788,6 @@ def baixar_planilha_view(request):
 @login_required
 def baixar_planilh_antiga_view(request):
  
-
     try:
         
         planilha_antiga = gerar_planilha_antiga()
@@ -781,7 +798,7 @@ def baixar_planilh_antiga_view(request):
             tmp.seek(0)
 
             response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_antiga_clean.xlsx")}'
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/Porto_Santos_2021 ajustada 2.xlsx")}'
 
             tmp.close()
 
@@ -884,7 +901,6 @@ def programacao_subida(request):
     
     return render(request, 'programacao_subida.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
   
-
 #region RELATORIO OCUPACAO
 @login_required
 def ocupacao_terminais(request):

@@ -183,40 +183,25 @@ class EXPORTAR_PLANILHA():
 
     def inserir_previsao(self):
 
-        DIAS_LOGISTICOS     = ["D", "D+1", "D+2", "D+3", "D+4"]
-        CRIAR_TREM          = self.PLANILHA['PREVISAO']
-        PREVISOES           = {}
-     
-        for i, DIA_LOGISTICO in enumerate(DIAS_LOGISTICOS):
+        CRIAR_TREM  = self.PLANILHA['PREVISAO']
+        QUERYSET    = Trem.objects.all().order_by('previsao')
+        
+        if QUERYSET.exists():
+                    
+            for j, TREM in enumerate(QUERYSET):
 
-            PREVISOES[DIA_LOGISTICO] = ""
+                j = j + 5 # É PQ COMEÇA NA LINHA 5
 
-            LINHA    = self.PERIODO_VIGENTE[self.PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO]
-            DATA_ARQ = LINHA['DATA_ARQ'].values[0]
-            DATETIME = datetime.strptime(DATA_ARQ, "%Y-%m-%d")
-
-            QUERYSET = Trem.objects.filter(
-                previsao__year  = DATETIME.year,
-                previsao__month = DATETIME.month,
-                previsao__day   = DATETIME.day
-            ).order_by('posicao_previsao')
-            
-            if QUERYSET.exists():
-                     
-                for j, TREM in enumerate(QUERYSET):
-
-                    j = j + 5 # É PQ COMEÇA NA LINHA 5
-
-                    CRIAR_TREM.cell(row = j, column=2  + (11 * i),   value=TREM.posicao_previsao)
-                    CRIAR_TREM.cell(row = j, column=3  + (11 * i),   value=TREM.prefixo)
-                    CRIAR_TREM.cell(row = j, column=4  + (11 * i),   value=TREM.os)
-                    CRIAR_TREM.cell(row = j, column=5  + (11 * i),   value=TREM.origem)
-                    CRIAR_TREM.cell(row = j, column=6  + (11 * i),   value=TREM.destino)              
-                    CRIAR_TREM.cell(row = j, column=7  + (11 * i),   value=TREM.terminal)
-                    CRIAR_TREM.cell(row = j, column=8  + (11 * i),   value=TREM.vagoes)
-                    CRIAR_TREM.cell(row = j, column=9  + (11 * i),   value=TREM.mercadoria)
-                    CRIAR_TREM.cell(row = j, column=10 + (11 * i),   value=TREM.previsao.replace(tzinfo=None))
-                    CRIAR_TREM.cell(row = j, column=11 + (11 * i),   value=TREM.ferrovia)
+                CRIAR_TREM.cell(row = j, column=2 ,   value=j - 5)
+                CRIAR_TREM.cell(row = j, column=3 ,   value=TREM.prefixo)
+                CRIAR_TREM.cell(row = j, column=4 ,   value=TREM.os)
+                CRIAR_TREM.cell(row = j, column=5 ,   value=TREM.origem)
+                CRIAR_TREM.cell(row = j, column=6 ,   value=TREM.destino)              
+                CRIAR_TREM.cell(row = j, column=7 ,   value=TREM.terminal)
+                CRIAR_TREM.cell(row = j, column=8 ,   value=TREM.vagoes)
+                CRIAR_TREM.cell(row = j, column=9 ,   value=TREM.mercadoria)
+                CRIAR_TREM.cell(row = j, column=10,   value=TREM.previsao.replace(tzinfo=None))
+                CRIAR_TREM.cell(row = j, column=11,   value=TREM.ferrovia)
 
     def inserir_navegacao(self):
 
@@ -605,6 +590,7 @@ def gerar_planilha_antiga_old():
     return Planilha.planilha
 
 #############################################################################################################
+
 from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA import CARREGAR_RELATORIO_DETALHE
 
 class PlanilhaAntiga:
@@ -631,7 +617,7 @@ class PlanilhaAntiga:
                 data = datetime.strptime(linha['DATA_ARQ'], '%Y-%m-%d')
                 dia_logistico = linha['NM_DIA']
 
-                queryset = Trem.objects.filter( previsao__year=data.year, previsao__month=data.month, previsao__day=data.day ).order_by('posicao_previsao')
+                queryset = Trem.objects.all().order_by('posicao_previsao')
 
                 if queryset.exists():
 

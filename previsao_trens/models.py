@@ -1,12 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
-from django.utils import timezone
-import pandas as pd
-from    django.forms.models                                  import model_to_dict
-
-
-from    django.db import transaction
+from    django.db                   import models
+from    django.contrib.auth.models  import AbstractUser
+from    django.conf                 import settings
+from    django.forms.models         import model_to_dict
+from    django.db                   import transaction
 
 #UserProfile
 class Usuario(AbstractUser):
@@ -31,12 +27,13 @@ class Trem(models.Model):
     terminal    = models.CharField(max_length=50)
     mercadoria  = models.CharField(max_length=50)
     vagoes      = models.IntegerField()
-    previsao    = models.DateTimeField()
-    #encoste     = models.DateTimeField() PRECISAMOS DE UM MODELO TERMINAL PARA QUE ISTO FUNCIONE
+    previsao    = models.DateTimeField(null=True, blank=True)
+    encoste     = models.DateTimeField(null=True, blank=True)
     ferrovia    = models.CharField(max_length=50, choices=[('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')])
     comentario  = models.CharField(max_length=100)
     
     posicao_previsao = models.IntegerField(default=0)
+    translogic       = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
