@@ -218,7 +218,7 @@ class AtualizandoSistema:
             lst_terminais_ativos = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()  
             TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)
 
-            lst_terminais_ativos = list(set(lst_terminais_ativos).intersection(list(json_descargas[DIA_LOGISTICO].keys())))
+            lst_terminais_ativos = list(set(lst_terminais_ativos).intersection(list(json_descargas["D"].keys())))
 
             for DIA_LOGISTICO in list(json_descargas.keys()):
 
