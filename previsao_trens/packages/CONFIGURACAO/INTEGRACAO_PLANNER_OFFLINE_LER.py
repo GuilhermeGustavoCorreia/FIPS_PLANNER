@@ -1,14 +1,14 @@
 import  os
 import  json
 import  pandas as pd
+import  warnings
 
-from    previsao_trens.models                                import Trem, Restricao, Mercadoria, Terminal
-from    previsao_trens.packages.descarga.EDITAR_DESCARGA     import NAVEGACAO_DESCARGA
-from    django.shortcuts import get_object_or_404
-from    datetime                    import datetime, timedelta
-from previsao_trens.forms         import TremForm
-import warnings
+from    previsao_trens.models                                   import Trem, Restricao, Mercadoria, Terminal
+from    previsao_trens.packages.descarga.EDITAR_DESCARGA        import NAVEGACAO_DESCARGA
+from    datetime                                                import datetime, timedelta
+from    previsao_trens.forms                                    import TremForm
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
+
 # Ignorando FutureWarning específico
 
 def _json_to_form_data(json_data):
@@ -184,9 +184,7 @@ class AtualizandoSistema:
 
             DESCARGAS_ATIVAS = saldos_de_virada_offline.loc[TERMINAL][saldos_de_virada_offline.loc[TERMINAL] > 0].index.tolist()
             DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
-            
               
-            
             for ATIVO in DESCARGAS_ATIVAS:
 
                 if TERMINAL == "SBR"     and ATIVO[1] == "RUMO": ATIVO[1] = "MRS"
@@ -194,8 +192,6 @@ class AtualizandoSistema:
 
                 saldo = saldos_de_virada_offline.at[TERMINAL, f"SLD_{ATIVO[1]}_{ATIVO[2]}"]      
 
-
-                
                 PARAMETROS = {
                     'TERMINAL'  :   TERMINAL, 
                     'DATA_ARQ'  :   DATA_ARQ, 
@@ -206,7 +202,7 @@ class AtualizandoSistema:
                 }
 
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
-                DESCARGAS = Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)    
+                Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)    
                         
     def inserirProdutividade(json_descargas):
         

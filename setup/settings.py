@@ -209,10 +209,10 @@ STATIC_URL = 'static/'
 
 # Diretório onde os arquivos estáticos serão coletados pelo comando collectstatic.
 # Este é o diretório que será usado para servir arquivos estáticos em produção.
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 if not DEBUG:
     # Diretório onde os arquivos estáticos serão coletados em produção
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 else:
     # Em desenvolvimento, servimos os arquivos estáticos diretamente

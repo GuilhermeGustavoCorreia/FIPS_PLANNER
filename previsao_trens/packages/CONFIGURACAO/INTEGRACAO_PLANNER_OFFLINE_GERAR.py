@@ -96,11 +96,11 @@ def dados_integracao():
                     'PREFIXO'           : trem.prefixo,
                     'OS'                : trem.os,
                     'VAGOES'            : trem.vagoes,
-                    'MERCADORIA'        : trem.mercadoria,
+                    'MERCADORIA'        : trem.mercadoria.nome,
                     'ORIGEM'            : trem.origem,
                     'SB_ATUAL'          : '--',  # Este valor deve ser ajustado conforme necessário
                     'DESTINO'           : trem.destino,
-                    'TERMINAL_DESTINO'  : trem.terminal,
+                    'TERMINAL_DESTINO'  : trem.terminal.nome,
                     'PREVISAO'          : trem.previsao.strftime('%Y-%m-%d %H:%M:%S'),
                     'PREVISAO_DATA'     : trem.previsao.strftime('%d/%m/%Y'),
                     'PREVISAO_HORA'     : trem.previsao.strftime('%H:%M')

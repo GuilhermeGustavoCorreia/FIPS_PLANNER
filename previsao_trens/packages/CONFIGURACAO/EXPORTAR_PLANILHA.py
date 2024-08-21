@@ -700,33 +700,33 @@ class PlanilhaAntiga:
         },
     }
 
-        with open(f"previsao_trens/src/DICIONARIOS/MAPA_TERMINAIS_DETALHE.json") as ARQUIVO:
+        with open(f"previsao_trens/src/DICIONARIOS/MAPA_DETALHE_PLANILHA_ANTIGA.json") as ARQUIVO:
             map_DETALHE = json.load(ARQUIVO)
 
         DADOS_RELATORIO = CARREGAR_RELATORIO_DETALHE()  # ['PRINCIPAL', 'RUMO', 'TOTAIS', 'VLI', 'MRS']
         DADOS_RELATORIO = DADOS_RELATORIO["PRINCIPAL"]  # ['TGG', 'TEG', 'CUTRALE', 'T39', 'TES', 'MOEGA X', 'TGRAO', 'CLI', 'TAC', 'T12A', 'BRACELL', 'SBR', 'ECOPORTO', 'HIDROVIAS', 'TEAG']
 
         for TERMINAL in DADOS_RELATORIO:
-                
-            FERROVIAS = list(DADOS_RELATORIO[TERMINAL].keys())
-            FERROVIAS.remove('MARGEM')
-            FERROVIAS.remove('TOTAL') 
+            if TERMINAL in map_DETALHE:    
+                FERROVIAS = list(DADOS_RELATORIO[TERMINAL].keys())
+                FERROVIAS.remove('MARGEM')
+                FERROVIAS.remove('TOTAL') 
 
-            for FERROVIA in FERROVIAS:
-                
-                PRODUTOS = list(DADOS_RELATORIO[TERMINAL][FERROVIA].keys()) 
+                for FERROVIA in FERROVIAS:
+                    
+                    PRODUTOS = list(DADOS_RELATORIO[TERMINAL][FERROVIA].keys()) 
 
-                for PRODUTO in PRODUTOS:
-                    for DIA in [0, 1, 2, 3, 4]: 
-                        for TITULO_COL in list(DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA]):                       
-                            if not TITULO_COL == "TT_OF" and  not TITULO_COL == "TT_PD":                             
-                                for PERIODO in DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL]:
+                    for PRODUTO in PRODUTOS:
+                        for DIA in [0, 1, 2, 3, 4]: 
+                            for TITULO_COL in list(DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA]):                       
+                                if not TITULO_COL == "TT_OF" and  not TITULO_COL == "TT_PD":                             
+                                    for PERIODO in DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL]:
 
-                                    LINHA   =   map_DETALHE[TERMINAL][FERROVIA][PRODUTO] + 4
-                                    COLUNA  =   COLUNAS[DIA][TITULO_COL][PERIODO] + 7
-                                    VALOR   =   DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL][PERIODO]
+                                        LINHA   =   map_DETALHE[TERMINAL][FERROVIA][PRODUTO]
+                                        COLUNA  =   COLUNAS[DIA][TITULO_COL][PERIODO] + 7
+                                        VALOR   =   DADOS_RELATORIO[TERMINAL][FERROVIA][PRODUTO][DIA][TITULO_COL][PERIODO]
 
-                                    ws_criarDetalhe.cell(row = LINHA, column= COLUNA,  value = VALOR )
+                                        ws_criarDetalhe.cell(row = LINHA, column= COLUNA,  value = VALOR )
 
 
 def gerar_planilha_antiga():
