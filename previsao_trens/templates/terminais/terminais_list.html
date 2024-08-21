@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+<link   rel="stylesheet" type="text/css" href="{% static 'css/terminais/terminais_list.css' %}">
+
+<div class="container">
+
+    <h1 style="text-align: left;">Terminais</h1>
+
+    <a href="{% url 'create_terminal' %}" class="btn btn-primary">Adicionar Terminal</a>
+
+    <input type="text" id="searchInput" onkeyup="filterTerminals()" placeholder="Buscar terminais...">
+    
+    <p style="text-align: left;"></p>
+    
+    <section>
+        <ul id="terminalList">
+            {% for terminal in terminais %}
+                <li><a href="{% url 'terminal_content' terminal.id %}">{{ terminal.nome }}</a></li>
+            {% empty %}
+                <li>Nenhum Terminal adicionado ainda.</li>
+            {% endfor %}
+        </ul>
+    </section>
+    
+    
+    
+    
+
+    
+</div>
+
+<script>
+    function filterTerminals() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toUpperCase();
+        let ul = document.getElementById("terminalList");
+        let li = ul.getElementsByTagName('li');
+    
+        for (let i = 0; i < li.length; i++) {
+            let a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+{% endblock %}

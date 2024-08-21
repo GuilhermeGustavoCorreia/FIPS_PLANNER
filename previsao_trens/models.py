@@ -1,22 +1,41 @@
-from    django.db                   import models
+from    django.db                   import models, transaction
 from    django.contrib.auth.models  import AbstractUser
 from    django.conf                 import settings
 from    django.forms.models         import model_to_dict
-from    django.db                   import transaction
+from    django.db.models            import F
 
-#UserProfile
-class Usuario(AbstractUser):
+from    datetime                    import timedelta
 
-    foto        = models.ImageField(upload_to="fotos_de_perfil", blank=True, default='anonimo.jpg' )
-    USERNAME_FIELD = 'username'  # Define o campo usado para fazer login
-    
-    # REQUIRED_FIELDS deve conter todos os campos adicionais necessários além de username
-    REQUIRED_FIELDS = ['first_name', 'last_name']  # Adicione 'nome' aos campos necessários
-    
+
+        
+
+class Segmento(models.Model):
+
+    nome = models.CharField(max_length=100)
+
     def __str__(self):
+        return self.nome
+    
+class Mercadoria(models.Model):
 
-        return  self.username
+    nome     = models.CharField(max_length=100)
+    segmento = models.ForeignKey(Segmento, on_delete=models.CASCADE, related_name='mercadorias')
 
+    def __str__(self):
+        return self.nome
+    
+class Terminal(models.Model):
+
+    nome            = models.CharField(max_length=100)
+    ordem           = models.IntegerField()
+    margem          = models.CharField(max_length=100) 
+    patio           = models.CharField(max_length=100) 
+    tempo_encoste   = models.IntegerField()
+    segmento        = models.ForeignKey(Segmento, on_delete=models.CASCADE, related_name='terminais')
+
+    def __str__(self):
+        return self.nome
+    
 class Trem(models.Model):
 
     prefixo     = models.CharField(max_length=100)
@@ -24,8 +43,8 @@ class Trem(models.Model):
     origem      = models.CharField(max_length=50)
     local       = models.CharField(max_length=50)
     destino     = models.CharField(max_length=50)
-    terminal    = models.CharField(max_length=50)
-    mercadoria  = models.CharField(max_length=50)
+    terminal    = models.ForeignKey(Terminal, on_delete=models.CASCADE) 
+    mercadoria  = models.ForeignKey(Mercadoria, on_delete=models.CASCADE)
     vagoes      = models.IntegerField()
     previsao    = models.DateTimeField(null=True, blank=True)
     encoste     = models.DateTimeField(null=True, blank=True)
@@ -38,90 +57,157 @@ class Trem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+    def update_position(self, new_position):
 
-    def excluir_trem(self):
+        old_position = self.posicao_previsao
 
-        # Tenta encontrar o trem pelo ID e excluí-lo.
-        # CUIDADO AO EXCLUIR UM TREM QUE NÃO ESTÁ NA DESCARGA
+        if old_position > new_position: direction = "para cima"
+        if old_position < new_position: direction = "para baixo"
 
-        from previsao_trens.packages.descarga.EDITAR_DESCARGA       import NAVEGACAO_DESCARGA
-        from previsao_trens.packages.CRIAR_TREM.ATUALIZAR_POSICAO   import AJUSTAR_POSICAO_CHEGADA
-
-        try:
-            with transaction.atomic():
+        if direction == "para cima":
+            
+            Trem.objects.filter(
                 
-                TREM_ANTIGO = model_to_dict(self)
-                self.delete()
+                posicao_previsao__gt = new_position - 1,
+                posicao_previsao__lt = self.posicao_previsao,
+                previsao__date       = self.previsao
+                
+            ).update(posicao_previsao=F('posicao_previsao') + 1)
 
-                try:  
-                    try:
+        if direction == "para baixo":
+
+            Trem.objects.filter(
+                
+                posicao_previsao__gt = self.posicao_previsao,
+                posicao_previsao__lt = new_position + 1,
+                previsao__date       = self.previsao
+            
+            ).update(posicao_previsao=F('posicao_previsao') - 1)
+
+        self.posicao_previsao = new_position
+        super().save()
+
+    def save(self, *args, **kwargs):
+        
+        from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as Navegacao
+        
+        #region em caso de edicao
+        if not self._state.adding:
+
+            trem_atual      = Trem.objects.get(pk=self.pk)
+            previsao_antiga = trem_atual.previsao.date() if trem_atual.previsao else None
+            nova_previsao   = self.previsao.date() if self.previsao else None
+            
+            self.posicao_previsao = trem_atual.posicao_previsao
+            if nova_previsao:
+                
+                if previsao_antiga != nova_previsao:
+
+                    self.posicao_previsao = 0
+
+                    Trem.objects.filter(
                         
-                        NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"]) #5
-                        NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
+                        posicao_previsao__gt    = trem_atual.posicao_previsao, 
+                        previsao__year          = previsao_antiga.year, 
+                        previsao__month         = previsao_antiga.month, 
+                        previsao__day           = previsao_antiga.day
+                        
+                    ).update(posicao_previsao=F('posicao_previsao') - 1) 
+
+                    Trem.objects.filter(
+                        
+                        previsao__year  = nova_previsao.year, 
+                        previsao__month = nova_previsao.month, 
+                        previsao__day   = nova_previsao.day
                     
-                    except:
-
-                        NAVEGACAO = NAVEGACAO_DESCARGA(TREM_ANTIGO["terminal"], TREM_ANTIGO["ferrovia"], TREM_ANTIGO["mercadoria"], DIA_ANTERIOR=True) #5
-                        NAVEGACAO.EDITAR_TREM(TREM_ANTIGO, "REMOVER")
-
-                except IndexError:
-                    pass
-
-                POSICAO_TREM = TREM_ANTIGO['posicao_previsao']
-                PREVISAO_TREM = TREM_ANTIGO['previsao'].date()
+                    ).update(posicao_previsao=F('posicao_previsao') + 1)
 
 
-                AJUSTAR_POSICAO_CHEGADA(ACAO="EXCLUIR TREM", PREVISAO_TREM_EXCLUIDO=PREVISAO_TREM, POSICAO=POSICAO_TREM)
-    
-        except Trem.DoesNotExist:
-            # Lidar com o caso onde o trem não é encontrado
-            pass
-     
-    @classmethod #Quando o método é responsável por criar uma nova instância do modelo.
-    def criar_trem(cls, data, user):
-
-        from .forms import TremForm
-        from previsao_trens.packages.CRIAR_TREM.VALIDAR             import VALIDAR_NOVA_PREVISAO
-        from previsao_trens.packages.CRIAR_TREM.ATUALIZAR_POSICAO   import AJUSTAR_POSICAO_CHEGADA
-        from previsao_trens.packages.descarga.EDITAR_DESCARGA       import NAVEGACAO_DESCARGA
-
-        with transaction.atomic():
+            super().delete(*args, **kwargs)
             
-            form = TremForm(data)
+            if trem_atual.previsao: 
+                
+                self.encoste = (trem_atual.previsao + timedelta(hours=trem_atual.terminal.tempo_encoste))
+                CalculoNavegacaoAntigo = Navegacao(trem_atual.terminal.nome, trem_atual.ferrovia, trem_atual.mercadoria.nome)
+                CalculoNavegacaoAntigo.atualizar(trem_atual)
+
+        #endregion
+
+        self.prefixo = self.prefixo.upper()
+
+        #ajustando previsão (colocando este trem como o primeiro da lista)
+        if self._state.adding:
             
-            if form.is_valid():
-                novo_trem = form.cleaned_data
-                criterios_avaliados = VALIDAR_NOVA_PREVISAO(novo_trem)
+            Trem.objects.filter(
                 
-                if not criterios_avaliados["STATUS"]:
-                    return {"status": False, "descricao": criterios_avaliados["DESCRICAO"], "errors": None}
-
-                AJUSTAR_POSICAO_CHEGADA(ACAO="INSERIR TREM", TREM=novo_trem)
-                trem_objeto = form.save(commit=False)
-                trem_objeto.created_by = user
-                trem_objeto.save()
-
-                novo_trem["ID"] = trem_objeto.id
+                previsao__year  = self.previsao.year, 
+                previsao__month = self.previsao.month, 
+                previsao__day   = self.previsao.day
                 
-                try:
+            ).update(posicao_previsao=F('posicao_previsao') + 1)
 
-                    print("tentando sem dia anterior...")    
-                    navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"])
-                    navegacao.EDITAR_TREM(novo_trem, "INSERIR")
-                
-                except IndexError:
-
-                    print("com dia anterior...") 
-                    navegacao = NAVEGACAO_DESCARGA(novo_trem["terminal"], novo_trem["ferrovia"], novo_trem["mercadoria"], DIA_ANTERIOR=True)
-                    navegacao.EDITAR_TREM(novo_trem, "INSERIR")
-
-                return {"status": True, "descricao": "Trem adicionado com sucesso!", "errors": None}
-            else:
-                
-                return {"status": False, "descricao": None, "errors": form.errors}
+        #inserindo tempo de encoste
+        if self.previsao: 
+            
+            self.encoste = (self.previsao + timedelta(hours=self.terminal.tempo_encoste))
  
+            super().save(*args, **kwargs)
+            CalculoNavegacao = Navegacao(self.terminal.nome, self.ferrovia, self.mercadoria.nome)
+            CalculoNavegacao.atualizar(self)
+
+        else:
+
+            super().save(*args, **kwargs)    
+
+    def delete(self, *args, **kwargs):
+
+        from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as Navegacao
+       
+        with transaction.atomic():  # Garante que as mudanças sejam atômicas
+            
+            if self.previsao:    
+                #ajustando previsão 
+                Trem.objects.filter(
+                    
+                    posicao_previsao__gt    = self.posicao_previsao, 
+                    previsao__year          = self.previsao.year, 
+                    previsao__month         = self.previsao.month, 
+                    previsao__day           = self.previsao.day
+                
+                ).update(posicao_previsao=F('posicao_previsao') - 1)
+
+                super().delete(*args, **kwargs)
+                
+                CalculoNavegacao = Navegacao(self.terminal.nome, self.ferrovia, self.mercadoria.nome)
+                CalculoNavegacao.atualizar(self)
+
+            else:
+
+                super().delete(*args, **kwargs)
+
+    def to_slice(self, slice_01, slice_02):
+  
+        with transaction.atomic():
+
+            if self.previsao.date() == slice_01["previsao"].date() == slice_02["previsao"].date():
+                with transaction.atomic():  
+                    Trem.objects.filter(
+                        
+                        posicao_previsao__gt = self.posicao_previsao,
+                        previsao__date       = self.previsao
+
+                    ).update(
+                        posicao_previsao=F('posicao_previsao') + 1
+                    )
+                    slice_01["posicao_previsao"] = (self.posicao_previsao + 1)
+          
+        Trem.objects.create(**slice_01, created_by=self.created_by)
+        Trem.objects.create(**slice_02, created_by=self.created_by)
+
+        self.delete()
+
     def __str__(self):
-        return self.prefixo
+        return f"{self.prefixo} -  {self.terminal} - {self.mercadoria} - {self.previsao}"
     
 class Restricao(models.Model):
 
@@ -277,3 +363,16 @@ class TremVazio(models.Model):
 
     def __str__(self):
         return self.prefixo
+
+class Usuario(AbstractUser):
+
+    foto        = models.ImageField(upload_to="fotos_de_perfil", blank=True, default='anonimo.jpg' )
+    USERNAME_FIELD = 'username'  # Define o campo usado para fazer login
+    
+    # REQUIRED_FIELDS deve conter todos os campos adicionais necessários além de username
+    REQUIRED_FIELDS = ['first_name', 'last_name']  # Adicione 'nome' aos campos necessários
+    
+    def __str__(self):
+
+        return  self.username
+    

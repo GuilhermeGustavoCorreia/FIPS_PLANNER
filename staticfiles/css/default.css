@@ -169,3 +169,36 @@ dialog{ overflow: hidden; border-radius: 5px; border: none; }
         height: 7vh  !important;  
     }
 }
+
+
+/* Estilo para a lista de erros */
+.errorlist {
+    color: #D8000C; /* Cor do texto dos erros */
+    background-color: #FFBABA; /* Fundo dos erros */
+    border: 1px solid #D8000C; /* Borda dos erros */
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px; /* Bordas arredondadas */
+    list-style-type: none; /* Remove as bullets da lista */
+}
+
+/* Estilo para o item de erro */
+.errorlist li {
+    margin-bottom: 5px;
+}
+
+/* Estilo para erros de campo específico */
+.errorlist .nonfield {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    border: 1px solid #9F6000;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Estilo para a mensagem de erro em si */
+.errorlist li ul li {
+    margin-bottom: 0;
+    color: #D8000C;
+}

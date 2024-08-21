@@ -5,7 +5,7 @@ import os
 from django.db.models import Sum
 from previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS import EDITAR_PARAMETROS
 from previsao_trens.models  import Trem   
-from datetime               import datetime, timedelta
+from datetime               import datetime, timedelta, time
 
 class NAVEGACAO_DESCARGA:
 
@@ -26,6 +26,12 @@ class NAVEGACAO_DESCARGA:
         #region INICIANDO OS OBJETOS GLOBAIS
         self.PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         
+        data_arqs = self.PERIODO_VIGENTE["DATA_ARQ"].tolist()
+
+        self.limite_minimo = datetime.combine(datetime.strptime(data_arqs[0], '%Y-%m-%d').date(), time(1, 0))
+        self.limite_maximo = datetime.combine(datetime.strptime(data_arqs[5], '%Y-%m-%d').date(), time(0, 0)) + timedelta(days=1)
+
+
         #ESTOU REMOVENDO O D-1 DO CÁLCULO PARA VER NO QUE VAI DAR
         self.QT_COLUNAS_FULL = 144
         if not DIA_ANTERIOR:
@@ -40,12 +46,15 @@ class NAVEGACAO_DESCARGA:
 
         self.INFOS       = self.INFOS[TERMINAL]
 
+
         for DATA_ARQ in self.LISTA_DATA_ARQ:
 
             with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json") as ARQUIVO_DESCARGA:
                 DESCARGA = json.load(ARQUIVO_DESCARGA)
 
             self.DESCARGAS[DATA_ARQ] = DESCARGA
+
+        
 
         #endregion
 
@@ -201,6 +210,7 @@ class NAVEGACAO_DESCARGA:
             #MÓDULO DE VAZIOS (PODE SER REMOVIDO)
 
             DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-1] = DESCARGA_COMPLETA["PRODUTIVIDADE"][i-1] + DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-2]
+            
             if DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-1] == DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-2]:
                DESCARGA_COMPLETA["GERACAO_DE_VAZIOS"][i-1] = 0
 
@@ -419,7 +429,7 @@ class NAVEGACAO_DESCARGA:
 
             POSICAO_DIA = self.LISTA_DATA_ARQ.index(DATA_ARQ_CHEGADA)
 
-            print(f"ENCOSTE: {DATA_ARQ_ENCOSTE} às {HORA_ENCOSTE}h - POSICAO DIA: {POSICAO_DIA} em {DATA_ARQ_CHEGADA}")
+
             if ((HORA_ENCOSTE) >= 24 and POSICAO_DIA < 6):
 
                 HORA_ENCOSTE     = HORA_ENCOSTE - 24
@@ -427,9 +437,7 @@ class NAVEGACAO_DESCARGA:
 
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][1] = TREM_ID
             self.DESCARGAS[DATA_ARQ_ENCOSTE]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][HORA_ENCOSTE][0] = VAGOES
-
-  
-        
+       
         def __ATIVAR_TERMINAL__(ACAO):
             
             DESC_ATV = -1
@@ -452,13 +460,13 @@ class NAVEGACAO_DESCARGA:
         TREM_DATA_ARQ    = TREM['previsao'].strftime('%Y-%m-%d')
         HORA             = TREM['previsao'].hour
         
-        print(f"PREVISAO : { TREM_DATA_ARQ } às { HORA }h")
+
         
         __ATIVAR_TERMINAL__(ACAO)
 
         HORA_CHEGADA, DATA_ARQ_CHEGADA = __CHEGADA__(HORA, TREM_DATA_ARQ)
 
-        print(f"CHEGADA  : { DATA_ARQ_CHEGADA } às { HORA_CHEGADA }h")
+
 
         __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO)
         
@@ -648,6 +656,112 @@ class NAVEGACAO_DESCARGA:
                     pass
         #endregion
         
+        self.__CALCULAR_TOTAIS__()
+        self.__SALVAR__()
+
+    def atualizar(self, trem):
+
+        from django.core.exceptions import ObjectDoesNotExist
+
+        #consegue colocar trem até D-1 01:00 (chegada)
+        #D+5 00:00 (encoste)
+
+        previsao = trem.previsao
+        encoste  = trem.encoste
+
+        #[VALIDAÇÃO 01] - Não atualizar o que estiver fora do limite.
+        if (previsao < self.limite_minimo) or (encoste > self.limite_maximo): return
+      
+        previsao_navegacao  = (previsao - timedelta(hours=1))
+        encoste_navegacao   = (encoste  - timedelta(hours=1))
+        
+        trem_chegada    = Trem.objects.filter(previsao=trem.previsao, terminal=trem.terminal).first()
+        vagoes_chegada  = Trem.objects.filter(previsao=trem.previsao, terminal=trem.terminal).aggregate(total_vagoes=Sum('vagoes'))['total_vagoes']
+        
+        if trem_chegada:
+            prefixo = trem_chegada.prefixo
+        else:
+            prefixo         = 0
+            vagoes_chegada  = 0
+            trem.id         = 0
+            trem.vagoes     = 0
+            
+        #deve servir para calcular a fila
+        
+        lista_pk_dos_trens = list(Trem.objects.filter(terminal=trem.terminal, previsao=trem.previsao).values_list('pk', flat=True))
+
+        #region inserindo chegada
+        data_arq_chegada = previsao_navegacao.strftime('%Y-%m-%d')
+        hora_chegada     = previsao_navegacao.hour
+
+        #region chegada em D-1 (Ja validamos se o trem esta dentro do periodo vigente em [VALIDAÇÃO 01])
+        if not data_arq_chegada in self.LISTA_DATA_ARQ:
+
+            path = f"previsao_trens/src/DESCARGAS/{ trem.terminal }/descarga_{ data_arq_chegada }.json"
+
+            with open(path) as json_file:
+                json_descarga = json.load(json_file)
+
+                json_descarga["PREFIXO"][hora_chegada][0] = prefixo 
+                json_descarga["PREFIXO"][hora_chegada][1] = lista_pk_dos_trens
+        
+                json_descarga["CHEGADA"][hora_chegada][0] = vagoes_chegada
+                json_descarga["CHEGADA"][hora_chegada][1] = lista_pk_dos_trens
+
+            with open(path, 'w') as ARQUIVO_NOME:
+                json.dump(json_descarga, ARQUIVO_NOME, indent=4)
+        else:          
+
+            self.DESCARGAS[data_arq_chegada]["PREFIXO"][hora_chegada][0] = prefixo    
+            self.DESCARGAS[data_arq_chegada]["PREFIXO"][hora_chegada][1] = lista_pk_dos_trens
+            
+            self.DESCARGAS[data_arq_chegada]["CHEGADA"][hora_chegada][0] = vagoes_chegada
+            self.DESCARGAS[data_arq_chegada]["CHEGADA"][hora_chegada][1] = lista_pk_dos_trens
+        #endregion
+        
+        #endregion
+
+        #region inserindo encoste
+        data_arq_encoste    = encoste_navegacao.strftime('%Y-%m-%d')
+        hora_encoste        = encoste_navegacao.hour
+        
+        #region chegada em D-1 (Ja validamos se o trem esta dentro do periodo vigente em [VALIDAÇÃO 01])
+        if not data_arq_encoste in self.LISTA_DATA_ARQ:
+            
+            path = f"previsao_trens/src/DESCARGAS/{ trem.terminal }/descarga_{ data_arq_chegada }.json"
+
+            with open(path) as json_file:
+                json_descarga = json.load(json_file)
+
+                if not trem.id is None:
+
+                    json_descarga["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = trem.id
+                    json_descarga["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = trem.vagoes
+                
+                else:
+
+                    json_descarga["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = 0
+                    json_descarga["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = 0
+
+            with open(path, 'w') as ARQUIVO_NOME:
+                json.dump(json_descarga, ARQUIVO_NOME, indent=4)
+        else:
+
+            if not trem.id is None:
+
+                self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = trem.id
+                self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = trem.vagoes
+            
+            else:
+
+                self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = 0
+                self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = 0
+
+        #endregion
+
+        #endregion
+        
+        self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
 

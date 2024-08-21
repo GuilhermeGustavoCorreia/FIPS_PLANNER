@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+<link   rel="stylesheet" type="text/css" href="{% static 'css/terminais/terminais_list.css' %}">
+
+<div class="container">
+
+    <h1 style="text-align: left;">{{terminal.nome}}</h1>
+    <p style="text-align: left;"></p>
+    
+    <section class="terminal-details">
+        <p><strong>Segmento:</strong> {{ terminal.segmento }}</p>
+        <p><strong>Margem:</strong> {{ terminal.margem }}</p>
+        <p><strong>Pátio:</strong> {{ terminal.patio }}</p>
+        <p><strong>Tempo de Encoste:</strong> {{ terminal.tempo_encoste }}h</p>
+    </section>
+
+         
+        
+    <a href="{% url 'terminais_list' %}" class="btn btn-secondary">Voltar</a>
+    
+    
+</div>
+
+
+
+{% endblock %}

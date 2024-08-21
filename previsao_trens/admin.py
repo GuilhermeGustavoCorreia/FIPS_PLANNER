@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from rolepermissions.roles import get_user_roles, assign_role, clear_roles, RolesManager
-from .models import Usuario, Trem, TremVazio, Restricao
+from .models import Usuario, Trem, TremVazio, Restricao, Terminal, Segmento, Mercadoria
 from setup.roles import CurtoPrazo, UsuarioComum, CelulaOperacao  # Certifique-se de que o caminho para roles.py está correto
 
 # Função para obter todos os papéis disponíveis
@@ -56,3 +56,6 @@ admin.site.register(Usuario, CustomUserAdmin)
 admin.site.register(Trem)
 admin.site.register(TremVazio)
 admin.site.register(Restricao)
+admin.site.register(Terminal)
+admin.site.register(Segmento)
+admin.site.register(Mercadoria)

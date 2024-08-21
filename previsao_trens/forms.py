@@ -1,7 +1,9 @@
 from django import forms
-from .models import Trem, Restricao, TremVazio
+from .models import Trem, Restricao, TremVazio, Terminal, Mercadoria
 from django.forms.widgets import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
+
 import os
 import json
 import pandas as pd
@@ -28,24 +30,22 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 class TremForm(forms.ModelForm):
 
-    MERCADORIAS = DICIONARIO_MERCADORIAS()
-
     class Meta:
         model = Trem
         fields = '__all__'
         
         widgets = {
-            'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
-            'os':           NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'OS'}),
-            'origem':       TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Origem'}),
-            'local':        TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Local'}),
-            'destino':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Destino'}),
-            'mercadoria':   Select(choices=[(k, k) for k in MERCADORIAS.keys()], attrs={'class': 'INPUT INPUT_G', 'onchange': 'updateTerminals()'}),
-            'terminal':     Select(choices=[(k, k) for k in MERCADORIAS["ACUCAR"]], attrs={'class': 'INPUT INPUT_M'}),
-            'vagoes':       NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
-            'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}),
-            'comentario':   Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
-            'ferrovia':     RadioSelect(attrs={'class': 'INPUT INPUT_RADIO'})
+            'prefixo':      forms.TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo'}),
+            'os':           forms.NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'OS'}),
+            'origem':       forms.TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Origem'}),
+            'local':        forms.TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Local'}),
+            'destino':      forms.TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Destino'}),
+            'mercadoria':   forms.Select(attrs={'class': 'INPUT INPUT_G', 'id': 'id_mercadoria', 'onchange': 'updateTerminals()'}),
+            'terminal':     forms.Select(attrs={'class': 'INPUT INPUT_M', 'id': 'id_terminal'}),
+            'vagoes':       forms.NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Vagões'}),
+            'previsao':     forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão'}),
+            'comentario':   forms.Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
+            'ferrovia':     forms.RadioSelect(attrs={'class': 'INPUT INPUT_RADIO'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +60,83 @@ class TremForm(forms.ModelForm):
         self.fields['created_by'].required          = False 
         self.fields['encoste'].required             = False
         self.fields['translogic'].required          = False
+
+    def clean(self):
+
+        from datetime import datetime, timedelta, time
+
+        cleaned_data    = super().clean()
+        previsao        = cleaned_data.get('previsao')
+        mercadoria      = cleaned_data.get('mercadoria')
+        terminal        = cleaned_data.get('terminal')
+        prefixo         = cleaned_data.get('prefixo')
+
+        # Verificação de conflito
+        trens_existentes = Trem.objects.filter(previsao=previsao, mercadoria=mercadoria, terminal=terminal)
+
+        if self.instance.pk:  # Editando um trem existente
+            trens_existentes = trens_existentes.exclude(pk=self.instance.pk)
+
+        if trens_existentes.exists() and not all(trem.prefixo == prefixo for trem in trens_existentes):
+            raise ValidationError("Erro: Não é permitido ter o mesmo terminal, previsão e mercadoria com prefixos diferentes.")
+
+        # Verificação de data
+        periodo_vigente = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+        data_arqs       = periodo_vigente["DATA_ARQ"].tolist()
+
+        limite_minimo = datetime.combine(datetime.strptime(data_arqs[0], '%Y-%m-%d').date(), time(1, 0))
+        limite_maximo = datetime.combine(datetime.strptime(data_arqs[5], '%Y-%m-%d').date(), time(0, 0)) + timedelta(days=1)
+
+        if previsao and (previsao < limite_minimo or previsao > limite_maximo): 
+            raise ValidationError("Erro: Não é possível inserir o trem fora do período de D-1 à D+4.")
+
+        return cleaned_data
+
+class DividirTremForm(forms.ModelForm):
+    # Campos adicionais para dividir o trem
+    
+    destino1    = forms.CharField(label='Destino 1', max_length=50)
+    mercadoria1 = forms.ModelChoiceField(label='Mercadoria 1',  queryset=Mercadoria.objects.all())
+    terminal1   = forms.ModelChoiceField(label='Terminal 1',    queryset=Terminal.objects.all())
+    vagoes1     = forms.IntegerField(label='Vagões 1')
+    previsao1   = forms.DateTimeField(label='Previsão 1', widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+
+    destino2    = forms.CharField(label='Destino 2', max_length=50)
+    mercadoria2 = forms.ModelChoiceField(label='Mercadoria 2',  queryset=Mercadoria.objects.all())
+    terminal2   = forms.ModelChoiceField(label='Terminal 2',    queryset=Terminal.objects.all())
+    vagoes2     = forms.IntegerField(label='Vagões 2')
+    previsao2   = forms.DateTimeField(label='Previsão 2', widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+
+    class Meta:
+        
+        model   = Trem
+        fields  = ['prefixo', 'os', 'origem', 'local', 'ferrovia']  # apenas os campos diretamente no modelo Trem
+
+    def __init__(self, *args, **kwargs):
+        
+        super(DividirTremForm, self).__init__(*args, **kwargs)
+
+        self.fields['prefixo'].required     = False
+        self.fields['os'].required          = False 
+        self.fields['origem'].required      = False 
+        self.fields['local'].required       = False
+        self.fields['ferrovia'].required    = False
+
+
+        self.fields['prefixo'].widget.attrs.update( {'class': 'form-control', 'placeholder': 'Prefixo',  'disabled': True})
+        self.fields['os'].widget.attrs.update(      {'class': 'form-control', 'placeholder': 'OS',       'disabled': True})
+        self.fields['origem'].widget.attrs.update(  {'class': 'form-control', 'placeholder': 'Origem',   'disabled': True})
+        self.fields['local'].widget.attrs.update(   {'class': 'form-control', 'placeholder': 'Local',    'disabled': True})
+        self.fields['ferrovia'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ferrovia', 'disabled': True})
+        
+        self.fields['mercadoria1'].widget.attrs.update({'onchange': 'updateTerminals1()'})
+        self.fields['mercadoria2'].widget.attrs.update({'onchange': 'updateTerminals2()'})
+
+        self.fields['destino1'].widget.attrs.update({'placeholder': 'destino'})
+        self.fields['destino2'].widget.attrs.update({'placeholder': 'destino'})
+
+        self.fields['vagoes1'].widget.attrs.update({'placeholder': 'vagões'})
+        self.fields['vagoes2'].widget.attrs.update({'placeholder': 'vagões'})
 
 class RestricaoForm(forms.ModelForm):
 
@@ -90,7 +167,6 @@ class RestricaoForm(forms.ModelForm):
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
-
 
 class TremVazioForm(forms.ModelForm):
 
@@ -161,3 +237,38 @@ class TremVazioForm(forms.ModelForm):
             raise forms.ValidationError('Já existe um trem com esta previsão.')
         
         return previsao
+
+class TerminalForm(forms.ModelForm):
+    
+    class Meta:
+
+        model = Terminal
+        fields = ['nome', 'margem', 'patio', 'tempo_encoste']
+        
+        labels = {
+            'nome'          : 'Nome',
+            'margem'        : 'Margem',
+            'patio'         : 'Pátio',
+            'tempo_encoste' : 'Tempo de Encoste'
+        }
+
+        widgets = {
+            'nome'          : forms.TextInput(attrs={'class': 'form-control'}),
+            'margem'        : forms.TextInput(attrs={'class': 'form-control'}),
+            'patio'         : forms.TextInput(attrs={'class': 'form-control'}),
+            'tempo_encoste' : forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+    def clean(self):
+
+        cleaned_data    = super().clean()
+        margem          = cleaned_data.get('margem')
+        patio           = cleaned_data.get('patio')
+
+        if margem == 'esquerda' and patio != 'PCZ':
+            raise ValidationError({'patio': "O pátio deve ser 'PCZ' quando a margem é esquerda."})
+        elif margem == 'direita' and patio not in ['PSN', 'PMC', 'PST']:
+            raise ValidationError({'patio': "O pátio deve ser 'PSN', 'PMC' ou 'PST' quando a margem é direita."})
+
+        return cleaned_data
+

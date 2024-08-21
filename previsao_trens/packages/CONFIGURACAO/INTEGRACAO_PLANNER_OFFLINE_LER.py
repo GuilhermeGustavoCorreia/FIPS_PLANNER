@@ -2,9 +2,14 @@ import  os
 import  json
 import  pandas as pd
 
-from    previsao_trens.models                                import Trem, Restricao
+from    previsao_trens.models                                import Trem, Restricao, Mercadoria, Terminal
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA     import NAVEGACAO_DESCARGA
 from    django.shortcuts import get_object_or_404
+from    datetime                    import datetime, timedelta
+from previsao_trens.forms         import TremForm
+import warnings
+from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
+# Ignorando FutureWarning específico
 
 def _json_to_form_data(json_data):
     form_data = {
@@ -13,8 +18,9 @@ def _json_to_form_data(json_data):
         'origem'    : json_data.get('ORIGEM', ''),
         'local'     : json_data.get('SB_ATUAL', ''),
         'destino'   : json_data.get('DESTINO', ''),
-        'terminal'  : json_data.get('TERMINAL_DESTINO', ''),
-        'mercadoria': json_data.get('MERCADORIA', ''),
+        'terminal'  : Terminal.objects.get(nome=json_data.get('TERMINAL_DESTINO', '')), 
+        'encoste'   : (datetime.strptime(json_data.get('PREVISAO', ''), "%Y-%m-%d %H:%M:%S") + timedelta(hours=Terminal.objects.get(nome=json_data.get('TERMINAL_DESTINO', '')).tempo_encoste)),
+        'mercadoria': Mercadoria.objects.get(nome=json_data.get('MERCADORIA', '')),
         'vagoes'    : json_data.get('VAGOES', 0),
         'previsao'  : json_data.get('PREVISAO', ''),
         'ferrovia'  : json_data.get('FERROVIA', ''),
@@ -36,7 +42,7 @@ class AtualizandoSistema:
         
         for trem in trens:
             
-            trem.excluir_trem()
+            trem.delete()
 
     def inserirNovosTrens(novos_trens, usuario_logado):
         
@@ -48,13 +54,21 @@ class AtualizandoSistema:
                 novos_trens[dia_log].reverse()
                 for dict_trem in novos_trens[dia_log]:
                     
+                    print(f"inserindo: { dict_trem }")
                     
                     dict_trem = _ajustar_trem(dict_trem)
 
-                    form_trem = _json_to_form_data(dict_trem)
+                    form_trem = TremForm(_json_to_form_data(dict_trem))
                     
-                    Trem.criar_trem(form_trem, usuario_logado)
+                    if form_trem.is_valid():
+                        
+                        trem  = form_trem.save(commit=False)
+                        trem.created_by = usuario_logado
+                        trem.save()
 
+                    else:
+                        print(f"erro ao inserir o trem: {dict_trem["PREFIXO"]} - {form_trem.errors}")
+                        
     def limparRestricao():
 
         restricoes = Restricao.objects.all()
@@ -193,59 +207,62 @@ class AtualizandoSistema:
 
                 Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
                 DESCARGAS = Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)    
-                  
-        
+                        
     def inserirProdutividade(json_descargas):
-
-        TERMINAIS_ATIVOS    = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
-        lst_terminais_ativos = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()  
-        TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)
-
-        for DIA_LOGISTICO in list(json_descargas.keys()):
-
-            PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
-            linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO]
-            DATA_ARQ        = linha['DATA_ARQ'].values[0]
-
-            print(f"terminais: {list(json_descargas[DIA_LOGISTICO].keys())}")
-            for TERMINAL in lst_terminais_ativos:
-
-                
-                DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
-                DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
+        
+        with warnings.catch_warnings():
             
-                with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
-                    DESCARGA = json.load(ARQUIVO)  
+            warnings.simplefilter("ignore", category=FutureWarning)
+            
+            TERMINAIS_ATIVOS    = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
+            lst_terminais_ativos = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()  
+            TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)
+
+            lst_terminais_ativos = list(set(lst_terminais_ativos).intersection(list(json_descargas[DIA_LOGISTICO].keys())))
+
+            for DIA_LOGISTICO in list(json_descargas.keys()):
+
+                PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+                linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == DIA_LOGISTICO]
+                DATA_ARQ        = linha['DATA_ARQ'].values[0]
+
+                for TERMINAL in lst_terminais_ativos:
+
+                    DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
+                    DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
                 
-                json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
-                json_string     = json_string.replace('\'', '"')
-
-                descarga_dict    = json.loads(json_string)
-                descarga_offline = pd.DataFrame.from_dict(descarga_dict, orient='index') 
-                descarga_offline.drop(columns=['TOTAIS'], inplace=True)
-                descarga_offline.replace('-', 0, inplace=True)
-
-                for ATIVO in DESCARGAS_ATIVAS:
-
+                    with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
+                        DESCARGA = json.load(ARQUIVO)  
                     
-                    
-                    try:
+                    json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
+                    json_string     = json_string.replace('\'', '"')
 
-                        produtividade_offline = descarga_offline.loc[f"{ATIVO[0]}_{ATIVO[1]}_prod"].tolist()
-                        produtividade_offline = [int(float(x)) for x in produtividade_offline]
-                        
-                        if TERMINAL == "SBR"     and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
-                        if TERMINAL == "TECONDI" and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
-                        
-                        DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["PRODUTIVIDADE"] = produtividade_offline
-                        DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["EDITADO"] = [1] * 24
-                    except KeyError:
-                        pass
-                
-                with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json", 'w') as ARQUIVO:
-                    json.dump(DESCARGA, ARQUIVO, indent=4)
+                    descarga_dict    = json.loads(json_string)
+                    descarga_offline = pd.DataFrame.from_dict(descarga_dict, orient='index') 
+                    descarga_offline.drop(columns=['TOTAIS'], inplace=True)
+                    descarga_offline.replace('-', 0, inplace=True)
+
+                    for ATIVO in DESCARGAS_ATIVAS:
+
+                        try:
+
+                            produtividade_offline = descarga_offline.loc[f"{ATIVO[0]}_{ATIVO[1]}_prod"].tolist()
+                            produtividade_offline = [int(float(x)) for x in produtividade_offline]
+                            
+                            if TERMINAL == "SBR"     and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
+                            if TERMINAL == "TECONDI" and ATIVO[0] == "RUMO": ATIVO[0] = "MRS"
+                            
+                            DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["PRODUTIVIDADE"] = produtividade_offline
+                            DESCARGA["DESCARGAS"][ATIVO[0]][ATIVO[1]]["EDITADO"] = [1] * 24
+                        except KeyError:
+                            pass
+                    
+                    with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json", 'w') as ARQUIVO:
+                        json.dump(DESCARGA, ARQUIVO, indent=4)
 
 def lerDados(JSON, usuario_logado):
+
+    ATUALIZAR_DESCARGA()
 
     AtualizandoSistema.limparPrevisao()
     AtualizandoSistema.inserirNovosTrens(JSON["PREVISOES"], usuario_logado)

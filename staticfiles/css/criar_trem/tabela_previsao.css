@@ -142,7 +142,7 @@
     background-color: transparent ;
 }
 
-
+#modal_criar_trem{ max-width: 28vw;}
 
 @media (max-width: 768px) {
 
@@ -154,3 +154,22 @@
 
     
 }
+
+fieldset {
+    font-family: "Saira Expanded", Arial, sans-serif;
+    border: 1px solid #868686; /* Cor da borda */
+    border-radius: 3px; /* Bordas arredondadas */
+}
+
+fieldset input,
+fieldset select{
+    width: fit-content;
+    padding: 5px;
+    text-align: center;
+    min-width: 3rem;
+    max-width: 7rem;
+}
+
+#id_previsao1, #id_previsao2 {min-width: 13rem; padding: 3.5px;}
+
+#modal_dividir_trem .BOTAO {margin-top: 10px;}

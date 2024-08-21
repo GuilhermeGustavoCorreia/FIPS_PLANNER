@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+
+<link   rel="stylesheet" type="text/css" href="{% static 'css/terminais/form.css' %}">
+
+<div class="container">
+
+    <h1 style="text-align: left;">Criar Terminal</h1>
+    <p style="text-align: left;"></p>
+    <section>
+        
+        <form method="post" action="{% url 'create_terminal' %}">
+            {% csrf_token %}
+    
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+    
+            <div class="form-group">
+                <label for="id_titulo">Nome do Terminal:</label>
+                {{ form.nome }}
+    
+                {% if form.nome.errors %}
+                <div class="error">
+                    <ul>
+                        {% for error in form.nome.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            </div>
+
+    
+            <div class="form-group">
+                <label for="id_descricao">Margem:</label>
+                {{ form.margem }}
+    
+                {% if form.margem.errors %}
+                    <div class="error">
+                        <ul>
+                            {% for error in form.margem.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+    
+            <div class="form-group">
+                <label for="id_seu">Pátio:</label>
+                {{ form.patio }}
+    
+                {% if form.patio.errors %}
+                    <div class="error">
+                        <ul>
+                            {% for error in form.patio.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+    
+            <div class="form-group">
+                <label for="id_seu">Encoste (hrs):</label>
+                {{ form.tempo_encoste }}
+    
+                {% if form.tempo_encoste.errors %}
+                    <div class="error">
+                        <ul>
+                            {% for error in form.tempo_encoste.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <li>{{ message }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+
+            <div class="form-group">      
+                <button type="submit" class="btn btn-primary">Criar Terminal</button>
+                <a href="{% url 'terminais_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </section>
+    
+    
+
+    
+</div>
+
+{% endblock %}

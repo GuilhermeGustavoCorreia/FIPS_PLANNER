@@ -2,6 +2,28 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
+url_terminais = [
+                
+                    path('terminais_list/',                         views.terminais_list_view,      name='terminais_list'),
+                    path('create_terminal/',                        views.create_terminal_view,     name='create_terminal'),
+                    path('terminal_content/<int:terminal_id>/',     views.content_terminal_view,    name='terminal_content')
+                ]
+
+url_previsao = [
+
+    path('previsao/previsao_trens',                                     views.previsao_trens_view,  name="previsao_trens"),
+    
+    path('previsao/previsao_trens/novo_trem_previsao',                  views.criar_trem_view,      name="novo_trem_previsao"),   
+    path('previsao/previsao_trens/excluir_trem/<int:id>/',              views.excluir_trem_view,    name="excluir_trem"),   
+    path('previsao/editar_trem/<int:trem_id>',                          views.editar_trem,          name='editar_trem'),
+    path('previsao/dividir_trem/<int:trem_id>',                                 views.dividir_trem,         name="dividir_trem"),
+    
+    path('previsao/previsao_trens/excluir_tabela/<str:dia_logistico>',  views.excluir_dia_inteiro,  name="excluir_dia_inteiro"),
+    path('previsao/previsao_trens/alterar_posicao',                     views.alterar_posicao_view, name="alterar_posicao"),
+    path('get-terminals/',                                              views.get_terminals,        name='get_terminals'),
+]
+
 urlpatterns = [
 
     path('', views.redirect_to_login),
@@ -16,14 +38,7 @@ urlpatterns = [
     path('navegacao/',  views.navegacao,    name="navegacao"),
     path('profile/',    views.profile,      name="profile"),
 
-    path('previsao/previsao_trens',                             views.previsao_trens_view,  name="previsao_trens"),
-    path('previsao/previsao_trens/novo_trem_previsao',          views.criar_trem_view,      name="novo_trem_previsao"),
-    path('previsao/previsao_trens/alterar_posicao',             views.alterar_posicao_view, name="alterar_posicao"),
-    path('previsao/previsao_trens/excluir_trem/<int:id>/',      views.excluir_trem_view,    name="excluir_trem"),
-    path('previsao/previsao_trens/excluir_tabela/<str:dia_logistico>',   views.excluir_dia_inteiro,  name="excluir_dia_inteiro"),
-    path('editar_trem/<int:trem_id>/',                          views.editar_trem,          name='editar_trem'),
-    path('dividir_trem/<int:trem_id>/',                         views.dividir_trem,         name="dividir_trem"),
-    
+ 
     path('upload/',                                             views.upload_file_view,     name='upload_file'),
 
     #PAGINA CONFIGURACAO
@@ -41,5 +56,6 @@ urlpatterns = [
     path('previsao_subida/',                        views.previsao_subida_view,     name="previsao_subida"),
 
     path('previsao_subida/criar_trem_subida',                  views.criar_trem_subida_view,        name="criar_trem_subida"),
-    path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida")
-]
+    path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida"),
+
+] + url_terminais + url_previsao

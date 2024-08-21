@@ -4,17 +4,16 @@
 {% load permission_tags %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/criar_trem/tabela_previsao.css' %}"> 
-
 <script src="{% static 'javascript/CRIAR_TREM/main.js' %}" defer></script>
 
-<div id="OVERLAY" class="OVERLAY"  data-acao="FECHAR" onclick='TOOGLE_FORM(this)'></div>
-        
-<!--FORMULARIO DE CRIAR TREM-->
-<div class="MODAL" id="MODAL">
-    
-    <h2 id="TITULO_FORMULARIO"></h2>
-    
-    <form id="FORM_TREM_PADRAO"   method="post">
+
+<!--#region formulário de criar trem-->
+{% if TIPO_FORMULARIO != 'dividir_trem'%}
+<dialog id="modal_criar_trem">
+
+    <h2></h2>
+
+    <form method="post">
         
         {% csrf_token %}
 
@@ -49,63 +48,73 @@
         <input type="checkbox" id="ckbSemPrevisao" class="ckbox" name="sem_previsao" >
         <label for="ckbSemPrevisao" class="ckbox">Este trem não possui previsão.</label></br>
 
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <button type="submit" class="BOTAO VERDE" >Salvar</button>
     </form>
 
-    <form id="FORM_DIVIDIR_TREM"  method="POST">
-    
+   
+
+</dialog>
+{% endif %}
+<!--#endregion-->
+
+<!--#region formulário de dividir trem-->
+<dialog id="modal_dividir_trem">
+
+    <h2>Dividir Trem</h2>
+    <form method="post">
         {% csrf_token %}
+        <fieldset class="fst-trem-info">
+            <legend>Trem</legend>
+            {{form.prefixo}}
+            {{form.os}}
+            {{form.origem}}
+            {{form.ferrovia}}
+        </fieldset>
 
-    
-        <div id="FRM_DIVIDIR_TREM"> 
-    
-            <table class="TABELA_DIVIDIR_TREM">
-                
-                <thead>
-                    <tr>
-                        <th class="COL_PP">DESTINO </th>
-                        <th>PRODUTO  </th>
-                        <th>TERMINAL </th>
-                        <th>PREVISAO </th>
-                        <th class="COL_PP">VAGÕES  </th>
-                    </tr>
-                </thead>
-    
-                <tbody>
-                    <tr class="">
-                        <td><input  name="destino_01"     id="destino_01"   class="INPUT INPUT_P"  type=text placeholder="Destino" ></td>
-                        <td><select name="mercadoria_01"  id="mercadoria_01"class="INPUT INPUT_G"  maxlength="50"></select></td>
-                        <td><select name="terminal_01"    id="terminal_01"  class="INPUT INPUT_G"  maxlength="50" ></select></td>
-                        <td><input  name="previsao_01"    id="previsao_01"  class="INPUT INPUT_M"  type="datetime-local" placeholder="Previsão" required></td>
-                        <td><input  name="vagoes_01"      id="vagoes_01"    class="INPUT INPUT_P"  type=text placeholder="Vagões" ></td>
-                    </tr>
-    
-                    <tr class="">
-                        <td><input  name="destino_02"    class="INPUT INPUT_P" id="destino_02"    type=text placeholder="Destino" ></td>
-                        <td><select name="mercadoria_02" class="INPUT INPUT_G" id="mercadoria_02" maxlength="50"></select></td>
-                        <td><select name="terminal_02"   class="INPUT INPUT_G" id="terminal_02"   maxlength="50"  ></select></td>
-                        <td><input  name="previsao_02"   class="INPUT INPUT_M" id="previsao_02"   placeholder="Previsão" type="datetime-local" required ></td>
-                        <td><input  name="vagoes_02"     class="INPUT INPUT_P" id="vagoes_02"     type=text placeholder="Vagões" ></td>
-                    </tr>
-                <tbody>
-                    
-                </tbody>
-    
-            </table> 
-        </div>  
+        <fieldset class="fst-trem-info">
+            <legend>Parte 01</legend>
+
+            {{form.destino1}}
+            {{form.mercadoria1}}
+            {{form.terminal1}}
+            {{form.vagoes1}}
+            {{form.previsao1}}
         
-        <button type="submit" class="BOTAO VERDE" >Salvar</button>
-    </form> 
+        </fieldset>    
 
-    {% if messages.error %}
-        <div class="messages">
-            {% for message in messages %}
-                <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+        <fieldset class="fst-trem-info">
+            <legend>Parte 02</legend>
+
+            {{form.destino2}}
+            {{form.mercadoria2}}
+            {{form.terminal2}}
+            {{form.vagoes2}}
+            {{form.previsao2}}
+        
+        </fieldset>    
+
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
             {% endfor %}
-        </div>
-    {% endif %}
+        </ul>
+        {% endif %}
 
-</div>
+        <button type="submit" class="BOTAO VERDE" >Salvar</button>
+
+    </form>
+</dialog>
+<!--#endregion-->
+
 
 <div class="CONTEUDO__PADRAO">  
 
@@ -113,7 +122,7 @@
     
     {% if user|can:'editar_itens' %}
     
-    <button type="button"  data-acao="CRIAR_TREM" data-criar-trem-url="{% url 'novo_trem_previsao' %}" class="BOTAO BTN__CRIAR__TREM" data-toggle="modal" data-target="#modalAdicionarTrem" onclick="TOOGLE_FORM(this)">
+    <button type="button"  data-acao="CRIAR_TREM" data-criar-trem-url="{% url 'novo_trem_previsao' %}" class="BOTAO BTN__CRIAR__TREM" data-toggle="modal" data-target="#modalAdicionarTrem" onclick="criar_trem()">
         Novo Trem
     </button>
 
@@ -125,169 +134,198 @@
 
             <h2>{{ DIA_LOGISTICO }}</h2>
 
-                <table id="{{DIA_LOGISTICO}}" class="LISTA__TRENS" >
-                    
-                    <thead>
+            <table id="{{DIA_LOGISTICO}}" class="LISTA__TRENS" >
+                
+                <thead>
 
-                        <th class="COL_PP">                     </th>
-                        <th class="COL_P">          PREF        </th>
-                        <th class="COL_M os">       OS          </th>
-                        <th class="COL_P origem">   ORIGEM      </th>
-                        <th class="COL_P local">    LOCAL       </th>
-                        <th class="COL_P destino">  DESTINO     </th>
-                        <th class="COL_M">          TERMINAL    </th>
-                        <th class="COL_P">          VAGÕES      </th>
-                        <th class="COL_M">          MERCADORIA  </th>
-                        <th class="COL_G previsao"> PREVISÃO    </th>
-                        <th class="COL_P COMENTARIO" onclick="TOOGLE_COMENTARIO()">
-                        
-                            {% if user|can:'editar_itens' %}
-                            <svg height="2rem" viewBox="-2.4 -2.4 28.80 28.80" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#C0CCD2" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#C0CCD2" stroke-width="0.288">
-        
-                                </g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <defs>
-                                        <style>.cls-1{fill:none;stroke:#C0CCD2;stroke-miterlimit:10;stroke-width:2.184;}</style>
-                                    </defs>
-                                    <path class="cls-1" d="M1.5,5.3v9.54a3.82,3.82,0,0,0,3.82,3.82H7.23v2.86L13,18.66h5.73a3.82,3.82,0,0,0,3.82-3.82V5.3a3.82,3.82,0,0,0-3.82-3.82H5.32A3.82,3.82,0,0,0,1.5,5.3Z">
-        
-                                    </path>
-                                    <line class="cls-1" x1="15.82" y1="10.07" x2="17.73" y2="10.07"></line>
-                                    <line class="cls-1" x1="11.05" y1="10.07" x2="12.95" y2="10.07"></line>
-                                    <line class="cls-1" x1="6.27"  y1="10.07" x2="8.18"  y2="10.07"></line>
-                                </g>
+                    <th class="COL_PP">                     </th>
+                    <th class="COL_P">          PREF        </th>
+                    <th class="COL_M os">       OS          </th>
+                    <th class="COL_P origem">   ORIGEM      </th>
+                    <th class="COL_P local">    LOCAL       </th>
+                    <th class="COL_P destino">  DESTINO     </th>
+                    <th class="COL_M">          TERMINAL    </th>
+                    <th class="COL_P">          VAGÕES      </th>
+                    <th class="COL_M">          MERCADORIA  </th>
+                    <th class="COL_G previsao"> PREVISÃO    </th>
+                    <th class="COL_P COMENTARIO" onclick="TOOGLE_COMENTARIO()">
+                    
+                        {% if user|can:'editar_itens' %}
+
+                        <svg height="2rem" viewBox="-2.4 -2.4 28.80 28.80" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#C0CCD2" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#C0CCD2" stroke-width="0.288">
+    
+                            </g>
+                            <g id="SVGRepo_iconCarrier">
+                                <defs>
+                                    <style>.cls-1{fill:none;stroke:#C0CCD2;stroke-miterlimit:10;stroke-width:2.184;}</style>
+                                </defs>
+                                <path class="cls-1" d="M1.5,5.3v9.54a3.82,3.82,0,0,0,3.82,3.82H7.23v2.86L13,18.66h5.73a3.82,3.82,0,0,0,3.82-3.82V5.3a3.82,3.82,0,0,0-3.82-3.82H5.32A3.82,3.82,0,0,0,1.5,5.3Z">
+    
+                                </path>
+                                <line class="cls-1" x1="15.82" y1="10.07" x2="17.73" y2="10.07"></line>
+                                <line class="cls-1" x1="11.05" y1="10.07" x2="12.95" y2="10.07"></line>
+                                <line class="cls-1" x1="6.27"  y1="10.07" x2="8.18"  y2="10.07"></line>
+                            </g>
+                        </svg>
+                        {% endif %}
+                    </th>
+                    {% if user|can:'editar_itens' %}
+                    <th id="COLUNA_BOTOES botoes" class="COL_P" colspan=3> 
+                        <a href="{% url 'excluir_dia_inteiro' DIA_LOGISTICO %}">
+                            <svg class="ICONE ICONE_DELETAR botoes" id="Layer_1" data-name="Layer 1" data-id="{{ TREM.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88">
+                                <title>Excluir</title>
+                                <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
                             </svg>
+                            </th>
+                    {% endif %}
+                </thead>
+                
+                {% if user|can:'editar_itens' %}
+                    
+                    {% if DIA_LOGISTICO != "SEM PREVISÃO" %}
+                        <tbody {% if DIA_LOGISTICO != "SEM PREVISÃO" %} class="ui-sortable" {% endif %}>
+                    {% else %}
+                        <tbody> 
+                    {% endif %}
+
+                    {% for TREM in PREVISAO %}
+
+                        {% if  DIA_LOGISTICO != "SEM PREVISÃO" %}
+                            <tr onclick="SELECIONAR_TREM('{{ TREM.id }}')" class="trem ui-sortable-handle">
+                        {% else %}
+                            <tr >   
+                        {% endif %}
+                        
+                            <td class="COL_PP posicao"> {{ TREM.posicao_previsao }}</td>
+                            <td class="COL_P">          {{ TREM.prefixo     }}</td>
+                            <td class="COL_M os">       {{ TREM.os          }}</td>
+                            <td class="COL_P origem">   {{ TREM.origem      }}</td>
+                            <td class="COL_P local">    {{ TREM.local       }}</td>
+                            <td class="COL_P destino">  {{ TREM.destino     }}</td>
+                            <td class="COL_M">          {{ TREM.terminal    }}</td>
+                            <td class="COL_P">          {{ TREM.vagoes      }}</td>
+                            <td class="COL_M">          {{ TREM.mercadoria  }}</td>       
+                            <td class="COL_G previsao"> {{ TREM.previsao | date:"d/m/Y H:i" }}</td>
+                            <td><div class="CONTEUDO_COMENTARIO DESATIVADO">{{ TREM.comentario }}<div></td>
+                            
+                            <td>    
+                                {% if  DIA_LOGISTICO != "SEM PREVISÃO" %}
+                                <a href="{% url 'dividir_trem' TREM.id %}">
+                                <svg class="ICONE ICONE_DIVIDIR botoes" height="2rem" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#C0CCD2" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144">
+        
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier"> 
+        
+                                        <path d="M6 3L6 11" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+
+                                        <path d="M3 6L5.91296 3.08704V3.08704C5.96103 3.03897 6.03897 3.03897 6.08704 3.08704V3.08704L9 6" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+                                        
+                                        <path d="M18 7L20.913 9.91296V9.91296C20.961 9.96103 20.961 10.039 20.913 10.087V10.087L18 13" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+                                        
+                                        <path d="M20 10H16.5C10.701 10 6 14.701 6 20.5V21" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+        
+                                    </g>
+                                </svg>
+                                </a>
+                            {% else %}
+                                <svg  class="ICONE" width="2rem" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#C0CCD2" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="transparent" stroke-width="0.144">
+        
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier"> 
+        
+                                        <path d="M6 3L6 11" stroke="transparent" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+
+                                        <path d="M3 6L5.91296 3.08704V3.08704C5.96103 3.03897 6.03897 3.03897 6.08704 3.08704V3.08704L9 6" stroke="transparent" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+                                        
+                                        <path d="M18 7L20.913 9.91296V9.91296C20.961 9.96103 20.961 10.039 20.913 10.087V10.087L18 13" stroke="transparent" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+                                        
+                                        <path d="M20 10H16.5C10.701 10 6 14.701 6 20.5V21" stroke="transparent" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        </path> 
+        
+                                    </g>
+                                </svg>   
                             {% endif %}
-                        </th>
-                        <th id="COLUNA_BOTOES botoes" class="COL_P" colspan=3> 
-                            <a href="{% url 'excluir_dia_inteiro' DIA_LOGISTICO %}">
+                                
+                            
+                            </td>
+        
+                            <td>
+                                <a href="{% url 'excluir_trem' TREM.id %}">
                                 <svg class="ICONE ICONE_DELETAR botoes" id="Layer_1" data-name="Layer 1" data-id="{{ TREM.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88">
                                     <title>Excluir</title>
                                     <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
                                 </svg>
-                             </th>
-                    </thead>
+                                </a>
+                            </td>
+                            <td >
+                                <a href="{% url 'editar_trem' TREM.id %}">
+                                <svg  version="1.1" id="Capa_1" class="ICONE ICONE_EDITAR botoes" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                                    <title>Editar</title>
+                                    <g>
+                                        <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                            c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                            c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                            C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                            L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                            c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                                        <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                            c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                            s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                            c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                                    
+                                    </g>
+                                </svg>
+                                </a>
+                            </td>
+        
+
+        
+                        </tr >
+                        
+                    {% endfor %}
                     
-                    {% if user|can:'editar_itens' %}
-                    <tbody class=" ui-sortable ">  
-        
-                        {% for TREM in PREVISAO %}
+                </tbody>
+                {% else %}
 
-                            {% if user|can:'editar_itens' %}
-                                <tr onclick="SELECIONAR_TREM('{{ TREM.id }}')" class="trem ui-sortable-handle">
-                            {% else %}
-                                <tr >   
-                            {% endif %}
-                            
-                                <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
-                                <td class="COL_P">{{  TREM.prefixo     }}</td>
-                                <td class="COL_M os">{{  TREM.os          }}</td>
-                                <td class="COL_P origem">{{  TREM.origem      }}</td>
-                                <td class="COL_P local">{{  TREM.local       }}</td>
-                                <td class="COL_P destino">{{  TREM.destino     }}</td>
-                                <td class="COL_M">{{  TREM.terminal    }}</td>
-                                <td class="COL_P">{{  TREM.vagoes      }}</td>
-                                <td class="COL_M">{{  TREM.mercadoria  }}</td>       
-                                <td class="COL_G previsao">{{  TREM.previsao | date:"d/m/Y H:i" }}</td>
-                                <td><div class="CONTEUDO_COMENTARIO DESATIVADO">{{ TREM.comentario }}<div></td>
-                                
-                                <td>    
-            
-                                    <svg data-acao="DIVIDIR_TREM" data-dividir-trem-url="{% url 'dividir_trem' TREM.id %}" onclick="TOOGLE_FORM(this)" class="ICONE ICONE_DIVIDIR botoes" height="2rem" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#C0CCD2" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
-                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144">
-            
-                                        </g>
-                                        <g id="SVGRepo_iconCarrier"> 
-            
-                                            <path d="M6 3L6 11" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                            </path> 
-            
-                                            <path d="M3 6L5.91296 3.08704V3.08704C5.96103 3.03897 6.03897 3.03897 6.08704 3.08704V3.08704L9 6" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                            </path> 
-                                            
-                                            <path d="M18 7L20.913 9.91296V9.91296C20.961 9.96103 20.961 10.039 20.913 10.087V10.087L18 13" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                            </path> 
-                                            
-                                            <path d="M20 10H16.5C10.701 10 6 14.701 6 20.5V21" stroke="#C0CCD2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                            </path> 
-            
-                                        </g>
-                                    </svg>
-                                
-                                </td>
-            
-                                <td>
-                                    <a href="{% url 'excluir_trem' TREM.id %}">
-                                    <svg class="ICONE ICONE_DELETAR botoes" id="Layer_1" data-name="Layer 1" data-id="{{ TREM.id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.61 122.88">
-                                        <title>Excluir</title>
-                                        <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
-                                    </svg>
-            
-                                </td>
-                                <td >
-            
-                                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' TREM.id %}" onclick="TOOGLE_FORM(this)" class="ICONE ICONE_EDITAR botoes" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
-                                        <title>Editar</title>
-                                        <g>
-                                            <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
-                                                c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
-                                                c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
-                                                C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
-                                                L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
-                                                c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
-                                            <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
-                                                c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
-                                                s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
-                                                c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
-                                        
-                                        </g>
-                                    </svg>
-            
-                                </td>
-            
+                <tbody>  
+    
+                    {% for TREM in PREVISAO %}
 
-            
-                            </tr >
+                        <tr>
+
+                            <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
+                            <td class="COL_P">{{  TREM.prefixo     }}</td>
+                            <td class="COL_M">{{  TREM.os          }}</td>
+                            <td class="COL_P">{{  TREM.origem      }}</td>
+                            <td class="COL_P">{{  TREM.local       }}</td>
+                            <td class="COL_P">{{  TREM.destino     }}</td>
+                            <td class="COL_M">{{  TREM.terminal    }}</td>
+                            <td class="COL_P">{{  TREM.vagoes      }}</td>
+                            <td class="COL_M">{{  TREM.mercadoria  }}</td>       
+                            <td class="COL_G">{{  TREM.previsao | date:"d/m/Y H:i" }}</td>
+                            <td colspan="3"><div class="CONTEUDO_COMENTARIO ">{{ TREM.comentario }}<div></td>
                             
-                        {% endfor %}
+                        </tr >
                         
-                    </tbody>
-                    {% else %}
-
-                    <tbody>  
-        
-                        {% for TREM in PREVISAO %}
-
-
-                            <tr>
-
-                            
-                                <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
-                                <td class="COL_P">{{  TREM.prefixo     }}</td>
-                                <td class="COL_M">{{  TREM.os          }}</td>
-                                <td class="COL_P">{{  TREM.origem      }}</td>
-                                <td class="COL_P">{{  TREM.local       }}</td>
-                                <td class="COL_P">{{  TREM.destino     }}</td>
-                                <td class="COL_M">{{  TREM.terminal    }}</td>
-                                <td class="COL_P">{{  TREM.vagoes      }}</td>
-                                <td class="COL_M">{{  TREM.mercadoria  }}</td>       
-                                <td class="COL_G">{{  TREM.previsao | date:"d/m/Y H:i" }}</td>
-                                <td colspan="3"><div class="CONTEUDO_COMENTARIO ">{{ TREM.comentario }}<div></td>
-                                
-                              
-
-                            </tr >
-                            
-                        {% endfor %}
-                        
-                    </tbody>
-                    {% endif %}
-                </table>
-
+                    {% endfor %}
+                    
+                </tbody>
+                {% endif %}
+            </table>
 
         {% endfor %}
-        {% else %}
+
+    {% else %}
 
         <div class="SEM_NAVEGACAO">
             <img src="{% static 'imagens/caixa-vazia.png' %}" >
@@ -298,312 +336,243 @@
     
 </div>
 
+<!--#region abrir modal editar trem-->
+{% if TIPO_FORMULARIO == 'editar_trem' %}
+<script>
+    window.addEventListener('load', function(){
+        
+        //obtendo a id do trem
+        let url         = new URL(window.location.href);
+        let pathParts   = url.pathname.split('/');
+        pathParts       = pathParts.filter(part => part.length > 0);
+        let id_trem     = pathParts[pathParts.length - 1];
+
+        //ajustando url
+        window.history.replaceState({}, '', '/previsao/previsao_trens');
+
+        var modal   = document.getElementById("modal_criar_trem");
+        var titulo  = modal.querySelector('h2');
+        var form    = modal.querySelector('form');
+
+        titulo.textContent = "Editar Trem";
+        modal.showModal()
+        form.action        = `/previsao/editar_trem/${id_trem}`;
+        
+    });
+</script>
+{% endif %}
+<!--#endregion-->
+
+
+
+<!--#region abrir modal editar_trem-->
+{% if TIPO_FORMULARIO == 'dividir_trem' %}
+<script>
+    window.addEventListener('load', function(){
+        
+        //obtendo a id do trem
+        let url         = new URL(window.location.href);
+        let pathParts   = url.pathname.split('/');
+        pathParts       = pathParts.filter(part => part.length > 0);
+        let id_trem     = pathParts[pathParts.length - 1];
+
+        //ajustando url
+        window.history.replaceState({}, '', '/previsao/previsao_trens');
+
+        var modal   = document.getElementById("modal_dividir_trem");
+        var form    = modal.querySelector('form');
+
+
+        modal.showModal()
+        form.action        = `/previsao/dividir_trem/${id_trem}`;
+        
+    });
+</script>
+{% endif %}
+<!--#endregion-->
+
+<!--#region abrir modal criar criar_trem-->
+{% if TIPO_FORMULARIO == 'criar_trem' %}
+<script>
+    window.addEventListener('load', function(){
+        //ajustando url
+        window.history.replaceState({}, '', '/previsao/previsao_trens');
+    
+        var modal   = document.getElementById("modal_criar_trem");
+        var titulo  = modal.querySelector('h2');
+        var form    = modal.querySelector('form');
+
+        titulo.textContent = "Criar Trem";
+        modal.showModal()
+        form.action        = "{% url 'novo_trem_previsao' %}";
+    });
+    
+</script>
+{% endif %}
+<!--#endregion-->
+
+
 <script>
 
-    var FORMULARIO = null
-    
-    var MERCADORIAS = "{{ form.MERCADORIAS | safe }}"
-    MERCADORIAS = (JSON.parse(MERCADORIAS.replace(/'/g, '"')))
-    
-    function updateTerminals() {
+//#region fechar modal
+document.querySelector('dialog').addEventListener('mousedown', event => {
 
-        var SELECT_MERCADORIAS = document.getElementById("id_mercadoria");
-        var SELECT_TERMINAL    = document.getElementById('id_terminal');
-        var MERCADORIA_SELECIONADA = SELECT_MERCADORIAS.value;
+if (event.target === event.currentTarget) {
+    event.currentTarget.close()
+}
+
+})
+//#endregion
+
+//#region btn-abrir-criar-trem
+
+function criar_trem(){
+        
+    var modal   = document.getElementById("modal_criar_trem");
+    var titulo  = modal.querySelector('h2');
+    var form    = modal.querySelector('form');
     
-        // Limpa as opções existentes
-        SELECT_TERMINAL.innerHTML = '';
+    titulo.textContent  = "Criar Trem";
+    form.action         = "{% url 'novo_trem_previsao' %}"
+    form.reset()
+    modal.showModal()    
+}
+
+//#endregion
+
+//#region atualizar dropbox terminais e mercadorias
+
+function updateTerminals() {
     
-        // Adiciona novas opções
-        if (MERCADORIA_SELECIONADA in MERCADORIAS) {
-            MERCADORIAS[MERCADORIA_SELECIONADA].forEach(function(terminal) {
+    var mercadoria = document.getElementById('id_mercadoria').value;
+    var terminalSelect = document.getElementById('id_terminal');
+
+    $.ajax({
+        url: '/get-terminals/',  // Certifique-se de que esta URL esteja correta
+        data: {
+            'mercadoria': mercadoria
+        },
+        success: function(data) {
+            terminalSelect.innerHTML = '';  // Limpa as opções existentes
+
+            data.forEach(function(terminal) {
                 var option = document.createElement('option');
-                option.value = terminal;
-                option.textContent = terminal;
-                SELECT_TERMINAL.appendChild(option);
+                option.value = terminal.id;
+                option.text = terminal.nome;
+                terminalSelect.appendChild(option);
             });
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro ao carregar os terminais: ", error); // Mensagem de erro no console
         }
-    }
+    });
+}
 
-    //FORMULARIO CRIAR E EDITAR TREM
-    function TOOGLE_FORM(BOTAO){
-
-        
-        let ACAO = BOTAO.dataset.acao
-
-        let MODAL       = document.getElementById("MODAL")
-        let TITULO_FRM  = document.getElementById("TITULO_FORMULARIO")
-        let OVERLAY     = document.getElementById("OVERLAY")
-
-        let OPCOES = {
-
-            CRIAR_TREM: {
-                TITULO      : "Criar Trem",
-                URL         : BOTAO.dataset.criarTremUrl,
-                FORMULARIO  : "FORM_TREM_PADRAO"
-            },
-            DIVIDIR_TREM: {
-                TITULO      : "Dividir Trem",
-                URL         : BOTAO.dataset.dividirTremUrl,
-                FORMULARIO  : "FORM_DIVIDIR_TREM"
-            },
-            EDITAR_TREM: {
-                TITULO      : "Editar Trem",
-                URL         : BOTAO.dataset.editarTremUrl,
-                FORMULARIO  : "FORM_TREM_PADRAO"
-            },
-            FECHAR      : {
-                TITULO      : "",
-                URL         : "",
-                FORMULARIO  : ""
-            }
-
-        }
-  
-        if (ACAO !== "FECHAR"){ 
-
-            FORMULARIO           = document.getElementById(OPCOES[ACAO]["FORMULARIO"])
-            TITULO_FRM.innerText = OPCOES[ACAO]["TITULO"]
-            FORMULARIO.action    = OPCOES[ACAO]["URL"]
-
-        }
-
-        if (ACAO == "EDITAR_TREM")  {ABRIR_EDICAO(OPCOES[ACAO]["URL"])}
-        if (ACAO == "DIVIDIR_TREM") {ABRIR_DIVIDIR_TREM(OPCOES[ACAO]["URL"])}
-
-        let ELEMENTOS = [MODAL, OVERLAY, FORMULARIO]
-
-        for (i = 0; i < ELEMENTOS.length; i++){
-            if (ELEMENTOS[i].style.display === "none" || ELEMENTOS[i].style.display === "") {
-                ELEMENTOS[i].style.display = "block";
-            } else {
-                ELEMENTOS[i].style.display = "none";
-            }
-        }
-    }
-
-  
-    //EDITAR TREM
-    var ID_TREM_EDITADO = null
-    function ABRIR_EDICAO(URL) {
-
-        $.ajax({
-            url: URL,
-            type: 'GET',
-            data: {
-
-            },
-            success: function(response) {
-
-                $('#id_prefixo').val(response.prefixo);
-                $('#id_os').val(response.os);
-                $('#id_vagoes').val(response.vagoes);
-                $('#id_mercadoria').val(response.mercadoria);
-                updateTerminals()
-                $('#id_origem').val(response.origem);
-                $('#id_local').val(response.local);
-                $('#id_destino').val(response.destino);
-                
-                $('#id_previsao').val(response.previsao);
-                $('#id_comentario').val(response.comentario);
-                
-                $('#id_terminal').val(response.terminal);
-                $('input[name="ferrovia"][value="' + response.ferrovia + '"]').prop('checked', true);
-
-            },
-            error: function(xhr) {
-                alert("ERRO")
-            }
-        });
-    }
-
-    //DIVIDIR TREM
-    function ATUALIZAR_TERMINAIS(INPUTS) {
-
-        let MERCADORIA_SELECIONADA = INPUTS.PRODUTOS.value;
+function updateTerminals1() {
     
-        // Limpa as opções existentes
-        INPUTS.TERMINAIS.innerHTML = '';
-    
-        // Adiciona novas opções
-        if (MERCADORIA_SELECIONADA in MERCADORIAS) {
-            MERCADORIAS[MERCADORIA_SELECIONADA].forEach(function(terminal) {
+    var mercadoria = document.getElementById('id_mercadoria1').value;
+    var terminalSelect = document.getElementById('id_terminal1');
+
+    $.ajax({
+        url: '/get-terminals/',  // Certifique-se de que esta URL esteja correta
+        data: {
+            'mercadoria': mercadoria
+        },
+        success: function(data) {
+            terminalSelect.innerHTML = '';  // Limpa as opções existentes
+
+            data.forEach(function(terminal) {
                 var option = document.createElement('option');
-                option.value = terminal;
-                option.textContent = terminal;
-                INPUTS.TERMINAIS.appendChild(option);
+                option.value = terminal.id;
+                option.text = terminal.nome;
+                terminalSelect.appendChild(option);
             });
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro ao carregar os terminais: ", error); // Mensagem de erro no console
         }
-    }
+    });
+}
 
-    function PREENCHER_OPCOES(PARAMETROS, INPUTS) {
-        
-        let LISTA_MERCADORIAS = PARAMETROS.PRODUTOS;
-        let LISTA_TERMINAIS   = PARAMETROS.TERMINAIS;
+function updateTerminals2() {
+    
+    var mercadoria = document.getElementById('id_mercadoria2').value;
+    var terminalSelect = document.getElementById('id_terminal2');
 
-        LISTA_MERCADORIAS.unshift(PARAMETROS.ITENS_SELECIONADOS.PRODUTO);
-        LISTA_TERMINAIS.unshift(PARAMETROS.ITENS_SELECIONADOS.TERMINAL);
-        
-        INPUTS.PRODUTOS.onchange = function() {ATUALIZAR_TERMINAIS( INPUTS )}
-        
-        INPUTS.PRODUTOS.innerHTML  = '';
-        INPUTS.TERMINAIS.innerHTML = '';
-        
-        // Adiciona novas opções
-        for (let i = 0; i < LISTA_MERCADORIAS.length; i++) {
+    $.ajax({
+        url: '/get-terminals/',  // Certifique-se de que esta URL esteja correta
+        data: {
+            'mercadoria': mercadoria
+        },
+        success: function(data) {
+            terminalSelect.innerHTML = '';  // Limpa as opções existentes
 
-            const option = document.createElement('option');
-            option.value = LISTA_MERCADORIAS[i];
-            option.textContent = LISTA_MERCADORIAS[i];
-            INPUTS.PRODUTOS.appendChild(option);
+            data.forEach(function(terminal) {
+                var option = document.createElement('option');
+                option.value = terminal.id;
+                option.text = terminal.nome;
+                terminalSelect.appendChild(option);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log("Erro ao carregar os terminais: ", error); // Mensagem de erro no console
         }
+    });
+}
 
-        for (let i = 0; i < LISTA_TERMINAIS.length; i++) {
+//#endregion
 
-            const option = document.createElement('option');
-            option.value = LISTA_TERMINAIS[i];
-            option.textContent = LISTA_TERMINAIS[i];
-            INPUTS.TERMINAIS.appendChild(option);
-        }   
-    }
+</script>
 
-    function ABRIR_DIVIDIR_TREM(URL) {
-
-
-        //BAIXAR OS DADOS DO FORMULARIO
-        $.ajax({
-            url: URL,
-            type: 'GET',
-            data: {
-
-            },
-            success: function(response) {
-      
-                /*$("#TITULO_FORMULARIO_DIVIDIR_TREM").text(`Dividindo: ${response.TREM.prefixo} - ${response.TREM.os}`);*/
-
-                $('#destino_01').val(response.TREM.destino);
-                $('#destino_02').val(response.TREM.destino);
-                
-                $('#previsao_01').val(response.TREM.previsao);
-                $('#previsao_02').val(response.TREM.previsao);
-                
-                $('#vagoes_01').val(response.TREM.vagoes);
-                $('#vagoes_02').val(response.TREM.vagoes);
-                
-                PARAMETROS = {
-                    
-                    PRODUTOS:   Object.keys(response.produtos_terminais),
-                    TERMINAIS:  response.produtos_terminais[response.TREM.mercadoria],
-                    
-                    ITENS_SELECIONADOS: {
-                        PRODUTO: response.TREM.mercadoria, 
-                        TERMINAL: response.TREM.terminal
-                    }   
-
-                }
-
-                INPUTS_1 = {
-                    PRODUTOS:  document.getElementById("mercadoria_01"),
-                    TERMINAIS: document.getElementById("terminal_01")
-                }
-
-                INPUTS_2 = {
-                    PRODUTOS:  document.getElementById("mercadoria_02"),
-                    TERMINAIS: document.getElementById("terminal_02")
-                }
-   
-                PREENCHER_OPCOES(PARAMETROS, INPUTS_1)
-                PREENCHER_OPCOES(PARAMETROS, INPUTS_2)
-                
-            },
-            error: function(xhr) {
-                alert('NAO OK');
-            }
-        })
-
-    }
+{% if user|can:'editar_itens' %}
+<script>
 
     var TREM_SELECIONADO = null
 
     function SELECIONAR_TREM(id_trem){
         TREM_SELECIONADO = id_trem
     }
-   
-    {% if user|can:'editar_itens' %}
+
+
     $( function() {
 
-        $( "tbody" ).sortable({
+        $( "tbody.ui-sortable" ).sortable({
             placeholder: 'FUNDO_LARANJA',
             axis: "y",
             revert: 150,
-    
+
             start: function(event, ui) {
-    
+
                 // Armazena a posição inicial em um atributo de dados
                 var startPos = ui.item.index();
                 ui.item.data('start_pos', startPos);
             },
             stop: function(event, ui) {
-    
-                var startPos = ui.item.data('start_pos');   // Pega a posição inicial
-                var endPos = ui.item.index();               // Posição final após soltar
-       
+
+                var endPos      = ui.item.index();               // Posição final após soltar
+        
                 $.ajax({
                     url: '{% url "alterar_posicao" %}',
                     type: 'POST',
                     data: {
-                        "ACAO"          : "REORDENAR_TABELA",
-                        "DIA_LOGISTICO" : ui.item.closest('table').attr('id'),
-                        "POSICAO_A"     : startPos,
-                        "POSICAO_B"     : endPos,
-                        "TREM"          : TREM_SELECIONADO,
-                        'csrfmiddlewaretoken': "{{ csrf_token }}"
+                        "new_position"          : endPos,
+                        "trem"                  : TREM_SELECIONADO,
+                        'csrfmiddlewaretoken'   : "{{ csrf_token }}"
                     },
                     success: function(response) {
                         location.reload();
                     },
                     error: function(xhr) {
-                        alert('NAO OK');
+                        console.log('NAO OK');
                     }
                 });         
             }}
         );
+
     });
-    {% endif %}
-    //RETORNO DE ERRO DO FORMULARIO
-    {% if messages %}
-    {% for message in messages %}
-        {% if message.tags == 'error' %}
-
-            TITULO_FORMULARIO   = document.getElementById("TITULO_FORMULARIO");
-            OVERLAY             = document.getElementById("OVERLAY");
-            FORMULARIO          = document.getElementById("FORM_TREM_PADRAO");
-            MODAL               = document.getElementById("MODAL")
-
-            {% if TIPO_FORMULARIO == 'CRIAR_TREM'%}
-
-                TITULO_FORMULARIO.textContent = "Criar Trem"
-
-            {% endif %}
-
-            {% if TIPO_FORMULARIO == 'EDITAR_TREM'%}
-
-                TITULO_FORMULARIO.textContent = "Editar Trem"
-
-            {% endif %}
-            
-
-            let ELEMENTOS = [FORMULARIO, OVERLAY, MODAL]
-
-            for (i = 0; i < ELEMENTOS.length; i++){
-                    ELEMENTOS[i].style.display = "block";
-            }
-
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-
 
 </script>
+{% endif %}
+
 
 {% endblock %}
