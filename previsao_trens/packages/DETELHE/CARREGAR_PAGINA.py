@@ -718,34 +718,7 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["MRS"][PRODUTO][i][COLUNA]["P4"]
 
 
-    #calculando os TOTAIS PD E O OF
 
-    # TOTAIS = {
-    #     "RUMO" :{
-    #         "GRAOS":  {
-    #             "PCZ"           : copy.deepcopy(LINHA_DETALHE), 
-    #             "PSN"           : copy.deepcopy(LINHA_DETALHE), 
-    #             "TOTAL_GRAO"    : copy.deepcopy(LINHA_DETALHE)
-    #         }, 
-    #         "ACUCAR":  {
-    #             "PCZ"           : copy.deepcopy(LINHA_DETALHE), 
-    #             "PSN"           : copy.deepcopy(LINHA_DETALHE), 
-    #             "TOTAL_ACUCAR"  : copy.deepcopy(LINHA_DETALHE), 
-    #         },
-    #         "RESUMO_GRAOS": {
-    #             "FARELO"        : copy.deepcopy(LINHA_DETALHE), 
-    #             "SOJA"          : copy.deepcopy(LINHA_DETALHE), 
-    #             "MILHO"         : copy.deepcopy(LINHA_DETALHE)
-    #         },
-    #         "TOTAO_GRAO_ACUCAR" : copy.deepcopy(LINHA_DETALHE)
-    #     },
-    #     "TOTAIS": {
-    #         "GRAO_ACUCAR"       : copy.deepcopy(LINHA_DETALHE),
-    #         "GERAL"             : copy.deepcopy(LINHA_DETALHE),
-    #         "PSN"               : copy.deepcopy(LINHA_DETALHE),
-    #         "PCZ"               : copy.deepcopy(LINHA_DETALHE)
-    #     }
- 
     #region TOTAIS DOS RESUMOS
 
     #region CALCULANDO OS TOTAIS DO RESUMO RUMO GRAOS

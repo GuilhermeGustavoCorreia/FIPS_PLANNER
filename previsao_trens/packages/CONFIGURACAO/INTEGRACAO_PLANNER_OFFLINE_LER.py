@@ -47,14 +47,14 @@ class AtualizandoSistema:
     def inserirNovosTrens(novos_trens, usuario_logado):
         
         for dia_log in novos_trens:
-            
+            print(dia_log)
             if len(novos_trens[dia_log]) > 0:
 
                 
                 novos_trens[dia_log].reverse()
                 for dict_trem in novos_trens[dia_log]:
                     
-                    print(f"inserindo: { dict_trem }")
+                    print(f"\t  { dict_trem["PREFIXO"] } { dict_trem["TERMINAL_DESTINO"] } { dict_trem["MERCADORIA"] } ")
                     
                     dict_trem = _ajustar_trem(dict_trem)
 
@@ -275,15 +275,17 @@ def lerDados(JSON, usuario_logado):
 
     ATUALIZAR_DESCARGA()
 
+    
+    
+    
     AtualizandoSistema.limparPrevisao()
-    AtualizandoSistema.inserirNovosTrens(JSON["PREVISOES"], usuario_logado)
-
     AtualizandoSistema.limparRestricao()
+    
+    AtualizandoSistema.inserirNovosTrens(JSON["PREVISOES"], usuario_logado)
     AtualizandoSistema.inserirNovasRestricoes(JSON["RESTRICOES"], usuario_logado)
-
-    AtualizandoSistema.limparSaldosVirada()
-    AtualizandoSistema.ativarTerminais(JSON["DESCARGAS_ATIVAS"])
     AtualizandoSistema.inserirProdutividade(JSON["DESCARGAS"])
     
-    #Aqui recalculamos além de inserir o saldo de virada, atualizamos o calculo da descarga
+    AtualizandoSistema.ativarTerminais(JSON["DESCARGAS_ATIVAS"])
+    
+    AtualizandoSistema.limparSaldosVirada()
     AtualizandoSistema.inserirSaldosVidada(JSON["SALDOS_VIRADA"])   

@@ -6,6 +6,7 @@ from    django.db.models            import F
 from    datetime                    import timedelta
 
 
+
 class Segmento(models.Model):
 
     nome = models.CharField(max_length=100)
@@ -226,7 +227,7 @@ class Restricao(models.Model):
     def json_to_form(json_data):
 
         form_data = {
-        'terminal'  : json_data.get('TERMINAL', ''),
+        'terminal'      : json_data.get('TERMINAL', ''),
         'mercadoria'    : json_data.get('SEGMENTO', ''),
         'comeca_em'     : json_data.get('INICIO', ''),
         'termina_em'    : json_data.get('FINAL', ''),

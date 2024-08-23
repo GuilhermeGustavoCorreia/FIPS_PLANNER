@@ -459,14 +459,10 @@ class NAVEGACAO_DESCARGA:
         
         TREM_DATA_ARQ    = TREM['previsao'].strftime('%Y-%m-%d')
         HORA             = TREM['previsao'].hour
-        
-
-        
+         
         __ATIVAR_TERMINAL__(ACAO)
 
         HORA_CHEGADA, DATA_ARQ_CHEGADA = __CHEGADA__(HORA, TREM_DATA_ARQ)
-
-
 
         __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO)
         
