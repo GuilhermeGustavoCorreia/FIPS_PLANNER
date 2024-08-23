@@ -29,7 +29,8 @@
 
 .COMENTARIO{font-size: 12px; text-align: left !important;}
 
-.LISTA__RESTRICAO{   
+.LISTA__RESTRICAO{  
+    border-radius: 10px; 
     margin-top: 2vh;
     border-collapse: collapse;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
@@ -54,6 +55,12 @@
 .LISTA__RESTRICAO tbody tr:nth-child(odd)         {background-color: #ffff;  }
 .LISTA__RESTRICAO tbody tr:nth-child(even):hover  {background-color: var(--neutro);}
 .LISTA__RESTRICAO tbody tr:nth-child(odd):hover   {background-color: var(--neutro);}
+
+.LISTA__RESTRICAO thead th:first-child {border-radius: 10px 0 0 0;}
+.LISTA__RESTRICAO thead th:last-child  {border-radius: 0 10px 0 0;}
+
+.LISTA__RESTRICAO tbody tr:last-child td:first-child {border-radius: 0 0 0 10px;}
+.LISTA__RESTRICAO tbody tr:last-child td:last-child  {border-radius: 0 0 10px 0;}
 
 .ICONE_DELETAR{height: 2rem; cursor: pointer; fill: var(--cinza-chumbo-c);     padding: 0 0.5rem;}
 .ICONE_DELETAR:hover{height: 2rem; fill: darkred;}

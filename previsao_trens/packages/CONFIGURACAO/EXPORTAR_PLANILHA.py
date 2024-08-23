@@ -631,7 +631,6 @@ class PlanilhaAntiga:
             segmento             = { "SOJA": "Grão", "FARELO": "Grão", "MILHO": "Grão", "ACUCAR": "Açúcar", "CELULOSE": "Industrial", "CONTEINER": "Industrial", "KCL": "Fertilizante", "UREIA": "Fertilizante", "OUTROS": "Fertilizante"}
             linhas               = { "D": 15, "D+1": 54, "D+2": 100, "D+3": 173, "D+4": 250 }
             
-
             ws_criarTrem = self.planilha["Criar_Trem"]
 
             for _, linha in self.periodo_vigente.iterrows():
@@ -639,8 +638,14 @@ class PlanilhaAntiga:
                 data = datetime.strptime(linha['DATA_ARQ'], '%Y-%m-%d')
                 dia_logistico = linha['NM_DIA']
 
-                queryset = Trem.objects.all().order_by('posicao_previsao')
+                queryset = Trem.objects.filter(
+                
+                            previsao__year=data.year,
+                            previsao__month=data.month,
+                            previsao__day=data.day
 
+                        ).order_by('posicao_previsao')
+                
                 if queryset.exists():
 
                     i = 0

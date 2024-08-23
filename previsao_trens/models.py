@@ -3,11 +3,8 @@ from    django.contrib.auth.models  import AbstractUser
 from    django.conf                 import settings
 from    django.forms.models         import model_to_dict
 from    django.db.models            import F
-
 from    datetime                    import timedelta
 
-
-        
 
 class Segmento(models.Model):
 
@@ -35,7 +32,7 @@ class Terminal(models.Model):
 
     def __str__(self):
         return self.nome
-    
+
 class Trem(models.Model):
 
     prefixo     = models.CharField(max_length=100)
