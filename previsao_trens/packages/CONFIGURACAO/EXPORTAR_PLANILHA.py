@@ -665,6 +665,8 @@ class PlanilhaAntiga:
                         ws_criarTrem.cell(row=linha + i, column=8,  value=trem.origem)
                         ws_criarTrem.cell(row=linha + i, column=9,  value=trem.destino)
                         ws_criarTrem.cell(row=linha + i, column=10, value=trem.previsao.replace(tzinfo=None))
+                        ws_criarTrem.cell(row=linha + i, column=12, value=trem.encoste.replace(tzinfo=None))
+                        
 
                         ws_criarTrem.cell(row=linha + i, column=13, value=terminal)     
                         ws_criarTrem.cell(row=linha + i, column=14, value=segmento[trem.mercadoria.nome])    
