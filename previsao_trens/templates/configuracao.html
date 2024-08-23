@@ -178,7 +178,7 @@
                 <input type="hidden" name="ACAO" value="INSERIR_DADOS_OFFLINE">
                     {% csrf_token %}
                     {{ FORM_CSV.as_p }}
-                <button type="submit">Upload</button>
+                <button type="submit" onclick="modo_carregamento()">Upload</button>
 
             </form>
 
@@ -275,6 +275,12 @@ document.body.addEventListener('keypress', function(e) {
     }
 
 });
+
+function modo_carregamento(){
+
+    var overlay = document.getElementById("overlay")
+    overlay.style.display = "block"
+}
 
 function ATUALIZAR_DESCARGA(){
 

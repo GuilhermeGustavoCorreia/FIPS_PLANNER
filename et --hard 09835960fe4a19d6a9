@@ -1,0 +1,389 @@
+[33mcommit 17ea01f9e2514fb122bc5516b7befa2af4a73e9b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Fri Aug 23 11:58:45 2024 -0300
+
+    inserir dados offline, bug saldo 0 corrigido
+
+[33mcommit 85f3e6518ae5ed5ba8a26d41252761d8f1b55259[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Fri Aug 23 09:11:53 2024 -0300
+
+    ajuste Criar_Trem planilha antiga v2
+
+[33mcommit cd089fad990d1e0f33f50a64a036684df0e187e3[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Fri Aug 23 09:04:07 2024 -0300
+
+    ajuste Criar_Trem planilha antiga
+
+[33mcommit 54e04fbee50592160533d84c0115711aee621121[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 21 16:30:20 2024 -0300
+
+    centralização de regra de negocio v3
+
+[33mcommit 09835960fe4a19d6a9d45b567021cac6978befcf[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 21 15:36:45 2024 -0300
+
+    centralização de regra de negocio v2
+
+[33mcommit 8469c80e429e893f751eedd35d0f22de59aad07c[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 21 15:29:34 2024 -0300
+
+    centralização de regra de negocio
+
+[33mcommit 828a614314521a37c944464af0767597e13ee122[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Fri Aug 16 16:30:25 2024 -0300
+
+    atualizacao
+
+[33mcommit 8c55c88fd9b47cbbd2665982484993655272f871[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 14 19:45:57 2024 -0300
+
+    ajuste na planilha v3
+
+[33mcommit be89acc135f3ed4d7eb4e3ab84abf7aba60c8440[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 14 19:22:34 2024 -0300
+
+    ajuste na planilha v2
+
+[33mcommit 7e10099dc6223e55832ddff5d92571371f414503[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 14 19:16:47 2024 -0300
+
+    ajuste na planilha com xlsx
+
+[33mcommit 04b78dacd0a59cf5db5e450d0d5edd44fa25ac8c[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 14 18:56:10 2024 -0300
+
+    ajuste na planilha
+
+[33mcommit 883a58a151f579490ffd9d9341596c4eb549f869[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Aug 13 16:11:41 2024 -0300
+
+    subida v2
+
+[33mcommit 67320b38081e50dfa774d6806a7c471d0c6ad56d[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Aug 12 08:09:07 2024 -0300
+
+    versao final
+
+[33mcommit 49c8bf56501e629f7d10cb71983f97e765819f9b[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Aug 8 16:16:23 2024 -0300
+
+    fix (navegacao ocupacao) style (loggout)
+
+[33mcommit 04faa5d5e013109f960500c52c953fde73476578[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Aug 7 07:55:18 2024 -0300
+
+    bug subida resolvido
+
+[33mcommit 2a42ab975a7862da90aede7b7a040c1f0d432a10[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Aug 6 15:21:03 2024 -0300
+
+    Todos os terminais inseridos.
+
+[33mcommit 7fa5793ef16b9cf3335756753cfc08572f3df101[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Aug 5 16:17:35 2024 -0300
+
+    ajustes finais navegacao ok ok
+
+[33mcommit b2151ee782ba4e1692301e4a0fe72623d0ff0067[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Aug 5 16:14:31 2024 -0300
+
+    ajustes finais navegacao ok
+
+[33mcommit 528b861bd2807607df68de831a6946bb712be053[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Aug 5 16:04:26 2024 -0300
+
+    ajustes finais navegacao
+
+[33mcommit 29d0de3c5916ede5b82bca7009ddd61f5b775593[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Fri Aug 2 09:10:02 2024 -0300
+
+    teste download 3
+
+[33mcommit 6761276d8835d80db754d6e95f2f14214efb04fe[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Aug 1 17:44:19 2024 -0300
+
+    Tentativa de sincronizar os arquivos de download estaticos 2
+
+[33mcommit d11f6e7d4bd7cca35a10fbe8682d4a5fb6572e9f[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Aug 1 16:54:39 2024 -0300
+
+    Tentativa de sincronizar os arquivos de download estaticos
+
+[33mcommit 7a46f625f4bdb4e550c3d183e55074b020bd168f[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Jul 31 10:01:59 2024 -0300
+
+    atualizacoes subida
+
+[33mcommit 0b8002106bf07c2da727272141a7847a3223706d[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Jul 29 09:36:07 2024 -0300
+
+    collect static feito
+
+[33mcommit d89dd37eef1ecdbead4bda544db8f4e156e60f8f[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Jul 29 09:20:48 2024 -0300
+
+    Iniciando LAYOUT responsivo
+
+[33mcommit d6f72c394324be4dbc1e0e52c7b954e486d61db8[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 16:11:55 2024 -0300
+
+    static collected
+
+[33mcommit 134546ffb1311dc7f698dbe69ece4c6aeb70cff9[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 15:38:58 2024 -0300
+
+    Ajustes tela subida
+
+[33mcommit b856cc94293ff4c8815b14081b623603c80da023[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 10:46:17 2024 -0300
+
+    bug fuso horario
+
+[33mcommit 307cb7201e76c48c998ff8e96f3b0c56d37e8b91[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 10:40:46 2024 -0300
+
+    horario ajustado
+
+[33mcommit a2e240a6de7e3ff63a3c7ba706691e4f422e3ed7[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 10:10:42 2024 -0300
+
+    bug adm consetado v2
+
+[33mcommit 88d4494ca45cb51c203f9728b738fa1d45bf6a5c[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 10:04:35 2024 -0300
+
+    bug adm consetado
+
+[33mcommit 19ce22af014c3cebd841e9e6acdc5ac12ca32292[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Thu Jul 25 09:44:27 2024 -0300
+
+    Calculadora Navegação Inserida
+
+[33mcommit 5fa4f7d817236c549dc061e51ad4dec79e25ee64[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Jul 24 16:22:16 2024 -0300
+
+    subida ADM estava com problema agora foi resolvido
+
+[33mcommit fbb8b001c81ff5fa3ce75de37938dad63779c639[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Jul 24 08:58:58 2024 -0300
+
+    bug encostes resolvido
+
+[33mcommit 764edae7676d7f020a9c6655d5ca6299ca8701f4[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Wed Jul 24 08:14:14 2024 -0300
+
+    bug excluir trem ok - borda previsao arredondada, falta criar soma na navegacao
+
+[33mcommit 1bd2b121a385e0b5854b95c06d95d78e292fe2d6[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Jul 23 16:22:13 2024 -0300
+
+    Remove large file and update .gitignore
+
+[33mcommit 3c6a4ed5ad1e220433aaa1dcabcbc7d81547a051[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Jul 23 16:11:30 2024 -0300
+
+    Consertando subida
+
+[33mcommit c901ef2ac3cb63a56dcb9fd593a211adfc0120e4[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Jul 23 14:46:55 2024 -0300
+
+    Conta Ranieri Adicionada
+
+[33mcommit a21ef4cf20b35ac71e48962cf1ab105b17973d02[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Tue Jul 23 14:31:30 2024 -0300
+
+    Corrigido Bug Virada D-1
+
+[33mcommit 2c8012717d355fbcb5525ee1ca04e28f78aa849b[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Jul 22 13:59:43 2024 -0300
+
+    static files ajustados
+
+[33mcommit 9be67e26243b4f5d8fc3bc306d35c44feb933293[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Jul 22 13:23:38 2024 -0300
+
+    ajustando nova lib whitenoise
+
+[33mcommit d5c04ecd1aa7507ac596f44322d78294d8637eea[m
+Author: Guilherme Gustavo <guilherme_gustavo.2808@agfips.com.br>
+Date:   Mon Jul 22 12:01:06 2024 -0300
+
+    whitenoise - conserando bug css admin
+
+[33mcommit 91b57f54e833864d2b1cbca5b5c9aa31f1456266[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Mon Jul 22 11:22:00 2024 -0300
+
+    corrigindo erro css pagina admin
+
+[33mcommit c1ddfad8397531c05c373a053097d6d0c65c0dec[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Mon Jul 22 11:05:27 2024 -0300
+
+    conta gabi alterada
+
+[33mcommit d0b35ef3b625f424cb440a750ec274e9ff47804e[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Mon Jul 22 10:46:38 2024 -0300
+
+    teste 22/07
+
+[33mcommit f3343b81ac91303feea81877c00d52ebf3b4e8bb[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Mon Jul 15 17:08:13 2024 -0300
+
+    BUG SUBIDA ARRUMADO
+
+[33mcommit d5cdbe8a9982434274c04dc32f1b0f9931c7d985[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Thu Jul 11 15:43:44 2024 -0300
+
+    RELATORIO OCUPACAO PRONTO - LOGIN RESPONSIVO - DIVIDIR TREM OK - SALDO CONDENSADOS SUBIDA OK - CORRIGIR FORM SUBIDA NOK
+
+[33mcommit 65554478e2dbe5dfeec50a5f9d302c8aac1ac103[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Tue Jul 2 09:29:10 2024 -0300
+
+    Pedra navegacao valor corrigido
+
+[33mcommit 4b5be802c734b578285ad432b41535ad0f7f1e21[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Thu Jun 27 08:34:11 2024 -0300
+
+    alguns bugs resolvidos
+
+[33mcommit 29c25d066ac90211f6fa5e4ee1041566e96308d2[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Wed Jun 26 08:39:05 2024 -0300
+
+    Subida Pronta
+
+[33mcommit e5f76590459dbdfaa74b2c216043d670a6628cee[m[33m ([m[1;32mNOVA_BRANCH[m[33m)[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Wed Jun 5 09:27:03 2024 -0300
+
+    Committing all changes before merging NOVA_BRANCH into main
+
+[33mcommit 71542f0019270ea5ee7cdb634472dee3b973c547[m[33m ([m[1;31morigin/NOVA_BRANCH[m[33m)[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Mon May 6 13:48:46 2024 -0300
+
+    Iniciando módulo de vazios (Finalizar Restricoes)
+
+[33mcommit ff166a53f9631931264b97d472c258ce32c42bb6[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 26 16:57:04 2024 -0300
+
+    RESTRICOES E EDITAR PRODUTIVIDADE OK
+
+[33mcommit 4bc7385db1f1050b0a4b09c750ef236bee84ff99[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 12:21:09 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA O / V4
+
+[33mcommit 7a187bb2326cdbfaf3885da624e2d7f7fb99429a[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 12:18:43 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA O / V3
+
+[33mcommit 67ce49636a9ae6cfc435bd4ccdbb52a7f0f7d19d[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 12:11:05 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA ASPAS SIMPLES v2
+
+[33mcommit 3147432dcb34486b210b28c9e5c2483f3f47f508[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 12:08:51 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA ASPAS SIMPLES
+
+[33mcommit 3b79aa3344a00d8a9ebfe511905688d07f21326a[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 11:56:26 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA O / V2
+
+[33mcommit c54c3210ebc2441791a147829eaa011ebbfef177[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 11:52:18 2024 -0300
+
+    CORRIGIDO OS DIRETORIOS USANDO AGORA O /
+
+[33mcommit 238c6b1dc302f3ede81aae3a6ab1d1610fe7d413[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 11:23:06 2024 -0300
+
+    CRIAR TREM - VALIDACAO OK - CHEGADA OK - ALLOWED HOSTS - OK
+
+[33mcommit f7743ba3d36bee53223d6f6ec3534b634d6dbc5a[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 19 11:16:03 2024 -0300
+
+    CRIAR TREM - VALIDACAO OK - CHEGADA OK
+
+[33mcommit e82e1b76e7cb9433e231001f35c12cc9171b5ee8[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Fri Apr 12 16:00:15 2024 -0300
+
+    first commit
+
+[33mcommit c741f1460220614b501550a6a2d50fd8701f06c8[m
+Author: Guilherme Gustavo <122472406+GuilhermeGustavoCorreia@users.noreply.github.com>
+Date:   Wed Mar 13 11:45:50 2024 -0300
+
+    Update settings.py
+
+[33mcommit a19fcb6c5464e83b231d91ee9ad8bc691fdc92b6[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Wed Mar 13 10:44:30 2024 -0300
+
+    Sistema de Usuário funcionando com foto
+
+[33mcommit cd18ff7fdc2d108c647d5434510a85198ec9f0c6[m
+Author: Guilherme Gustavo Correia <CS404937@agfips.com.br>
+Date:   Tue Feb 27 16:29:23 2024 -0300
+
+    projeto limpo

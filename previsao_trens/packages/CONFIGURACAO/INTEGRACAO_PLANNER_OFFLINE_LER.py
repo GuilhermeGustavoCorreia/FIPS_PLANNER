@@ -103,8 +103,21 @@ class AtualizandoSistema:
 
                     descarga["DESCARGAS"][ferrovia][produto]["INDICADORES"]["SALDO_DE_VIRADA"] = 0
 
-            with open(f"previsao_trens/src/DESCARGAS/{ terminal }/descarga_{ data_arq }.json", 'w') as ARQUIVO:
-                json.dump(descarga, ARQUIVO, indent=4)
+                    PARAMETROS = {
+                    'TERMINAL'  :   terminal, 
+                    'DATA_ARQ'  :   data_arq, 
+                    'PRODUTO'   :   produto, 
+                    'FERROVIA'  :   ferrovia, 
+                    
+                    'VALOR'     :   0,      
+                    }
+                    try:
+                        Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
+                        Descarga.EDITAR_SALDO_VIRADA(PARAMETROS) 
+                    except Exception as e:
+                        print(f"[erro] - limparSaldosVirada: {e} - [{ PARAMETROS}]")
+
+
 
     def ativarTerminais(json_descargas_ativas):
 
@@ -255,6 +268,8 @@ class AtualizandoSistema:
                     
                     with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json", 'w') as ARQUIVO:
                         json.dump(DESCARGA, ARQUIVO, indent=4)
+
+
 
 def lerDados(JSON, usuario_logado):
 
