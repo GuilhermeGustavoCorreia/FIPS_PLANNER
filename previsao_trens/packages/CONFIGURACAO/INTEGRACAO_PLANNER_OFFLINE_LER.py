@@ -269,7 +269,35 @@ class AtualizandoSistema:
                     with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json", 'w') as ARQUIVO:
                         json.dump(DESCARGA, ARQUIVO, indent=4)
 
+    def atualizarCalculos():
+        
+        PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+        linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == "D"]
+        data_arq        = linha['DATA_ARQ'].values[0]
 
+        terminais = os.listdir("previsao_trens/src/DESCARGAS")
+
+        for terminal in terminais:
+
+            with open(f"previsao_trens/src/DESCARGAS/{ terminal }/descarga_{ data_arq }.json") as ARQUIVO_DESCARGA:
+                descarga = json.load(ARQUIVO_DESCARGA)
+
+            for ferrovia in descarga["DESCARGAS"]:
+
+                for produto in descarga["DESCARGAS"][ferrovia]:
+
+                    PARAMETROS = {
+                        'TERMINAL'  :   terminal, 
+                        'DATA_ARQ'  :   data_arq, 
+                        'PRODUTO'   :   produto, 
+                        'FERROVIA'  :   ferrovia,       
+                        'VALOR'     :   descarga["DESCARGAS"][ferrovia][produto]["INDICADORES"]["SALDO_DE_VIRADA"],      
+                    }
+                    try:
+                        Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
+                        Descarga.EDITAR_SALDO_VIRADA(PARAMETROS) 
+                    except Exception as e:
+                        print(f"[erro] - limparSaldosVirada: {e} - [{ PARAMETROS}]")
 
 def lerDados(JSON, usuario_logado):
 
@@ -283,9 +311,11 @@ def lerDados(JSON, usuario_logado):
     
     AtualizandoSistema.inserirNovosTrens(JSON["PREVISOES"], usuario_logado)
     AtualizandoSistema.inserirNovasRestricoes(JSON["RESTRICOES"], usuario_logado)
-    AtualizandoSistema.inserirProdutividade(JSON["DESCARGAS"])
+    
     
     AtualizandoSistema.ativarTerminais(JSON["DESCARGAS_ATIVAS"])
     
     AtualizandoSistema.limparSaldosVirada()
     AtualizandoSistema.inserirSaldosVidada(JSON["SALDOS_VIRADA"])   
+    AtualizandoSistema.inserirProdutividade(JSON["DESCARGAS"])
+    AtualizandoSistema.atualizarCalculos()

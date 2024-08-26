@@ -59,14 +59,10 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
             //#region INSERINDO TOTAIS
 
             let TOTAL_SALDO = TABELA_DESCARGA.querySelector("#TOTAL_SALDO")
-
-            if (Number(DESCARGAS[i]["INDICADORES"]["TOTAL_SALDO"]) !== 0)
-            {TOTAL_SALDO.innerText = DESCARGAS[i]["INDICADORES"]["TOTAL_SALDO"]}
-            
-            
             let TOTAL_PEDRA = TABELA_DESCARGA.querySelector("#TOTAL_PEDRA")
-            if (Number(DESCARGAS[i]["INDICADORES"]["TOTAL_PEDRA"]) !== 0)
-            {TOTAL_PEDRA.innerText = DESCARGAS[i]["INDICADORES"]["TOTAL_PEDRA"]}
+            
+            TOTAL_SALDO.innerText = DESCARGAS[i]["INDICADORES"]["TOTAL_SALDO"]
+            TOTAL_PEDRA.innerText = DESCARGAS[i]["INDICADORES"]["TOTAL_PEDRA"]
 
             let PEDRAS = {
                 "RUMO":  {"P1": 0, "P2": 0, "P3": 0, "P4": 0},
@@ -162,6 +158,14 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
                         if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["SALDO"][k]) !== 0)
                         {ELEMENTO_SALDO.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["SALDO"][k]}
                         else                                        {ELEMENTO_SALDO.innerText = ""}
+                        //#endregion
+
+                        //#region INSERINDO A LINHA DO ENCOSTE
+                        let FILTRO_ENCOSTE       = `td[data-ferrovia="${FERROVIA}"][data-mercadoria="${PRODUTO}"][headers="${k}"][name="encoste"]`
+                        let ELEMENTO_ENCOSTE       = TABELA_DESCARGA.querySelector(FILTRO_ENCOSTE);
+                        if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]) !== 0)
+                            {ELEMENTO_ENCOSTE.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]}
+                            else                                        {ELEMENTO_ENCOSTE.innerText = ""}
                         //#endregion
                     
                     }

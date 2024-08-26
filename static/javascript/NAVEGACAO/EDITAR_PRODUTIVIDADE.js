@@ -128,10 +128,9 @@ class mudarElemento {
         return textBox
   
     }
-  
     voltar_ao_nomral() {
 
-        this.elemento.parentNode.innerHTML = elemento.value;
+        this.elemento.parentNode.innerHTML = "";
     }
   
 }
@@ -169,7 +168,6 @@ document.body.addEventListener('mousedown', async function(event) {
 
         NOVA_SELECAO = [CELULA_SELECIONADA.getAttribute('headers')]
         
-
         LINHA_PRODUTIVIDADE.id = 'LINHA_EM_EDICAO';  
         
         DESENHAR_BORDA(NOVA_SELECAO)

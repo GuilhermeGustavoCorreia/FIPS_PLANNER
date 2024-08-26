@@ -261,7 +261,7 @@
 
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
-                                        <td data-mercadoria="{{PRODUTOS}}" data-ferrovia="{{FERROVIA}}" style="font-weight: bold;" class="celula_encoste" headers="{{ forloop.counter0 }}">
+                                        <td data-mercadoria="{{PRODUTOS}}" data-ferrovia="{{FERROVIA}}" style="font-weight: bold;" class="celula_encoste" headers="{{ forloop.counter0 }}" name="encoste">
                                             {% if ENCOSTE.0 != 0 %}
                                                 {{ ENCOSTE.0 }}
                                             {% endif %}
@@ -556,12 +556,7 @@
                 success: function(descargas_atualizadas) {
                     
                     ATUALIZAR_DESCARGA(descargas_atualizadas);
-                    
-                    elemento = document.querySelector('.input_encoste');
-                    elementoTransformado = new mudarElemento(elemento);
-                    tbEdicao = elementoTransformado.voltar_ao_nomral();
                     editando_encoste = false
-
                 },
                 error: function(xhr) {
                     alert("ERRO")
