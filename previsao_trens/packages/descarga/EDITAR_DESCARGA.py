@@ -167,7 +167,6 @@ class NAVEGACAO_DESCARGA:
             for ITEM in ITENS_SUBIDA:
                 DESCARGA_COMPLETA[ITEM].extend(self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["SUBIDA"][ITEM])
 
-
         # ITERANDO SOBRE A DESCARGA ÚNICA
         DESCARGA_COMPLETA["SALDO"][0] = 0
 
@@ -675,8 +674,11 @@ class NAVEGACAO_DESCARGA:
         vagoes_chegada  = Trem.objects.filter(previsao=trem.previsao, terminal=trem.terminal).aggregate(total_vagoes=Sum('vagoes'))['total_vagoes']
         
         if trem_chegada:
+
             prefixo = trem_chegada.prefixo
+
         else:
+
             prefixo         = 0
             vagoes_chegada  = 0
             trem.id         = 0
@@ -760,6 +762,24 @@ class NAVEGACAO_DESCARGA:
         self.__CALCULAR_DESCARGA__()
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
+
+    def editar_encoste(self, hora, novo_valor, data_arq):
+
+        self.DESCARGAS[data_arq]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora][1] = 0
+        self.DESCARGAS[data_arq]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora][0] = novo_valor
+        
+        self.__CALCULAR_DESCARGA__()
+        self.__CALCULAR_TOTAIS__()
+        self.__SALVAR__()
+
+        descargas = []
+
+        for DATA_ARQ in self.LISTA_DATA_ARQ:
+
+            descargas.append(self.DESCARGAS[DATA_ARQ])
+            
+        return descargas
+
 
     #ESTA FUNCAO É CHAMADA EM CONFIGURACAO.ATUALIZAR_DESCARA (PARA INSERIR AS RESTRICOES NOS DIAS QUE ULTRAPASSAVAM D+4)
     def RESTRICAO_ATUALIZAR_PERIODO(self, RESTRICAO, ULTIMO_DIA_ANTIGO, ULTIMO_DIA_NOVO):

@@ -24,6 +24,12 @@ url_previsao = [
     path('get-terminals/',                                              views.get_terminals,        name='get_terminals'),
 ]
 
+url_navegacao = [
+
+    path('navegacao/',                  views.navegacao,            name="navegacao"),
+    path('navegacao/editar_encoste',    views.editar_encoste,       name="editar_encoste"),
+]
+
 urlpatterns = [
 
     path('', views.redirect_to_login),
@@ -35,7 +41,7 @@ urlpatterns = [
     
     path('restricao/editar/<int:id>/',  views.editar_restricao,         name="editar_restricao"),
 
-    path('navegacao/',  views.navegacao,    name="navegacao"),
+    
     path('profile/',    views.profile,      name="profile"),
 
  
@@ -58,4 +64,4 @@ urlpatterns = [
     path('previsao_subida/criar_trem_subida',                  views.criar_trem_subida_view,        name="criar_trem_subida"),
     path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida"),
 
-] + url_terminais + url_previsao
+] + url_terminais + url_previsao + url_navegacao

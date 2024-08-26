@@ -100,7 +100,7 @@ function DESENHAR_BORDA(CELULAS_INCICES){
     catch{
 
         return
-
+        
     }
 }
 
@@ -131,7 +131,7 @@ class mudarElemento {
   
     voltar_ao_nomral() {
 
-        this.elemento.parentNode.innerHTML = elemento.value;
+        this.elemento.parentNode.innerHTML = "";
     }
   
 }

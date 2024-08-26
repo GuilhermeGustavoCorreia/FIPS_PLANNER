@@ -128,6 +128,33 @@ def navegacao(request):
 
     DESCARGAS = CARREGAR_DESCARGA.PAGINA_COMPLETA()
     return render(request, 'navegacao.html', {"CONTEUDO_NAVEGACAO": DESCARGAS})
+
+
+
+@login_required
+def editar_encoste(request):
+
+    if request.method == 'POST':
+        with transaction.atomic():  
+
+            terminal    = request.POST.get('terminal', 0)
+            ferrovia    = request.POST.get('ferrovia', 0)
+            mercadoria  = request.POST.get('mercadoria', 0)
+            
+            hora = int(request.POST.get('hora', 0))
+            
+
+            try: 
+                novo_valor  = int(request.POST.get('novo_valor', 0))
+            except ValueError : 
+                novo_valor  = 0
+            data_arq    = request.POST.get('data_arq', 0)
+ 
+            Descarga = NAVEGACAO_DESCARGA(terminal, ferrovia, mercadoria)
+            descargas_atualizadas = Descarga.editar_encoste(hora, novo_valor, data_arq)
+
+            return JsonResponse(descargas_atualizadas, safe=False)
+
 #endregion
 
 from django.contrib.auth import login as auth_login

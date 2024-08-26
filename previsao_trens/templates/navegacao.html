@@ -261,7 +261,7 @@
 
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
-                                        <td style="font-weight: bold;">
+                                        <td data-mercadoria="{{PRODUTOS}}" data-ferrovia="{{FERROVIA}}" style="font-weight: bold;" class="celula_encoste" headers="{{ forloop.counter0 }}">
                                             {% if ENCOSTE.0 != 0 %}
                                                 {{ ENCOSTE.0 }}
                                             {% endif %}
@@ -303,7 +303,7 @@
                                     <td ><div class="SETA_PRODUTIVIDADE_{{FERROVIA}}" >➔</div></td><td name="TOTAL_PRODUTIVIDADE" data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" class="VALOR_PRODUTIVIDADE_{{FERROVIA}}">{{LINHAS.INDICADORES.TOTAL_PRODUTIVIDADE}}</td>       
                                 </tr>
 
-                                <!-- <tr>
+                               <!-- <tr>
                                     
                                     <td colspan="3" style="border: 1px black solid">FILA</td>
                                     
@@ -441,9 +441,11 @@
     document.body.addEventListener('keypress', function(e) {
 
         if ((MODO_EDICAO === true) && (e.which === 13)){
+            
             if (NOVO_VALOR == ""){NOVO_VALOR = 0 }
             PARAMETROS_EDITADOS["VALOR"] = NOVO_VALOR
             console.log(`PARAMETROS EDITADOS ${JSON.stringify(PARAMETROS_EDITADOS)}`)
+            
             $.ajax({
 
                 url: '{% url "navegacao" %} ',
@@ -468,6 +470,7 @@
                 }
 
             });
+        
         }
 
         if ((EDITAR_SALDO_VIRADA === true) && (e.which === 13)){
@@ -529,9 +532,45 @@
 
         }
 
+        if ((editando_encoste)  && (e.which === 13)) {
+
+            elemento    = document.querySelector('.input_encoste')
+            let celula  = elemento.parentNode
+            let tabela  = elemento.parentNode.parentNode.parentNode.parentNode
+            
+            params_encoste = {
+
+                "data_arq"              : tabela.id.split("_")[1],
+                "terminal"              : tabela.id.split("_")[0],
+                "hora"                  : celula.getAttribute('headers'),
+                "mercadoria"            : celula.dataset.mercadoria,
+                "ferrovia"              : celula.dataset.ferrovia,
+                "novo_valor"            : elemento.value,
+                "csrfmiddlewaretoken"   : "{{ csrf_token }}"
+            }
+
+            $.ajax({
+                url: '{% url "editar_encoste" %} ',
+                type: 'POST',
+                data: params_encoste,
+                success: function(descargas_atualizadas) {
+                    
+                    ATUALIZAR_DESCARGA(descargas_atualizadas);
+                    
+                    elemento = document.querySelector('.input_encoste');
+                    elementoTransformado = new mudarElemento(elemento);
+                    tbEdicao = elementoTransformado.voltar_ao_nomral();
+                    editando_encoste = false
+
+                },
+                error: function(xhr) {
+                    alert("ERRO")
+                }
+            });
+        }
+
     });
 
-     
     
 </script>
 {% endif %}

@@ -15,9 +15,9 @@ var PARAMETROS_EDITADOS = {
 }
 
 let SENTIDO_SELECAO = ""
-
+let editando_encoste = false
 let NOVA_SELECAO = []
-
+let params_encoste = {}
 //#region PARA AO ATUALIZAR NAO VOLTAR AO INICIO DA PAGINA
 
 window.addEventListener('load', function() {
@@ -57,14 +57,6 @@ function LIMPAR_SELECOES(){
     CELULAS_ULTIMA.forEach(function(CELULA)         {CELULA.classList.remove('ULTIMA');});
     CELULAS_SELECIONADAS.forEach(function(CELULA)   {CELULA.classList.remove('CELULA_SELECIONADA');});
 
-    /*PARAMETROS_EDITADOS = {
-        "TERMINAL": "",
-        "DATA_ARQ": "",
-        "CELULAS" : [],
-        "VALOR"   : 0
-    }*/
-
-
     let LINHA_PRODUTIVIDADE = document.getElementById('LINHA_EM_EDICAO')
     if (LINHA_PRODUTIVIDADE !== null) {LINHA_PRODUTIVIDADE.removeAttribute('id')}
 
@@ -73,32 +65,16 @@ function LIMPAR_SELECOES(){
 
 function DESENHAR_BORDA(CELULAS_INCICES){
     
-    /*var CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
-
-    var CELULAS_PRIMEIRA = document.querySelectorAll('.PRIMEIRA');
-    
-    CELULAS_PRIMEIRA.forEach(function(CELULA) {
-        CELULA.classList.remove('PRIMEIRA');
-    });
-    
-    var CELULAS_ULTIMA   = document.querySelectorAll('.ULTIMA');
-
-    CELULAS_ULTIMA.forEach(function(CELULA) {
-        CELULA.classList.remove('ULTIMA');
-    });
-
-    CELULAS_SELECIONADAS.forEach(function(CELULA) {
-        CELULA.classList.remove('CELULA_SELECIONADA');
-    });*/
-
     CELULAS_INCICES.forEach(function(INDICE) {
         
         let CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE }"]` )
 
         if (CELULA) {
+
             CELULA.classList.remove('CELULA_SELECIONADA');
             CELULA.classList.remove('PRIMEIRA');
             CELULA.classList.remove('ULTIMA');
+
         } 
 
     });
@@ -116,12 +92,48 @@ function DESENHAR_BORDA(CELULAS_INCICES){
     let ULTIMA_CELULA = document.querySelector(`#LINHA_EM_EDICAO td[headers="${ INDICE_ULTIMA }"]` )
     
     try{
+        
         PRIMEIRA_CELULA.classList.add('PRIMEIRA');
         ULTIMA_CELULA.classList.add('ULTIMA');
+
     }
     catch{
+
         return
+
     }
+}
+
+class mudarElemento {
+
+    constructor(elemento) {
+  
+        this.elemento       = elemento
+        //this.valor_original = elemento.value
+        this.posicao_coluna = elemento.cellIndex
+    }
+  
+    para_textBox() {
+        
+        var textBox = document.createElement('input');
+        
+        textBox.className   = 'input_encoste';
+        textBox.id          = this.elemento.id;
+        textBox.type        = 'text';
+        textBox.placeholder = this.valor_original;
+        
+        this.elemento.innerHTML = '';
+        this.elemento.appendChild(textBox);
+  
+        return textBox
+  
+    }
+  
+    voltar_ao_nomral() {
+
+        this.elemento.parentNode.innerHTML = elemento.value;
+    }
+  
 }
 //#endregion
 
@@ -280,7 +292,6 @@ document.body.addEventListener('mouseover', async function(event) {
                 ULTIMA_CELULA.classList.remove('CELULA_SELECIONADA');
                 ULTIMA_CELULA.classList.remove('ULTIMA');
 
-                
                 DESENHAR_BORDA(NOVA_SELECAO)
             }
         
@@ -326,8 +337,7 @@ document.body.addEventListener('mouseup', function() {
 });
 
 document.addEventListener('keydown', async function (event) {
-  
-    
+     
     let CELULAS_SELECIONADAS = document.querySelectorAll('.CELULA_SELECIONADA');
 
     //AO DIGITAR ALGUM NUMERO
@@ -368,5 +378,31 @@ document.addEventListener('keydown', async function (event) {
 document.addEventListener('keyup', function(event) {
     
     if (!event.ctrlKey) { ctrlPressed = false }
+
+})
+
+document.addEventListener('click', async function(event) {
+
+    let elemento = event.target
+    if (editando_encoste) {
+        
+        elemento = document.querySelector('.input_encoste');
+        elementoTransformado = new mudarElemento(elemento);
+        tbEdicao = elementoTransformado.voltar_ao_nomral();
+        editando_encoste = false
+
+    }
+    else if (elemento.classList.contains('celula_encoste')) {
+
+        elementoTransformado = new mudarElemento(elemento);
+        tbEdicao = elementoTransformado.para_textBox();
+        tbEdicao.focus();
+        editando_encoste = true
+
+        
+
+    }
+
+
 
 })
