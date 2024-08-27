@@ -71,7 +71,7 @@ class TremForm(forms.ModelForm):
         terminal        = cleaned_data.get('terminal')
         prefixo         = cleaned_data.get('prefixo')
         ferrovia        = cleaned_data.get('ferrovia')
-
+ 
         # Verificação de conflito
         trens_existentes = Trem.objects.filter(previsao=previsao, mercadoria=mercadoria, terminal=terminal)
 
@@ -91,7 +91,8 @@ class TremForm(forms.ModelForm):
         if previsao and (previsao < limite_minimo or previsao > limite_maximo): 
             raise ValidationError("Erro: Não é possível inserir o trem fora do período de D-1 à D+4.")
 
-        if terminal == "SBR" and (ferrovia == "RUMO" or ferrovia == "VLI" ):
+        if terminal.nome == "SBR" and (ferrovia == "RUMO" or ferrovia == "VLI"):
+  
             raise ValidationError("O Sistema esta configurado para receber somente trens MRS no terminal SBR.")
         
         return cleaned_data
