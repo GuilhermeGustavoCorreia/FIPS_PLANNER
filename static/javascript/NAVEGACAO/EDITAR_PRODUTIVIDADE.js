@@ -106,14 +106,14 @@ function DESENHAR_BORDA(CELULAS_INCICES){
 
 class mudarElemento {
 
-    constructor(elemento) {
+    constructor(elemento)   {
   
         this.elemento       = elemento
         //this.valor_original = elemento.value
         this.posicao_coluna = elemento.cellIndex
     }
   
-    para_textBox() {
+    para_textBox()          {
         
         var textBox = document.createElement('input');
         
@@ -128,7 +128,8 @@ class mudarElemento {
         return textBox
   
     }
-    voltar_ao_nomral() {
+
+    voltar_ao_nomral()      {
 
         this.elemento.parentNode.innerHTML = "";
     }
@@ -390,6 +391,7 @@ document.addEventListener('click', async function(event) {
         editando_encoste = false
 
     }
+
     else if (elemento.classList.contains('celula_encoste')) {
 
         elementoTransformado = new mudarElemento(elemento);
@@ -400,7 +402,5 @@ document.addEventListener('click', async function(event) {
         
 
     }
-
-
 
 })
