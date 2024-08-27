@@ -249,6 +249,7 @@ class AtualizandoSistema:
                     try:
                         json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
                         json_string     = json_string.replace('\'', '"')
+                        json_string     = json_string.replace('nan', '0')    
                         descarga_dict    = json.loads(json_string)
                     except json.JSONDecodeError as e:
                         print(f"Erro na linha {e.lineno}, coluna {e.colno}: {e.msg}")
