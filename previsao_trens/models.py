@@ -88,46 +88,46 @@ class Trem(models.Model):
     def save(self, *args, **kwargs):
         
         from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as Navegacao
-        
-        #region em caso de edicao
-        if not self._state.adding:
+        with transaction.atomic(): 
+            #region em caso de edicao
+            if not self._state.adding:
 
-            trem_atual      = Trem.objects.get(pk=self.pk)
-            previsao_antiga = trem_atual.previsao.date() if trem_atual.previsao else None
-            nova_previsao   = self.previsao.date() if self.previsao else None
-            
-            self.posicao_previsao = trem_atual.posicao_previsao
-            if nova_previsao:
+                trem_atual      = Trem.objects.get(pk=self.pk)
+                previsao_antiga = trem_atual.previsao.date() if trem_atual.previsao else None
+                nova_previsao   = self.previsao.date() if self.previsao else None
                 
-                if previsao_antiga != nova_previsao:
-
-                    self.posicao_previsao = 0
-
-                    Trem.objects.filter(
-                        
-                        posicao_previsao__gt    = trem_atual.posicao_previsao, 
-                        previsao__year          = previsao_antiga.year, 
-                        previsao__month         = previsao_antiga.month, 
-                        previsao__day           = previsao_antiga.day
-                        
-                    ).update(posicao_previsao=F('posicao_previsao') - 1) 
-
-                    Trem.objects.filter(
-                        
-                        previsao__year  = nova_previsao.year, 
-                        previsao__month = nova_previsao.month, 
-                        previsao__day   = nova_previsao.day
+                self.posicao_previsao = trem_atual.posicao_previsao
+                if nova_previsao:
                     
-                    ).update(posicao_previsao=F('posicao_previsao') + 1)
+                    if previsao_antiga != nova_previsao:
+
+                        self.posicao_previsao = 0
+
+                        Trem.objects.filter(
+                            
+                            posicao_previsao__gt    = trem_atual.posicao_previsao, 
+                            previsao__year          = previsao_antiga.year, 
+                            previsao__month         = previsao_antiga.month, 
+                            previsao__day           = previsao_antiga.day
+                            
+                        ).update(posicao_previsao=F('posicao_previsao') - 1) 
+
+                        Trem.objects.filter(
+                            
+                            previsao__year  = nova_previsao.year, 
+                            previsao__month = nova_previsao.month, 
+                            previsao__day   = nova_previsao.day
+                        
+                        ).update(posicao_previsao=F('posicao_previsao') + 1)
 
 
-            super().delete(*args, **kwargs)
-            
-            if trem_atual.previsao: 
+                super().delete(*args, **kwargs)
                 
-                self.encoste = (trem_atual.previsao + timedelta(hours=trem_atual.terminal.tempo_encoste))
-                CalculoNavegacaoAntigo = Navegacao(trem_atual.terminal.nome, trem_atual.ferrovia, trem_atual.mercadoria.nome)
-                CalculoNavegacaoAntigo.atualizar(trem_atual)
+                if trem_atual.previsao: 
+                    
+                    self.encoste = (trem_atual.previsao + timedelta(hours=trem_atual.terminal.tempo_encoste))
+                    CalculoNavegacaoAntigo = Navegacao(trem_atual.terminal.nome, trem_atual.ferrovia, trem_atual.mercadoria.nome)
+                    CalculoNavegacaoAntigo.atualizar(trem_atual)
 
         #endregion
 

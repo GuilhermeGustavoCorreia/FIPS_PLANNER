@@ -384,7 +384,7 @@ class EXPORTAR_PLANILHA():
         
         HOME.cell(row = 6, column=5,  value=f"{USUARIO_LOGADO.first_name} {USUARIO_LOGADO.last_name}" )
         HOME.cell(row = 7, column=5,  value=USUARIO_LOGADO.email )
-        HOME.cell(row = 8, column=5,  value=datetime.today() - timedelta(hours=4))
+        HOME.cell(row = 8, column=5,  value=datetime.today() - timedelta(hours=3))
 
     def inserir_previsao_subida(self):
 

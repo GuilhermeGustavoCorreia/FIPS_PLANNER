@@ -91,7 +91,7 @@ class AtualizandoSistema:
         data_arq        = linha['DATA_ARQ'].values[0]
 
         terminais = os.listdir("previsao_trens/src/DESCARGAS")
-
+        print(terminais)
         for terminal in terminais:
 
             with open(f"previsao_trens/src/DESCARGAS/{ terminal }/descarga_{ data_arq }.json") as ARQUIVO_DESCARGA:
@@ -213,12 +213,14 @@ class AtualizandoSistema:
                     
                     'VALOR'     :   int(saldo),      
                 }
-
-                Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
-                Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)    
+                try:
+                    Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
+                    Descarga.EDITAR_SALDO_VIRADA(PARAMETROS)   
+                except Exception as e:
+                    print(f"[erro] - limparSaldosVirada: {e} - [{ PARAMETROS}]") 
                         
     def inserirProdutividade(json_descargas):
-        
+        print("inserindo produtividade")
         with warnings.catch_warnings():
             
             warnings.simplefilter("ignore", category=FutureWarning)
@@ -228,7 +230,7 @@ class AtualizandoSistema:
             TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)
 
             lst_terminais_ativos = list(set(lst_terminais_ativos).intersection(list(json_descargas["D"].keys())))
-
+            print(f"terminais ativos: {lst_terminais_ativos}")
             for DIA_LOGISTICO in list(json_descargas.keys()):
 
                 PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
@@ -236,17 +238,26 @@ class AtualizandoSistema:
                 DATA_ARQ        = linha['DATA_ARQ'].values[0]
 
                 for TERMINAL in lst_terminais_ativos:
-
+                    print(f"\t {TERMINAL}")
                     DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()
                     DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
                 
                     with open(f"previsao_trens/src/DESCARGAS/{ TERMINAL }/descarga_{ DATA_ARQ }.json") as ARQUIVO:
                         DESCARGA = json.load(ARQUIVO)  
                     
-                    json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
-                    json_string     = json_string.replace('\'', '"')
 
-                    descarga_dict    = json.loads(json_string)
+                    try:
+                        json_string     = json_descargas[DIA_LOGISTICO][TERMINAL].strip('"')
+                        json_string     = json_string.replace('\'', '"')
+                        descarga_dict    = json.loads(json_string)
+                    except json.JSONDecodeError as e:
+                        print(f"Erro na linha {e.lineno}, coluna {e.colno}: {e.msg}")
+                        # Exibir uma parte do JSON próximo ao erro para inspeção
+                        erro_index = e.pos
+                        erro_vizinho = 50  # número de caracteres a mostrar ao redor do erro
+                        print(json_string[max(0, erro_index-erro_vizinho):erro_index+erro_vizinho])
+
+
                     descarga_offline = pd.DataFrame.from_dict(descarga_dict, orient='index') 
                     descarga_offline.drop(columns=['TOTAIS'], inplace=True)
                     descarga_offline.replace('-', 0, inplace=True)
