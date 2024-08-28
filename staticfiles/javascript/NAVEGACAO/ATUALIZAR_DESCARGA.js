@@ -163,9 +163,22 @@ function ATUALIZAR_DESCARGA(DESCARGAS){
                         //#region INSERINDO A LINHA DO ENCOSTE
                         let FILTRO_ENCOSTE       = `td[data-ferrovia="${FERROVIA}"][data-mercadoria="${PRODUTO}"][headers="${k}"][name="encoste"]`
                         let ELEMENTO_ENCOSTE       = TABELA_DESCARGA.querySelector(FILTRO_ENCOSTE);
-                        if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]) !== 0)
-                            {ELEMENTO_ENCOSTE.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]}
-                            else                                        {ELEMENTO_ENCOSTE.innerText = ""}
+                        if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]) !== 0){
+                            
+                            if (Number(DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][1]) == 0){
+                                ELEMENTO_ENCOSTE.classList.add("encoste_virtual")
+                            }
+                            else{
+                                ELEMENTO_ENCOSTE.classList.remove("encoste_virtual") 
+                            }
+                            ELEMENTO_ENCOSTE.innerText = DESCARGAS[i]["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][k][0]
+
+                        }
+                        
+                        else {
+                            ELEMENTO_ENCOSTE.classList.remove("encoste_virtual") 
+                            ELEMENTO_ENCOSTE.innerText = ""
+                        }
                         //#endregion
                     
                     }

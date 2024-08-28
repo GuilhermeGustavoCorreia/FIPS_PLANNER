@@ -21,11 +21,11 @@
 .input_encoste{width: 1.5rem;}    
 
 .tabela__descarga, .tabela__margens {font-size: 0.7rem;}
-
-.TITLO_TOTAIS       {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold;}
-.NOME_TERMINAL      {color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 9rem; }
-.DIA_TERMINAL       {color:white;   background-color: var(--azul-profundo-m); font-weight: bold;}
-.PERIODO_TERMINAL   {color: white;  background-color: var(--azul-profundo-e); font-weight: bold;}
+.encoste_virtual    { background-color: var(--amarelo-ouro-m); border-radius: 5px; color: white;}
+.TITLO_TOTAIS       { color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold;}
+.NOME_TERMINAL      { color: white;  background-color: var(--cinza-chumbo-e);  font-weight: bold; min-width: 9rem; }
+.DIA_TERMINAL       { color:white;   background-color: var(--azul-profundo-m); font-weight: bold;}
+.PERIODO_TERMINAL   { color: white;  background-color: var(--azul-profundo-e); font-weight: bold;}
 
 .LINHA_HORAS        {color: white; background-color: var(--azul-profundo-c);font-weight: bold}
 
