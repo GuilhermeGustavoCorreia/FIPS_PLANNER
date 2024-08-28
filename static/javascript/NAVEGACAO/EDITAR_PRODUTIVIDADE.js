@@ -18,6 +18,7 @@ let SENTIDO_SELECAO = ""
 let editando_encoste = false
 let NOVA_SELECAO = []
 let params_encoste = {}
+
 //#region PARA AO ATUALIZAR NAO VOLTAR AO INICIO DA PAGINA
 
 window.addEventListener('load', function() {
@@ -109,7 +110,7 @@ class mudarElemento {
     constructor(elemento)   {
   
         this.elemento       = elemento
-        //this.valor_original = elemento.value
+        this.valor_original = elemento.innerText
         this.posicao_coluna = elemento.cellIndex
     }
   
@@ -131,7 +132,7 @@ class mudarElemento {
 
     voltar_ao_nomral()      {
 
-        this.elemento.parentNode.innerHTML = "";
+        this.elemento.innerHTML = this.valor_original;
     }
   
 }
@@ -187,6 +188,7 @@ document.body.addEventListener('mousedown', async function(event) {
     }
 
     else if(CELULA_SELECIONADA.getAttribute('name') === "SALDO_DE_VIRADA_D"){
+        
         MODO_EDICAO = false
         EDITAR_SALDO_VIRADA = true
         NOVO_VALOR_SALDO = ""
@@ -331,7 +333,7 @@ document.body.addEventListener('mouseover', async function(event) {
 
 document.body.addEventListener('mouseup', function() {
     
-    if(MOUSE_PRESSIONADO){MOUSE_PRESSIONADO = false}
+    if(MOUSE_PRESSIONADO) {MOUSE_PRESSIONADO = false}
   
 });
 
@@ -380,26 +382,26 @@ document.addEventListener('keyup', function(event) {
 
 })
 
+let current_value = 0
+
 document.addEventListener('click', async function(event) {
 
     let elemento = event.target
+    
     if (editando_encoste) {
         
         elemento = document.querySelector('.input_encoste');
-        elementoTransformado = new mudarElemento(elemento);
         tbEdicao = elementoTransformado.voltar_ao_nomral();
         editando_encoste = false
-
     }
 
     else if (elemento.classList.contains('celula_encoste')) {
-
+        
+        current_value = elemento.innerText
         elementoTransformado = new mudarElemento(elemento);
         tbEdicao = elementoTransformado.para_textBox();
         tbEdicao.focus();
         editando_encoste = true
-
-        
 
     }
 

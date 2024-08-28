@@ -127,7 +127,6 @@ class DividirTremForm(forms.ModelForm):
         self.fields['local'].required       = False
         self.fields['ferrovia'].required    = False
 
-
         self.fields['prefixo'].widget.attrs.update( {'class': 'form-control', 'placeholder': 'Prefixo',  'disabled': True})
         self.fields['os'].widget.attrs.update(      {'class': 'form-control', 'placeholder': 'OS',       'disabled': True})
         self.fields['origem'].widget.attrs.update(  {'class': 'form-control', 'placeholder': 'Origem',   'disabled': True})

@@ -6,7 +6,7 @@ from django.db.models import Sum
 from previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS import EDITAR_PARAMETROS
 from previsao_trens.models  import Trem   
 from datetime               import datetime, timedelta, time
-
+from previsao_trens.models  import Mercadoria, Terminal
 class NAVEGACAO_DESCARGA:
 
     def __init__(self, TERMINAL, FERROVIA, PRODUTO, DIA_ANTERIOR=False):
@@ -693,6 +693,7 @@ class NAVEGACAO_DESCARGA:
         hora_chegada     = previsao_navegacao.hour
 
         #region chegada em D-1 (Ja validamos se o trem esta dentro do periodo vigente em [VALIDAÇÃO 01])
+        print(f"atualizando chegada: { trem.terminal } { trem.previsao }")
         if not data_arq_chegada in self.LISTA_DATA_ARQ:
 
             path = f"previsao_trens/src/DESCARGAS/{ trem.terminal }/descarga_{ data_arq_chegada }.json"
@@ -715,14 +716,24 @@ class NAVEGACAO_DESCARGA:
             
             self.DESCARGAS[data_arq_chegada]["CHEGADA"][hora_chegada][0] = vagoes_chegada
             self.DESCARGAS[data_arq_chegada]["CHEGADA"][hora_chegada][1] = lista_pk_dos_trens
+
+        print(f"inserindo : {[vagoes_chegada, lista_pk_dos_trens]}")
         #endregion
         
         #endregion
 
         #region inserindo encoste
+        print(f"atualizando encoste: {trem.encoste}")
         data_arq_encoste    = encoste_navegacao.strftime('%Y-%m-%d')
         hora_encoste        = encoste_navegacao.hour
+
+        trem_chegada    = Trem.objects.filter(previsao=trem.previsao, terminal=trem.terminal, mercadoria=trem.mercadoria).first()
+        vagoes_chegada  = Trem.objects.filter(previsao=trem.previsao, terminal=trem.terminal, mercadoria=trem.mercadoria).aggregate(total_vagoes=Sum('vagoes'))['total_vagoes']
         
+        if trem_chegada:
+            trem.id         = trem_chegada.id
+            trem.vagoes     = trem_chegada.vagoes
+
         #region chegada em D-1 (Ja validamos se o trem esta dentro do periodo vigente em [VALIDAÇÃO 01])
         if not data_arq_encoste in self.LISTA_DATA_ARQ:
             
@@ -754,7 +765,7 @@ class NAVEGACAO_DESCARGA:
 
                 self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = 0
                 self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = 0
-
+        print(f"inserindo : {[trem.vagoes, trem.id]}")
         #endregion
 
         #endregion
@@ -765,7 +776,39 @@ class NAVEGACAO_DESCARGA:
 
     def editar_encoste(self, hora, novo_valor, data_arq):
 
-        self.DESCARGAS[data_arq]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora][1] = 0
+        encoste = datetime.strptime(f"{data_arq} {hora:02d}:00", "%Y-%m-%d %H:%M")
+        
+        print(
+            f"""ARGUMENTOS \n 
+                terminal        = {Terminal.objects.get(nome=self.NM_TERMINAL)},
+                mercadoria      = {Mercadoria.objects.get(nome=self.PRODUTO)},
+                ferrovia        = {self.FERROVIA},
+                encoste__date   = {encoste.date()},
+                encoste__hour   = {encoste.hour},
+                vagoes          = {novo_valor}"""
+
+            )
+        trem = Trem.objects.filter(
+            terminal        = Terminal.objects.get(nome=self.NM_TERMINAL),
+            mercadoria      = Mercadoria.objects.get(nome=self.PRODUTO),
+            ferrovia        = self.FERROVIA,
+            encoste__date   = encoste.date(),
+            encoste__hour   = encoste.hour + 1,
+            vagoes          = novo_valor
+        ).first()
+        
+        
+        trem_id = 0
+
+        if trem:
+            print("ENCONTRADO")
+            print(f"\t prefixo: {trem.prefixo}")
+            print(f"\t encoste: {trem.encoste}")
+            print(f"\t hora encoste: {trem.encoste.hour} == {encoste.hour}")
+            trem_id = trem.id
+
+
+        self.DESCARGAS[data_arq]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora][1] = trem_id
         self.DESCARGAS[data_arq]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora][0] = novo_valor
         
         self.__CALCULAR_DESCARGA__()

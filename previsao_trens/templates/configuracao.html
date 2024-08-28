@@ -20,13 +20,11 @@
 <div class="CONTEUDO__PADRAO">  
   
     <h1>CONFIGURAÇÕES</h1>
-
+    {% if user|can:'editar_itens' %}     
     <button type="button" class="BOTAO BTN_ATUALIZAR_DESCARGA" onclick="ATUALIZAR_DESCARGA()">
         ATUALIZAR DESCARGA
     </button>
 
-
-    {% if user|can:'editar_itens' %}     
     <section>
         <h2  id="SECAO_DESCARGAS_ATIVAS"    class="SECAO_CONFIGURACAO">Descargas Ativas</h2>
         <div id="CONTEUDO_DESCARGAS_ATIVAS" class="CONTEUDO_CONFIGURACAO">
@@ -63,6 +61,18 @@
             {% endfor %}
         </div>
     </section>
+
+    <section>
+        <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao</h2>
+        <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
+            <h1>Upload de arquivo CSV</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+                {% csrf_token %}
+                {{ FORM_CSV.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </section>
     {% endif %}
 
     {% if user|can:'editar_subida' %}    
@@ -97,17 +107,7 @@
     </section>
     {% endif %}
 
-    <section>
-        <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao</h2>
-        <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
-            <h1>Upload de arquivo CSV</h1>
-            <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
-                {% csrf_token %}
-                {{ FORM_CSV.as_p }}
-                <button type="submit">Upload</button>
-            </form>
-        </div>
-    </section>
+
 
     {% if user|can:'editar_itens' %}   
     <section>

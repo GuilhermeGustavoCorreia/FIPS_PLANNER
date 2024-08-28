@@ -41,13 +41,13 @@ class Trem(models.Model):
     origem      = models.CharField(max_length=50)
     local       = models.CharField(max_length=50)
     destino     = models.CharField(max_length=50)
-    terminal    = models.ForeignKey(Terminal, on_delete=models.CASCADE) 
+    terminal    = models.ForeignKey(Terminal, on_delete=models.CASCADE, null=True, blank=True) 
     mercadoria  = models.ForeignKey(Mercadoria, on_delete=models.CASCADE)
     vagoes      = models.IntegerField()
     previsao    = models.DateTimeField(null=True, blank=True)
     encoste     = models.DateTimeField(null=True, blank=True)
     ferrovia    = models.CharField(max_length=50, choices=[('RUMO', 'RUMO'), ('MRS', 'MRS'), ('VLI', 'VLI')])
-    comentario  = models.CharField(max_length=100)
+    comentario  = models.CharField(max_length=100, null=True, blank=True)
     
     posicao_previsao = models.IntegerField(default=0)
     translogic       = models.BooleanField(default=False)
@@ -89,6 +89,7 @@ class Trem(models.Model):
         
         from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as Navegacao
         with transaction.atomic(): 
+
             #region em caso de edicao
             if not self._state.adding:
 
@@ -198,11 +199,16 @@ class Trem(models.Model):
                         posicao_previsao=F('posicao_previsao') + 1
                     )
                     slice_01["posicao_previsao"] = (self.posicao_previsao + 1)
-          
+        print(f"\tcriando: {slice_01}")
         Trem.objects.create(**slice_01, created_by=self.created_by)
+        print(f"\tcriando: {slice_02}")
         Trem.objects.create(**slice_02, created_by=self.created_by)
+        print(f"\tremovendo: {self}")
+        self.delete()  
+        
+        
 
-        self.delete()
+        
 
     def __str__(self):
         return f"{self.prefixo} -  {self.terminal} - {self.mercadoria} - {self.previsao}"

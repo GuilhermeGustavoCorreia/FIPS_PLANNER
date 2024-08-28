@@ -16,12 +16,12 @@
 
     <div class="table">
     <table>
-        <tr> <td> TGG      </td> <td> TGRAO   </td> <td> T39      </td> <td> S. BRASIL </td> <td>
 
-        <tr> <td> TEG      </td> <td> CLI     </td> <td> TES      </td> <td> TERMAG    </td> <td></td> </tr>
-        <tr> <td> TEAG     </td> <td> TAC     </td> <td> SUZANO   </td> <td> HIDROVIAS </td> <td></td> </tr>
-        <tr> <td> CUTRALE  </td> <td> T12A    </td> <td> MOEGA X  </td> <td>           </td> <td></td> </tr>
-        <tr> <td> ECOPORTO </td> <td> BRACELL </td> <td> MOEGA V  </td> <td>           </td> <td></td> </tr>
+        <tr> <td> TGG           </td> <td> TGRAO            </td> <td> T39      </td> <td> S. BRASIL </td> <td>SUZANO </td> <tr>
+        <tr> <td> TEG           </td> <td> CLI              </td> <td> TES      </td> <td> TERMAG    </td> <td></td> </tr>
+        <tr> <td> TEAG          </td> <td> CLI ACUCAR       </td> <td> T12A     </td> <td> HIDROVIAS </td> <td></td> </tr>
+        <tr> <td> TEAG ACUCAR   </td> <td> TAC              </td> <td> MOEGA X  </td> <td> BRACELL   </td> <td></td> </tr>
+        <tr> <td> CUTRALE       </td> <td> TAC ACUCAR       </td> <td> MOEGA V  </td> <td> ECOPORTO  </td> <td></td> </tr>
         
         <tr><td colspan="5" style="border: none; color: var(--cinza-chumbo-c); background-color: ddd;">.</td></tr>    
         
@@ -261,8 +261,9 @@
 
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
-                                        <td data-mercadoria="{{PRODUTOS}}" data-ferrovia="{{FERROVIA}}" style="font-weight: bold;" class="celula_encoste" headers="{{ forloop.counter0 }}" name="encoste">
+                                        <td data-mercadoria="{{PRODUTOS}}" data-ferrovia="{{FERROVIA}}" style="font-weight: bold;" class="celula_encoste {% if ENCOSTE.1 == 0 and ENCOSTE.0 != 0 %} encoste_virtual {% endif %}" headers="{{ forloop.counter0 }}" name="encoste">
                                             {% if ENCOSTE.0 != 0 %}
+
                                                 {{ ENCOSTE.0 }}
                                             {% endif %}
                                         </td>
@@ -596,7 +597,7 @@ window.addEventListener('load', function(){
 
     {% endautoescape %}
 
-    var terminais_navegador = ["TEG", "TEAG", "CUTRALE", "ECOPORTO", "CLI", "TAC", "T12A", "BRACELL", "TES", "SUZANO", "MOEGA X", "MOEGA V", "TERMAG", "HIDROVIAS"]
+    var terminais_navegador = ["TEG", "TEAG", "TEAG ACUCAR", "CUTRALE", "ECOPORTO", "CLI", "TAC", "CLI ACUCAR", "TAC ACUCAR", "T12A", "BRACELL", "TES", "SUZANO", "MOEGA X", "MOEGA V", "TERMAG", "HIDROVIAS"]
     
     // Função para encontrar a intersecção
     terminais_ativos.filter(value => terminais_navegador.includes(value));
