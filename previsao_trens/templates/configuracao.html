@@ -73,6 +73,32 @@
             </form>
         </div>
     </section>
+    
+    <section>
+
+        <h2  id="SECAO_INTEGRACAO"    class="SECAO_CONFIGURACAO">Integração entre Planners</h2>
+        <div id="CONTEUDO_INTEGRACAO" class="CONTEUDO_CONFIGURACAO">
+
+            <h1>INTEGRAÇÕES</h1>
+
+            <p>Para baixar os dados do Planner Web, pressione o botão abaixo.</p>
+            <a class="BOTAO VERDE" href="{% url 'baixar_integracao' %}">Baixar Dados</a>    
+
+            <p>Insira abaixo o arquivo gerado pelo Planner Desktop.</p>
+            
+            <form method="post" enctype="multipart/form-data" action="{% url 'configuracao' %}">
+                
+                <input type="hidden" name="ACAO" value="INSERIR_DADOS_OFFLINE">
+                    {% csrf_token %}
+                    {{ FORM_CSV.as_p }}
+                <button type="submit" onclick="modo_carregamento()">Upload</button>
+
+            </form>
+
+        </div>
+    </section>
+
+    
     {% endif %}
 
     {% if user|can:'editar_subida' %}    
@@ -161,29 +187,6 @@
         </div>
     </section>
 
-    <section>
-
-        <h2  id="SECAO_INTEGRACAO"    class="SECAO_CONFIGURACAO">Integração entre Planners</h2>
-        <div id="CONTEUDO_INTEGRACAO" class="CONTEUDO_CONFIGURACAO">
-
-            <h1>INTEGRAÇÕES</h1>
-
-            <p>Para baixar os dados do Planner Web, pressione o botão abaixo.</p>
-            <a class="BOTAO VERDE" href="{% url 'baixar_integracao' %}">Baixar Dados</a>    
-
-            <p>Insira abaixo o arquivo gerado pelo Planner Desktop.</p>
-            
-            <form method="post" enctype="multipart/form-data" action="{% url 'configuracao' %}">
-                
-                <input type="hidden" name="ACAO" value="INSERIR_DADOS_OFFLINE">
-                    {% csrf_token %}
-                    {{ FORM_CSV.as_p }}
-                <button type="submit" onclick="modo_carregamento()">Upload</button>
-
-            </form>
-
-        </div>
-    </section>
 
 </div>
 

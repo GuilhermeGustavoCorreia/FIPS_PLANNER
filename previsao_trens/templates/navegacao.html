@@ -17,11 +17,11 @@
     <div class="table">
     <table>
 
-        <tr> <td> TGG           </td> <td> TGRAO            </td> <td> T39      </td> <td> S. BRASIL </td> <td>SUZANO </td> <tr>
-        <tr> <td> TEG           </td> <td> CLI              </td> <td> TES      </td> <td> TERMAG    </td> <td></td> </tr>
-        <tr> <td> TEAG          </td> <td> CLI ACUCAR       </td> <td> T12A     </td> <td> HIDROVIAS </td> <td></td> </tr>
-        <tr> <td> TEAG ACUCAR   </td> <td> TAC              </td> <td> MOEGA X  </td> <td> BRACELL   </td> <td></td> </tr>
-        <tr> <td> CUTRALE       </td> <td> TAC ACUCAR       </td> <td> MOEGA V  </td> <td> ECOPORTO  </td> <td></td> </tr>
+        <tr> <td> TGG           </td> <td> TGRAO            </td> <td> T39      </td> <td> S. BRASIL </td> <td> SUZANO  </td> </tr>
+        <tr> <td> TEG           </td> <td> CLI              </td> <td> TES      </td> <td> TERMAG    </td> <td>         </td> </tr>
+        <tr> <td> TEAG          </td> <td> CLI ACUCAR       </td> <td> T12A     </td> <td> HIDROVIAS </td> <td>         </td> </tr>
+        <tr> <td> TEAG ACUCAR   </td> <td> TAC              </td> <td> MOEGA X  </td> <td> BRACELL   </td> <td>         </td> </tr>
+        <tr> <td> CUTRALE       </td> <td> TAC ACUCAR       </td> <td> MOEGA V  </td> <td> ECOPORTO  </td> <td>         </td> </tr>
         
         <tr><td colspan="5" style="border: none; color: var(--cinza-chumbo-c); background-color: ddd;">.</td></tr>    
         
@@ -257,7 +257,7 @@
                                         {% endif%}
 
                                     </td>
-                                    <td >Saldo</td>
+                                    <td style="background-color: rgb(241, 240, 240);">Saldo</td>
 
                                     {% for ENCOSTE in LINHAS.ENCOSTE %}
                                 
@@ -273,7 +273,7 @@
                                 </tr>
 
                                 <tr class="LINHA_SALDO_DESCARGA">
-                                    <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="SALDO_VIRADA" name="SALDO_DE_VIRADA_{{DIA}}">{{ LINHAS.INDICADORES.SALDO_DE_VIRADA }}</td>
+                                    <td style="background-color: rgb(241, 240, 240);" data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="SALDO_VIRADA" name="SALDO_DE_VIRADA_{{DIA}}">{{ LINHAS.INDICADORES.SALDO_DE_VIRADA }}</td>
                                     
                                     {% for SALDO in LINHAS.SALDO %}
                                     <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="{{ forloop.counter0 }}" name="SALDO">
@@ -290,8 +290,8 @@
                                 <tr name="LINHA_PRODUTIVIDADE" class="LINHA_PRODUTIVIDADE_{{FERROVIA}}">
                                     
                                     <td class="PRODUTIVIDADE_PADRAO_{{FERROVIA}}" data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" name="EDITAR_CONSTANTE_PRODUTIVIDADE">{{ LINHAS.INDICADORES.PRODUTIVIDADE }}</td>
-                                    <td id="{{ PRODUTOS }}_{{ FERROVIA }}"></td>
-
+                                    <td id="{{ PRODUTOS }}_{{ FERROVIA }}" style="background: rgba(255, 209, 209, 0.5);background-blend-mode: darken;"></td>
+              
                                     {% for PRODUTIVIDADE in LINHAS.PRODUTIVIDADE %}
 
                                         <td data-ferrovia="{{ FERROVIA }}" data-produto="{{ PRODUTOS }}" headers="{{ forloop.counter0 }}" class="PRODUTIVIDADE_{{FERROVIA}}" name="PRODUTIVIDADE">

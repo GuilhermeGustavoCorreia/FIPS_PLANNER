@@ -187,24 +187,10 @@ class Trem(models.Model):
     def to_slice(self, slice_01, slice_02):
   
         with transaction.atomic():
-
-            if self.previsao.date() == slice_01["previsao"].date() == slice_02["previsao"].date():
-                with transaction.atomic():  
-                    Trem.objects.filter(
-                        
-                        posicao_previsao__gt = self.posicao_previsao,
-                        previsao__date       = self.previsao
-
-                    ).update(
-                        posicao_previsao=F('posicao_previsao') + 1
-                    )
-                    slice_01["posicao_previsao"] = (self.posicao_previsao + 1)
-        print(f"\tcriando: {slice_01}")
-        Trem.objects.create(**slice_01, created_by=self.created_by)
-        print(f"\tcriando: {slice_02}")
-        Trem.objects.create(**slice_02, created_by=self.created_by)
-        print(f"\tremovendo: {self}")
-        self.delete()  
+   
+            Trem.objects.create(**slice_01, created_by=self.created_by)
+            Trem.objects.create(**slice_02, created_by=self.created_by)
+            self.delete()  
         
         
 
