@@ -10,7 +10,7 @@
 
     <h2>Novo Trem</h2>
 
-    <form action='{% url 'criar_trem_subida' %}' method="POST">
+    <form action="{% url 'criar_trem_subida' %}" method="POST">
         
         {% csrf_token %}
 
@@ -78,14 +78,13 @@
 
         </fieldset>
 
-        {% if messages.error %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
-                {% endfor %}
-            </div>
+        {% if form.non_field_errors %}
+        <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
-        
         <button type="submit" class="BOTAO VERDE" >Salvar</button>
     </form>
 
@@ -395,8 +394,8 @@
                 </td> 
 
                 <td >
-                    {% if user|can:'editar_subida' %}
-                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' TREM.id %}" onclick="TOOGLE_FORM(this)" class="ICONE ICONE_EDITAR botoes" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                    
+                    <!--{% if user|can:'editar_subida' %}<svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="" onclick="TOOGLE_FORM(this)" class="ICONE ICONE_EDITAR botoes" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
                         <title>Editar</title>
                         <g>
                             <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
@@ -411,8 +410,8 @@
                                 c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
                         
                         </g>
-                    </svg>
-                    {% endif %}
+                    </svg>{% endif %}-->
+                    
                 </td>
 
             </tr>
@@ -430,7 +429,27 @@
         <h3>Não há previsões.</h3>
     </div>
     {% endif %}
+
+
+<!--#region abrir modal criar criar_trem-->
+{% if tipo_formulario == 'criar_trem_subida' %}
+<script>
+    window.addEventListener('load', function(){
+        //ajustando url
+        window.history.replaceState({}, '', '/previsao_subida');
     
+        var modal   = document.getElementById("modal_criar_trem_subida");
+        var titulo  = modal.querySelector('h2');
+        var form    = modal.querySelector('form');
+
+        titulo.textContent = "Criar Trem";
+        modal.showModal()
+        form.action        = "{% url 'criar_trem_subida' %}";
+    });
+    
+</script>
+{% endif %}
+<!--#endregion-->
 
 <script>
 

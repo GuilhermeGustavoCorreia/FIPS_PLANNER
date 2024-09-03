@@ -1,50 +1,48 @@
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse, Http404
-
+from django.shortcuts               import render, get_object_or_404, redirect
+from django.http                    import HttpResponse, JsonResponse, Http404, QueryDict
+from django.contrib                 import messages
+from django.contrib.auth            import login as auth_login
+from django.contrib.auth.forms      import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http   import require_http_methods
-from django.shortcuts               import redirect
 from django.urls                    import reverse
 from django.forms.models            import model_to_dict
-import os
+from django.db                      import transaction
+
 from tempfile import NamedTemporaryFile
-from django.db import transaction
 
-from .models        import Trem, Restricao, TremVazio, Terminal, Segmento, Mercadoria
-from .forms         import TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm, TerminalForm, DividirTremForm
-from django.contrib import messages
 
-from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA    import ABRIR_TERMINAIS_ATIVOS
-from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS  import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
-from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
-from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA  import gerar_planilha, gerar_planilha_antiga
-from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE     import gerar_planilha_detalhe
+from .models        import Trem, Restricao, TremVazio, Terminal, Mercadoria
+from .forms         import UploadFileForm, TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm, TerminalForm, DividirTremForm
+from .serializers   import TremSerializer
 
-from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR     import    dados_integracao
-from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER       import    lerDados
+from rest_framework             import status
+from rest_framework.views       import APIView
+from rest_framework.response    import Response
 
-import  previsao_trens.packages.descarga.CARREGAR_PAGINA as CARREGAR_DESCARGA
-from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
+from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA                        import ABRIR_TERMINAIS_ATIVOS
+from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS                      import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
+from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA                     import ATUALIZAR_DESCARGA
+from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA                      import gerar_planilha, gerar_planilha_antiga
+from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE                         import gerar_planilha_detalhe
+from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR       import dados_integracao
+from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER         import lerDados
+import  previsao_trens.packages.descarga.CARREGAR_PAGINA                                                        as CARREGAR_DESCARGA
+from    previsao_trens.packages.descarga.EDITAR_DESCARGA                            import NAVEGACAO_DESCARGA   as NAVEGACAO_DESCARGA
+from    previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA                         import CARREGAR_PROG_SUBIDA
+from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2                      import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO
+from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA                             import CARREGAR_RELATORIO_DETALHE
+from    previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA                  import CARREGAR_RELATORIO_OCUPACAO
+from    previsao_trens.packages.RELATORIO_OCUPACAO.carregar_totais_detalhe          import  totais_detalhe
+from    previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML                    import DESCARGA_HTML
+from    previsao_trens.packages.RESTRICAO.VALIDAR                                   import VALIDAR_RESTRICAO
 
-from    previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA    import CARREGAR_PROG_SUBIDA
-
-from    previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2              import SUBIDA_DE_VAZIOS, EDITAR_SALDO_VIRADA_TERMINAL, EDITAR_BUFFER, EDITAR_SALDO_CONDENSADO
-from    previsao_trens.packages.DETELHE.CARREGAR_PAGINA                     import CARREGAR_RELATORIO_DETALHE
-from    previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA          import CARREGAR_RELATORIO_OCUPACAO
-from    previsao_trens.packages.RELATORIO_OCUPACAO.carregar_totais_detalhe  import  totais_detalhe
-from    previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML            import DESCARGA_HTML
-from    previsao_trens.packages.RESTRICAO.VALIDAR                           import VALIDAR_RESTRICAO
-
-from    .forms      import UploadFileForm
+import  os
 from    io          import TextIOWrapper
 from    datetime    import datetime
-from    django.http import QueryDict
-
-import json
-import csv
-import os
-import pandas as pd
+import  json
+import  csv
+import  pandas as pd
 
 def REQUEST_PARA_DICT(request):
     # Combina os parâmetros GET e POST em um único dicionário
@@ -129,8 +127,6 @@ def navegacao(request):
     DESCARGAS = CARREGAR_DESCARGA.PAGINA_COMPLETA()
     return render(request, 'navegacao.html', {"CONTEUDO_NAVEGACAO": DESCARGAS})
 
-
-
 @login_required
 def editar_encoste(request):
 
@@ -157,8 +153,7 @@ def editar_encoste(request):
 
 #endregion
 
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
+
 
 def custom_login_view(request):
 
@@ -205,13 +200,14 @@ def carregar_tabela_de_previsoes():
                 
                 previsao__year=DATA.year,
                 previsao__month=DATA.month,
-                previsao__day=DATA.day
+                previsao__day=DATA.day,
+                translogic=False
 
             ).order_by('posicao_previsao')
             if queryset.exists():  # Adiciona ao dicionário apenas se o queryset não estiver vazio
                 tabelas_de_previsoes[linha['NM_DIA']] = queryset
     
-    trens_sem_previsao = Trem.objects.filter(previsao__isnull=True).order_by('posicao_previsao')
+    trens_sem_previsao = Trem.objects.filter(previsao__isnull=True, translogic=False).order_by('posicao_previsao')
     
     if trens_sem_previsao.exists():tabelas_de_previsoes["SEM PREVISÃO"] = trens_sem_previsao
 
@@ -446,6 +442,35 @@ def get_terminals(request):
     return JsonResponse(list(terminais), safe=False)
 #endregion
 
+class APITremCreateView(APIView): 
+    
+    def post(self, request):
+        
+        Trem.objects.filter(translogic=True).delete()
+    
+        if isinstance(request.data, list):
+            
+            # Caso seja uma lista de objetos
+            serializer = TremSerializer(data=request.data, many=True)
+        else:
+            
+            # Caso seja um único objeto
+            serializer = TremSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@login_required
+def previsao_164_view(request):
+
+    trens = Trem.objects.filter(previsao__isnull=True, translogic=True)
+
+
+    return render(request, 'previsao_164.html', {'trens': trens})
 #endregion
 
 #region RESTRICOES
@@ -828,8 +853,6 @@ def programacao_subida(request):
 @login_required
 def ocupacao_terminais(request):
   
-    REQUISICAO = REQUEST_PARA_DICT(request)
-    print(REQUISICAO)
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         
         acao = request.GET.get('acao')
@@ -837,7 +860,7 @@ def ocupacao_terminais(request):
         if acao == "baixar_total_detalhe":
            
             dia_logistico = request.GET.get('dia_logistico')
-            print("REQUISICAO")
+    
             html_totais_relatorio_detalhe = totais_detalhe(dia_logistico)
             
             return JsonResponse({"html_totais_relatorio_detalhe": html_totais_relatorio_detalhe})
@@ -871,8 +894,8 @@ def ocupacao_terminais(request):
 
 def carregar_tabela_de_previsoes_subida():
 
-    trens_margem_direita  = TremVazio.objects.filter(margem='Direita')
-    trens_margem_esquerda = TremVazio.objects.filter(margem='Esquerda')
+    trens_margem_direita  = TremVazio.objects.filter(margem='Direita').order_by('previsao')
+    trens_margem_esquerda = TremVazio.objects.filter(margem='Esquerda').order_by('previsao')
 
     return {"direita": trens_margem_direita, "esquerda": trens_margem_esquerda}
 
@@ -897,8 +920,8 @@ def carregar_previsao_trem_subida(request, form, tipo_formulario):
 @login_required
 def previsao_subida_view(request):
  
-    form      = TremVazioForm()
-    tipo_formulario = "criar_trem_subida"
+    form             = TremVazioForm()
+    tipo_formulario  = None
     carregar_previsao_trem_subida(request, form, tipo_formulario)
 
     return carregar_previsao_trem_subida(request, form, tipo_formulario)
@@ -906,8 +929,6 @@ def previsao_subida_view(request):
 @login_required
 def criar_trem_subida_view(request):
     
-    tipo_formulario = "criar_trem_subida"
-
     if request.method == 'POST':
 
         form = TremVazioForm(request.POST)
@@ -923,15 +944,15 @@ def criar_trem_subida_view(request):
         
         else:
             
-            
-            messages.error(request, form.errors)         
-            carregar_previsao_trem_subida(request, form, tipo_formulario)
+            tipo_formulario = "criar_trem_subida"
+            messages.error(request, form.errors) 
+                    
+            return carregar_previsao_trem_subida(request, form, tipo_formulario)
     
     else:
         
         form = TremForm()
-    
-    
+
     return redirect('previsao_subida')     
 
 @login_required   
@@ -946,14 +967,12 @@ def excluir_trem_subida_view(request, id_trem_vazio):
 
 #region Terminais
 
-
 @login_required
 def terminais_list_view(request):
     
     terminais = Terminal.objects.all()
 
     return render(request, 'terminais/terminais_list.html', {'terminais': terminais})
-
 
 @login_required
 def create_terminal_view(request):
@@ -983,11 +1002,7 @@ def create_terminal_view(request):
 @login_required
 def content_terminal_view(request, terminal_id):
 
-    
-
-
     terminal = get_object_or_404(Terminal, id=terminal_id)
     return render(request, 'terminais/terminal_content.html', {'terminal': terminal})
-
 
 #endregion

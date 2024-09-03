@@ -1,0 +1,45 @@
+
+
+#MODAL_DESCARGA td{ padding: 0 1rem;}
+
+#MODAL_DESCARGA .TITULO_AZUL    {background-color: var(--azul-profundo-c); color:white}
+#MODAL_DESCARGA .TITULO_VERDE   {background-color: var(--verde-floresta-c); color:white}
+
+#MODAL_DESCARGA thead th{ border: 1px black solid; background-color: white; color: black; font-size: 1rem;}
+#MODAL_DESCARGA .NOME__TERMINAL{ 
+    border: 1px black solid;
+    min-width: 6rem;
+   
+}
+
+#MODAL_DESCARGA .COLUNA_TOTAL{
+    background-color: var(--cinza-chumbo-c);
+    border-left: 1px solid black; 
+    border-right: 1px solid black;
+    text-align: left;
+    padding-right:  20px;
+}
+
+#MODAL_DESCARGA .TOTAL_TOTAL0,
+#MODAL_DESCARGA .TOTAL_TOTAL2,
+#MODAL_DESCARGA .TOTAL_TOTAL4{ 
+    border:    1px solid black; 
+    background-color: var(--azul-profundo-c);
+}
+#MODAL_DESCARGA .TOTAL_0, 
+#MODAL_DESCARGA .TOTAL_2, 
+#MODAL_DESCARGA .TOTAL_4{
+    background-color: var(--azul-ceu-m);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    
+}
+
+#MODAL_DESCARGA .TOTAL_PD0,
+#MODAL_DESCARGA .TOTAL_PD2,
+#MODAL_DESCARGA .TOTAL_PD4  {
+    background-color: var(--azul-profundo-c);
+    border: 1px solid black;
+} 

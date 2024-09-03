@@ -44,10 +44,10 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
-            'formatter': 'verbose'
+            'level'     : 'DEBUG',
+            'class'     : 'logging.FileHandler',
+            'filename'  : 'mysite.log',
+            'formatter' : 'verbose'
         },
     },
     'loggers': {
@@ -80,7 +80,10 @@ INSTALLED_APPS = [
 
     # Aplicativos internos
     'previsao_trens',
-    'rolepermissions'
+
+    # ThirdParty Apps
+    'rolepermissions',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

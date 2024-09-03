@@ -27,21 +27,21 @@
 
 .LISTA__TRENS thead th{ height: 2.5rem; background-color: var(--azul-profundo-m); color: white;}
 
-.LISTA__TRENS thead th:first-child {border-radius: 10px 0 0 0;}
-.LISTA__TRENS thead th:last-child  {border-radius: 0 10px 0 0;}
+.LISTA__TRENS thead th:first-child { border-radius: 10px 0 0 0; }
+.LISTA__TRENS thead th:last-child  { border-radius: 0 10px 0 0; }
 
-.LISTA__TRENS tbody tr:last-child td:first-child {border-radius: 0 0 0 10px;}
-.LISTA__TRENS tbody tr:last-child td:last-child  {border-radius: 0 0 10px 0;}
+.LISTA__TRENS tbody tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+.LISTA__TRENS tbody tr:last-child td:last-child  { border-radius: 0 0 10px 0; }
 
 .LISTA__TRENS tbody tr{ height: 2rem; }
 
-.LISTA__TRENS td{ padding:0.2rem 0; }
-.LISTA__TRENS th{ padding:0.5rem 0;}
+.LISTA__TRENS td { padding:0.2rem 0; }
+.LISTA__TRENS th { padding:0.5rem 0; }
 
-.COL_PP{min-width: 3rem;}
-.COL_P{min-width: 4rem;}
-.COL_M{width: 8rem;}
-.COL_G{width: 15rem;}
+.COL_PP { min-width: 3rem;  }
+.COL_P  { min-width: 4rem;  }
+.COL_M  { width: 8rem;      }
+.COL_G  { width: 15rem;     }
 
 
 .BTN__CRIAR__TREM{
@@ -173,3 +173,9 @@ fieldset select{
 #id_previsao1, #id_previsao2 {min-width: 13rem; padding: 3.5px;}
 
 #modal_dividir_trem .BOTAO {margin-top: 10px;}
+
+
+#filtro{
+    padding: 7px;
+    margin: 10px 0;
+}

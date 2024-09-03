@@ -4,10 +4,11 @@ import copy
 
 def CARREGAR_RELATORIO_DETALHE():
 
-
-    PERIODO_VIGENTE   = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
-    TERMINAIS_ATIVOS  = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
-    lst_TERMINAIS_ATIVOS  = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
+    
+    PERIODO_VIGENTE         = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
+    TERMINAIS_ATIVOS        = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
+    lst_TERMINAIS_ATIVOS    = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
+    
     TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)    
     
     #ESTOU REMOVENDO O D-1 DO CÁLCULO PARA VER NO QUE VAI DAR
@@ -29,7 +30,7 @@ def CARREGAR_RELATORIO_DETALHE():
         RELATORIO_DETALHE["PRINCIPAL"][TERMINAL] = {}
 
         MARGEM = "PCZ"
-        if INFOS[TERMINAL]["MARGEM"] == "DIREITA": MARGEM = "PSN"
+        if INFOS[TERMINAL]["MARGEM"] == "DIREITA": MARGEM  = "PSN"
         RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["MARGEM"] = MARGEM
 
         DESCARGAS_ATIVAS = TERMINAIS_ATIVOS.loc[TERMINAL][TERMINAIS_ATIVOS.loc[TERMINAL] > 0].index.tolist()   
@@ -46,10 +47,10 @@ def CARREGAR_RELATORIO_DETALHE():
 
             for DIA_LOGISTICO, DATA_ARQ in enumerate(LISTA_DATA_ARQ): #CADA DIA
                 
-                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO] = {}
-                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["RECEBIMENTOS"] = {}
-                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["PEDRA"] = {} 
-                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"] = {}
+                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]                  = {}
+                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["RECEBIMENTOS"]  = {}
+                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["PEDRA"]         = {} 
+                RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"]        = {}
                 
                 with open(f"previsao_trens/src/DESCARGAS/{TERMINAL}/descarga_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
                     DESCARGA = json.load(ARQUIVO_DESCARGA)
@@ -74,7 +75,7 @@ def CARREGAR_RELATORIO_DETALHE():
                         PD  = RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["PEDRA"][f"P{i-1}"]
                         SD  = RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"][f"P{i-1}"] 
 
-                        RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"][f"P{i}"] =    REC + SD - PD
+                        RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"][f"P{i}"] =  (REC + SD - PD)
 
 
                     TOTAL_PEDRA  = 0
@@ -90,8 +91,8 @@ def CARREGAR_RELATORIO_DETALHE():
                     RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["TT_OF"] = TOTAL_OFERTA + RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"]["P1"]  
                     RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["TT_PD"] = TOTAL_PEDRA
     
-                except: 
-                        pass
+                except Exception as e: 
+                    print(f"Erro em: {TERMINAL} - {DESCARGAS} - {e}")
     
 
     #AJUSTANDO OS TERMINAIS DE ACUCAR
@@ -345,7 +346,6 @@ def CARREGAR_RELATORIO_DETALHE():
                     if not "CELULOSE" in TOTAIS["RUMO"]: 
                         TOTAIS["RUMO"]["CELULOSE"] = {"PSN": copy.deepcopy(LINHA_DETALHE), "TOTAL_CELULOSE": copy.deepcopy(LINHA_DETALHE)}
 
-
                     for i in range(5):
                         for COLUNA in COLUNAS:
                             
@@ -451,7 +451,6 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
 
-
         if "VLI" in RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]:
 
             if not "VLI" in TOTAIS: 
@@ -551,7 +550,6 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["VLI"][PRODUTO][i][COLUNA]["P2"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["VLI"][PRODUTO][i][COLUNA]["P3"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["VLI"][PRODUTO][i][COLUNA]["P4"]
-
 
         if "MRS" in RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]:
 
@@ -717,8 +715,6 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["MRS"][PRODUTO][i][COLUNA]["P3"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["MRS"][PRODUTO][i][COLUNA]["P4"]
 
-
-
     #region TOTAIS DOS RESUMOS
 
     #region CALCULANDO OS TOTAIS DO RESUMO RUMO GRAOS
@@ -766,6 +762,19 @@ def CARREGAR_RELATORIO_DETALHE():
                 TOTAIS["RUMO"]["RESUMO_GRAOS"][LINHA_RELATORIO][i]["TT_OF"] += TOTAIS["RUMO"]["RESUMO_GRAOS"][LINHA_RELATORIO][i]["RECEBIMENTOS"][f"P{J}"]
                 TOTAIS["RUMO"]["RESUMO_GRAOS"][LINHA_RELATORIO][i]["TT_PD"] += TOTAIS["RUMO"]["RESUMO_GRAOS"][LINHA_RELATORIO][i]["PEDRA"][f"P{J}"]
     #endregion
+
+        #region CALCULANDO OS TOTAIS DO RESUMO RUMO CELULOSE
+        if "CELULOSE" in TOTAIS["RUMO"]:
+            for LINHA_RELATORIO in list(TOTAIS["RUMO"]["CELULOSE"]): #MARGENS DO PRODUTO PCX OU PSN CELULOSE
+            
+                for i in range(5):
+                    TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["TT_OF"] = TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["SALDOS"]["P1"]
+                    TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["TT_PD"] = 0
+                    
+                    for J in range(1, 5):
+                        TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["TT_OF"] += TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["RECEBIMENTOS"][f"P{J}"]
+                        TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["TT_PD"] += TOTAIS["RUMO"]["CELULOSE"][LINHA_RELATORIO][i]["PEDRA"][f"P{J}"]
+        #endregion 
 
 
     if "VLI" in TOTAIS:
@@ -910,8 +919,8 @@ def CARREGAR_RELATORIO_DETALHE():
 
     RELATORIO_DETALHE["RUMO"]   = TOTAIS
     RELATORIO_DETALHE["TOTAIS"] = TOTAIS["TOTAIS"]
+
     if "VLI" in TOTAIS: RELATORIO_DETALHE["VLI"]    = TOTAIS["VLI"]
     if "MRS" in TOTAIS: RELATORIO_DETALHE["MRS"]    = TOTAIS["MRS"]
    
-
     return RELATORIO_DETALHE 

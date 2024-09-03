@@ -1,12 +1,18 @@
-from django import forms
-from .models import Trem, Restricao, TremVazio, Terminal, Mercadoria
-from django.forms.widgets import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
-from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import ValidationError
 
-import os
-import json
-import pandas as pd
+
+
+from django                     import forms
+from django.forms.widgets       import DateTimeInput, TextInput, NumberInput, Select, Textarea, RadioSelect
+from django.contrib.auth.forms  import AuthenticationForm
+from django.core.exceptions     import ValidationError
+
+from .models    import Trem, Restricao, TremVazio, Terminal, Mercadoria
+from datetime   import datetime, timedelta, time
+
+import  os
+import  json
+import  pandas as pd
+
 
 def DICIONARIO_MERCADORIAS():
 
@@ -63,16 +69,15 @@ class TremForm(forms.ModelForm):
 
     def clean(self):
 
-        from datetime import datetime, timedelta, time
-
         cleaned_data    = super().clean()
         previsao        = cleaned_data.get('previsao')
         mercadoria      = cleaned_data.get('mercadoria')
         terminal        = cleaned_data.get('terminal')
         prefixo         = cleaned_data.get('prefixo')
         ferrovia        = cleaned_data.get('ferrovia')
- 
-        # Verificação de conflito
+        destino         = cleaned_data.get('destino')
+
+        #region Verificação de conflito
         trens_existentes = Trem.objects.filter(previsao=previsao, mercadoria=mercadoria, terminal=terminal)
 
         if self.instance.pk:  # Editando um trem existente
@@ -80,8 +85,9 @@ class TremForm(forms.ModelForm):
 
         if trens_existentes.exists() and not all(trem.prefixo == prefixo for trem in trens_existentes):
             raise ValidationError("Erro: Não é permitido ter o mesmo terminal, previsão e mercadoria com prefixos diferentes.")
+        #endregion
 
-        # Verificação de data
+        #region Verificação de previsao
         periodo_vigente = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         data_arqs       = periodo_vigente["DATA_ARQ"].tolist()
 
@@ -90,11 +96,32 @@ class TremForm(forms.ModelForm):
 
         if previsao and (previsao < limite_minimo or previsao > limite_maximo): 
             raise ValidationError("Erro: Não é possível inserir o trem fora do período de D-1 à D+4.")
+        #endregion
 
+
+        #region Verificação de terminais
         if terminal.nome == "SBR" and (ferrovia == "RUMO" or ferrovia == "VLI"):
   
             raise ValidationError("O Sistema esta configurado para receber somente trens MRS no terminal SBR.")
         
+
+        if terminal.nome == "ECOPORTO" and (ferrovia == "RUMO" or ferrovia == "VLI"):
+  
+            raise ValidationError("O Sistema esta configurado para receber somente trens MRS no terminal ECOPORTO.")
+        #endregion
+        
+        #region validacao de destino
+        if terminal.margem == "ESQUERDA" and destino == "PSN":
+
+            raise ValidationError("Este terminal esta localizado na margem esquerda, por favor mude o destino.")
+
+        if terminal.margem == "DIREITA" and destino == "PCZ":
+
+            raise ValidationError("Este terminal esta localizado na margem direita, por favor mude o destino.")
+
+
+        #endregion
+
         return cleaned_data
 
 class DividirTremForm(forms.ModelForm):
@@ -175,13 +202,7 @@ class UploadFileForm(forms.Form):
 class TremVazioForm(forms.ModelForm):
 
     class Meta:
-     
-        PATH_PERIODO_VIGENTE = "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv"
-        periodo_vigente      = pd.read_csv(PATH_PERIODO_VIGENTE, sep=";", index_col=0)
-
-        data_arq_D           = periodo_vigente[periodo_vigente['NM_DIA'] == "D"].iloc[0]['DATA_ARQ']
-        data_arq_D1          = periodo_vigente[periodo_vigente['NM_DIA'] == "D+1"].iloc[0]['DATA_ARQ']
-
+    
         model = TremVazio
         fields = '__all__'
         widgets = {
@@ -198,7 +219,7 @@ class TremVazioForm(forms.ModelForm):
             'qt_celul':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CELULOSE'}),
             'qt_acuca':     NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'ACUCAR'}),
             'qt_contei':    NumberInput(attrs={'class': 'INPUT INPUT_P ', 'data-segmento': 'CONTEINER'}),
-            'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão', 'min': f'{data_arq_D}T01:00','max': f'{data_arq_D1}T23:59', 'onchange': 'atualizarHorario()'}),
+            'previsao':     DateTimeInput(attrs={'type': 'datetime-local', 'class': 'INPUT INPUT_M', 'placeholder': 'Previsão', 'onchange': 'atualizarHorario()'}),
             'margem':       RadioSelect(attrs={'name': 'margem', 'onclick': 'atualizar_tabela()'}),
         }
 
@@ -227,20 +248,26 @@ class TremVazioForm(forms.ModelForm):
 
         self.fields['created_by'].required = False
 
-
-        # Configurar formato do campo `previsao`
-        self.fields['previsao'].widget.attrs['format'] = '%Y-%m-%dT%H:%M'
-
-
-    def clean_previsao(self):
-
-        previsao = self.cleaned_data.get('previsao')
-        margem   = self.cleaned_data.get('margem')
+    def clean(self):
+        
+        cleaned_data    = super().clean()
+        previsao        = cleaned_data.get('previsao')
+        margem          = cleaned_data.get('margem')
         
         if TremVazio.objects.filter(previsao=previsao, margem=margem).exists():
-            raise forms.ValidationError('Já existe um trem com esta previsão.')
+            raise ValidationError('Já existe um trem com esta previsão.')
         
-        return previsao
+        # Verificação de data
+        periodo_vigente = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
+        data_arqs       = periodo_vigente["DATA_ARQ"].tolist()
+
+        limite_minimo = datetime.combine(datetime.strptime(data_arqs[1], '%Y-%m-%d').date(), time(1, 0))
+        limite_maximo = datetime.combine(datetime.strptime(data_arqs[2], '%Y-%m-%d').date(), time(0, 0)) + timedelta(days=1)
+
+        if previsao and (previsao < limite_minimo or previsao > limite_maximo): 
+            raise ValidationError("Erro: Não é possível inserir o trem fora do período de D à D+1.")
+
+        return cleaned_data
 
 class TerminalForm(forms.ModelForm):
     

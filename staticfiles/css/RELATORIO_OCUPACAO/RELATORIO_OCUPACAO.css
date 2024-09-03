@@ -127,3 +127,23 @@ tbody           { background-color: rgb(247, 242, 242);}
   
 
   /*---------------------------------------------------TABS---------------------------------------------------*/ 
+
+
+
+  #tabela__legenda{
+    background-color: white;
+    margin-top: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+    0 1px 2px rgba(0,0,0,0.24);
+  }
+
+  #tabela__legenda tbody td,
+  #tabela__legenda thead th,
+  #tabela__legenda tbody td{
+    
+    text-align: left;
+    border: 1px solid rgb(196, 194, 194);
+  }
+  #tabela__legenda tbody tr td:nth-child(1) {padding: 0px 20px ;}
+  #tabela__legenda thead th,
+  #tabela__legenda tbody tr td:nth-child(2){background-color: rgb(244, 244, 244); padding: 5px 10; color: var(--cinza-chumbo-e);}

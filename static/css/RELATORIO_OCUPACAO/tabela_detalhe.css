@@ -1,0 +1,113 @@
+
+
+#relatorio_detalhe td{ padding: 0 1rem;}
+
+#relatorio_detalhe .TITULO_AZUL    {background-color: var(--azul-profundo-c); color:white}
+#relatorio_detalhe .TITULO_VERDE   {background-color: var(--verde-floresta-c); color:white}
+
+#relatorio_detalhe thead th{ border: 1px black solid; background-color: white; color: black; font-size: 1rem;}
+#relatorio_detalhe .NOME__TERMINAL{ 
+    border: 1px black solid;
+    min-width: 6rem;
+   
+}
+
+#relatorio_detalhe .NOME__TERMINAL{ 
+    border: 1px black solid;
+    min-width: 6rem;
+    text-align: left !important;
+}
+
+#relatorio_detalhe .COLUNA_TOTAL{
+    background-color: var(--cinza-chumbo-c);
+    border-left: 1px solid black; 
+    border-right: 1px solid black;
+    text-align: center;
+    padding-right:  20px;
+}
+
+#relatorio_detalhe .TOTAL_TOTAL0,
+#relatorio_detalhe .TOTAL_TOTAL2,
+#relatorio_detalhe .TOTAL_TOTAL4{ 
+    border:    1px solid black; 
+    background-color: var(--azul-profundo-c);
+}
+#relatorio_detalhe .TOTAL_0, 
+#relatorio_detalhe .TOTAL_2, 
+#relatorio_detalhe .TOTAL_4{
+    background-color: var(--azul-ceu-m);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    
+}
+
+#relatorio_detalhe .TOTAL_PD0,
+#relatorio_detalhe .TOTAL_PD2,
+#relatorio_detalhe .TOTAL_PD4  {
+    background-color: var(--azul-profundo-c);
+    border: 1px solid black;
+} 
+
+#relatorio_detalhe .CONTEUDO_0,
+#relatorio_detalhe .CONTEUDO_2,
+#relatorio_detalhe .CONTEUDO_4{
+    background-color: var(--azul-ceu-c);
+    border-left:     1px solid var(--cinza-chumbo-c);
+}
+
+#relatorio_detalhe .CONTEUDO_PD0, 
+#relatorio_detalhe .CONTEUDO_PD2,
+#relatorio_detalhe .CONTEUDO_PD4{
+    background-color: var(--azul-ceu-m);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#relatorio_detalhe .pula__linha { 
+    color: white; 
+    background-color: white;     
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+}
+
+#relatorio_detalhe .CONTEUDO_PD1, 
+#relatorio_detalhe .CONTEUDO_PD3{
+    background-color: var(--verde-floresta-c);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#relatorio_detalhe .TOTAL_PD1,
+#relatorio_detalhe .TOTAL_PD3{
+    background-color: var(--verde-floresta-m);
+    border: 1px solid black;
+    color: white;
+}
+
+#relatorio_detalhe .TOTAL_1,
+#relatorio_detalhe .TOTAL_3{
+    background-color: var(--verde-floresta-c);
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; 
+    
+}
+
+#relatorio_detalhe .TOTAL_TOTAL1,
+#relatorio_detalhe .TOTAL_TOTAL3{ 
+    border:    1px solid black; 
+    background-color: var(--verde-floresta-m);
+    color: white;
+}
+
+#relatorio_detalhe .CONTEUDO_1,
+#relatorio_detalhe .CONTEUDO_3{
+    background-color: #dde7e1;
+    border-left:     1px solid var(--cinza-chumbo-m);
+}
+
+#relatorio_detalhe .TITULO_AZUL    {background-color: var(--azul-profundo-c); color:white}
+#relatorio_detalhe .TITULO_VERDE   {background-color: var(--verde-floresta-c); color:white}

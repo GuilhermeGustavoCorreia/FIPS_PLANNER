@@ -25,8 +25,8 @@ h2  { margin-top: 20px;}
 .tbl-prev-subida tbody tr:nth-child(even)        { background-color: #f2f2f2; }
 .tbl-prev-subida tbody tr:nth-child(odd)         { background-color: #ffff;   }
 
-.tbl-prev-subida tbody tr:nth-child(even):hover  { background-color: var(--neutro); }
-.tbl-prev-subida tbody tr:nth-child(odd):hover   { background-color: var(--neutro); }
+.tbl-prev-subida tbody tr:nth-child(even):hover  { background-color: #c1d5d4; }
+.tbl-prev-subida tbody tr:nth-child(odd):hover   { background-color: #c1d5d4; }
 
 .icone-excluir{ 
 

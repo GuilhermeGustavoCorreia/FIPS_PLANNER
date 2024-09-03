@@ -135,8 +135,8 @@ class Trem(models.Model):
         self.prefixo = self.prefixo.upper()
 
         #ajustando previsão (colocando este trem como o primeiro da lista)
-        if self._state.adding:
-            
+        if self._state.adding and self.previsao:
+
             Trem.objects.filter(
                 
                 previsao__year  = self.previsao.year, 
@@ -192,10 +192,6 @@ class Trem(models.Model):
             Trem.objects.create(**slice_02, created_by=self.created_by)
             self.delete()  
         
-        
-
-        
-
     def __str__(self):
         return f"{self.prefixo} -  {self.terminal} - {self.mercadoria} - {self.previsao}"
     
@@ -337,7 +333,6 @@ class TremVazio(models.Model):
     def delete(self, *args, **kwargs):
 
         from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import Condensados
-        from django.forms.models import model_to_dict
 
         super().delete(*args, **kwargs)
 

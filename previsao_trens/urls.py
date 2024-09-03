@@ -1,6 +1,7 @@
-from django.contrib import admin
-from django.urls import path
-from . import views
+from django.urls            import path, include
+from .                      import views
+
+
 
 
 url_terminais = [
@@ -10,7 +11,7 @@ url_terminais = [
                     path('terminal_content/<int:terminal_id>/',     views.content_terminal_view,    name='terminal_content')
                 ]
 
-url_previsao = [
+url_previsao  = [
 
     path('previsao/previsao_trens',                                     views.previsao_trens_view,  name="previsao_trens"),
     
@@ -22,6 +23,10 @@ url_previsao = [
     path('previsao/previsao_trens/excluir_tabela/<str:dia_logistico>',  views.excluir_dia_inteiro,  name="excluir_dia_inteiro"),
     path('previsao/previsao_trens/alterar_posicao',                     views.alterar_posicao_view, name="alterar_posicao"),
     path('get-terminals/',                                              views.get_terminals,        name='get_terminals'),
+
+    path('previsao_164/',                                               views.previsao_164_view,    name='previsao_164'),
+
+
 ]
 
 url_navegacao = [
@@ -30,7 +35,9 @@ url_navegacao = [
     path('navegacao/editar_encoste',    views.editar_encoste,       name="editar_encoste"),
 ]
 
-urlpatterns = [
+url_apis      = [path('insert_trens_translogic_164/', views.APITremCreateView.as_view(), name='create-trens')]
+
+urlpatterns   = [
 
     path('', views.redirect_to_login),
     path('accounts/login/', views.custom_login_view, name='login'),
@@ -64,4 +71,4 @@ urlpatterns = [
     path('previsao_subida/criar_trem_subida',                  views.criar_trem_subida_view,        name="criar_trem_subida"),
     path('excluir_trem_subida/<int:id_trem_vazio>/',           views.excluir_trem_subida_view,      name="excluir_trem_subida"),
 
-] + url_terminais + url_previsao + url_navegacao
+] + url_terminais + url_previsao + url_navegacao + url_apis

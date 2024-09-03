@@ -7,6 +7,7 @@ from previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS import EDITAR_PARAME
 from previsao_trens.models  import Trem   
 from datetime               import datetime, timedelta, time
 from previsao_trens.models  import Mercadoria, Terminal
+
 class NAVEGACAO_DESCARGA:
 
     def __init__(self, TERMINAL, FERROVIA, PRODUTO, DIA_ANTERIOR=False):
@@ -64,6 +65,7 @@ class NAVEGACAO_DESCARGA:
         
         #DEVE ESTAR AQUI DENTRO, POIS UTILIZARÁ A DESCARGA COMPLETA
         def __CALCULA_FILA__():
+            
 
             def __LIMPAR_OCUPACAO__():
 
@@ -77,15 +79,13 @@ class NAVEGACAO_DESCARGA:
             
             SALDO_VIRADA = self.DESCARGAS[self.LISTA_DATA_ARQ[0]]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]
 
-            
-
             #PRIMEIRO ANALISAR TODOS OS ENCOSTES 
             ORDEM_DE_CHEGADA = [ 
                 UM_ENCOSTE + [index] for index, UM_ENCOSTE in enumerate(DESCARGA_COMPLETA["ENCOSTE"]) if UM_ENCOSTE != [0, 0]
             ]
 
+            
             if SALDO_VIRADA > 0: ORDEM_DE_CHEGADA.insert(0, [SALDO_VIRADA, 101, 0],)
-
 
             __LIMPAR_OCUPACAO__()
 
@@ -101,7 +101,7 @@ class NAVEGACAO_DESCARGA:
             #]
 
             for i, DADOS_FILA_DO_TREM in enumerate(ORDEM_DE_CHEGADA): #PARA CADA TREM
-                
+
                 QUANDO_O_TREM_ENCOSTA   = DADOS_FILA_DO_TREM[2]
                 TAMANHO_DO_TREM         = DADOS_FILA_DO_TREM[0]
                 ID_TREM                 = int(DADOS_FILA_DO_TREM[1])
@@ -109,11 +109,12 @@ class NAVEGACAO_DESCARGA:
                 HORA                    = QUANDO_O_TREM_ENCOSTA
                 DIFERENCA = 0
                 HORA_FINAL = HORA
-     
+
+                
                 while not TREM_ACABOU_DESCARGA: #ENQUANTO O TREM NÃO ACABOU A DESCARGA
                     
                     TAMANHO_DO_TREM += SOBRA_ANTERIOR_DE_VAGOES 
-
+                                        
                     if (DESCARGA_COMPLETA["PRODUTIVIDADE"][HORA_FINAL] - DESCARGA_COMPLETA["SALDO"][HORA_FINAL]) == 0 or HORA_FINAL == 119:     # VERIFICA SE O TREM ACABOU A DESCARGA  
                         TREM_ACABOU_DESCARGA    = True
                           
@@ -129,8 +130,8 @@ class NAVEGACAO_DESCARGA:
     
                         if TAMANHO_DO_TREM <= 0:                                                                                                # SE O TAMANHO DO TREM ACABAR, O TREM ACABOU
 
-                            if TAMANHO_DO_TREM < 0:
-
+                            if TAMANHO_DO_TREM < 0 and len(ORDEM_DE_CHEGADA) > (i + 1):
+                                print(f"[{i}] LEN: {len(ORDEM_DE_CHEGADA)} - {ORDEM_DE_CHEGADA}")
                                 ORDEM_DE_CHEGADA[i + 1][0] = ORDEM_DE_CHEGADA[i + 1][0] + (0 - TAMANHO_DO_TREM)
 
                             TREM_ACABOU_DESCARGA = True
@@ -306,7 +307,7 @@ class NAVEGACAO_DESCARGA:
                     
                     #SOMA OS ESCOSTES, NECESSÁRIO PARA FAZER O CALCULO DOS RECEBIMENTOS DO DIA (QUE LEVA EM CONTA TODOS OS ENCOSTES [NÃO AS CHEGADAS]
                     #ENCOSTE = [x + y for x, y in zip(ENCOSTE, INDICADORES["ENCOSTE"][FERROVIA][PRODUTO])] if ENCOSTE else INDICADORES["ENCOSTE"][FERROVIA][PRODUTO]
-                    #print(f"ENCOSTE: {INDICADORES["ENCOSTE"]["ENCOSTE"]}")
+                    #pr_int(f"ENCOSTE: {INDICADORES["ENCOSTE"]["ENCOSTE"]}")
                     for i in range(len(INDICADORES["ENCOSTE"][FERROVIA][PRODUTO])):
                         ENCOSTE[i][0] += INDICADORES["ENCOSTE"][FERROVIA][PRODUTO][i][0]
                     #ENCOSTE = [[sum(first_elements), 0] for first_elements in zip(*[lst[0] for lst in INDICADORES["ENCOSTE"][FERROVIA][PRODUTO]])]
@@ -409,7 +410,7 @@ class NAVEGACAO_DESCARGA:
             return HORA_CHEGADA, DATA_ARQ_CHEGADA
 
         def __ENCOSTE__(HORA_CHEGADA, DATA_ARQ_CHEGADA, ACAO):
-
+            
         
             VAGOES          : int
             HORA_ENCOSTE    : int
@@ -423,7 +424,7 @@ class NAVEGACAO_DESCARGA:
             
             if ACAO == "INSERIR": 
 
-                VAGOES = TREM["vagoes"]
+                VAGOES  = TREM["vagoes"]
                 TREM_ID = TREM["ID"]
 
             POSICAO_DIA = self.LISTA_DATA_ARQ.index(DATA_ARQ_CHEGADA)
@@ -478,8 +479,7 @@ class NAVEGACAO_DESCARGA:
 
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["PRODUTIVIDADE"][COLUNA] = PARAMETROS["VALOR"]
                 self.DESCARGAS[DATA_ARQ]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["EDITADO"][COLUNA]       = 1
-       
-       
+             
         __INSERIR_VALORES__()
 
         self.__CALCULAR_DESCARGA__()
@@ -603,7 +603,7 @@ class NAVEGACAO_DESCARGA:
         #1 é de um dia para o outro
         #2 -> possui (HOJE: 0, PROXIMO DIA: 1, ULTIMO_DIA: 2) APLICAREMOS FULL RESTRICAO EM 1
         
-        DIAS_AFETADOS = DATA_FINAL - DATA_INICIO
+        DIAS_AFETADOS = (DATA_FINAL - DATA_INICIO)
         DIAS_AFETADOS = DIAS_AFETADOS.days
         
         DATAS_AFETADAS = {}
@@ -655,8 +655,6 @@ class NAVEGACAO_DESCARGA:
         self.__SALVAR__()
 
     def atualizar(self, trem):
-
-        from django.core.exceptions import ObjectDoesNotExist
 
         #consegue colocar trem até D-1 01:00 (chegada)
         #D+5 00:00 (encoste)
@@ -765,6 +763,7 @@ class NAVEGACAO_DESCARGA:
 
                 self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][1] = 0
                 self.DESCARGAS[data_arq_encoste]["DESCARGAS"][self.FERROVIA][self.PRODUTO]["ENCOSTE"][hora_encoste][0] = 0
+
         print(f"inserindo : {[trem.vagoes, trem.id]}")
         #endregion
 
@@ -778,16 +777,7 @@ class NAVEGACAO_DESCARGA:
 
         encoste = datetime.strptime(f"{data_arq} {hora:02d}:00", "%Y-%m-%d %H:%M")
         
-        print(
-            f"""ARGUMENTOS \n 
-                terminal        = {Terminal.objects.get(nome=self.NM_TERMINAL)},
-                mercadoria      = {Mercadoria.objects.get(nome=self.PRODUTO)},
-                ferrovia        = {self.FERROVIA},
-                encoste__date   = {encoste.date()},
-                encoste__hour   = {encoste.hour},
-                vagoes          = {novo_valor}"""
 
-            )
         trem = Trem.objects.filter(
             terminal        = Terminal.objects.get(nome=self.NM_TERMINAL),
             mercadoria      = Mercadoria.objects.get(nome=self.PRODUTO),
@@ -822,7 +812,6 @@ class NAVEGACAO_DESCARGA:
             descargas.append(self.DESCARGAS[DATA_ARQ])
             
         return descargas
-
 
     #ESTA FUNCAO É CHAMADA EM CONFIGURACAO.ATUALIZAR_DESCARA (PARA INSERIR AS RESTRICOES NOS DIAS QUE ULTRAPASSAVAM D+4)
     def RESTRICAO_ATUALIZAR_PERIODO(self, RESTRICAO, ULTIMO_DIA_ANTIGO, ULTIMO_DIA_NOVO):

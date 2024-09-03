@@ -4,6 +4,7 @@
 {% load custom_filters %}
 
 <link   rel="stylesheet" type="text/css" href="{% static 'css/RELATORIO_OCUPACAO/RELATORIO_OCUPACAO.css' %}"> 
+<link   rel="stylesheet" type="text/css" href="{% static 'css/RELATORIO_OCUPACAO/tabela_detalhe.css' %}"> 
 <link   rel="stylesheet" type="text/css" href="{% static 'css/navegacao/tabela_descarga.css' %}"> 
 
 <script src="{% static 'javascript/RELATORIO_OCUPACAO/RELATORIO_OCUPACAO.js' %}" defer></script>
@@ -34,7 +35,6 @@
                             <th colspan="24">D</th>
                             <th colspan="2">PLANO</th>
                             <th colspan="2">PxO</th>
-                            <th>FILA </br> MÉD</th>
                             <th>OPORT.</th>
                             <th>CAP.</th>
                         </tr>
@@ -70,7 +70,6 @@
             
                             <td>PROD </br> (vgs/h)  </td>
                             <td>OCIOS</br> (h)      </td>
-                            <td> (h/vg)             </td>
             
                             <td>(vgs)   </td>
                             <td>80%     </td>
@@ -138,7 +137,6 @@
                             {% endif %}
                         
 
-                            <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.FILA_MEDIA }}      </td>
                             <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA"> {{ CONTEUDO_TERMINAL.OPORTUNIDADE }}    </td>
                             <td rowspan=4 class="coluna-indicador">                     {{ CONTEUDO_TERMINAL.CAPACIDADE }}      </td>
             
@@ -245,7 +243,6 @@
             
                             {% endif %}
             
-                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
                             <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
                             <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
                             </tr>
@@ -303,7 +300,6 @@
                             <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PLANO.PEDRA         |formata_milhar }}</td>
                             <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
                             <td class="coluna__total">{{ RELATORIO.D.TOTAIS.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                            <td class="coluna__total">{{ RELATORIO.D.TOTAIS.FILA_MEDIA          |formata_milhar }}</td>
                             <td class="coluna__total">{{ RELATORIO.D.TOTAIS.OPORTUNIDADE                        }}</td>
                             <td class="coluna__total">{{ RELATORIO.D.TOTAIS.CAPACIDADE          |formata_milhar }}</td>
                 
@@ -318,7 +314,6 @@
                             <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.PLANO.PEDRA          |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.FILA_MEDIA           |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PSN.OPORTUNIDADE        |formata_milhar }}</td>
                             <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PSN.CAPACIDADE           |formata_milhar }}</td>
                         </tr>
@@ -329,7 +324,6 @@
                             <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.PLANO.PEDRA          |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.PXO.OCIOSIDADE      |formata_milhar }}</td>
-                            <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.FILA_MEDIA           |formata_milhar }}</td>
                             <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D.TOTAIS_PCZ.OPORTUNIDADE        |formata_milhar }}</td>
                             <td class="coluna-indicador">{{ RELATORIO.D.TOTAIS_PCZ.CAPACIDADE           |formata_milhar }}</td>
                         </tr>
@@ -358,7 +352,6 @@
                         <th colspan="24">D      </th>
                         <th colspan="2">PLANO   </th>
                         <th colspan="2">PxO     </th>
-                        <th>FILA </br> MÉD      </th>
                         <th>OPORT.              </th>
                         <th>CAP.                </th>
                     </tr>
@@ -394,7 +387,6 @@
         
                         <td>PROD </br> (vgs/h)  </td>
                         <td>OCIOS</br> (h)      </td>
-                        <td> (h/vg)             </td>
         
                         <td>(vgs)   </td>
                         <td>80%     </td>
@@ -458,8 +450,6 @@
             
                                 {% endif %}
                             
-            
-                                <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
                                 <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
                                 <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
             
@@ -566,7 +556,6 @@
             
                             {% endif %}
             
-                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
                             <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
                             <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
                             </tr>
@@ -623,13 +612,39 @@
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PLANO.PEDRA }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PXO.PRODUTIVIDADE }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.PXO.OCIOSIDADE }}</td>
-                            <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.FILA_MEDIA }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.OPORTUNIDADE }}</td>
                             <td class="coluna__total">{{ RELATORIO.D1.TOTAIS.CAPACIDADE }}</td>
                 
                         </tr>
                         <!--#endregion-->
-                    
+                        
+                        <!--#region TOTAIS MARGEM-->
+
+                            <tr><td colspan="33" class="pula__linha">x</td></tr>
+                            
+
+                            <tr>
+                                <td colspan="26" class="linha__total__margens">TOTAL DIREITA   </td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PSN.PLANO.OFERTA         |formata_milhar }}</td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PSN.PLANO.PEDRA          |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PSN.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PSN.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PSN.OPORTUNIDADE        |formata_milhar }}</td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PSN.CAPACIDADE           |formata_milhar }}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="26" class="linha__total__margens">TOTAL ESQUERDA  </td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PCZ.PLANO.OFERTA         |formata_milhar }}</td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PCZ.PLANO.PEDRA          |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PCZ.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PCZ.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                                <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D1.TOTAIS_PCZ.OPORTUNIDADE        |formata_milhar }}</td>
+                                <td class="coluna-indicador">{{ RELATORIO.D1.TOTAIS_PCZ.CAPACIDADE           |formata_milhar }}</td>
+                            </tr>
+
+                        <!--#endregion-->
+
                     </tbody>
 
                 </table>
@@ -654,7 +669,6 @@
                         <th colspan="24">   D       </th>
                         <th colspan="2">    PLANO   </th>
                         <th colspan="2">    PxO     </th>
-                        <th>FILA </br>      MÉD     </th>
                         <th>OPORT.                  </th>
                         <th>CAP.                    </th>
                     </tr>
@@ -690,7 +704,6 @@
         
                         <td>PROD </br> (vgs/h)  </td>
                         <td>OCIOS</br> (h)      </td>
-                        <td> (h/vg)             </td>
         
                         <td>(vgs)   </td>
                         <td>80%     </td>
@@ -754,8 +767,7 @@
         
                             {% endif %}
                         
-        
-                            <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
+    
                             <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
                             <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
         
@@ -863,7 +875,6 @@
                         {% endif %}
                         
 
-                        <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.FILA_MEDIA }}           </td>
                         <td rowspan=4 class="coluna-indicador OPORTINIDADE_COLUNA">{{ CONTEUDO_TERMINAL.OPORTUNIDADE }}         </td>
                         <td rowspan=4 class="coluna-indicador">{{ CONTEUDO_TERMINAL.CAPACIDADE }}           </td>
                         </tr>
@@ -920,13 +931,38 @@
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PLANO.PEDRA }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PXO.PRODUTIVIDADE }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.PXO.OCIOSIDADE }}</td>
-                    <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.FILA_MEDIA }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.OPORTUNIDADE }}</td>
                     <td class="coluna__total">{{ RELATORIO.D2.TOTAIS.CAPACIDADE }}</td>
         
                 </tr>
                  <!--#endregion-->
-                
+                 
+                    <!--#region TOTAIS MARGEM-->
+
+                    <tr><td colspan="33" class="pula__linha">x</td></tr>
+        
+
+                    <tr>
+                        <td colspan="26" class="linha__total__margens">TOTAL DIREITA   </td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PSN.PLANO.OFERTA         |formata_milhar }}</td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PSN.PLANO.PEDRA          |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PSN.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PSN.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PSN.OPORTUNIDADE        |formata_milhar }}</td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PSN.CAPACIDADE           |formata_milhar }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="26" class="linha__total__margens">TOTAL ESQUERDA  </td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PCZ.PLANO.OFERTA         |formata_milhar }}</td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PCZ.PLANO.PEDRA          |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PCZ.PXO.PRODUTIVIDADE   |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PCZ.PXO.OCIOSIDADE      |formata_milhar }}</td>
+                        <td class="OCIOSIDADE_COLUNA">{{ RELATORIO.D2.TOTAIS_PCZ.OPORTUNIDADE        |formata_milhar }}</td>
+                        <td class="coluna-indicador">{{ RELATORIO.D2.TOTAIS_PCZ.CAPACIDADE           |formata_milhar }}</td>
+                    </tr>
+
+                <!--#endregion-->    
                 </tbody>
 
             </table>
@@ -946,14 +982,14 @@
 
     {% endif %}
     
-    <table>
-        <thead><tr><th>LEGENDA</th></tr></thead>
+    <table id="tabela__legenda">
+        <thead><tr><th colspan=2>LEGENDA</th></tr></thead>
         <tbody>
-            <tr> <td></td> <td></td> </tr>
-            <tr> <td></td> <td></td> </tr>
-            <tr> <td></td> <td></td> </tr>
-            <tr> <td></td> <td></td> </tr>
-            <tr> <td></td> <td></td> </tr>
+            <tr> <td class="item__ocupacao item-verde" >. </td> <td>Descarregando           </td> </tr>
+            <tr> <td class="item__ocupacao item-amarelo">.</td> <td>Saldo sem descarga      </td> </tr>
+            <tr> <td class="item__ocupacao vazio">.</td>        <td>Sem saldo               </td> </tr>
+            <tr> <td class="item__ocupacao cinza">.</td>        <td>Em fila                 </td> </tr>
+            <tr> <td class="restricao ">.</td>                  <td>Terminal em restição    </td> </tr>
         </tbody>
     </table>
 </div>
@@ -967,23 +1003,23 @@
 <script>
 
     function abrir_total_detalhe(dia_logistico){
-        // $.ajax({
-        //     url: '{% url "ocupacao_terminais" %}',
-        //     type: 'GET',
-        //     data: {
-        //         'acao'                  : "baixar_total_detalhe",
-        //         'csrfmiddlewaretoken'   : "{{ csrf_token }}",
-        //         'dia_logistico'         : dia_logistico
-        //     },
-        //     success:  function(response)  {
+        $.ajax({
+            url: '/ocupacao_terminais/',
+            type: 'GET',
+            data: {
+                'acao'                  : "baixar_total_detalhe",
+                'csrfmiddlewaretoken'   : "{{ csrf_token }}",
+                'dia_logistico'         : dia_logistico
+            },
+            success:  function(response)  {
 
-        //         const dialog = document.querySelector("#MODAL_DESCARGA");
-        //         dialog.showModal()
-        //         dialog.innerHTML = response.html_totais_relatorio_detalhe
+                const dialog = document.querySelector("#MODAL_DESCARGA");
+                dialog.showModal()
+                dialog.innerHTML = response.html_totais_relatorio_detalhe
             
-        //     },
-        //     error:    function(xhr)       {alert("ERR")}
-        // });
+            },
+            error:    function(xhr)       {alert("ERR")}
+        });
     }
 
     function ABRIR_DESCARGA(CELULA_CLICADA){

@@ -59,8 +59,6 @@
         <button type="submit" class="BOTAO VERDE" >Salvar</button>
     </form>
 
-   
-
 </dialog>
 {% endif %}
 <!--#endregion-->
@@ -114,7 +112,6 @@
     </form>
 </dialog>
 <!--#endregion-->
-
 
 <div class="CONTEUDO__PADRAO">  
 
@@ -197,17 +194,22 @@
                             <tr >   
                         {% endif %}
                         
-                            <td class="COL_PP posicao"> {{ TREM.posicao_previsao }}</td>
+                            {% if DIA_LOGISTICO != "SEM PREVISÃO" %} 
+                                <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
+                            {% else %}
+                                <td class="COL_PP posicao">{{ forloop.counter0 }}</td> 
+                            {% endif %}
+                            
                             <td class="COL_P">          {{ TREM.prefixo     }}</td>
                             <td class="COL_M os">       {{ TREM.os          }}</td>
                             <td class="COL_P origem">   {{ TREM.origem      }}</td>
                             <td class="COL_P local">    {{ TREM.local       }}</td>
                             <td class="COL_P destino">  {{ TREM.destino     }}</td>
-                            <td class="COL_M">          {{ TREM.terminal    }}</td>
+                            <td class="COL_M">          {% if TREM.terminal %} {{  TREM.terminal       }} {% else %} -- {% endif %}</td>
                             <td class="COL_P">          {{ TREM.vagoes      }}</td>
                             <td class="COL_M">          {{ TREM.mercadoria  }}</td>       
-                            <td class="COL_G previsao"> {{ TREM.previsao | date:"d/m/Y H:i" }}</td>
-                            <td><div class="CONTEUDO_COMENTARIO DESATIVADO">{{ TREM.comentario }}<div></td>
+                            <td class="COL_G previsao"> {% if TREM.previsao %} {{ TREM.previsao | date:"d/m/Y H:i" }} {% else %} -- {% endif %}</td>
+                            <td><div class="CONTEUDO_COMENTARIO DESATIVADO"> {% if TREM.comentario %} {{ TREM.comentario }} {% else %} -- {% endif %}<div></td>
                             
                             <td>    
                                 {% if  DIA_LOGISTICO != "SEM PREVISÃO" %}
@@ -303,17 +305,22 @@
 
                         <tr>
 
-                            <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
-                            <td class="COL_P">{{  TREM.prefixo     }}</td>
-                            <td class="COL_M">{{  TREM.os          }}</td>
-                            <td class="COL_P">{{  TREM.origem      }}</td>
-                            <td class="COL_P">{{  TREM.local       }}</td>
-                            <td class="COL_P">{{  TREM.destino     }}</td>
-                            <td class="COL_M">{{  TREM.terminal    }}</td>
-                            <td class="COL_P">{{  TREM.vagoes      }}</td>
-                            <td class="COL_M">{{  TREM.mercadoria  }}</td>       
-                            <td class="COL_G">{{  TREM.previsao | date:"d/m/Y H:i" }}</td>
-                            <td colspan="3"><div class="CONTEUDO_COMENTARIO ">{{ TREM.comentario }}<div></td>
+                                                   
+                            {% if DIA_LOGISTICO != "SEM PREVISÃO" %} posicao_previsao
+                                <td class="COL_PP posicao">{{ TREM.posicao_previsao }}</td>
+                            {% else %}
+                                <td class="COL_PP posicao">{{ forloop.counter0 }}</td> 
+                            {% endif %}
+                            <td class="COL_P">          {{ TREM.prefixo     }}</td>
+                            <td class="COL_M os">       {{ TREM.os          }}</td>
+                            <td class="COL_P origem">   {{ TREM.origem      }}</td>
+                            <td class="COL_P local">    {{ TREM.local       }}</td>
+                            <td class="COL_P destino">  {{ TREM.destino     }}</td>
+                            <td class="COL_M">          {% if TREM.terminal %} {{  TREM.terminal       }} {% else %} -- {% endif %}</td>
+                            <td class="COL_P">          {{ TREM.vagoes      }}</td>
+                            <td class="COL_M">          {{ TREM.mercadoria  }}</td>       
+                            <td class="COL_G previsao"> {% if TREM.previsao %} {{ TREM.previsao | date:"d/m/Y H:i" }} {% else %} -- {% endif %}</td>
+                            <td><div class="CONTEUDO_COMENTARIO"> {% if TREM.comentario %} {{ TREM.comentario }} {% else %} -- {% endif %}<div></td>
                             
                         </tr >
                         

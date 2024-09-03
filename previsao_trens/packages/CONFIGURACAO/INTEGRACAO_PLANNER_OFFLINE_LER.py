@@ -117,8 +117,6 @@ class AtualizandoSistema:
                     except Exception as e:
                         print(f"[erro] - limparSaldosVirada: {e} - [{ PARAMETROS}]")
 
-
-
     def ativarTerminais(json_descargas_ativas):
 
         descargas_ativas_offline = pd.DataFrame.from_dict(json_descargas_ativas, orient='index')
@@ -183,7 +181,7 @@ class AtualizandoSistema:
         RESTRICOES_ATIVAS.to_csv("previsao_trens/src/PARAMETROS/RESTRICOES_ATIVAS.csv", sep=";")
 
     def inserirSaldosVidada(js_saldos_virada):
-
+        print("INSERIndo SALDOS DE VIRARA")
         PERIODO_VIGENTE = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         linha           = PERIODO_VIGENTE[PERIODO_VIGENTE['NM_DIA'] == "D"]
         DATA_ARQ        = linha['DATA_ARQ'].values[0]
@@ -194,12 +192,12 @@ class AtualizandoSistema:
         saldos_de_virada_offline = pd.DataFrame.from_dict(js_saldos_virada, orient='index')   
 
         for TERMINAL in lst_terminais_ativos:
-
+            print(f"\t {TERMINAL}")
             DESCARGAS_ATIVAS = saldos_de_virada_offline.loc[TERMINAL][saldos_de_virada_offline.loc[TERMINAL] > 0].index.tolist()
             DESCARGAS_ATIVAS = [item.split('_') for item in DESCARGAS_ATIVAS] #  <-- [['RUMO', 'FARELO'], ['RUMO', 'SOJA'], ['MRS', 'SOJA'], ['RUMO', 'MILHO']]
               
             for ATIVO in DESCARGAS_ATIVAS:
-
+                print(f"\t\t {ATIVO}")
                 if TERMINAL == "SBR"     and ATIVO[1] == "RUMO": ATIVO[1] = "MRS"
                 if TERMINAL == "TECONDI" and ATIVO[1] == "RUMO": ATIVO[1] = "MRS"
 
@@ -306,18 +304,18 @@ class AtualizandoSistema:
                         'VALOR'     :   descarga["DESCARGAS"][ferrovia][produto]["INDICADORES"]["SALDO_DE_VIRADA"],      
                     }
                     try:
+                        
                         Descarga = NAVEGACAO_DESCARGA(PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"], PARAMETROS["PRODUTO"]) 
                         Descarga.EDITAR_SALDO_VIRADA(PARAMETROS) 
+                    
                     except Exception as e:
+                        
                         print(f"[erro] - limparSaldosVirada: {e} - [{ PARAMETROS}]")
 
 def lerDados(JSON, usuario_logado):
 
     ATUALIZAR_DESCARGA()
-
-    
-    
-    
+   
     AtualizandoSistema.limparPrevisao()
     AtualizandoSistema.limparRestricao()
     
