@@ -9,6 +9,8 @@ from    datetime                                                import datetime,
 from    previsao_trens.forms                                    import TremForm
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
 
+pd.set_option('future.no_silent_downcasting', True)
+
 # Ignorando FutureWarning específico
 
 def _json_to_form_data(json_data):
