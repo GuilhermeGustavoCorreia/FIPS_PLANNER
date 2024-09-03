@@ -8,7 +8,7 @@ from    previsao_trens.packages.descarga.EDITAR_DESCARGA        import NAVEGACAO
 from    datetime                                                import datetime, timedelta
 from    previsao_trens.forms                                    import TremForm
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA import ATUALIZAR_DESCARGA
-
+pd.set_option('future.no_silent_downcasting', True)
 # Ignorando FutureWarning específico
 
 def _json_to_form_data(json_data):
@@ -259,8 +259,8 @@ class AtualizandoSistema:
 
                     descarga_offline = pd.DataFrame.from_dict(descarga_dict, orient='index') 
                     descarga_offline.drop(columns=['TOTAIS'], inplace=True)
-                    descarga_offline.replace('-', 0)
-                    descarga_offline = descarga_offline.infer_objects(copy=False)
+                    descarga_offline.replace('-', 0, inplace=True)
+
                     for ATIVO in DESCARGAS_ATIVAS:
 
                         try:
