@@ -187,11 +187,11 @@ class Trem(models.Model):
     def to_slice(self, slice_01, slice_02):
   
         with transaction.atomic():
-   
+            
+            self.delete() 
             Trem.objects.create(**slice_01, created_by=self.created_by)
             Trem.objects.create(**slice_02, created_by=self.created_by)
-            self.delete()  
-        
+                     
     def __str__(self):
         return f"{self.prefixo} -  {self.terminal} - {self.mercadoria} - {self.previsao}"
     
@@ -332,8 +332,10 @@ class TremVazio(models.Model):
 
     def delete(self, *args, **kwargs):
 
-        from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2     import Condensados
-
+        from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2 import Condensados
+        
+        print(f"Removendo: {self}")
+        
         super().delete(*args, **kwargs)
 
         try:
