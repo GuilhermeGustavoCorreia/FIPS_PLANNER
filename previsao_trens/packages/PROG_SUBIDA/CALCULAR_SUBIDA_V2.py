@@ -1177,10 +1177,8 @@ class Condensados():
         hora_inicio = dict_trem["previsao"].replace(minute=0, second=0, microsecond=0)
         hora_fim    = hora_inicio + timedelta(hours=1)
         
-        print(f"inicio: {hora_inicio} fim: {hora_fim}")
-        trens_da_previsao = TremVazio.objects.filter(Q(previsao__gte=hora_inicio) & Q(previsao__lt=hora_fim))
+        trens_da_previsao = TremVazio.objects.filter(Q(previsao__gte=hora_inicio) & Q(previsao__lt=hora_fim), margem = dict_trem["margem"]) #
         
-        print(f"trens_da_previsao: { trens_da_previsao}")
         data_arq = (previsao).strftime('%Y-%m-%d')   
         path_condensado = f"previsao_trens/src/SUBIDA/CONDENSADOS/condensado_{ data_arq }.json"
         
@@ -1190,15 +1188,11 @@ class Condensados():
                 consensados = json.load(arquivo_json)
 
             for ferrovia in ["RUMO", "MRS", "VLI"]:
-                print(f"\t : {ferrovia}")
                 trens_da_ferrovia = trens_da_previsao.filter(ferrovia=ferrovia)
 
                 for segmento in dict_segmentos:
-                    print(f"\t\t : {segmento}")   
-                    print(f"\t\t : {consensados[dict_trem["margem"].upper()]["SAIDAS"]["FERROVIA"][previsao.hour]}")  
-                    
+                       
                     total_segmento = trens_da_ferrovia.aggregate(total=Sum(F(segmento)))['total']
-                    print(f"\t\t total_segmento: {total_segmento}")
                     if total_segmento == None: total_segmento = 0
                     consensados[dict_trem["margem"].upper()]["SAIDAS"]["FERROVIA"][previsao.hour][ferrovia][dict_segmentos[segmento]] = total_segmento
             

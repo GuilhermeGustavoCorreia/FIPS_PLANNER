@@ -9,9 +9,9 @@
             "GRAO": {
                 "SALDO_VIRADA": 0,
                 "SALDO_NAVEGACAO": [
-                    0,
-                    0,
-                    0,
+                    13,
+                    8,
+                    3,
                     0,
                     0,
                     0,
@@ -36,9 +36,9 @@
                 ],
                 "GERACAO_DE_VAZIOS": [
                     0,
-                    0,
-                    0,
-                    0,
+                    5,
+                    5,
+                    3,
                     0,
                     0,
                     0,

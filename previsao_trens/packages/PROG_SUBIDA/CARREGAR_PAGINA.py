@@ -200,6 +200,7 @@ def CARREGAR_PROG_SUBIDA():
         
         SAIDA[CHAVES[i]]["DATA_ARQ"] = DATA_ARQ
         print(DATA_ARQ)
+        
         #region ABRINDO TERMINAIS   [rgb(255,77,197, 0.1)]
         for TERMINAL in lst_TERMINAIS_ATIVOS:
             

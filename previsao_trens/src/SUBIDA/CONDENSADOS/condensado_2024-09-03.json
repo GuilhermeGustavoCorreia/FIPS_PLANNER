@@ -624,30 +624,7 @@
                 },
                 {
                     "RUMO": {
-                        "GRAO": 83,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    },
-                    "MRS": {
                         "GRAO": 0,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    },
-                    "VLI": {
-                        "GRAO": 0,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    }
-                },
-                {
-                    "RUMO": {
-                        "GRAO": 83,
                         "FERTILIZANTE": 0,
                         "CELULOSE": 0,
                         "ACUCAR": 0,
@@ -693,30 +670,7 @@
                 },
                 {
                     "RUMO": {
-                        "GRAO": 83,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    },
-                    "MRS": {
                         "GRAO": 0,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    },
-                    "VLI": {
-                        "GRAO": 0,
-                        "FERTILIZANTE": 0,
-                        "CELULOSE": 0,
-                        "ACUCAR": 0,
-                        "CONTEINER": 0
-                    }
-                },
-                {
-                    "RUMO": {
-                        "GRAO": 82,
                         "FERTILIZANTE": 0,
                         "CELULOSE": 0,
                         "ACUCAR": 0,
@@ -762,7 +716,7 @@
                 },
                 {
                     "RUMO": {
-                        "GRAO": 83,
+                        "GRAO": 0,
                         "FERTILIZANTE": 0,
                         "CELULOSE": 0,
                         "ACUCAR": 0,
@@ -877,7 +831,53 @@
                 },
                 {
                     "RUMO": {
-                        "GRAO": 83,
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "MRS": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    },
+                    "VLI": {
+                        "GRAO": 0,
+                        "FERTILIZANTE": 0,
+                        "CELULOSE": 0,
+                        "ACUCAR": 0,
+                        "CONTEINER": 0
+                    }
+                },
+                {
+                    "RUMO": {
+                        "GRAO": 0,
                         "FERTILIZANTE": 0,
                         "CELULOSE": 0,
                         "ACUCAR": 0,

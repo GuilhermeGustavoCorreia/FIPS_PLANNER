@@ -75,7 +75,7 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
     """
 
     totais_rumo = dict_relatorio_detalhe["RUMO"]["RUMO"]
-    
+    print(totais_rumo["TOTAO_GRAO_ACUCAR"].keys())
     #region MRS
   
     mrs_graos_psn = dict_relatorio_detalhe["MRS"]["GRAOS"]['PSN'][dia_logistico]
@@ -366,7 +366,7 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
     #region RUMO
     
-    rumo_graos_e_acucar = dict_relatorio_detalhe["RUMO"]["TOTAIS"]["GRAO_ACUCAR"][dia_logistico] 
+    rumo_graos_e_acucar = totais_rumo["TOTAO_GRAO_ACUCAR"][dia_logistico] 
     html_total_rumo_graos_e_acucar =  ""
     if (int(rumo_graos_e_acucar["TT_OF"]) + int(rumo_graos_e_acucar["TT_PD"])) > 0:
         html_total_rumo_graos_e_acucar = f"""

@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
 
 
-SATURACAO_ADM = {"MAX": 35, "MIN": 20}
+SATURACAO_ADM = { "MAX": 35, "MIN": 20 }
 ALIVIO_ADM    = 20
 
 
