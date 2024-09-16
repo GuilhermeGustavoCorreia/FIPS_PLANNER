@@ -2233,7 +2233,7 @@ def editarSaldoViradaVazios(PARAMETROS):
     
     if PARAMETROS["TERMINAL"] == "ADM": PARAMETROS["TERMINAL"] = "MOEGA V"
 
-    DIRETORIO_DESCARGA = f"previsao_trens/src/DESCARGAS/{ PARAMETROS["TERMINAL"] }/descarga_{ DATA_ARQ }.json"
+    #DIRETORIO_DESCARGA = f"previsao_trens/src/DESCARGAS/{ PARAMETROS["TERMINAL"] }/descarga_{ DATA_ARQ }.json"
 
     with open(DIRETORIO_DESCARGA) as ARQUIVO_DESCARGA:
         JSON_DESCARGA = json.load(ARQUIVO_DESCARGA)

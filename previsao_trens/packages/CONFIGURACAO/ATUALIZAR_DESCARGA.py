@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import os
 from django.conf import settings
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA as NAVEGACAO_DESCARGA
-
+from django.db.models import Q
 from previsao_trens.packages.PROG_SUBIDA import CALCULAR_SUBIDA
 
 from previsao_trens.models        import Restricao
@@ -83,15 +83,14 @@ def ATUALIZAR_DESCARGA():
                     json.dump(DESCARGA_TERMINAL, ARQUIVO_NOME, indent=4)
         
         #endregion              
-    
-    
+       
     #region ATUALIZANDO RESTRIÇÕES [rgb(255,77,197, 0.3)]
-    RESTRICOES = Restricao.objects.filter(termina_em__gt=ULTIMO_DIA_ANTIGO)
+    restricoes = Restricao.objects.filter(Q(aplicacao_status="PARCIALMENTE_INSERIDA") | Q(aplicacao_status="NAO_INSERIDA"))
 
-    for RESTRICAO in RESTRICOES:   
+    for restricao in restricoes:   
 
-        NAVEGACAO = NAVEGACAO_DESCARGA(RESTRICAO["terminal"], None, RESTRICAO["mercadoria"]) #RESTRICAO NAO TEM FERROVIA
-        NAVEGACAO.EDITAR_RESTRICAO(RESTRICAO, "INSERIR")
+        restricao.delete()
+        restricao.save()
 
     #endregion
 
@@ -150,7 +149,6 @@ def ATUALIZAR_DESCARGA():
 
     TERMINAIS_DESCONDIDERADOS = TERMINAIS_ESPECIAIS["REMOVER"]
     TERMINAIS_ESPECIAIS_NOVOS = os.listdir(os.path.join(DIRETORIO_SUBIDA, "TERMINAIS_ADAPTADOS")) 
-
 
     DIRETORIO_SUBIDA                = "previsao_trens/src/SUBIDA"
     PARAMETROS_TERMINAIS_ESPECIAIS  = "PARAMETROS/TERMINAIS_ESPECIAIS.json" 

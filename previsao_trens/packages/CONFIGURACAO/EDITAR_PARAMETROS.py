@@ -2,26 +2,25 @@ import pandas as pd
 import json
 
 def EDITAR_PARAMETROS(PARAMETROS, ACAO="INSERIR"):
-        
-        DIRETORIO = f'previsao_trens/src/PARAMETROS/{PARAMETROS["TABELA"]}'
 
-        DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
+    DIRETORIO = f'previsao_trens/src/PARAMETROS/{PARAMETROS["TABELA"]}'
+
+    DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
+    DATAFRAME[DATAFRAME < 0] = 0
+    
+    if PARAMETROS["LINHA"] in DATAFRAME.index and PARAMETROS["COLUNA"] in DATAFRAME.columns:
+        
+        if ACAO == "SOMAR":
+            PARAMETROS["NOVO_VALOR"] = DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] + int(PARAMETROS["NOVO_VALOR"])
+    
+        DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] = int(PARAMETROS["NOVO_VALOR"])
         DATAFRAME[DATAFRAME < 0] = 0
-        
-        if PARAMETROS["LINHA"] in DATAFRAME.index and PARAMETROS["COLUNA"] in DATAFRAME.columns:
-            
-            if ACAO == "SOMAR":
-                PARAMETROS["NOVO_VALOR"] = DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] + int(PARAMETROS["NOVO_VALOR"])
-        
-            DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]] = int(PARAMETROS["NOVO_VALOR"])
-            DATAFRAME[DATAFRAME < 0] = 0
 
-            DATAFRAME.loc[PARAMETROS["LINHA"], "TERMINAL"] = DATAFRAME.loc[PARAMETROS['LINHA'], DATAFRAME.columns[1:]].sum()
+        DATAFRAME.loc[PARAMETROS["LINHA"], "TERMINAL"] = DATAFRAME.loc[PARAMETROS['LINHA'], DATAFRAME.columns[1:]].sum()
 
-            DATAFRAME.to_csv(DIRETORIO, sep=";")
+        DATAFRAME.to_csv(DIRETORIO, sep=";")
 
-            return int(DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]])
-
+        return int(DATAFRAME.loc[PARAMETROS["LINHA"], PARAMETROS["COLUNA"]])
 
 
 def EDITAR_PARAMOS_SUBIDAS(PARAMETROS):
@@ -34,13 +33,22 @@ def EDITAR_PARAMOS_SUBIDAS(PARAMETROS):
 
     return int(DATAFRAME.loc[PARAMETROS["TERMINAL"], PARAMETROS["FERROVIA"]])
 
+def EDITAR_PARAMETROS_RESTRICAO(PARAMETROS):
+    
+    DIRETORIO = "previsao_trens/src/PARAMETROS/RESTRICOES_ATIVAS.csv"
+    DATAFRAME = pd.read_csv(DIRETORIO, sep=";", index_col=0)
 
+    if PARAMETROS["TERMINAL"] in DATAFRAME.index and PARAMETROS["MERCADORIA"] in DATAFRAME.columns:
+    
+        DATAFRAME.loc[PARAMETROS["TERMINAL"], PARAMETROS["MERCADORIA"]] = int(PARAMETROS["NOVO_VALOR"])
+        DATAFRAME.loc[PARAMETROS["TERMINAL"], "RESTRICAO"] = DATAFRAME.loc[PARAMETROS["TERMINAL"], DATAFRAME.columns[1:]].sum()
+        
+        DATAFRAME.to_csv(DIRETORIO, sep=";")
+
+        return int(DATAFRAME.loc[PARAMETROS["TERMINAL"], PARAMETROS["MERCADORIA"]])
 
 def EDITAR_PARAMOS_PXO(PARAMETROS):
      
-
-    print(f"EDITANDO: {PARAMETROS}")
-
     with open("previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO:
         jsDESCARGAS = json.load(ARQUIVO)
 

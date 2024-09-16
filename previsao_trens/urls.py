@@ -1,6 +1,9 @@
 from django.urls            import path, include
 from .                      import views
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 
 
@@ -24,9 +27,12 @@ url_previsao  = [
     path('previsao/previsao_trens/alterar_posicao',                     views.alterar_posicao_view, name="alterar_posicao"),
     path('get-terminals/',                                              views.get_terminals,        name='get_terminals'),
 
-    path('previsao_164/',                                               views.previsao_164_view,    name='previsao_164'),
+    path('previsao_164/',                                               views.previsao_164_view,        name='previsao_164'),
+    
 
-
+    path('api/token/',          TokenObtainPairView.as_view(),  name='token_obtain_pair'),
+    path('api/token/refresh/',  TokenRefreshView.as_view(),     name='token_refresh'),
+    path('api/previsao_trens/', views.APITremList.as_view(),    name='trem-list-to-send'),
 ]
 
 url_navegacao = [
@@ -40,13 +46,12 @@ url_apis      = [path('insert_trens_translogic_164/', views.APITremCreateView.as
 urlpatterns   = [
 
     path('', views.redirect_to_login),
-    path('accounts/login/', views.custom_login_view, name='login'),
-
-    path('restricao/',                  views.restricoes_view,      name="restricao"),
-    path('restricao/criar_restricao',   views.criar_restricao_view, name="criar_restricao"),
-    path('restricao/excluir_restricao/<int:id>/', views.excluir_restricao_view,        name="excluir_restricao"),
     
-    path('restricao/editar/<int:id>/',  views.editar_restricao,         name="editar_restricao"),
+    path('accounts/login/',                         views.custom_login_view, name='login'),
+    path('restricao/',                              views.restricoes_view,          name="restricao"),
+    path('restricao/criar_restricao',               views.criar_restricao_view,     name="criar_restricao"),
+    path('restricao/excluir_restricao/<int:id>/',   views.excluir_restricao_view,   name="excluir_restricao"),
+    path('restricao/editar/<int:id>/',              views.editar_restricao,         name="editar_restricao"),
 
     
     path('profile/',    views.profile,      name="profile"),

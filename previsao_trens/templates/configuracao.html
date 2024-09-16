@@ -27,6 +27,7 @@
         </button>
 
         <section>
+            
             <h2  id="SECAO_DESCARGAS_ATIVAS"    class="SECAO_CONFIGURACAO">Descargas Ativas</h2>
             <div id="CONTEUDO_DESCARGAS_ATIVAS" class="CONTEUDO_CONFIGURACAO">
                     
@@ -40,17 +41,24 @@
                             <th>RUMO</th>
                             <th>MRS</th>
                             <th>VLI</th>
+                            <th>RESTRIÇÃO</th>
                         </thead>
 
                         <tbody>
 
                             {% for terminal, item in CONTEUDO.items %} 
+                            
                             <tr>
+
                                 <th>{{ terminal }}</th>
-                                <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
-                                <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
-                                <td name="DESCARGAS_ATIVAS" class="EDITAVEL" headers="VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
+
+                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
+                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
+                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
+                                <td name="RESTRICOES_ATIVAS"    class="EDITAVEL" headers="{{ PRODUTO }}"      id="{{ terminal }}">{{ item.RESTRICAO  }}</td>
+
                             </tr>
+
                             {% endfor %}
 
                         </tbody>
@@ -212,6 +220,37 @@ document.body.addEventListener('keypress', function(e) {
                 elementoTransformado.voltar_ao_nomral();
                 celula_selecionada.textContent = response;
                 editando_celula = false;
+            },
+            error: function(xhr) {
+                alert("ERRO")
+            }
+        });
+
+    }
+
+    if ((editando_celula === true) && (e.which === 13) && (ACAO === "RESTRICOES_ATIVAS")){
+
+        NOVO_VALOR = tbEdicao.value
+
+        $.ajax({
+            url: "{% url 'configuracao' %}",
+            type: 'POST',
+            data: {
+
+                'novo_valor':   Number(NOVO_VALOR),
+                'coluna':       celula_selecionada.getAttribute("headers"),
+                'linha':        celula_selecionada.id,
+                'tabela':       tbEdicao.parentNode.parentNode.parentNode.parentNode.id,
+                'ACAO':         "RESTRICOES_ATIVAS",
+                'csrfmiddlewaretoken': "{{ csrf_token }}"
+
+            },
+            success: function(response) {
+
+                elementoTransformado.voltar_ao_nomral();
+                celula_selecionada.textContent = response;
+                editando_celula = false;
+
             },
             error: function(xhr) {
                 alert("ERRO")

@@ -66,7 +66,6 @@ class NAVEGACAO_DESCARGA:
         #DEVE ESTAR AQUI DENTRO, POIS UTILIZARÁ A DESCARGA COMPLETA
         def __CALCULA_FILA__():
             
-
             def __LIMPAR_OCUPACAO__():
 
                 DESCARGA_COMPLETA["OCUPACAO"] = [0] * self.QT_COLUNAS_FULL
@@ -84,7 +83,6 @@ class NAVEGACAO_DESCARGA:
                 UM_ENCOSTE + [index] for index, UM_ENCOSTE in enumerate(DESCARGA_COMPLETA["ENCOSTE"]) if UM_ENCOSTE != [0, 0]
             ]
 
-            
             if SALDO_VIRADA > 0: ORDEM_DE_CHEGADA.insert(0, [SALDO_VIRADA, 101, 0],)
 
             __LIMPAR_OCUPACAO__()
@@ -512,12 +510,13 @@ class NAVEGACAO_DESCARGA:
 
     def EDITAR_RESTRICAO(self, RESTRICAO, ACAO):
         
-
+        #STATUS_RESTRICAO = ""
+        STATUS_RESTRICAO = "PARCIALMENTE_INSERIDA"
         # AQUI INSIRO E REMOVO RESTRICOES
 
         # 1. AQUI RECEBEMOS RESTRICOES VALIDADAS
         # 2. ATIVAMOS A RESTRICAO NA DESCARGA (NÃO TINHA ONDE COLOCAR ESTA FUNCAO...)
-        # 3. TRATAMOS RESTRICOES QUE VAO ALÉM DE D-4 (EM CASO DE INSERIR) (LINHA 337 procurar por RESTRICAO_TERMINA_NO_PERIODO_VIGENTE )
+        # 3. TRATAMOS  RESTRICOES QUE VAO ALÉM DE D-4 (EM CASO DE INSERIR) (LINHA 337 procurar por RESTRICAO_TERMINA_NO_PERIODO_VIGENTE )
         # 4. EXCLUIMOS RESTRICOES QUE VAO ALÉM DE D-1 (DENTRO DO IF ACAO == "REMOVER")
 
         #region PARAMETROS
@@ -540,8 +539,11 @@ class NAVEGACAO_DESCARGA:
         MOTIVO = RESTRICAO["motivo"]
         PCT    = RESTRICAO["porcentagem"]
 
+        
+
         VALOR_ATIVACAO = 1
         if ACAO == "REMOVER":
+            
             MOTIVO = ""
             PCT    = 0
             VALOR_ATIVACAO = 0
@@ -550,6 +552,16 @@ class NAVEGACAO_DESCARGA:
             if not (RESTRICAO["comeca_em"].strftime('%Y-%m-%d') in self.LISTA_DATA_ARQ):    
                 RESTRICAO["comeca_em"] = datetime.strptime(self.PERIODO_VIGENTE.iloc[0]["DATA_ARQ"], "%Y-%m-%d").replace(hour=1, minute=0, second=0)
         
+        else:
+
+            #ESTA INSEINDO UMA RESTRIÇÃO QUE NEM COMEÇOU
+            if  (not (RESTRICAO["comeca_em"].strftime('%Y-%m-%d')  in self.LISTA_DATA_ARQ)) and \
+                (not (RESTRICAO["termina_em"].strftime('%Y-%m-%d') in self.LISTA_DATA_ARQ)):   
+
+                STATUS_RESTRICAO = "NAO_INSERIDA"
+
+
+
 
         #region ATIVANDO RESTRICAO NA NAVEGACAO
         
@@ -564,17 +576,20 @@ class NAVEGACAO_DESCARGA:
 
         #endregion
 
-
         #PRIMEIRO PRECISAMOS SABER EM QUANTAS FERROVIAS VAMOS APLICAR (POIS NEM TODOS OS TERMINAIS TEM TODAS AS FERROVIAS)       
         FERROVIAS = self.INFOS["FERROVIA"]
 
         #PODEMOS INSERIR DO INICIO AO FIM OU DO INICIO ATÉ D+4 23:00
 
         #region DEFININDO ATÉ QUANDO VAI A RESTRIÇÃO (CASO ULTRAPASSE D+4)
+        
         RESTRICAO_TERMINA_NO_PERIODO_VIGENTE = RESTRICAO["termina_em"].strftime('%Y-%m-%d') in self.LISTA_DATA_ARQ
+        
 
         FIM_APLICACAO_RESTRICAO = datetime.strptime(self.LISTA_DATA_ARQ[4] + ' 23', '%Y-%m-%d %H')
         if (RESTRICAO_TERMINA_NO_PERIODO_VIGENTE):
+            
+            STATUS_RESTRICAO = "COMPLETAMENTE_INSERIDA"
             FIM_APLICACAO_RESTRICAO = RESTRICAO["termina_em"]
 
         #endregion
@@ -653,6 +668,8 @@ class NAVEGACAO_DESCARGA:
         
         self.__CALCULAR_TOTAIS__()
         self.__SALVAR__()
+
+        return STATUS_RESTRICAO
 
     def atualizar(self, trem):
 
@@ -777,7 +794,6 @@ class NAVEGACAO_DESCARGA:
 
         encoste = datetime.strptime(f"{data_arq} {hora:02d}:00", "%Y-%m-%d %H:%M")
         
-
         trem = Trem.objects.filter(
             terminal        = Terminal.objects.get(nome=self.NM_TERMINAL),
             mercadoria      = Mercadoria.objects.get(nome=self.PRODUTO),

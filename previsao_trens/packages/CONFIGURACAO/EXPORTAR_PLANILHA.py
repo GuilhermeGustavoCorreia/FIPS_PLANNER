@@ -267,7 +267,9 @@ class EXPORTAR_PLANILHA():
 
                 LINHA_PREFIXO = map_TERMINAIS[TERMINAL]["LIMITES"]["INICIO"] + 2
                 LINHA_VAGOES  = map_TERMINAIS[TERMINAL]["LIMITES"]["INICIO"] + 3
-
+                LINHA_PEDRA   = map_TERMINAIS[TERMINAL]["LIMITES"]["INICIO"] + 4
+                LINHA_FINAL   = map_TERMINAIS[TERMINAL]["LIMITES"]["FIM"] - 2
+                
                 #region INSERINDO VALORES
                 for DIA in COLUNAS.keys():
 
@@ -279,9 +281,10 @@ class EXPORTAR_PLANILHA():
                     #region INSERINDO PREFIXO E CHEGADA
                     for i in range(24):
                         
-                        NAVEGACAO.cell(row =LINHA_PREFIXO, column=(i + COLUNAS[DIA]),   value=DESCARGA["PREFIXO"][i][0])
-                        NAVEGACAO.cell(row =LINHA_VAGOES,  column=(i + COLUNAS[DIA]),   value=DESCARGA["CHEGADA"][i][0])
-                        
+                        NAVEGACAO.cell(row = LINHA_PREFIXO, column=(i + COLUNAS[DIA]),   value=DESCARGA["PREFIXO"][i][0])
+                        NAVEGACAO.cell(row = LINHA_VAGOES,  column=(i + COLUNAS[DIA]),   value=DESCARGA["CHEGADA"][i][0])
+                        NAVEGACAO.cell(row = LINHA_PEDRA,   column=(i + COLUNAS[DIA]),   value=DESCARGA["PEDRA"][i])
+                    
                     #endregion
 
                     #region INSERINDO DESCARGAS
@@ -292,6 +295,7 @@ class EXPORTAR_PLANILHA():
 
                         LINHA_ENCOSTE       = map_TERMINAIS[TERMINAL][FERROVIA][PRODUTO]
                         LINHA_PRODUTIVIDADE = LINHA_ENCOSTE + 2
+                        LINHA_SALDO         = LINHA_ENCOSTE + 1
 
                         if DIA == "D":
                             SALDO_VIRADA = DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]
@@ -299,12 +303,52 @@ class EXPORTAR_PLANILHA():
 
                         for i in range(24):
                         
-                            NAVEGACAO.cell(row =LINHA_ENCOSTE,         column=(i + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][i][0])
-                            NAVEGACAO.cell(row =LINHA_PRODUTIVIDADE,   column=(i + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["PRODUTIVIDADE"][i])
+                            NAVEGACAO.cell(row = LINHA_ENCOSTE,          column=(i + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["ENCOSTE"][i][0])
+                            NAVEGACAO.cell(row = LINHA_SALDO,            column=(i + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["SALDO"][i])
+                            NAVEGACAO.cell(row = LINHA_PRODUTIVIDADE,    column=(i + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["PRODUTIVIDADE"][i])
 
+                        #region INSERINDO TOTAIS PEDRA CHEGADA
+
+                        NAVEGACAO.cell(row = LINHA_SALDO,            column=(24 + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_CHEGADA"])
+                        NAVEGACAO.cell(row = LINHA_PRODUTIVIDADE,    column=(25 + COLUNAS[DIA]),   value=DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["TOTAL_PRODUTIVIDADE"])    
+
+                        #endregion            
 
                     #endregion
                     
+                    #region inserindo totais
+
+                    #INSERINDO PEDRA
+
+
+                    NAVEGACAO.cell(row = LINHA_PEDRA,   column=(24 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["TOTAL_SALDO"])
+                    NAVEGACAO.cell(row = LINHA_PEDRA,   column=(25 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["TOTAL_PEDRA"])
+
+
+                    #TOTAIS POR PERIODO DAS FERROVIAS
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 2 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["RUMO"]["P1"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 3 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["MRS"]["P1"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 4 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["VLI"]["P1"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 5 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["TOTAL"]["P1"])
+
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 8 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["RUMO"]["P2"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=( 9 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["MRS"]["P2"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(10 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["VLI"]["P2"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(11 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["TOTAL"]["P2"])
+
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(14 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["RUMO"]["P3"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(15 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["MRS"]["P3"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(16 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["VLI"]["P3"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(17 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["TOTAL"]["P3"])
+
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(20 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["RUMO"]["P4"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(21 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["MRS"]["P4"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(22 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["VLI"]["P4"])
+                    NAVEGACAO.cell(row = LINHA_FINAL,   column=(23 + COLUNAS[DIA]),   value=DESCARGA["INDICADORES"]["PEDRAS"]["TOTAL"]["P4"])
+
+
+                    #endregion
+
 
 
                     if TERMINAL in TERMINAIS_COM_RESTRICAO:
@@ -447,16 +491,12 @@ class EXPORTAR_PLANILHA():
 
 def gerar_planilha(USUARIO_LOGADO):
     
-
-
-
     PLANILHA = EXPORTAR_PLANILHA()
     PLANILHA.inserir_previsao()
     PLANILHA.inserir_navegacao()
     PLANILHA.inserir_restricao()
     PLANILHA.inserir_previsao_subida()
     PLANILHA.inserir_folha_capa(USUARIO_LOGADO)
-    #PLANILHA.salvar()
     
     return PLANILHA.PLANILHA
     

@@ -14,14 +14,14 @@ from tempfile import NamedTemporaryFile
 
 from .models        import Trem, Restricao, TremVazio, Terminal, Mercadoria
 from .forms         import UploadFileForm, TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm, TerminalForm, DividirTremForm
-from .serializers   import TremSerializer
-
-from rest_framework             import status
+from .serializers   import TremSerializer, TremSerializerToSend
+from .permissions   import IsInAllowedGroup
+from rest_framework             import status, generics
 from rest_framework.views       import APIView
 from rest_framework.response    import Response
 
 from    previsao_trens.packages.CONFIGURACAO.CARREGAR_PAGINA                        import ABRIR_TERMINAIS_ATIVOS
-from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS                      import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO
+from    previsao_trens.packages.CONFIGURACAO.EDITAR_PARAMETROS                      import EDITAR_PARAMETROS, EDITAR_PARAMOS_SUBIDAS, EDITAR_PARAMOS_PXO, EDITAR_PARAMETROS_RESTRICAO
 from    previsao_trens.packages.CONFIGURACAO.ATUALIZAR_DESCARGA                     import ATUALIZAR_DESCARGA
 from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA                      import gerar_planilha, gerar_planilha_antiga
 from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE                         import gerar_planilha_detalhe
@@ -56,7 +56,6 @@ def REQUEST_PARA_DICT(request):
 def redirect_to_login(request):
     
     return redirect(reverse('login'))
-
 
 #region NAVEGACAO
 @login_required
@@ -152,8 +151,6 @@ def editar_encoste(request):
             return JsonResponse(descargas_atualizadas, safe=False)
 
 #endregion
-
-
 
 def custom_login_view(request):
 
@@ -464,6 +461,12 @@ class APITremCreateView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class APITremList(generics.ListAPIView):
+    
+    queryset         = Trem.objects.all()
+    serializer_class = TremSerializerToSend
+
 @login_required
 def previsao_164_view(request):
 
@@ -495,20 +498,24 @@ def criar_restricao_view(request):
     
     if request.method == 'POST':
         
-        resultado = Restricao.criar_restricao(request.POST, request.user)
-        
-        if resultado["status"]: 
-            
+        form = RestricaoForm(request.POST)
+
+        if form.is_valid():
+
+            restricao = form.save(commit=False)
+            restricao.created_by = request.user
+            restricao.save()
+               
             return redirect('restricao')
         
         else:
 
-            if resultado["descricao"]:  messages.error(request, resultado["descricao"])
-            if resultado["errors"]:     messages.error(request, resultado["errors"])
+            messages.error(request, form.errors)
 
-            return carregar_restricoes(request, resultado["form"], "CRIAR")
+            return carregar_restricoes(request, form, "CRIAR")
 
-    else: return redirect('restricao')
+    else: 
+        return redirect('restricao')
    
 @login_required
 def excluir_restricao_view(request, id):
@@ -670,11 +677,21 @@ def configuracao(request):
 
             return HttpResponse(EDITAR_PARAMOS_SUBIDAS(PARAMETROS))
         
-        elif    ACAO == "PXO":
+        elif    ACAO == "RESTRICOES_ATIVAS":
+            
+            PARAMETROS = {
+                "NOVO_VALOR"    : request.POST.get('novo_valor', 0),
+                "MERCADORIA"    : request.POST.get('coluna'    , 0),
+                "TERMINAL"      : request.POST.get('linha'     , 0)
+            }
 
+            return HttpResponse(EDITAR_PARAMETROS_RESTRICAO(PARAMETROS))
+        
+        elif    ACAO == "PXO":
+            
             PARAMETROS = {
                 "NOVO_VALOR":   request.POST.get('NOVO_VALOR', 0),
-                "TIPO":         request.POST.get('TIPO'  , 0),
+                "TIPO":         request.POST.get('TIPO'      , 0),
                 "TERMINAL":     request.POST.get('TERMINAL'  , 0)
             }
 

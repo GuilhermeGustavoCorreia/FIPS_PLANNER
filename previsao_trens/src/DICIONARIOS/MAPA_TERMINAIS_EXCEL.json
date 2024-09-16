@@ -24,7 +24,7 @@
         "VLI"       : {"ACUCAR": 122}
     },
     "CUTRALE": {
-        "LIMITES"   : {"INICIO": 129, "FIM":   163},
+        "LIMITES"   : {"INICIO": 129, "FIM"  : 163},
         "RUMO"      : {"FARELO": 134, "MILHO": 143, "SOJA": 152}, 
         "MRS"       : {"FARELO": 137, "MILHO": 146, "SOJA": 155},
         "VLI"       : {"FARELO": 140, "MILHO": 149, "SOJA": 158}

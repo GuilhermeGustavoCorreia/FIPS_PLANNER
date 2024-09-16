@@ -130,33 +130,33 @@ class Trem(models.Model):
                     CalculoNavegacaoAntigo = Navegacao(trem_atual.terminal.nome, trem_atual.ferrovia, trem_atual.mercadoria.nome)
                     CalculoNavegacaoAntigo.atualizar(trem_atual)
 
-        #endregion
+            #endregion
 
-        self.prefixo = self.prefixo.upper()
+            self.prefixo = self.prefixo.upper()
 
-        #ajustando previsão (colocando este trem como o primeiro da lista)
-        if self._state.adding and self.previsao:
+            #ajustando previsão (colocando este trem como o primeiro da lista)
+            if self._state.adding and self.previsao:
 
-            Trem.objects.filter(
+                Trem.objects.filter(
+                    
+                    previsao__year  = self.previsao.year, 
+                    previsao__month = self.previsao.month, 
+                    previsao__day   = self.previsao.day
+                    
+                ).update(posicao_previsao=F('posicao_previsao') + 1)
+
+            #inserindo tempo de encoste
+            if self.previsao: 
                 
-                previsao__year  = self.previsao.year, 
-                previsao__month = self.previsao.month, 
-                previsao__day   = self.previsao.day
-                
-            ).update(posicao_previsao=F('posicao_previsao') + 1)
+                self.encoste = (self.previsao + timedelta(hours=self.terminal.tempo_encoste))
+    
+                super().save(*args, **kwargs)
+                CalculoNavegacao = Navegacao(self.terminal.nome, self.ferrovia, self.mercadoria.nome)
+                CalculoNavegacao.atualizar(self)
 
-        #inserindo tempo de encoste
-        if self.previsao: 
-            
-            self.encoste = (self.previsao + timedelta(hours=self.terminal.tempo_encoste))
- 
-            super().save(*args, **kwargs)
-            CalculoNavegacao = Navegacao(self.terminal.nome, self.ferrovia, self.mercadoria.nome)
-            CalculoNavegacao.atualizar(self)
+            else:
 
-        else:
-
-            super().save(*args, **kwargs)    
+                super().save(*args, **kwargs)    
 
     def delete(self, *args, **kwargs):
 
@@ -208,8 +208,12 @@ class Restricao(models.Model):
     motivo      = models.CharField(max_length=50)
     comentario  = models.CharField(max_length=50) 
 
+    aplicacao_status = models.CharField(max_length=50, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
 
     @staticmethod
     def json_to_form(json_data):
@@ -230,6 +234,7 @@ class Restricao(models.Model):
         from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA
 
         with transaction.atomic():
+            
             restricao_antiga = model_to_dict(self)
             self.delete()
 
@@ -271,24 +276,81 @@ class Restricao(models.Model):
                     try:
                         
                         navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"])
-                        navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
+                        status_restricao = navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
                     
                     except KeyError:
                         
                         navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"], DIA_ANTERIOR=True)
-                        navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
+                        status_restricao = navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
                     
-                    restricao_objeto = restricao_form.save(commit=False)
-                    restricao_objeto.created_by = user
-                    restricao_objeto.save()
+                    print(status_restricao)
+                    
                 
                 except IndexError:
+                    
+                    status_restricao = "NAO_INSERIDA"
                     pass
 
+                restricao_objeto = restricao_form.save(commit=False)
+                restricao_objeto.aplicacao_status = status_restricao
+                restricao_objeto.created_by = user
+                restricao_objeto.save()
+
                 return {"status": True, "descricao": "Restrição criada com sucesso!", "errors": None, "form": restricao_form}
+            
             else:
 
-                return {"status": False, "descricao": None, "errors": restricao_form.errors, "form": restricao_form}
+                return { "status": False, "descricao": None, "errors": restricao_form.errors, "form": restricao_form }
+
+    def save(self, *args, **kwargs):
+
+        from previsao_trens.packages.descarga.EDITAR_DESCARGA   import NAVEGACAO_DESCARGA
+
+        try: #CASO ESTEJA FORA DA DATA
+
+            dict_restricao = model_to_dict(self)
+
+            try:
+                
+                navegacao = NAVEGACAO_DESCARGA(self.terminal, None, self.mercadoria)
+                status_restricao = navegacao.EDITAR_RESTRICAO(dict_restricao, "INSERIR")
+            
+            except KeyError:
+                
+                navegacao = NAVEGACAO_DESCARGA(self.terminal, None, self.mercadoria, DIA_ANTERIOR=True)
+                status_restricao = navegacao.EDITAR_RESTRICAO(dict_restricao, "INSERIR")
+                 
+        except IndexError:
+            
+            status_restricao = "NAO_INSERIDA"
+            pass
+
+        self.aplicacao_status = status_restricao
+
+        super().save(*args, **kwargs)           
+
+    def delete(self, *args, **kwargs):
+
+        from previsao_trens.packages.descarga.EDITAR_DESCARGA import NAVEGACAO_DESCARGA
+
+        with transaction.atomic():
+            
+            restricao_antiga = model_to_dict(self)
+            super().delete(*args, **kwargs)
+
+        try: #CASO ESTEJA FORA DA DATA
+            try:
+                
+                navegacao = NAVEGACAO_DESCARGA(restricao_antiga["terminal"], None, restricao_antiga["mercadoria"])
+                navegacao.EDITAR_RESTRICAO(restricao_antiga, "REMOVER")
+            
+            except KeyError:
+                
+                navegacao = NAVEGACAO_DESCARGA(restricao_antiga["terminal"], None, restricao_antiga["mercadoria"], DIA_ANTERIOR=True)
+                navegacao.EDITAR_RESTRICAO(restricao_antiga, "REMOVER")
+        
+        except IndexError:
+            pass
 
     def __str__(self):
 
@@ -333,9 +395,7 @@ class TremVazio(models.Model):
     def delete(self, *args, **kwargs):
 
         from previsao_trens.packages.PROG_SUBIDA.CALCULAR_SUBIDA_V2 import Condensados
-        
-        print(f"Removendo: {self}")
-        
+              
         super().delete(*args, **kwargs)
 
         try:

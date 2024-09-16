@@ -22,6 +22,7 @@
 
             <thead>
                 <th class="COL_PP">             </th>
+                <th class="COL_PP">             </th>
                 <th class="COL_M">TERMINAL      </th>
                 <th class="COL_M">MERCADORIA    </th>
                 <th class="COL_G">INICIO        </th>
@@ -36,7 +37,21 @@
 
                 {% for RESTRICAO in RESTRICOES %}
                     <tr class="RES">
+                        <td>
+                            
+                            {% if RESTRICAO.aplicacao_status == "COMPLETAMENTE_INSERIDA" %}
+                                <div class="COMPLETAMENTE_INSERIDA">.</div>
+                            {% endif %}
+                            
+                            {% if RESTRICAO.aplicacao_status == "PARCIALMENTE_INSERIDA" %}
+                                <div class="PARCIALMENTE_INSERIDA">.</div>
+                            {% endif %}
+                            
+                            {% if RESTRICAO.aplicacao_status == "NAO_INSERIDA" %}
+                                <div class="NAO_INSERIDA">.</div>
+                            {% endif %}
 
+                        </td>
                         <td>{{ forloop.counter0                        }}</td>
                         <td>{{ RESTRICAO.terminal                      }}</td>
                         <td>{{ RESTRICAO.mercadoria                    }}</td>
@@ -44,7 +59,7 @@
                         <td>{{ RESTRICAO.termina_em  |date:"H:i d/m/Y" }}</td>
                         <td>{{ RESTRICAO.porcentagem                   }}</td>
                         <td>{{ RESTRICAO.motivo                        }}</td>
-                        <td class="COMENTARIO">{{ RESTRICAO.comentario                    }}</td>
+                        <td class="COMENTARIO">{{ RESTRICAO.comentario }}</td>
                         
                         {% if user|can:'editar_itens' %}
                         <td>
