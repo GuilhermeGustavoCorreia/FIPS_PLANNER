@@ -94,9 +94,11 @@
 
     <h1>PREVISÃO - IMPORTAÇÃO</h1>
     
+    {% if user|can:'editar_subida' %}
     <button type="button"  data-acao="CRIAR_TREM" data-criar-trem-url="{% url 'novo_trem_previsao' %}" class="BOTAO LARANJA" data-toggle="modal" data-target="#modalAdicionarTrem" onclick="abriFormulario()">
         Novo Trem
     </button>
+    {% endif %}
 
     {% if previsoes.direita or previsoes.esquerda %}
     {% if previsoes.direita %}

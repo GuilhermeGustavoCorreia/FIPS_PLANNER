@@ -116,6 +116,24 @@ function celula_modo_edicao(celula_selecionada){
   }
   //#endregion
 
+  //#region RESTRICOES_ATIVAS
+  else if ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "RESTRICOES_ATIVAS"))
+  {
+    ACAO = "RESTRICOES_ATIVAS"
+    elementoTransformado = new mudarElemento(celula_selecionada);
+    tbEdicao = elementoTransformado.para_textBox();
+    tbEdicao.focus();
+    editando_celula = true;
+  }
+  else if ((editando_celula === true) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "RESTRICOES_ATIVAS"))  
+  {
+    ACAO  = "RESTRICOES_ATIVAS"
+    tbEdicao = elementoTransformado.voltar_ao_nomral();
+    elementoTransformado = new mudarElemento(celula_selecionada);
+    tbEdicao = elementoTransformado.para_textBox();
+  }
+  //#endregion
+
   //#region SUBIDAS_ATIVAS
   else if ((editando_celula === false) && (celula_selecionada.tagName === "TD") && (celula_selecionada.getAttribute('name') === "SUBIDAS_ATIVAS"))
   {
@@ -128,7 +146,6 @@ function celula_modo_edicao(celula_selecionada){
       FERROVIA = celula_selecionada.dataset.ferrovia
       TERMINAL = celula_selecionada.dataset.terminal
   }
-
   else if ((editando_celula === true) && (celula_selecionada.tagName !== "INPUT") )  
   {
       ACAO = null
@@ -158,6 +175,7 @@ function celula_modo_edicao(celula_selecionada){
       editando_celula = false;
   }
   //#endregion
+
 }
 
 document.body.addEventListener('click', async function(event) {

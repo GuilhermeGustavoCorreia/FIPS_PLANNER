@@ -1,5 +1,7 @@
 # Use uma imagem base do Python
-FROM python:3.10
+FROM python:3.12.1
+
+
 # Defina o diretório de trabalho no contêiner
 WORKDIR /app
 
@@ -7,11 +9,14 @@ WORKDIR /app
 # Copie o arquivo de dependências para o contêiner
 COPY requirements.txt .
 
+
 # Instale as dependências do projeto
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 # Copie o restante do código para o contêiner
 COPY . .
+
 
 # Defina a variável de ambiente para o Django
 ENV PYTHONDONTWRITEBYTECODE 1
