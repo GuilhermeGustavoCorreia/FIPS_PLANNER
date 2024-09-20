@@ -9,7 +9,7 @@
             "ACUCAR": {
                 "SALDO_VIRADA": 0,
                 "SALDO_NAVEGACAO": [
-                    0,
+                    5,
                     0,
                     0,
                     0,
@@ -35,8 +35,8 @@
                     0
                 ],
                 "GERACAO_DE_VAZIOS": [
-                    0,
-                    0,
+                    5,
+                    5,
                     0,
                     0,
                     0,
@@ -87,8 +87,8 @@
                     0
                 ],
                 "ALIVIO_DE_VAZIOS": [
-                    0,
-                    0,
+                    20,
+                    5,
                     0,
                     0,
                     0,
@@ -139,8 +139,8 @@
                     0
                 ],
                 "SALDO_DE_VAZIOS": [
-                    0,
-                    0,
+                    20,
+                    5,
                     0,
                     0,
                     0,

@@ -10,7 +10,7 @@
 
     <h2>Novo Trem</h2>
 
-    <form action="{% url 'criar_trem_subida' %}" method="POST">
+    <form action="{% url 'criar_trem_subida' %}" id="fomulario_trem_subida" method="POST">
         
         {% csrf_token %}
 
@@ -85,7 +85,8 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <button type="submit" class="BOTAO VERDE" >Salvar</button>
+        <button type="submit" class="BOTAO VERDE" id="btnEnviar" >Salvar</button>
+        <div id="loading" style="display:none;">Processando...</div>
     </form>
 
 </dialog>
@@ -451,12 +452,24 @@
         modal.showModal()
         form.action        = "{% url 'criar_trem_subida' %}";
     });
+
+
     
 </script>
 {% endif %}
 <!--#endregion-->
 
 <script>
+
+    document.getElementById('fomulario_trem_subida').addEventListener('submit', function(event) {
+        
+        var submitButton = document.getElementById('btnEnviar');
+        var loadingIndicator = document.getElementById('loading');
+        
+        submitButton.disabled = true;
+        loadingIndicator.style.display = 'block'; // Exibe o indicador de carregamento
+    
+    });
 
     const condensados   = {{ condensados | safe }};
     const dias          = {{ dias | safe }};

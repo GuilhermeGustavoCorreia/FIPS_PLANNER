@@ -97,3 +97,9 @@ fieldset {
 
 
 .VERDE {margin-top: 10px; right: 0px;}
+
+#btnEnviar:disabled {
+    background-color: var(--verde-floresta-c); /* Cinza */
+    color: white;
+    cursor: not-allowed;
+  }

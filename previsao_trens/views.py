@@ -975,8 +975,14 @@ def criar_trem_subida_view(request):
 @login_required   
 def excluir_trem_subida_view(request, id_trem_vazio):
 
-    trem = TremVazio.objects.get(pk=id_trem_vazio)
-    trem.delete()
+    try:
+        
+        trem = TremVazio.objects.get(pk=id_trem_vazio)
+        trem.delete()
+    
+    except TremVazio.DoesNotExist:
+     
+        pass
 
     return redirect('previsao_subida')
 
