@@ -583,8 +583,110 @@
             }
         }
     },
-    "CLI": {
+    "BRACELL": {
         "ORDEM": 10,
+        "TIPO": [
+            "DESCARGA"
+        ],
+        "MARGEM": "DIREITA",
+        "PATIO": "PMC",
+        "FILA": 4,
+        "MIN_ALIVIO": 0,
+        "SEGMENTO": "CELULOSE",
+        "SATURACAO": 50,
+        "SATURACAO_VAZIO": {
+            "RUMO": {
+                "MIN": 63,
+                "MAX": 67
+            },
+            "MRS": {
+                "MIN": 63,
+                "MAX": 67
+            },
+            "VLI": {
+                "MIN": 63,
+                "MAX": 67
+            }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 8.0,
+            "OCIOSIDADE": 15.0
+        },
+        "ALIVIO": 30,
+        "PRODUTOS": [
+            "CELULOSE"
+        ],
+        "FERROVIA": [
+            "RUMO",
+            "MRS",
+            "VLI"
+        ],
+        "SLA": 3,
+        "PRODUTIVIDADE": {
+            "RUMO": {
+                "CELULOSE": 5
+            },
+            "MRS": {
+                "CELULOSE": 10
+            },
+            "VLI": {
+                "CELULOSE": 5
+            }
+        }
+    },
+    "SUZANO": {
+        "ORDEM": 11,
+        "TIPO": [
+            "DESCARGA"
+        ],
+        "MARGEM": "DIREITA",
+        "PATIO": "PMC",
+        "FILA": 4,
+        "MIN_ALIVIO": 0,
+        "SEGMENTO": "CELULOSE",
+        "SATURACAO": 50,
+        "SATURACAO_VAZIO": {
+            "RUMO": {
+                "MIN": 26,
+                "MAX": 40
+            },
+            "MRS": {
+                "MIN": 26,
+                "MAX": 40
+            },
+            "VLI": {
+                "MIN": 26,
+                "MAX": 40
+            }
+        },
+        "PXO": {
+            "PRODUTIVIDADE": 5.0,
+            "OCIOSIDADE": 20.0
+        },
+        "ALIVIO": 30,
+        "PRODUTOS": [
+            "CELULOSE"
+        ],
+        "FERROVIA": [
+            "RUMO",
+            "MRS",
+            "VLI"
+        ],
+        "SLA": 2,
+        "PRODUTIVIDADE": {
+            "RUMO": {
+                "CELULOSE": 0
+            },
+            "MRS": {
+                "CELULOSE": 0
+            },
+            "VLI": {
+                "CELULOSE": 0
+            }
+        }
+    },
+    "CLI": {
+        "ORDEM": 12,
         "TIPO": [
             "DESCARGA"
         ],
@@ -643,7 +745,7 @@
         }
     },
     "CLI ACUCAR": {
-        "ORDEM": 11,
+        "ORDEM": 13,
         "TIPO": [
             "DESCARGA"
         ],
@@ -694,7 +796,7 @@
         }
     },
     "TAC": {
-        "ORDEM": 12,
+        "ORDEM": 14,
         "TIPO": [
             "DESCARGA"
         ],
@@ -753,7 +855,7 @@
         }
     },
     "TAC ACUCAR": {
-        "ORDEM": 13,
+        "ORDEM": 15,
         "TIPO": [
             "DESCARGA"
         ],
@@ -804,7 +906,7 @@
         }
     },
     "T12A": {
-        "ORDEM": 14,
+        "ORDEM": 16,
         "TIPO": [
             "DESCARGA"
         ],
@@ -863,7 +965,7 @@
         }
     },
     "TERMAG": {
-        "ORDEM": 15,
+        "ORDEM": 17,
         "TIPO": [
             "CARGA"
         ],
@@ -922,7 +1024,7 @@
         }
     },
     "SBR": {
-        "ORDEM": 16,
+        "ORDEM": 18,
         "TIPO": [
             "CARGA",
             "DESCARGA"
@@ -972,7 +1074,7 @@
         }
     },
     "DPW": {
-        "ORDEM": 18,
+        "ORDEM": 19,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1031,7 +1133,7 @@
         }
     },
     "DPW SUZANO": {
-        "ORDEM": 17,
+        "ORDEM": 20,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1081,7 +1183,7 @@
         }
     },
     "DPW CONTEINER": {
-        "ORDEM": 19,
+        "ORDEM": 21,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1132,7 +1234,7 @@
         }
     },
     "TIPLAM": {
-        "ORDEM": 20,
+        "ORDEM": 22,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1191,7 +1293,7 @@
         }
     },
     "TIPLAM ACUCAR": {
-        "ORDEM": 21,
+        "ORDEM": 23,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1242,7 +1344,7 @@
         }
     },
     "TIPLAM FERTILIZANTES": {
-        "ORDEM": 22,
+        "ORDEM": 24,
         "TIPO": [
             "CARGA"
         ],
@@ -1301,7 +1403,7 @@
         }
     },
     "TERLOC": {
-        "ORDEM": 23,
+        "ORDEM": 25,
         "TIPO": [
             "DESCARGA",
             "CARGA"
@@ -1353,7 +1455,7 @@
         }
     },
     "ECOPORTO": {
-        "ORDEM": 24,
+        "ORDEM": 26,
         "TIPO": [
             "DESCARGA",
             "CARGA"
@@ -1405,7 +1507,7 @@
         }
     },
     "TERLOC FERTILIZANTES": {
-        "ORDEM": 25,
+        "ORDEM": 27,
         "TIPO": [
             "CARGA"
         ],
@@ -1464,7 +1566,7 @@
         }
     },
     "TEC": {
-        "ORDEM": 26,
+        "ORDEM": 28,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1523,7 +1625,7 @@
         }
     },
     "TEC ACUCAR": {
-        "ORDEM": 27,
+        "ORDEM": 29,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1574,7 +1676,7 @@
         }
     },
     "HIDROVIAS": {
-        "ORDEM": 28,
+        "ORDEM": 30,
         "TIPO": [
             "CARGA"
         ],
@@ -1633,7 +1735,7 @@
         }
     },
     "STS-53": {
-        "ORDEM": 29,
+        "ORDEM": 31,
         "TIPO": [
             "CARGA"
         ],
@@ -1692,7 +1794,7 @@
         }
     },
     "T31": {
-        "ORDEM": 30,
+        "ORDEM": 32,
         "TIPO": [
             "DESCARGA"
         ],
@@ -1739,108 +1841,6 @@
             },
             "VLI": {
                 "CELULOSE": 0
-            }
-        }
-    },
-    "SUZANO": {
-        "ORDEM": 31,
-        "TIPO": [
-            "DESCARGA"
-        ],
-        "MARGEM": "DIREITA",
-        "PATIO": "PMC",
-        "FILA": 4,
-        "MIN_ALIVIO": 0,
-        "SEGMENTO": "CELULOSE",
-        "SATURACAO": 50,
-        "SATURACAO_VAZIO": {
-            "RUMO": {
-                "MIN": 26,
-                "MAX": 40
-            },
-            "MRS": {
-                "MIN": 26,
-                "MAX": 40
-            },
-            "VLI": {
-                "MIN": 26,
-                "MAX": 40
-            }
-        },
-        "PXO": {
-            "PRODUTIVIDADE": 5.0,
-            "OCIOSIDADE": 20.0
-        },
-        "ALIVIO": 30,
-        "PRODUTOS": [
-            "CELULOSE"
-        ],
-        "FERROVIA": [
-            "RUMO",
-            "MRS",
-            "VLI"
-        ],
-        "SLA": 2,
-        "PRODUTIVIDADE": {
-            "RUMO": {
-                "CELULOSE": 0
-            },
-            "MRS": {
-                "CELULOSE": 0
-            },
-            "VLI": {
-                "CELULOSE": 0
-            }
-        }
-    },
-    "BRACELL": {
-        "ORDEM": 32,
-        "TIPO": [
-            "DESCARGA"
-        ],
-        "MARGEM": "DIREITA",
-        "PATIO": "PMC",
-        "FILA": 4,
-        "MIN_ALIVIO": 0,
-        "SEGMENTO": "CELULOSE",
-        "SATURACAO": 50,
-        "SATURACAO_VAZIO": {
-            "RUMO": {
-                "MIN": 63,
-                "MAX": 67
-            },
-            "MRS": {
-                "MIN": 63,
-                "MAX": 67
-            },
-            "VLI": {
-                "MIN": 63,
-                "MAX": 67
-            }
-        },
-        "PXO": {
-            "PRODUTIVIDADE": 8.0,
-            "OCIOSIDADE": 15.0
-        },
-        "ALIVIO": 30,
-        "PRODUTOS": [
-            "CELULOSE"
-        ],
-        "FERROVIA": [
-            "RUMO",
-            "MRS",
-            "VLI"
-        ],
-        "SLA": 3,
-        "PRODUTIVIDADE": {
-            "RUMO": {
-                "CELULOSE": 5
-            },
-            "MRS": {
-                "CELULOSE": 10
-            },
-            "VLI": {
-                "CELULOSE": 5
             }
         }
     },
