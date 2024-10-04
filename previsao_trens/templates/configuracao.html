@@ -70,19 +70,7 @@
             </div>
         </section>
 
-        <section>
-            <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao de Subida</h2>
-            <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
-                
-                <h1>Insira a planilha no botão abaixo</h1>
-                
-                <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
-                    {% csrf_token %}
-                    {{ FORM_CSV.as_p }}
-                    <button type="submit"  onclick="modo_carregamento()">Upload</button>
-                </form>
-            </div>
-        </section>
+
         
         <section>
 
@@ -110,7 +98,22 @@
         
     {% endif %}
 
-    {% if user|can:'editar_subida' %}    
+    {% if user|can:'editar_subida' %}  
+    
+    <section>
+        <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao de Subida</h2>
+        <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
+            
+            <h1>Insira a planilha no botão abaixo</h1>
+            
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+                {% csrf_token %}
+                {{ FORM_CSV.as_p }}
+                <button type="submit"  onclick="modo_carregamento()">Upload</button>
+            </form>
+        </div>
+    </section>
+    
     <section>
         <h2  id="SECAO_SUBIDAS_ATIVAS"    class="SECAO_CONFIGURACAO">Subidas Ativas</h2>
         <div id="CONTEUDO_SUBIDAS_ATIVAS" class="CONTEUDO_CONFIGURACAO">
