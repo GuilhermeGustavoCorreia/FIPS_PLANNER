@@ -98,7 +98,6 @@ class TremForm(forms.ModelForm):
             raise ValidationError("Erro: Não é possível inserir o trem fora do período de D-1 à D+4.")
         #endregion
 
-
         #region Verificação de terminais
         if terminal.nome == "SBR" and (ferrovia == "RUMO" or ferrovia == "VLI"):
   
@@ -187,7 +186,7 @@ class RestricaoForm(forms.ModelForm):
 
             'porcentagem':   NumberInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': '%'}),
 
-            'motivo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Motivo'}),
+            'motivo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Motivo', 'maxlength': '2'}),
             'comentario':  Textarea(attrs={'class': 'INPUT INPUT_G', 'placeholder': 'Comentário', 'rows': 2}),
 
         }
@@ -203,8 +202,8 @@ class TremVazioForm(forms.ModelForm):
 
     class Meta:
     
-        model = TremVazio
-        fields = '__all__'
+        model   = TremVazio
+        fields  = '__all__'
         widgets = {
             'prefixo':      TextInput(attrs={'class': 'INPUT INPUT_P', 'placeholder': 'Prefixo', 'style': 'text-transform: uppercase;'}),
             'eot':          RadioSelect(),
@@ -254,7 +253,12 @@ class TremVazioForm(forms.ModelForm):
         previsao        = cleaned_data.get('previsao')
         margem          = cleaned_data.get('margem')
         
-        if TremVazio.objects.filter(previsao=previsao, margem=margem).exists():
+
+        trens_existentes = TremVazio.objects.filter(previsao=previsao, margem=margem)
+        if self.instance.pk:  # Editando um trem existente
+            trens_existentes = trens_existentes.exclude(pk=self.instance.pk)
+
+        if trens_existentes.exists():
             raise ValidationError('Já existe um trem com esta previsão.')
         
         # Verificação de data

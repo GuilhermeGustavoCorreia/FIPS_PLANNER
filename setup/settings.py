@@ -26,47 +26,11 @@ SECRET_KEY = 'django-insecure-ncma313p1ssm%ao*u24bnmt#tp1*g63um)gneel(6xw8yd+qk1
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost', '127.0.0.1', 'planner.develop.agfips.com.br']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # settings.py
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level'     : 'DEBUG',
-            'class'     : 'logging.FileHandler',
-            'filename'  : 'mysite.log',
-            'formatter' : 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'MYAPP': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-        'django.utils.autoreload': {  # Add this block to control autoreload logging
-            'handlers': ['file'],
-            'level': 'INFO',  # Change to INFO to reduce verbosity or ERROR to hide completely
-            'propagate': False,
-        },
-    }
-}
+
 
 # Application definition
 

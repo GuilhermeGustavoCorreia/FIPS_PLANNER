@@ -6,6 +6,9 @@
 <div class="CONTEUDO__PADRAO">
 
     <h1>PREVISÃO DE TRENS - TELA 164</h1>
+    
+    <a href="{% url 'atualizar_previsao_164' %}" class="BOTAO BTN__CRIAR__TREM">Atualizar</a>
+    <br>
     <input type="text" id="filtro" placeholder="Buscar trem...">
     {% if trens %}
 
@@ -20,19 +23,21 @@
             <th class="COL_P local">    LOCAL       </th>
             <th class="COL_P">          VAGÕES      </th>
             <th class="COL_M">          MERCADORIA  </th>
-            <th class="COL_M">          </th>
+            <th class="COL_M">                      </th>
+
         </thead>
 
         <tbody>
+
             {% for trem in trens %}
                 <tr>  
-                    <td class="COL_PP posicao">{{ forloop.counter0 }}</td>
-                    <td class="COL_P">          {{ trem.prefixo     }}</td>
-                    <td class="COL_M os">       {{ trem.os          }}</td>
-                    <td class="COL_P origem">   {{ trem.origem      }}</td>
-                    <td class="COL_P local">    {{ trem.local       }}</td>
-                    <td class="COL_P">          {{ trem.vagoes      }}</td>
-                    <td class="COL_M">          {{ trem.mercadoria  }}</td> 
+                    <td class="COL_PP posicao"> {{ forloop.counter0 }} </td>
+                    <td class="COL_P">          {{ trem.prefixo     }} </td>
+                    <td class="COL_M os">       {{ trem.os          }} </td>
+                    <td class="COL_P origem">   {{ trem.origem      }} </td>
+                    <td class="COL_P local">    {{ trem.local       }} </td>
+                    <td class="COL_P">          {{ trem.vagoes      }} </td>
+                    <td class="COL_M">          {{ trem.mercadoria  }} </td> 
                     
                     <td>
                         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -5,6 +5,14 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/previsao_subida/previsao_subida.css' %}"> 
 
+<div id="overlay" class="loading">
+    
+    <div class="conteudo-carregando">
+      <img src="{% static 'imagens/loading.gif' %}" alt="">
+      <p style="color: white">Carregando...</p>
+    </div>
+
+  </div>
 
 <dialog id="modal_criar_trem_subida">
 
@@ -126,7 +134,19 @@
                 <th colspan=5 style="padding: 0 15px ">LOCOMOTIVAS                  </th>
                 
 
-                <th  colspan=2></th>
+                
+                <th id="COLUNA_BOTOES botoes" class="COL_P" colspan=3> 
+                    
+                    <a href="{% url 'excluir_tabela_subida' 'Direita' %}">
+                    
+                    <svg class="ICONE ICONE_DELETAR botoes" viewBox="0 0 110.61 122.88"  onclick="modo_carregamento()">
+                        <title>Excluir</title>
+                        <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
+                    </svg>
+
+                </th>
+
+                
 
             </thead>
         <!--#endregion-->
@@ -141,35 +161,35 @@
                 <td>{{trem.previsao | date:"H:i d/m/Y" }}   </td>
                 <td>{{trem.eot}}                            </td>
                 <td>
-                    {% if trem.qt_graos == None %}
+                    {% if trem.qt_graos == None or trem.qt_graos == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_graos}}  
                     {% endif %}    
                 </td>
                 <td>
-                    {% if trem.qt_ferti == None %}
+                    {% if trem.qt_ferti == None or trem.qt_ferti == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_ferti}}  
                     {% endif %}                     
                 </td>
                 <td>
-                    {% if trem.qt_celul == None %}
+                    {% if trem.qt_celul == None or trem.qt_celul == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_celul}}  
                     {% endif %}                      
                 </td>
                 <td>
-                    {% if trem.qt_acuca == None %}
+                    {% if trem.qt_acuca == None or trem.qt_acuca == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_acuca}}  
                     {% endif %}                       
                 </td>
                 <td>
-                    {% if trem.qt_contei == None %}
+                    {% if trem.qt_contei == None or trem.qt_contei == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_contei}}  
@@ -178,7 +198,7 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_1 == None %}
+                    {% if trem.loco_1 == None or trem.loco_1 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_1}}  
@@ -186,7 +206,7 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_2 == None %}
+                    {% if trem.loco_2 == None or trem.loco_2 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_2}}  
@@ -195,7 +215,7 @@
     
     
                 <td>
-                    {% if trem.loco_3 == None %}
+                    {% if trem.loco_3 == None or trem.loco_3 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_3}}  
@@ -204,7 +224,7 @@
     
     
                 <td>
-                    {% if trem.loco_4 == None %}
+                    {% if trem.loco_4 == None or trem.loco_4 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_4}}  
@@ -212,31 +232,38 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_5 == None %}
+                    {% if trem.loco_5 == None or trem.loco_5 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_5}}  
                     {% endif %}                           
                 </td>
+    
                 
                 <td >
                     {% if user|can:'editar_subida' %}
-                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' trem.id %}" onclick="TOOGLE_FORM(this)"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
-                        <title>Editar</title>
-                        <g>
-                            <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
-                                c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
-                                c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
-                                C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
-                                L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
-                                c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
-                            <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
-                                c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
-                                s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
-                                c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
-                        
-                        </g>
-                    </svg>
+                    
+                    <a href="{% url 'editar_trem_subida' trem.id %}">
+                        <svg  version="1.1" id="Capa_1" class="ICONE ICONE_EDITAR botoes" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                            <title>Editar</title>
+                            <g>
+                                
+                                    <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                    c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                    c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                    C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                    L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                    c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                                
+                                    <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                    c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                    s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                    c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                            
+                            </g>
+                        </svg>
+                        </a>
+  
                     {% endif %}
                 </td>
 
@@ -287,8 +314,16 @@
 
                 <th colspan=5 style="padding: 0 15px ">LOCOMOTIVAS                  </th>
                 
+                <th id="COLUNA_BOTOES botoes" class="COL_P" colspan=3> 
+                    
+                    <a href="{% url 'excluir_tabela_subida' 'Esquerda' %}">
+                    
+                    <svg class="ICONE ICONE_DELETAR botoes" viewBox="0 0 110.61 122.88" onclick="modo_carregamento()">
+                        <title>Excluir</title>
+                        <path d="M39.27,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Zm63.6-19.86L98,103a22.29,22.29,0,0,1-6.33,14.1,19.41,19.41,0,0,1-13.88,5.78h-45a19.4,19.4,0,0,1-13.86-5.78l0,0A22.31,22.31,0,0,1,12.59,103L7.74,38.78H0V25c0-3.32,1.63-4.58,4.84-4.58H27.58V10.79A10.82,10.82,0,0,1,38.37,0H72.24A10.82,10.82,0,0,1,83,10.79v9.62h23.35a6.19,6.19,0,0,1,1,.06A3.86,3.86,0,0,1,110.59,24c0,.2,0,.38,0,.57V38.78Zm-9.5.17H17.24L22,102.3a12.82,12.82,0,0,0,3.57,8.1l0,0a10,10,0,0,0,7.19,3h45a10.06,10.06,0,0,0,7.19-3,12.8,12.8,0,0,0,3.59-8.1L93.37,39ZM71,20.41V12.05H39.64v8.36ZM61.87,58.64a4.74,4.74,0,1,1,9.47,0V93.72a4.74,4.74,0,1,1-9.47,0V58.64Z"/>
+                    </svg>
 
-                <th  colspan=2></th>
+                </th>
 
             </thead>
         <!--#endregion-->
@@ -304,35 +339,35 @@
                 <td>{{trem.previsao | date:"H:i d/m/Y" }}   </td>
                 <td>{{trem.eot}}                            </td>
                 <td>
-                    {% if trem.qt_graos == None %}
+                    {% if trem.qt_graos == None or trem.qt_graos == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_graos}}  
                     {% endif %}    
                 </td>
                 <td>
-                    {% if trem.qt_ferti == None %}
+                    {% if trem.qt_ferti == None or trem.qt_ferti == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_ferti}}  
                     {% endif %}                     
                 </td>
                 <td>
-                    {% if trem.qt_celul == None %}
+                    {% if trem.qt_celul == None or trem.qt_celul == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_celul}}  
                     {% endif %}                      
                 </td>
                 <td>
-                    {% if trem.qt_acuca == None %}
+                    {% if trem.qt_acuca == None or trem.qt_acuca == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_acuca}}  
                     {% endif %}                       
                 </td>
                 <td>
-                    {% if trem.qt_contei == None %}
+                    {% if trem.qt_contei == None or trem.qt_contei == 0 %}
                         --   
                     {% else %}
                         {{trem.qt_contei}}  
@@ -341,7 +376,7 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_1 == None %}
+                    {% if trem.loco_1 == None or trem.loco_1 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_1}}  
@@ -349,7 +384,7 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_2 == None %}
+                    {% if trem.loco_2 == None or trem.loco_2 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_2}}  
@@ -358,7 +393,7 @@
     
     
                 <td>
-                    {% if trem.loco_3 == None %}
+                    {% if trem.loco_3 == None or trem.loco_3 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_3}}  
@@ -367,7 +402,7 @@
     
     
                 <td>
-                    {% if trem.loco_4 == None %}
+                    {% if trem.loco_4 == None or trem.loco_4 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_4}}  
@@ -375,7 +410,7 @@
                 </td>
     
                 <td>
-                    {% if trem.loco_5 == None %}
+                    {% if trem.loco_5 == None or trem.loco_5 == 0 %}
                         --   
                     {% else %}
                         {{trem.loco_5}}  
@@ -384,26 +419,31 @@
     
 
 
-               <td >
+               <td>
                     
                     {% if user|can:'editar_subida' %}
-                    <svg  version="1.1" id="Capa_1" data-acao="EDITAR_TREM" data-editar-trem-url="{% url 'editar_trem' trem.id %}" onclick="TOOGLE_FORM(this)"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.882 348.882" xml:space="preserve">\
-                        <title>Editar</title>
-                        <g>
-                            <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
-                                c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
-                                c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
-                                C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
-                                L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
-                                c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                    
+                        <a href="{% url 'editar_trem_subida' trem.id %}">
                             
-                            <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
-                                c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
-                                s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
-                                c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
-                        
-                        </g>
-                    </svg>
+                            <svg  version="1.1" id="Capa_1" class="ICONE ICONE_EDITAR botoes" viewBox="0 0 348.882 348.882" xml:space="preserve">\
+                                <title>Editar</title>
+                                <g>
+                                    <path d="M333.988,11.758l-0.42-0.383C325.538,4.04,315.129,0,304.258,0c-12.187,0-23.888,5.159-32.104,14.153L116.803,184.231
+                                        c-1.416,1.55-2.49,3.379-3.154,5.37l-18.267,54.762c-2.112,6.331-1.052,13.333,2.835,18.729c3.918,5.438,10.23,8.685,16.886,8.685
+                                        c0,0,0.001,0,0.001,0c2.879,0,5.693-0.592,8.362-1.76l52.89-23.138c1.923-0.841,3.648-2.076,5.063-3.626L336.771,73.176
+                                        C352.937,55.479,351.69,27.929,333.988,11.758z M130.381,234.247l10.719-32.134l0.904-0.99l20.316,18.556l-0.904,0.99
+                                        L130.381,234.247z M314.621,52.943L182.553,197.53l-20.316-18.556L294.305,34.386c2.583-2.828,6.118-4.386,9.954-4.386
+                                        c3.365,0,6.588,1.252,9.082,3.53l0.419,0.383C319.244,38.922,319.63,47.459,314.621,52.943z"/>
+                                    <path d="M303.85,138.388c-8.284,0-15,6.716-15,15v127.347c0,21.034-17.113,38.147-38.147,38.147H68.904
+                                        c-21.035,0-38.147-17.113-38.147-38.147V100.413c0-21.034,17.113-38.147,38.147-38.147h131.587c8.284,0,15-6.716,15-15
+                                        s-6.716-15-15-15H68.904c-37.577,0-68.147,30.571-68.147,68.147v180.321c0,37.576,30.571,68.147,68.147,68.147h181.798
+                                        c37.576,0,68.147-30.571,68.147-68.147V153.388C318.85,145.104,312.134,138.388,303.85,138.388z"/>
+                                
+                                </g>
+                            </svg>
+
+                        </a>
+
                     {% endif %}
                     
                 </td>
@@ -459,8 +499,43 @@
 {% endif %}
 <!--#endregion-->
 
+<!--#region abrir modal de edição-->
+{% if tipo_formulario == 'editar_trem_subida' %}
 <script>
+    window.addEventListener('load', function(){
 
+        //obtendo a id do trem
+        let url         = new URL(window.location.href);
+        let pathParts   = url.pathname.split('/');
+        pathParts       = pathParts.filter(part => part.length > 0);
+        let id_trem     = pathParts[pathParts.length - 1];
+
+        //ajustando url
+        window.history.replaceState({}, '', '/previsao_subida');
+    
+        var modal   = document.getElementById("modal_criar_trem_subida");
+        var titulo  = modal.querySelector('h2');
+        var form    = modal.querySelector('form');
+
+        titulo.textContent = "Editar Trem";
+        modal.showModal()
+        form.action        = `/editar_trem_subida/${ id_trem }/`;
+    });
+
+
+    
+</script>
+{% endif %}
+<!--#endregion-->
+
+
+<script>
+    function modo_carregamento(){
+
+        var overlay = document.getElementById("overlay")
+        overlay.style.display = "block"
+        
+    }
     document.getElementById('fomulario_trem_subida').addEventListener('submit', function(event) {
         
         var submitButton = document.getElementById('btnEnviar');
@@ -487,7 +562,7 @@
     }
 
     function atualizar_tabela(){
-
+        try{
         var ferrovia = analisarRadioButton("ferrovia")
         var margem   = analisarRadioButton("margem").toUpperCase()
         var segmento =  document.querySelector('th.segmento-selecionado').getAttribute('name');
@@ -506,6 +581,9 @@
 
         const nomeProduto = document.querySelectorAll('.tbl_vagoes_disponiveis th');
         nomeProduto.forEach(th => { th.innerText = segmento; });
+        }
+        catch
+        {}
     }
 
     function mudarSegmento(botao){

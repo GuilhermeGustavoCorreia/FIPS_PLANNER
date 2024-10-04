@@ -19,8 +19,8 @@ COPY . .
 
 
 # Defina a variável de ambiente para o Django
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Exponha a porta que o Django irá rodar
 EXPOSE 8000

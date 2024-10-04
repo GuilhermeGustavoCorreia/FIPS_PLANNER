@@ -48,23 +48,22 @@
 
                             {% for terminal, item in CONTEUDO.items %} 
                             
-                            <tr>
+                                <tr>
 
-                                <th>{{ terminal }}</th>
+                                    <th>{{ terminal }}</th>
 
-                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
-                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
-                                <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
-                                <td name="RESTRICOES_ATIVAS"    class="EDITAVEL" headers="{{ PRODUTO }}"      id="{{ terminal }}">{{ item.RESTRICAO  }}</td>
+                                    <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="RUMO_{{ PRODUTO }}" id="{{ terminal }}">{{ item.RUMO }}</td>
+                                    <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="MRS_{{  PRODUTO }}" id="{{ terminal }}">{{ item.MRS  }}</td>
+                                    <td name="DESCARGAS_ATIVAS"     class="EDITAVEL" headers="VLI_{{  PRODUTO }}" id="{{ terminal }}">{{ item.VLI  }}</td>
+                                    <td name="RESTRICOES_ATIVAS"    class="EDITAVEL" headers="{{ PRODUTO }}"      id="{{ terminal }}">{{ item.RESTRICAO  }}</td>
 
-                            </tr>
+                                </tr>
 
                             {% endfor %}
 
                         </tbody>
                     </table>    
-                    
-                
+                            
                     <br>
                 
                 {% endfor %}
@@ -72,13 +71,15 @@
         </section>
 
         <section>
-            <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao</h2>
+            <h2  id="SECAO_INSERIR_PREVISAO"    class="SECAO_CONFIGURACAO">Inserir Previsao de Subida</h2>
             <div id="CONTEUDO_INSERIR_PREVISAO" class="CONTEUDO_CONFIGURACAO">
-                <h1>Upload de arquivo CSV</h1>
+                
+                <h1>Insira a planilha no botão abaixo</h1>
+                
                 <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
                     {% csrf_token %}
                     {{ FORM_CSV.as_p }}
-                    <button type="submit">Upload</button>
+                    <button type="submit"  onclick="modo_carregamento()">Upload</button>
                 </form>
             </div>
         </section>
@@ -142,6 +143,7 @@
     {% endif %}
 
     {% if user|can:'editar_itens' %}   
+
     <section>
         <h2  id="SECAO_EDITAR_PXO"    class="SECAO_CONFIGURACAO">Editar PxO</h2>
         <div id="CONTEUDO_EDITAR_PXO" class="CONTEUDO_CONFIGURACAO">
@@ -172,6 +174,7 @@
 
         </div>
     </section>
+    
     {% endif %}
 
     <section>

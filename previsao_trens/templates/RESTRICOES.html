@@ -121,7 +121,7 @@
 <!--FORMULARIO DE CRIAR RESTRICAO-->    
 <div id="OVERLAY" class="OVERLAY" onclick='TOOGLE_FORMULARIO()'></div>
 
-<form id="FORMULARIO_RESTRICAO" class="MODAL"  method="post" >
+<form id="FORMULARIO_RESTRICAO" class="MODAL"  method="POST" >
     
     {% csrf_token %}
 
@@ -129,33 +129,38 @@
 
     <div>
         <p>*Informações do Terminal</p>
+
         {{ FORMULARIO.terminal    }}
         {{ FORMULARIO.mercadoria  }}
-  
+ 
     </div>
     
-
     <div>
         <p>*Informações da restrição</p>
+
         {{ FORMULARIO.comeca_em   }}
         {{ FORMULARIO.termina_em  }}</br>
         {{ FORMULARIO.porcentagem }}
+
     </div>
 
     <div>
+
         <p>*Descrições</p>
+
         {{ FORMULARIO.motivo }}</br>
         {{ FORMULARIO.comentario }}
+
     </div>
     
     <div class="MENSAGEM_FORMULARIO">
-    {% if messages %}
-        
+        {% if messages %}
+            
             {% for message in messages %}
             <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
             {% endfor %}
-        
-    {% endif %}
+            
+        {% endif %}
     </div>
     
     <input id="TIPO_FORMULARIO" type="hidden" name="TIPO_FORMULARIO" value="">

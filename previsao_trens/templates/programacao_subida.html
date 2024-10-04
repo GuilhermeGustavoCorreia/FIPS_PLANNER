@@ -4293,7 +4293,42 @@
 
 
 <script>
+function abrirAba(evt, abaNome) {
+    var i, conteudo, abas;
+    conteudo = document.getElementsByClassName("conteudo");
+    for (i = 0; i < conteudo.length; i++) {
+        conteudo[i].style.display = "none";
+    }
 
+    abas = document.getElementsByClassName("aba");
+    for (i = 0; i < abas.length; i++) {
+        abas[i].className = abas[i].className.replace(" ativa", "");
+    }
+
+    document.getElementById(abaNome).style.display = "block";
+    evt.currentTarget.className += " ativa";
+    // Salvar a aba ativa no localStorage
+    localStorage.setItem('abaAtiva', abaNome);
+}
+
+function abrirSubAba(evt, subAbaNome) {
+    var i, subConteudo, subAbas;
+
+    subConteudo = document.getElementsByClassName("sub-conteudo");
+    for (i = 0; i < subConteudo.length; i++) {
+        subConteudo[i].style.display = "none";
+    }
+
+    subAbas = document.getElementsByClassName("sub-aba");
+    for (i = 0; i < subAbas.length; i++) {
+        subAbas[i].className = subAbas[i].className.replace(" sub-ativa", "");
+    }
+
+    document.getElementById(subAbaNome).style.display = "block";
+    evt.currentTarget.className += " sub-ativa";
+    // Salvar a sub-aba ativa no localStorage
+    localStorage.setItem('subAbaAtiva', subAbaNome);
+}
 
 </script>
 {% if user|can:'editar_subida' %}

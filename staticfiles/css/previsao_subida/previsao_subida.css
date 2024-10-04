@@ -14,7 +14,8 @@ h2  { margin-top: 20px;}
 .tbl-prev-subida thead  { background-color: var(--azul-profundo-m); color: white; height: 2.5rem; padding: 0.5rem 0;}
 
 .tbl-prev-subida td,
-.tbl-prev-subida th     {padding: 5px 1rem }
+.tbl-prev-subida th { padding: 5px 0.5rem;}
+
 
 .tbl-prev-subida tbody td:nth-child(11),
 .tbl-prev-subida tbody td:nth-child(12),
@@ -55,7 +56,6 @@ h2  { margin-top: 20px;}
 
 
 
-
 dialog h2 {margin: 0;}
 
 dialog .fst-trem-locomotivas input {width: 6rem;}
@@ -76,7 +76,7 @@ dialog fieldset table tbody th,
 dialog fieldset table tbody td    { border-bottom: 1px rgb(223, 222, 222) solid ;border-right: 1px rgb(223, 222, 222) solid ; } 
 
 
-dialog fieldset table tbody .valor_vagoes { padding: 0 20px; text-align: center; }
+dialog fieldset table tbody .valor_vagoes { text-align: center; display: none }
 
  
 dialog .fst-trem-vagoes             { display: flex;}
@@ -97,3 +97,39 @@ fieldset {
 
 
 .VERDE {margin-top: 10px; right: 0px;}
+
+#btnEnviar:disabled {
+    background-color: var(--verde-floresta-c); /* Cinza */
+    color: white;
+    cursor: not-allowed;
+  }
+
+
+.ICONE_DELETAR{ 
+    height: 1.5rem; 
+    cursor: pointer; 
+    fill: var(--cinza-chumbo-c);     
+    padding: 0 0.5rem;
+}
+
+.ICONE_DELETAR:hover{fill: darkred;}
+
+
+.conteudo-carregando img{
+    height: 70px;
+
+}
+.conteudo-carregando{
+    top:       50%;
+    left:       50%;
+    transform:  translate(-50%, -50%);
+    position: absolute;
+
+    align-items: center;
+    text-align: center;
+}
+.loading {display: none;background: rgba(0, 0, 0, .7); backdrop-filter: blur(10px); position: absolute; width: 100%; height: 100%; z-index: 100;}
+
+
+.ICONE_EDITAR       {  width: 1.5rem; fill: var(--cinza-chumbo-c); cursor: pointer; padding: 0 0.2rem;}
+.ICONE_EDITAR:hover {  fill: var(--cinza-chumbo-m); }

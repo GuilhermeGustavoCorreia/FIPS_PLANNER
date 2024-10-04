@@ -1,0 +1,31 @@
+image: python:3.12.1
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Deploy development on docker
+          script:
+            - ssh -tt ubuntu@$IP_FIPS_PLANNER_DEV << EOSSH
+            - cd planner-fips-v1
+            - git checkout dev
+            - git pull origin dev
+            - docker rm -f planner
+            - docker rmi -f planner
+            - docker build -t planner .
+            - docker run -d --name planner -p 8000:8000 planner
+            - exit
+            - EOSSH
+    main:
+      - step:
+          name: Deploy development on docker
+          script:
+            - ssh -tt ubuntu@$IP_FIPS_PLANNER_PROD << EOSSH
+            - cd planner-fips-v1
+            - git checkout main
+            - git pull origin main
+            - docker rm -f planner
+            - docker rmi -f planner
+            - docker build -t planner .
+            - docker run -d --name planner -p 8000:8000 planner
+            - exit
+            - EOSSH

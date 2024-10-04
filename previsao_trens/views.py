@@ -12,10 +12,9 @@ from django.db                      import transaction
 from tempfile import NamedTemporaryFile
 
 
-from .models        import Trem, Restricao, TremVazio, Terminal, Mercadoria
-from .forms         import UploadFileForm, TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm, TerminalForm, DividirTremForm
-from .serializers   import TremSerializer, TremSerializerToSend
-from .permissions   import IsInAllowedGroup
+from .models                    import Trem, Restricao, TremVazio, Terminal, Mercadoria
+from .forms                     import UploadFileForm, TremForm, RestricaoForm, TremVazioForm, CustomAuthenticationForm, TerminalForm, DividirTremForm
+from .serializers               import TremSerializer, TremSerializerToSend
 from rest_framework             import status, generics
 from rest_framework.views       import APIView
 from rest_framework.response    import Response
@@ -217,52 +216,6 @@ def carregar_previsao_trens(request, trem_form, tipo_formulario):
     return render(request, 'previsao/criar_trem.html', context)
 
 @login_required
-def upload_file_view(request):
-
-    if request.method == 'POST':
-        with transaction.atomic():
-            form = UploadFileForm(request.POST, request.FILES)
-            if form.is_valid():
-                file    = TextIOWrapper(request.FILES['file'].file, encoding=request.encoding)
-                reader  = csv.DictReader(file, delimiter=';')
-                
-                for index, row in enumerate(reader):
-
-                    datetime_str = f"{row['PREVISAO_DATA']} {row['PREVISAO_HORA']}"
-                    previsao_datetime = datetime.strptime(datetime_str, "%d/%m/%Y %H:%M")
-
-                    trem = Trem(
-
-                        os=int(row['OS']),
-                        prefixo=row['PREFIXO'],
-                        origem=row['ORIGEM'],
-                        local=row['SB_ATUAL'],
-                        destino=row['DESTINO'],
-                        terminal=row['TERMINAL_DESTINO'],
-                        mercadoria=row['MERCADORIA'],
-                        vagoes=int(row['VAGOES']),
-                        previsao=previsao_datetime,
-                        ferrovia=row['FERROVIA'],
-                        comentario='Ola',  # Valor padrão ou adicione lógica para comentários
-                        posicao_previsao=index,  # Definindo o índice da linha como posicao_previsao
-                        created_by = request.user
-                    )
-                    trem.save()
-                    
-                    trem_dict = model_to_dict(trem)
-                    trem_dict['ID'] = trem.id
-
-                    navegacao = NAVEGACAO_DESCARGA(trem_dict['terminal'], trem_dict['ferrovia'], trem_dict['mercadoria'], DIA_ANTERIOR=True)
-                    navegacao.EDITAR_TREM(trem_dict, "INSERIR")
-
-                    
-                return redirect('configuracao')
-    
-    else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
-
-@login_required
 def previsao_trens_view(request):
     
     trem_form            = TremForm()
@@ -308,7 +261,7 @@ def excluir_trem_view(request, id):
      
         pass
 
-    return redirect('previsao_trens')  #
+    return redirect('previsao_trens')
    
 @login_required
 def editar_trem(request, trem_id):
@@ -337,6 +290,7 @@ def editar_trem(request, trem_id):
                 return carregar_previsao_trens(request, trem_form, tipo_formulario)
     
     else:
+        
 
         trem.previsao = trem.previsao.strftime('%Y-%m-%dT%H:%M') if trem.previsao else None
         trem_form = TremForm(instance=trem)
@@ -437,6 +391,7 @@ def get_terminals(request):
     terminais       = Terminal.objects.filter(segmento=mercadoria.segmento).values('id', 'nome')
    
     return JsonResponse(list(terminais), safe=False)
+
 #endregion
 
 class APITremCreateView(APIView): 
@@ -461,7 +416,6 @@ class APITremCreateView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class APITremList(generics.ListAPIView):
     
     queryset         = Trem.objects.all()
@@ -472,8 +426,14 @@ def previsao_164_view(request):
 
     trens = Trem.objects.filter(previsao__isnull=True, translogic=True)
 
-
     return render(request, 'previsao_164.html', {'trens': trens})
+
+def previsao_164_atualizar_view(request):
+    
+    Trem.update_nitro()
+
+    return redirect("previsao_164")
+
 #endregion
 
 #region RESTRICOES
@@ -519,11 +479,15 @@ def criar_restricao_view(request):
    
 @login_required
 def excluir_restricao_view(request, id):
+ 
+    try: 
 
-    restricao = get_object_or_404(Restricao, pk=id)
-    
-    try: restricao.excluir_restricao() 
-    except Exception as e:  pass
+        restricao = Restricao.objects.get(pk=id)
+        restricao.excluir_restricao() 
+
+    except Restricao.DoesNotExist:  
+        
+        pass
 
     return redirect('restricao')
 
@@ -604,32 +568,37 @@ def restricao(request):
 @login_required
 def editar_restricao(request, id):
 
+    restricao = get_object_or_404(Restricao, pk=id)
+
     #ESTA ENVIANDO A EDICAO
     if request.method == 'POST':
-        FORMULARIO = RestricaoForm(request.POST)    
-        if FORMULARIO.is_valid():
-            
-            print(FORMULARIO.cleaned_data)
+
+        form = RestricaoForm(request.POST, instance=restricao)   
+
+        if form.is_valid():
+
+            restricao  = form.save(commit=False)
+            restricao.created_by = request.user
+            restricao.save()
 
         else:
 
-            messages.error(request, FORMULARIO.errors)
-            return redirect('restricao')
+            messages.error(request, form.errors)
+        
+        return redirect('restricao')
 
     #ABRINDO O FORMULARIO DE EDICAO
     else:
 
-        RESTRICAO = get_object_or_404(Restricao, pk=id)
-        
         # Cria um dicionário com os dados do trem
         DADOS_RESTRICAO = {
-            "mercadoria":      RESTRICAO.mercadoria,
-            "terminal":        RESTRICAO.terminal,
-            "comeca_em":       RESTRICAO.comeca_em.strftime('%Y-%m-%d %H:%M'),
-            "termina_em":      RESTRICAO.termina_em.strftime('%Y-%m-%d %H:%M'),
-            "porcentagem":     RESTRICAO.porcentagem,
-            "motivo":          RESTRICAO.motivo,
-            "comentario":      RESTRICAO.comentario
+            "mercadoria":      restricao.mercadoria,
+            "terminal":        restricao.terminal,
+            "comeca_em":       restricao.comeca_em.strftime('%Y-%m-%d %H:%M'),
+            "termina_em":      restricao.termina_em.strftime('%Y-%m-%d %H:%M'),
+            "porcentagem":     restricao.porcentagem,
+            "motivo":          restricao.motivo,
+            "comentario":      restricao.comentario
 
         }
         
@@ -729,6 +698,7 @@ def baixar_integracao_view(request):
 @login_required
 def baixar_planilha_view(request):
     
+
     try:
         planilha_sistema = gerar_planilha(request.user)
 
@@ -736,9 +706,11 @@ def baixar_planilha_view(request):
             
             planilha_sistema.save(tmp.name)
             tmp.seek(0)
+            
+            now = datetime.now()
 
             response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename={os.path.basename("previsao_trens/src/DICIONARIOS/planilha_planner.xlsm")}'
+            response['Content-Disposition'] = f'attachment; filename="planilha_planner_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.xlsm"'
 
             tmp.close()
 
@@ -799,6 +771,22 @@ def baixar_planilha_detalhe_view(request):
     except Exception as e:
 
         raise Http404(f"Erro ao baixar o arquivo: {e}")
+
+@login_required
+def upload_file_view(request):
+
+    with transaction.atomic():
+     
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+
+            file = request.FILES['file']
+
+            TremVazio.read_excel(file, request.user)
+                    
+            return redirect('previsao_subida')
+        
+    return redirect('configuracao')
 
 #endregion
 
@@ -865,7 +853,8 @@ def programacao_subida(request):
     FORM_NOVO_TREM = TremVazioForm()
     
     return render(request, 'programacao_subida.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
-  
+
+
 #region RELATORIO OCUPACAO
 @login_required
 def ocupacao_terminais(request):
@@ -985,6 +974,59 @@ def excluir_trem_subida_view(request, id_trem_vazio):
         pass
 
     return redirect('previsao_subida')
+
+@login_required
+def excluir_tabela_subida_view(request, margem):
+
+    trens_vazios = TremVazio.objects.filter(margem=margem)
+    
+    if trens_vazios.exists(): 
+        
+        for trem_vazio in trens_vazios:
+
+            trem_vazio.delete()
+
+    return redirect('previsao_subida')
+
+
+@login_required   
+def editar_trem_subida_view(request, id_trem_vazio):
+      
+    if request.method == 'POST':
+        
+        with transaction.atomic():
+            
+            trem_vazio_antigo = get_object_or_404(TremVazio, pk=id_trem_vazio)
+            
+            form = TremVazioForm(request.POST, instance=trem_vazio_antigo)
+            
+            if form.is_valid():
+
+                trem_vazio_antigo = get_object_or_404(TremVazio, pk=id_trem_vazio)
+                trem_vazio_antigo.delete()
+
+                form = TremVazioForm(request.POST)
+
+                trem_vazio  = form.save(commit=False)
+                trem_vazio.created_by = request.user
+                trem_vazio.save()
+
+            else:
+
+                print(form.errors)
+
+            return redirect('previsao_subida')
+
+    else:
+
+        trem_vazio = get_object_or_404(TremVazio, pk=id_trem_vazio)
+        trem_vazio.previsao = trem_vazio.previsao.strftime('%Y-%m-%dT%H:%M') 
+        
+        form = TremVazioForm(instance=trem_vazio)
+
+        tipo_formulario = "editar_trem_subida"
+    
+        return carregar_previsao_trem_subida(request, form, tipo_formulario)
 
 #endregion
 
