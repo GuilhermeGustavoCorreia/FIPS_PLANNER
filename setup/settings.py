@@ -30,6 +30,45 @@ ALLOWED_HOSTS = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost', '127.0.0
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # settings.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level'     : 'DEBUG',
+            'class'     : 'logging.handlers.RotatingFileHandler',  # Use RotatingFileHandler
+            'filename'  : 'mysite.log',
+            'formatter' : 'verbose',
+            'maxBytes'  : 1024 * 1024 * 5,  # 5 MB de tamanho máximo do arquivo de log
+            'backupCount': 3,  # Manter até 3 arquivos de log rotacionados
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'MYAPP': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+        'django.utils.autoreload': {  # Add this block to control autoreload logging
+            'handlers': ['file'],
+            'level': 'INFO',  # Change to INFO to reduce verbosity or ERROR to hide completely
+            'propagate': False,
+        },
+    }
+}
 
 
 # Application definition

@@ -839,12 +839,12 @@
         "PRODUTIVIDADE": {
             "RUMO": {
                 "FARELO": 10,
-                "MILHO": 10,
+                "MILHO": 5,
                 "SOJA": 10
             },
             "MRS": {
                 "FARELO": 10,
-                "MILHO": 10,
+                "MILHO": 4,
                 "SOJA": 5
             },
             "VLI": {
@@ -1009,7 +1009,7 @@
             "RUMO": {
                 "KCL": 5,
                 "UREIA": 0,
-                "OUTROS": 5
+                "OUTROS": 4
             },
             "MRS": {
                 "KCL": 0,
