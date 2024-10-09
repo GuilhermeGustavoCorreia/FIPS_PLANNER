@@ -237,9 +237,7 @@ class Trem(models.Model):
 
         lista_de_trens = access_previsao_api(access_token)["data"]
         
-        for trem in lista_de_trens:
 
-            print(trem)
 
     def __str__(self):
         return f"{self.prefixo} -  {self.terminal} - {self.mercadoria} - {self.previsao}"
@@ -332,7 +330,6 @@ class Restricao(models.Model):
                         navegacao = NAVEGACAO_DESCARGA(restricao["terminal"], None, restricao["mercadoria"], DIA_ANTERIOR=True)
                         status_restricao = navegacao.EDITAR_RESTRICAO(restricao, "INSERIR")
                     
-                    print(status_restricao)
                     
                 
                 except IndexError:
@@ -505,7 +502,6 @@ class TremVazio(models.Model):
                 df_previsao_subida_dir[loco] = df_previsao_subida_dir[loco].astype(str).str.zfill(4)
                 df_previsao_subida_esq[loco] = df_previsao_subida_esq[loco].astype(str).str.zfill(4)
         
-            
             df_previsao_subida_dir[locos] = df_previsao_subida_dir[locos].replace('0000', '')
             df_previsao_subida_esq[locos] = df_previsao_subida_esq[locos].replace('0000', '')
 
@@ -546,8 +542,7 @@ class TremVazio(models.Model):
                     (~df_previsao_subida['prefixo'].str.startswith('U')) & 
                     (df_previsao_subida['prefixo'].str.startswith('L')), 
                 'qt_celul'] = 64
-            
-            
+                     
             df_previsao_subida.loc[
                 (df_previsao_subida['prefixo'].str.len() == 3) & 
                 (~df_previsao_subida['prefixo'].str.startswith('U')) & 
@@ -571,6 +566,8 @@ class TremVazio(models.Model):
             mask = (df_previsao_subida['prefixo'].str.len() == 3) & df_previsao_subida['prefixo'].str.startswith('N')  # Máscara para prefixos que começam com 'N'
             df_previsao_subida.loc[mask, 'qt_ferti'] = df_previsao_subida.loc[mask, 'vagoes'].apply(lambda x: x if isinstance(x, (int, float)) else 0)
 
+            print(f"previao subida: {df_previsao_subida}")
+
             for _, row in df_previsao_subida.iterrows():
                 # Convertendo a linha para dicionário
                 dicionario = row.to_dict()
@@ -593,6 +590,7 @@ class TremVazio(models.Model):
                     qt_contei   = dicionario['qt_contei'],
                     created_by  =  user
                 )
+                print(f"inserindo trem vazio: {trem_vazio}")
                 trem_vazio.save()
         except:
             pass

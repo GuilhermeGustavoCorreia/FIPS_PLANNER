@@ -743,9 +743,7 @@ class CALCULAR_SALDO:   #INSERE DOS TERMINAIS PARA OS TOTAIS POR FERROVIA
         for i in range(119):
             
             for FERROVIA in ["RUMO", "MRS", "VLI"]:
-                
-                if i == 12 or i == 13 or i == 14 or i == 12: print(f"[{i}] - {self.full_CONDENSADOS["DIREITA"]["SAIDAS"]["FERROVIA"][i][FERROVIA]}")    
-                
+                       
                 for CHAVE in CHAVES_CONDENSADOS:
                     
                     ALIVIOS = 0 #(ALIVIOS => vagões que aliviaram do terminal)

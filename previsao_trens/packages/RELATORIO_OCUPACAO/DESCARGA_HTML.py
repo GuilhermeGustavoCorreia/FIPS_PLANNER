@@ -81,10 +81,17 @@ def MONTAR_HTML(DESCARGA, TERMINAL, DIA_LOGISTICO, DATA_ARQ, INFOS):
     #region LINHA PEDRA
     LINHA_PEDRA = """<tr class="LINHA_PEDRA">
                         <td>Pedra</td>"""
+    print()
+    print(f"CHEGADA: {DESCARGA["CHEGADA"]}")
+    print(f"PEDRA: {DESCARGA["PEDRA"]}")
 
     for PEDRA in DESCARGA["PEDRA"]:
-
-        if CHEGADA[0] != 0  : LINHA_PEDRA += f"<td>{ PEDRA[0] }</td>"
+        print(f"chg { CHEGADA } pdr { PEDRA } ")
+        if CHEGADA[0] != 0  : 
+            try: 
+                LINHA_PEDRA +=  f"<td>{ PEDRA[0] }</td>" 
+            except: 
+                LINHA_PEDRA +=  "<td></td>"  
         else                : LINHA_PEDRA += "<td></td>"           
     
     LINHA_PEDRA += f"<td>{ DESCARGA["INDICADORES"]["TOTAL_SALDO"] }</td><td>{ DESCARGA["INDICADORES"]["TOTAL_PEDRA"] }</td></tr>" 

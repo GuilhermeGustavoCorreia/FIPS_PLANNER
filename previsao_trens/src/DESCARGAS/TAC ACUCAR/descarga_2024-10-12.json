@@ -248,8 +248,8 @@
         "MT",
         "MT",
         "MT",
-        0,
-        0
+        "MT",
+        "MT"
     ],
     "DESCARGAS": {
         "RUMO": {
@@ -505,8 +505,8 @@
                     50,
                     50,
                     50,
-                    0,
-                    0
+                    50,
+                    50
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
@@ -921,8 +921,8 @@
                     50,
                     50,
                     50,
-                    0,
-                    0
+                    50,
+                    50
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
@@ -1337,8 +1337,8 @@
                     50,
                     50,
                     50,
-                    0,
-                    0
+                    50,
+                    50
                 ],
                 "INDICADORES": {
                     "SALDO_DE_VIRADA_VAZIOS": 0,
