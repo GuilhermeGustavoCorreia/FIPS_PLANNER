@@ -18,7 +18,7 @@ body{
 
 table{ border-collapse: collapse; font-family: "Saira Expanded" , Arial, sans-serif; }
 thead th, thead td{ background-color: var(--azul-profundo-m); color: white; font-size: 0.8rem; padding: 0 5px; text-align: center; border: 1px solid white }
-thead{ border: 1px solid lightgray;}
+.borda_cinza{ border: 1px solid lightgray;}
 .logo__ocupacao{ height: 60px; margin: 10px 5px;}
 
 tbody th{ text-align: left; font-weight: 500;}
@@ -125,6 +125,9 @@ tbody           { background-color: rgb(247, 242, 242);}
     to {opacity: 1;}
   }
   
+  #MODAL_DESCARGA{
+    overflow: auto !important;
+  }
 
   /*---------------------------------------------------TABS---------------------------------------------------*/ 
 
@@ -147,3 +150,9 @@ tbody           { background-color: rgb(247, 242, 242);}
   #tabela__legenda tbody tr td:nth-child(1) {padding: 0px 20px ;}
   #tabela__legenda thead th,
   #tabela__legenda tbody tr td:nth-child(2){background-color: rgb(244, 244, 244); padding: 5px 10; color: var(--cinza-chumbo-e);}
+
+
+
+
+
+.celula_vazia{ border: none !important; background-color: white;}

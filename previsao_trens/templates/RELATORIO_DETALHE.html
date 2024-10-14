@@ -228,7 +228,7 @@
         
         {% for NOME_TERMINAL, DADOS in RELATORIO.PRINCIPAL.items %}
            
-                {% for NOME_FERROVIA, DADOS_FERROVIA in DADOS.items %}
+            {% for NOME_FERROVIA, DADOS_FERROVIA in DADOS.items %}
                     
                 {% if not NOME_FERROVIA == "TOTAL" %}
                     {% for NOME_PRODUTO, DADOS_PRODUTO in DADOS_FERROVIA.items %}
@@ -247,116 +247,109 @@
                                 {{NOME_PRODUTO}} 
                             </th>
                             
-                                {% for DIA_LOGISTICO, DADOS_DIA_LOGISTICO in DADOS_PRODUTO.items %}
+                            {% for DIA_LOGISTICO, DADOS_DIA_LOGISTICO in DADOS_PRODUTO.items %}
+                                
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
 
+                                    {% if DADOS_DIA_LOGISTICO.SALDOS.P1 != 0 %}                    
+                                        {{ DADOS_DIA_LOGISTICO.SALDOS.P1 }}
+                                    {% endif%}
+
+                                </td>  
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+
+                                    {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P1 != 0 %}                    
+                                        {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P1 }}
+                                    {% endif%}
+
+                                </td>   
+                                <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">  
+
+                                    {% if DADOS_DIA_LOGISTICO.PEDRA.P1 != 0 %}                    
+                                        {{ DADOS_DIA_LOGISTICO.PEDRA.P1 }}
+                                    {% endif%}
+
+                                </td>
+
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+
+                                    {% if DADOS_DIA_LOGISTICO.SALDOS.P2 != 0 %}                    
+                                        {{ DADOS_DIA_LOGISTICO.SALDOS.P2 }}
+                                    {% endif%}     
+                                
+                                </td> 
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
                                     
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-
-                                        {% if DADOS_DIA_LOGISTICO.SALDOS.P1 != 0 %}                    
-                                            {{ DADOS_DIA_LOGISTICO.SALDOS.P1 }}
-                                        {% endif%}
-
-                                    </td>  
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-
-                                        {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P1 != 0 %}                    
-                                            {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P1 }}
-                                        {% endif%}
-
-                                    </td>   
-                                    <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">  
-
-                                        {% if DADOS_DIA_LOGISTICO.PEDRA.P1 != 0 %}                    
-                                            {{ DADOS_DIA_LOGISTICO.PEDRA.P1 }}
-                                        {% endif%}
-
-                                    </td>
-
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-
-                                        {% if DADOS_DIA_LOGISTICO.SALDOS.P2 != 0 %}                    
-                                            {{ DADOS_DIA_LOGISTICO.SALDOS.P2 }}
-                                        {% endif%}     
+                                    {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P2 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P2 }}
+                                    {% endif%}    
+                                
+                                </td> 
+                                <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">     
                                     
-                                    </td> 
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-                                     
-                                        {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P2 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P2 }}
-                                        {% endif%}    
+                                    {% if DADOS_DIA_LOGISTICO.PEDRA.P2 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.PEDRA.P2 }}
+                                    {% endif%} 
+
+                                </td>  
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+
+                                    {% if DADOS_DIA_LOGISTICO.SALDOS.P3 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.SALDOS.P3 }}
+                                    {% endif%} 
+
+                                </td> 
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+
+                                    {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P3 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P3 }}
+                                    {% endif%} 
+
+                                </td>
+                                <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">
+
+                                    {% if DADOS_DIA_LOGISTICO.PEDRA.P3 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.PEDRA.P3 }}
+                                    {% endif%} 
+
+                                </td> 
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
                                     
-                                    </td> 
-                                    <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">     
-                                        
-                                        {% if DADOS_DIA_LOGISTICO.PEDRA.P2 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.PEDRA.P2 }}
-                                        {% endif%} 
+                                    {% if DADOS_DIA_LOGISTICO.SALDOS.P4 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.SALDOS.P4 }}
+                                    {% endif%} 
 
-                                    </td>
+                                </td>
+                                <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+    
+                                    {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P4 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P4 }}
+                                    {% endif%} 
+                                
+                                </td> 
+                                <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">
                                     
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+                                    {% if DADOS_DIA_LOGISTICO.PEDRA.P4 != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.PEDRA.P4 }}
+                                    {% endif%} 
+                                
+                                </td>    
+                                <td class="COLUNA_TOTAL">
 
-                                        {% if DADOS_DIA_LOGISTICO.SALDOS.P3 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.SALDOS.P3 }}
-                                        {% endif%} 
+                                    {% if DADOS_DIA_LOGISTICO.TT_OF != 0 %}                      
+                                        {{ DADOS_DIA_LOGISTICO.TT_OF }}
+                                    {% endif%} 
 
-                                    </td> 
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
+                                </td> 
+                                <td class="COLUNA_TOTAL">
 
-                                        {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P3 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P3 }}
-                                        {% endif%} 
+                                    {% if DADOS_DIA_LOGISTICO.TT_PD != 0 %}                      
+                                        {{DADOS_DIA_LOGISTICO.TT_PD }}
+                                    {% endif%} 
 
-                                    </td>
-                                    <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">
-
-                                        {% if DADOS_DIA_LOGISTICO.PEDRA.P3 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.PEDRA.P3 }}
-                                        {% endif%} 
-
-                                    </td> 
+                                </td> 
                                     
-
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-                                        
-                                        {% if DADOS_DIA_LOGISTICO.SALDOS.P4 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.SALDOS.P4 }}
-                                        {% endif%} 
-
-                                    </td>
-                                    <td class="CONTEUDO_{{DIA_LOGISTICO}}">
-        
-                                        {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P4 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.RECEBIMENTOS.P4 }}
-                                        {% endif%} 
-                                    
-                                    </td> 
-                                    <td class="CONTEUDO_PD{{DIA_LOGISTICO}}">
-                                        
-                                        {% if DADOS_DIA_LOGISTICO.PEDRA.P4 != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.PEDRA.P4 }}
-                                        {% endif%} 
-                                    
-                                    </td> 
-                                    
-                                    
-                                    <td class="COLUNA_TOTAL">
-
-                                        {% if DADOS_DIA_LOGISTICO.TT_OF != 0 %}                      
-                                            {{ DADOS_DIA_LOGISTICO.TT_OF }}
-                                        {% endif%} 
-
-                                    </td> 
-                                    <td class="COLUNA_TOTAL">
-
-                                        {% if DADOS_DIA_LOGISTICO.TT_PD != 0 %}                      
-                                            {{DADOS_DIA_LOGISTICO.TT_PD }}
-                                        {% endif%} 
-
-                                    </td> 
-                                        
-                                    
-                                {% endfor %}
+                            {% endfor %}
                             
                         </tr>  
 
@@ -951,7 +944,6 @@
          {% endif %}
          <!--#endregion-->
 
-
             <!--#region RELATORIO RUMO ACUCAR PSN-->
             {% if RELATORIO.RUMO.RUMO.ACUCAR.PSN %}
             <tr>
@@ -1296,7 +1288,6 @@
             </tr>
             {% endif %}
             <!--#endregion-->
-
 
             <!--#region RELATORIO RUMO CELULOSE PSN-->
              {% if RELATORIO.RUMO.RUMO.CELULOSE.PSN %}
@@ -2348,8 +2339,7 @@
                 </tr>
             {% endif %}
             <!--#endregion-->
-        
-            
+                
             <!--#region RELATORIO MRS ACUCAR PSN-->
               {% if RELATORIO.MRS.ACUCAR.PSN %}
               <tr>
@@ -3273,7 +3263,6 @@
         {% endif %}
         <!--#endregion-->
         
-
         <!--#region TOTAIS-->
 
         <tr><td colspan="72" CLASS="PULA_LINHA">.</td></tr>

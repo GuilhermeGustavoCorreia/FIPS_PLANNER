@@ -44,6 +44,7 @@ import  csv
 import  pandas as pd
 
 def REQUEST_PARA_DICT(request):
+    
     # Combina os parâmetros GET e POST em um único dicionário
     request_params = QueryDict('', mutable=True)
     request_params.update(request.GET)
@@ -61,6 +62,7 @@ def redirect_to_login(request):
 def navegacao(request):
     
     if request.method == 'POST':
+        
         with transaction.atomic():  
                
             REQUISICAO =  dict(request.POST)
@@ -82,7 +84,6 @@ def navegacao(request):
                 DESCARGAS = Descarga.EDITAR_PRODUTIVIDADE(PARAMETROS)
 
                 return JsonResponse(DESCARGAS, safe=False)
-
 
             if ACAO == "EDITAR_SALDO_DE_VIRADA":
 
@@ -695,32 +696,58 @@ def baixar_integracao_view(request):
 
     return response
 
+import zipfile
 @login_required
 def baixar_planilha_view(request):
-    
 
-    try:
-        planilha_sistema = gerar_planilha(request.user)
-
-        with NamedTemporaryFile(delete=False, suffix=".xlsm") as tmp:
-            
-            planilha_sistema.save(tmp.name)
-            tmp.seek(0)
-            
-            now = datetime.now()
-
-            response = HttpResponse(tmp.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            response['Content-Disposition'] = f'attachment; filename="planilha_planner_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.xlsm"'
-
-            tmp.close()
-
-            try:    os.unlink(tmp.name)
-            except PermissionError: pass
-
-            return response
+    # Função para gerar o JSON (mantida como está)
+    def baixar_integracao_view(request):
         
+        json_data = dados_integracao()
+        return json_data  # Retornando os dados JSON diretamente para incluir no ZIP
+
+    # Função para gerar a planilha (mantida como está)
+    def baixar_planilha_view(request):
+        
+        planilha_sistema = gerar_planilha(request.user)
+        tmp_file = NamedTemporaryFile(delete=False, suffix=".xlsx")
+
+        try:
+            planilha_sistema.save(tmp_file.name)
+            return tmp_file.name  # Retornando o nome do arquivo temporário para incluir no ZIP
+        except Exception as e:
+            raise Http404(f"Erro ao gerar o arquivo de planilha: {e}")
+    try:
+
+        # Gerar o JSON
+        json_data = baixar_integracao_view(request)
+        now = datetime.now()
+        # Gerar a planilha
+        planilha_path = baixar_planilha_view(request)
+
+        # Criar um arquivo ZIP temporário
+        with NamedTemporaryFile(delete=False, suffix=".zip") as zip_tmp_file:
+            with zipfile.ZipFile(zip_tmp_file, 'w') as zip_file:
+                # Adicionar o arquivo JSON ao ZIP
+                zip_file.writestr(f'data_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.json', json_data)
+                
+                # Adicionar o arquivo da planilha ao ZIP
+                zip_file.write(planilha_path, f'planilha_planner_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.xlsx')
+
+            zip_tmp_file.seek(0)
+
+            # Configurar a resposta HTTP para o arquivo ZIP
+
+            response = HttpResponse(zip_tmp_file.read(), content_type='application/zip')
+            response['Content-Disposition'] = f'attachment; filename="arquivos_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.zip"'
+
+        # Limpar arquivos temporários
+        os.unlink(planilha_path)
+
+        return response
+    
     except Exception as e:
-        raise Http404(f"Erro ao baixar o arquivo: {e}")
+        raise Http404(f"Erro ao gerar o arquivo ZIP: {e}")
 
 @login_required
 def baixar_planilh_antiga_view(request):
@@ -854,7 +881,6 @@ def programacao_subida(request):
     
     return render(request, 'programacao_subida.html', {"TABELAS_SUBIDA": TABELAS_SUBIDA, "FORM": FORM_NOVO_TREM})
 
-
 #region RELATORIO OCUPACAO
 @login_required
 def ocupacao_terminais(request):
@@ -875,6 +901,31 @@ def ocupacao_terminais(request):
             
             dia_logistico   = request.GET.get('dia_logistico')
             terminal        = request.GET.get('terminal')
+
+            if terminal == "TGRAO" or terminal == "BRACELL" or terminal == "SUZANO":
+
+                DESCARGA = DESCARGA_HTML("TGRAO", dia_logistico)                      + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("BRACELL", dia_logistico)    + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("SUZANO", dia_logistico)           + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+
+                return HttpResponse(DESCARGA) 
+
+
+            if terminal == "CLI" or terminal == "CLI ACUCAR":
+
+                DESCARGA = DESCARGA_HTML("CLI", dia_logistico)                      + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("CLI ACUCAR", dia_logistico)    + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+
+
+                return HttpResponse(DESCARGA) 
+            
+            if terminal == "TAC" or terminal == "TAC ACUCAR":
+
+                DESCARGA = DESCARGA_HTML("TAC", dia_logistico)                      + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+                DESCARGA = DESCARGA + DESCARGA_HTML("TAC ACUCAR", dia_logistico)    + "<tr><td colspan=29 class='pula__linha'>.</td></tr>"
+
+
+                return HttpResponse(DESCARGA) 
 
             if terminal == "MOEGA X" or terminal == "MOEGA V":
 
@@ -987,7 +1038,6 @@ def excluir_tabela_subida_view(request, margem):
             trem_vazio.delete()
 
     return redirect('previsao_subida')
-
 
 @login_required   
 def editar_trem_subida_view(request, id_trem_vazio):

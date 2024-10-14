@@ -8,20 +8,24 @@ from previsao_trens.packages.DETELHE.CARREGAR_PAGINA import CARREGAR_RELATORIO_D
 
 def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
     
-    PULA_LINHA = "<tr><td class='pula__linha' colspan=16>x</td></tr>"
+    PULA_LINHA = "<tr><td class='pula__linha' colspan=15>x</td> <td class='celula_vazia'></td> <td class='pula__linha' ></td></tr>"
 
-    dias_logisticos = ["D", "D+1", "D+2"]
+    dias_logisticos = ["D", "D+1", "D+2", "D+3"]
     titulos= ["TITULO_AZUL", "TITULO_VERDE", "TITULO_AZUL"]
     html_detalhe_header = f"""
         <table id="relatorio_detalhe">
             <thead>
                 <tr>
-                    <th class="CELULA_VAZIA"  rowspan="3">
+                    <th class="borda_cinza"  rowspan="3">
                         
                     </th>
                     <th colspan="14" class="{titulos[dia_logistico]}">
                         PREVISÃO {dias_logisticos[dia_logistico]}
                     </th>
+
+                    <th rowspan=3 class="celula_vazia"></th>
+
+                    <th rowspan=3 class="{titulos[dia_logistico]}" >SALDO DE </br>VIRADA {dias_logisticos[dia_logistico + 1]}</th>
                    
                 </tr>
                 
@@ -76,6 +80,7 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
     totais_rumo = dict_relatorio_detalhe["RUMO"]["RUMO"]
     print(totais_rumo["TOTAO_GRAO_ACUCAR"].keys())
+
     #region MRS
   
     mrs_graos_psn = dict_relatorio_detalhe["MRS"]["GRAOS"]['PSN'][dia_logistico]
@@ -103,6 +108,8 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_graos_psn["TT_OF"]}</td> 
             <td class="COLUNA_TOTAL">{ mrs_graos_psn["TT_PD"]}</td>
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_graos_psn["TT_OF"]) - int(mrs_graos_psn["TT_PD"]) }</td>
         </tr> """
 
     mrs_graos_pcz = dict_relatorio_detalhe["MRS"]["GRAOS"]['PCZ'][dia_logistico]
@@ -130,6 +137,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_graos_pcz["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_graos_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+<td class="COLUNA_TOTAL">{ int(mrs_graos_pcz["TT_OF"]) - int(mrs_graos_pcz["TT_PD"]) }</td>
         </tr> """
 
     mrs_acucar_psn = dict_relatorio_detalhe["MRS"]["ACUCAR"]['PSN'][dia_logistico]
@@ -157,6 +167,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_acucar_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_acucar_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_acucar_psn["TT_OF"]) - int(mrs_acucar_psn["TT_PD"]) }</td>   
         </tr> """
 
     mrs_acucar_pcz = dict_relatorio_detalhe["MRS"]["ACUCAR"]['PCZ'][dia_logistico]
@@ -184,6 +197,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_acucar_pcz["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_acucar_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_acucar_pcz["TT_OF"]) - int(mrs_acucar_pcz["TT_PD"]) }</td>   
         </tr> """
 
     mrs_graos_e_acucar = dict_relatorio_detalhe["MRS"]["TOTAO_GRAO_ACUCAR"][dia_logistico] 
@@ -211,6 +227,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { mrs_graos_e_acucar["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { mrs_graos_e_acucar["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(mrs_graos_e_acucar["TT_OF"]) - int(mrs_graos_e_acucar["TT_PD"]) }</td>
         </tr> """
 
     mrs_celulose_psn = dict_relatorio_detalhe["MRS"]["CELULOSE"]["PSN"][dia_logistico] 
@@ -238,6 +257,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_celulose_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_celulose_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_celulose_psn["TT_OF"]) - int(mrs_celulose_psn["TT_PD"]) }</td>
+
         </tr> """
 
     total_mrs_celulose = dict_relatorio_detalhe["MRS"]["CELULOSE"]["TOTAL_CELULOSE"][dia_logistico] 
@@ -265,6 +288,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { total_mrs_celulose["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { total_mrs_celulose["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(total_mrs_celulose["TT_OF"]) - int(total_mrs_celulose["TT_PD"]) }</td>
         </tr> """
 
     mrs_conteiner_psn = dict_relatorio_detalhe["MRS"]["CONTEINER"]["PSN"][dia_logistico] 
@@ -293,6 +319,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
             <td class="COLUNA_TOTAL">{ mrs_conteiner_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_conteiner_psn["TT_PD"]  }</td>
 
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_conteiner_psn["TT_OF"]) - int(mrs_conteiner_psn["TT_PD"]) }</td>
+
         </tr> """
 
     mrs_conteiner_pcz = dict_relatorio_detalhe["MRS"]["CONTEINER"]["PCZ"][dia_logistico] 
@@ -320,6 +349,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ mrs_conteiner_pcz["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ mrs_conteiner_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(mrs_conteiner_pcz["TT_OF"]) - int(mrs_conteiner_pcz["TT_PD"]) }</td>
         </tr> """
 
     total_mrs_conteiner = dict_relatorio_detalhe["MRS"]["CONTEINER"]["TOTAL_CONTEINER"][dia_logistico] 
@@ -347,6 +379,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { total_mrs_conteiner["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { total_mrs_conteiner["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(total_mrs_conteiner["TT_OF"]) - int(total_mrs_conteiner["TT_PD"]) }</td>
         </tr> """
 
     html_mrs = ( 
@@ -391,6 +426,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_graos_e_acucar["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_graos_e_acucar["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(rumo_graos_e_acucar["TT_OF"]) - int(rumo_graos_e_acucar["TT_PD"]) }</td>
         </tr> """
 
     rumo_graos_psn = dict_relatorio_detalhe["RUMO"]["RUMO"]["GRAOS"]['PSN'][dia_logistico]
@@ -418,6 +456,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ rumo_graos_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ rumo_graos_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(rumo_graos_psn["TT_OF"]) - int(rumo_graos_psn["TT_PD"]) }</td>
         </tr> """
 
     rumo_graos_pcz = dict_relatorio_detalhe["RUMO"]["RUMO"]["GRAOS"]['PCZ'][dia_logistico]
@@ -445,6 +486,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ rumo_graos_pcz["TT_OF"]  }</td>
             <td class="COLUNA_TOTAL">{ rumo_graos_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(rumo_graos_pcz["TT_OF"]) - int(rumo_graos_pcz["TT_PD"]) }</td>
         </tr> """
     
     rumo_graos = totais_rumo["GRAOS"]["TOTAL_GRAO"][dia_logistico]
@@ -472,6 +516,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_graos["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_graos["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(rumo_graos["TT_OF"]) - int(rumo_graos["TT_PD"]) }</td>
+
         </tr> """
     
     rumo_acucar_psn = dict_relatorio_detalhe["RUMO"]["RUMO"]["ACUCAR"]['PSN'][dia_logistico]
@@ -499,6 +547,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ rumo_acucar_psn["TT_OF"]  }</td>
             <td class="COLUNA_TOTAL">{ rumo_acucar_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(rumo_acucar_psn["TT_OF"]) - int(rumo_acucar_psn["TT_PD"]) }</td>
         </tr> """
 
     rumo_acucar_pcz = dict_relatorio_detalhe["RUMO"]["RUMO"]["ACUCAR"]['PCZ'][dia_logistico]
@@ -526,6 +577,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ rumo_acucar_pcz["TT_OF"]  }</td>
             <td class="COLUNA_TOTAL">{ rumo_acucar_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(rumo_acucar_pcz["TT_OF"]) - int(rumo_acucar_pcz["TT_PD"]) }</td>
         </tr> """
     
     rumo_acucar = totais_rumo["ACUCAR"]["TOTAL_ACUCAR"][dia_logistico]
@@ -552,6 +606,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_acucar["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { rumo_acucar["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(rumo_acucar["TT_OF"]) - int(rumo_acucar["TT_PD"]) }</td>
         </tr> """
 
     rumo_celulose_psn = dict_relatorio_detalhe["RUMO"]["RUMO"]["CELULOSE"]['PSN'][dia_logistico]
@@ -579,6 +636,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ rumo_celulose_psn["TT_OF"]  }</td>
             <td class="COLUNA_TOTAL">{ rumo_celulose_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(rumo_celulose_psn["TT_OF"]) - int(rumo_celulose_psn["TT_PD"]) }</td>
         </tr> """
 
     html_rumo = (
@@ -623,6 +683,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ vli_graos_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ vli_graos_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(vli_graos_psn["TT_OF"]) - int(vli_graos_psn["TT_PD"]) }</td>
+
         </tr> """
 
     vli_graos_pcz = dict_relatorio_detalhe["VLI"]["GRAOS"]['PCZ'][dia_logistico]
@@ -650,6 +714,9 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ vli_graos_pcz["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ vli_graos_pcz["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(vli_graos_pcz["TT_OF"]) - int(vli_graos_pcz["TT_PD"]) }</td>
         </tr> """
 
     vli_acucar_psn = dict_relatorio_detalhe["VLI"]["ACUCAR"]['PSN'][dia_logistico]
@@ -677,6 +744,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ vli_acucar_psn["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ vli_acucar_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(vli_acucar_psn["TT_OF"]) - int(vli_acucar_psn["TT_PD"]) }</td>
+
         </tr> """
 
     vli_acucar_pcz = dict_relatorio_detalhe["VLI"]["ACUCAR"]['PCZ'][dia_logistico]
@@ -704,6 +775,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="COLUNA_TOTAL">{ vli_acucar_pcz["TT_OF"]  }</td> 
             <td class="COLUNA_TOTAL">{ vli_acucar_pcz["TT_PD"]  }</td>
+            
+            <td class='celula_vazia'></td>
+            <td class="COLUNA_TOTAL">{ int(vli_acucar_pcz["TT_OF"]) - int(vli_acucar_pcz["TT_PD"]) }</td>
+
         </tr> """ 
 
     vli_grao_e_acucar_psn = dict_relatorio_detalhe["VLI"]["TOTAO_GRAO_ACUCAR"][dia_logistico]
@@ -730,6 +805,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
             <td class="TOTAL_TOTAL{dia_logistico}"> { vli_grao_e_acucar_psn["TT_OF"]  }</td>
             <td class="TOTAL_TOTAL{dia_logistico}"> { vli_grao_e_acucar_psn["TT_PD"]  }</td>
+
+            <td class='celula_vazia'></td>
+            <td class="TOTAL_TOTAL{dia_logistico}">{ int(vli_grao_e_acucar_psn["TT_OF"]) - int(vli_grao_e_acucar_psn["TT_PD"]) }</td>
+
         </tr> """
 
 
@@ -760,11 +839,16 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
         <td class="COLUNA_TOTAL">{ totais_graos_psn["TT_OF"]  }</td> 
         <td class="COLUNA_TOTAL">{ totais_graos_psn["TT_PD"]  }</td>
+
+        <td class='celula_vazia'></td>
+        <td class="COLUNA_TOTAL">{ int(totais_graos_psn["TT_OF"]) - int(totais_graos_psn["TT_PD"]) }</td>
+
     </tr> """
 
     totais_graos_pcz = dict_relatorio_detalhe["TOTAIS"]["PCZ"][dia_logistico]
     html_totais_graos_pcz = f"""
     <tr>
+
         <th class="NOME__TERMINAL">TOTAIS GRÃOS PCZ</th> 
           
         <td class="CONTEUDO_{dia_logistico}">   { totais_graos_pcz["SALDOS"]["P1"]           }</td>
@@ -785,12 +869,16 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
         <td class="COLUNA_TOTAL">{ totais_graos_pcz["TT_OF"]  }</td> 
         <td class="COLUNA_TOTAL">{ totais_graos_pcz["TT_PD"]  }</td>
-    </tr> """
 
-        
+        <td class='celula_vazia'></td>
+        <td class="COLUNA_TOTAL">{ int(totais_graos_pcz["TT_OF"]) - int(totais_graos_pcz["TT_PD"]) }</td>
+
+    </tr> """
+  
     totais_graos_e_acucar = dict_relatorio_detalhe["TOTAIS"]["GRAO_ACUCAR"][dia_logistico]
     html_totais_graos_e_acucar = f"""
     <tr> 
+
         <th class="COLUNA_TOTAL NOME__TERMINAL">TOTAL GRÃOS E AÇÚCAR</th>  
         <td class="TOTAL_{dia_logistico}">      { totais_graos_e_acucar["SALDOS"]["P1"]        }</td>
         <td class="TOTAL_{dia_logistico}">      { totais_graos_e_acucar["RECEBIMENTOS"]["P1"]  }</td>
@@ -810,11 +898,16 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
         <td class="TOTAL_TOTAL{dia_logistico}"> { totais_graos_e_acucar["TT_OF"]  }</td>
         <td class="TOTAL_TOTAL{dia_logistico}"> { totais_graos_e_acucar["TT_PD"]  }</td>
+
+        <td class='celula_vazia'></td>
+        <td class="TOTAL_TOTAL{dia_logistico}">{ int(totais_graos_e_acucar["TT_OF"]) - int(totais_graos_e_acucar["TT_PD"]) }</td>
+
     </tr> """
 
     totais_geral = dict_relatorio_detalhe["TOTAIS"]["GERAL"][dia_logistico]
     html_totais_geral = f"""
     <tr> 
+
         <th class="COLUNA_TOTAL NOME__TERMINAL">TOTAL GERAL FERROVIAS</th>  
         <td class="TOTAL_{dia_logistico}">      { totais_geral["SALDOS"]["P1"]        }</td>
         <td class="TOTAL_{dia_logistico}">      { totais_geral["RECEBIMENTOS"]["P1"]  }</td>
@@ -834,6 +927,10 @@ def montar_html_detalhe(dict_relatorio_detalhe, dia_logistico):
 
         <td class="TOTAL_TOTAL{dia_logistico}"> { totais_geral["TT_OF"]  }</td>
         <td class="TOTAL_TOTAL{dia_logistico}"> { totais_geral["TT_PD"]  }</td>
+
+        <td class='celula_vazia'></td>
+        <td class="TOTAL_TOTAL{dia_logistico}">{ int(totais_geral["TT_OF"]) - int(totais_geral["TT_PD"]) }</td>
+
     </tr> """
 
     totais_fips =  html_totais_graos_psn + html_totais_graos_pcz + html_totais_graos_e_acucar + html_totais_geral

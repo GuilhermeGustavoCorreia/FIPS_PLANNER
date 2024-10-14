@@ -191,7 +191,7 @@ class EXPORTAR_PLANILHA():
 
     def __init__(self):
 
-        self.PLANILHA           = load_workbook("previsao_trens/src/DICIONARIOS/planilha_planner.xlsx", keep_vba=True) 
+        self.PLANILHA           = load_workbook("previsao_trens/src/DICIONARIOS/planilha_planner.xlsx", keep_vba=False) 
         self.PERIODO_VIGENTE    = pd.read_csv(f"previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv", sep=";", index_col=0)
         
     def atualizar_a_data(self):

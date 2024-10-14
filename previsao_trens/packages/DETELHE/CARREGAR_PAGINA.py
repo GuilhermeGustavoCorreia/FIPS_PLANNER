@@ -18,11 +18,7 @@ def CARREGAR_RELATORIO_DETALHE():
     with open(f"previsao_trens/src/DICIONARIOS/TERMINAIS.json") as ARQUIVO_DESCARGA:
         INFOS = json.load(ARQUIVO_DESCARGA)
 
-    RELATORIO_DETALHE = {
-
-        "PRINCIPAL":    {},
-        "RUMO":         {}
-    }
+    RELATORIO_DETALHE = { "PRINCIPAL": {}, "RUMO": {} }
 
     #OBTENDO OS VALORES DA DETALHADA
 

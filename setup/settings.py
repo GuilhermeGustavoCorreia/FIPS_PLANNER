@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
+
 from    pathlib import Path
 import  os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,55 +26,12 @@ SECRET_KEY = 'django-insecure-ncma313p1ssm%ao*u24bnmt#tp1*g63um)gneel(6xw8yd+qk1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-
-ALLOWED_HOSTS = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost', '127.0.0.1', 'planner.develop.agfips.com.br']
+ALLOWED_HOSTS           = ['fipsplanner.com', 'www.fipsplanner.com', 'localhost', '127.0.0.1', 'planner.develop.agfips.com.br']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # settings.py
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level'     : 'DEBUG',
-            'class'     : 'logging.handlers.RotatingFileHandler',  # Use RotatingFileHandler
-            'filename'  : 'mysite.log',
-            'formatter' : 'verbose',
-            'maxBytes'  : 1024 * 1024 * 5,  # 5 MB de tamanho máximo do arquivo de log
-            'backupCount': 3,  # Manter até 3 arquivos de log rotacionados
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'propagate': True,
-            'level': 'DEBUG',
-        },
-        'MYAPP': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-        'django.utils.autoreload': {  # Add this block to control autoreload logging
-            'handlers': ['file'],
-            'level': 'INFO',  # Change to INFO to reduce verbosity or ERROR to hide completely
-            'propagate': False,
-        },
-    }
-}
-
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -151,7 +151,6 @@ def MONTAR_HTML(DESCARGA, TERMINAL, DIA_LOGISTICO, DATA_ARQ, INFOS):
 
             #endregion
 
-
     #region LINHA TOTAIS DE PEDRAS 
     LINHA_TOTAIS_PEDRA = \
     f"""<tr class="LINHAS_TOTAIS_PEDRAS">
