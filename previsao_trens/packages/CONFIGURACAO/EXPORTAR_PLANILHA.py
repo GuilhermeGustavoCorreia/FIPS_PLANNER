@@ -459,29 +459,7 @@ class EXPORTAR_PLANILHA():
             SUBIDA.cell(row = j, column=16,   value=TREM.loco_4)
             SUBIDA.cell(row = j, column=17,   value=TREM.loco_5)
 
-        # QUERYSET = TremVazio.objects.filter(margem  = "ESQUERDA").order_by('previsao')
 
-        # for j, TREM in enumerate(QUERYSET):
-
-        #     j = j + 4 # É PQ COMEÇA NA LINHA 5
-
-        #     SUBIDA.cell(row = j, column=18,   value=j - 4)
-        #     SUBIDA.cell(row = j, column=19,   value=TREM.prefixo)
-        #     SUBIDA.cell(row = j, column=20,   value=TREM.ferrovia)
-        #     SUBIDA.cell(row = j, column=21,   value=TREM.previsao.replace(tzinfo=None))
-        #     SUBIDA.cell(row = j, column=22,   value=TREM.eot)
-
-        #     SUBIDA.cell(row = j, column=23,   value=TREM.qt_graos)
-        #     SUBIDA.cell(row = j, column=24,   value=TREM.qt_ferti)
-        #     SUBIDA.cell(row = j, column=25,   value=TREM.qt_celul)
-        #     SUBIDA.cell(row = j, column=26,   value=TREM.qt_acuca)
-        #     SUBIDA.cell(row = j, column=27,   value=TREM.qt_contei)
-
-        #     SUBIDA.cell(row = j, column=28,   value=TREM.loco_1)
-        #     SUBIDA.cell(row = j, column=29,   value=TREM.loco_2)
-        #     SUBIDA.cell(row = j, column=30,   value=TREM.loco_3)
-        #     SUBIDA.cell(row = j, column=31,   value=TREM.loco_4)
-        #     SUBIDA.cell(row = j, column=32,   value=TREM.loco_5)
     
     def salvar(self):
         

@@ -4,9 +4,8 @@ import copy
 
 def CARREGAR_RELATORIO_DETALHE():
 
-    
-    PERIODO_VIGENTE         = pd.read_csv("previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0)
-    TERMINAIS_ATIVOS        = pd.read_csv("previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0)
+    PERIODO_VIGENTE         = pd.read_csv( "previsao_trens/src/PARAMETROS/PERIODO_VIGENTE.csv",   encoding='utf-8-sig', sep=';', index_col=0 )
+    TERMINAIS_ATIVOS        = pd.read_csv( "previsao_trens/src/PARAMETROS/DESCARGAS_ATIVAS.csv",  encoding='utf-8-sig', sep=';', index_col=0 )
     lst_TERMINAIS_ATIVOS    = TERMINAIS_ATIVOS[TERMINAIS_ATIVOS['TERMINAL'] > 0].index.tolist()
     
     TERMINAIS_ATIVOS.drop('TERMINAL', axis=1, inplace=True)    
@@ -42,7 +41,7 @@ def CARREGAR_RELATORIO_DETALHE():
                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO] = {}
 
             for DIA_LOGISTICO, DATA_ARQ in enumerate(LISTA_DATA_ARQ): #CADA DIA
-                
+
                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]                  = {}
                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["RECEBIMENTOS"]  = {}
                 RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["PEDRA"]         = {} 
@@ -51,7 +50,7 @@ def CARREGAR_RELATORIO_DETALHE():
                 with open(f"previsao_trens/src/DESCARGAS/{TERMINAL}/descarga_{DATA_ARQ}.json") as ARQUIVO_DESCARGA:
                     DESCARGA = json.load(ARQUIVO_DESCARGA)
 
-                try: #['SALDO_DE_VIRADA_VAZIOS', 'SALDO_DE_VIRADA', 'PRODUTIVIDADE', 'RECEBIMENTOS', 'PEDRA']
+                try:
 
                     RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"]["P1"] = DESCARGA["DESCARGAS"][FERROVIA][PRODUTO]["INDICADORES"]["SALDO_DE_VIRADA"]
 
@@ -78,11 +77,11 @@ def CARREGAR_RELATORIO_DETALHE():
                     TOTAL_OFERTA = 0
 
                     for i in range (1, 5):
-                    
+
 
                         TOTAL_PEDRA  = TOTAL_PEDRA  + RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["PEDRA"][f"P{i}"]
                         TOTAL_OFERTA = TOTAL_OFERTA + RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["RECEBIMENTOS"][f"P{i}"]
-                    
+
 
                     RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["TT_OF"] = TOTAL_OFERTA + RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["SALDOS"]["P1"]  
                     RELATORIO_DETALHE["PRINCIPAL"][TERMINAL][FERROVIA][PRODUTO][DIA_LOGISTICO]["TT_PD"] = TOTAL_PEDRA
@@ -335,7 +334,7 @@ def CARREGAR_RELATORIO_DETALHE():
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P1"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P1"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P2"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P2"]
                             TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P3"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P3"]
-                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"]
+                            TOTAIS["TOTAIS"]["GERAL"][i][COLUNA]["P4"] += RELATORIO_DETALHE["PRINCIPAL"][TERMINAL]["RUMO"][PRODUTO][i][COLUNA]["P4"] 
                 
                 if PRODUTO == "CELULOSE" and MARGEM == "PSN":
 

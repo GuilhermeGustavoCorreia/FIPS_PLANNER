@@ -26,6 +26,8 @@ from    previsao_trens.packages.CONFIGURACAO.EXPORTAR_PLANILHA                  
 from    previsao_trens.packages.CONFIGURACAO.BAIXAR_DETALHE                         import gerar_planilha_detalhe
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_GERAR       import dados_integracao
 from    previsao_trens.packages.CONFIGURACAO.INTEGRACAO_PLANNER_OFFLINE_LER         import lerDados
+from    previsao_trens.packages.CONFIGURACAO.create_reports_image                   import imagem_detalhe
+
 import  previsao_trens.packages.descarga.CARREGAR_PAGINA                                                        as CARREGAR_DESCARGA
 from    previsao_trens.packages.descarga.EDITAR_DESCARGA                            import NAVEGACAO_DESCARGA   as NAVEGACAO_DESCARGA
 from    previsao_trens.packages.PROG_SUBIDA.CARREGAR_PAGINA                         import CARREGAR_PROG_SUBIDA
@@ -35,6 +37,7 @@ from    previsao_trens.packages.RELATORIO_OCUPACAO.CARREGAR_PAGINA              
 from    previsao_trens.packages.RELATORIO_OCUPACAO.carregar_totais_detalhe          import  totais_detalhe
 from    previsao_trens.packages.RELATORIO_OCUPACAO.DESCARGA_HTML                    import DESCARGA_HTML
 from    previsao_trens.packages.RESTRICAO.VALIDAR                                   import VALIDAR_RESTRICAO
+
 
 import  os
 from    io          import TextIOWrapper
@@ -696,56 +699,119 @@ def baixar_integracao_view(request):
 
     return response
 
+import imgkit
 import zipfile
+from html2image import Html2Image
 @login_required
 def baixar_planilha_view(request):
 
-    # Função para gerar o JSON (mantida como está)
-    def baixar_integracao_view(request):
+    #####################################################################################################################
+
+    # def salvar_html_como_imagem(html_content):
+
+    #     hti = Html2Image()
+
+    #     # Definir tamanho personalizado para a imagem
+    #     hti.output_path = '.'  # Define o diretório atual para salvar a imagem
+    #     img_path = f"imagem_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
+
+    #     # Adicionando tamanho da imagem e definindo uma largura e altura fixas
+    #     hti.screenshot(html_str=html_content, save_as=img_path, size=(1366, 2580))  
+
+    #     if os.path.exists(img_path) and os.path.getsize(img_path) > 0:
+            
+    #         return img_path
         
+    #     else:
+            
+    #         raise Http404("Erro ao gerar a imagem do HTML")
+
+
+    # # Adicionar estilos básicos ao HTML
+    # html_content = imagem_detalhe(0)
+
+    # # Gerar a imagem a partir do conteúdo HTML com estilo
+    # imagem_path = salvar_html_como_imagem(html_content)
+
+    # # Ler o conteúdo da imagem para a resposta HTTP
+    # with open(imagem_path, 'rb') as img_file:
+
+    #     response = HttpResponse(img_file.read(), content_type='image/jpeg')
+    #     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(imagem_path)}"'
+
+    # # Remover o arquivo da imagem após o download
+    # os.unlink(imagem_path)
+
+    # return response
+
+    #####################################################################################################################
+
+    #Função para gerar o JSON (mantida como está)
+    def baixar_integracao_view():
         json_data = dados_integracao()
         return json_data  # Retornando os dados JSON diretamente para incluir no ZIP
 
     # Função para gerar a planilha (mantida como está)
-    def baixar_planilha_view(request):
-        
+    def baixar_planilha_view():
         planilha_sistema = gerar_planilha(request.user)
-        tmp_file = NamedTemporaryFile(delete=False, suffix=".xlsx")
+        tmp_file = NamedTemporaryFile(delete=False, suffix=".xlsm")
 
         try:
             planilha_sistema.save(tmp_file.name)
             return tmp_file.name  # Retornando o nome do arquivo temporário para incluir no ZIP
         except Exception as e:
             raise Http404(f"Erro ao gerar o arquivo de planilha: {e}")
-    try:
+    
+    # Função para salvar o HTML como imagem
+    def salvar_html_como_imagem(html_content):
+        
+        hti = Html2Image()
+        with NamedTemporaryFile(delete=False, suffix='.jpeg') as img_tmp_file:
+            img_path = img_tmp_file.name
+            hti.output_path = os.path.dirname(img_path)  # Define o diretório para salvar a imagem
+            hti.screenshot(html_str=html_content, save_as=os.path.basename(img_path))  # Usa apenas o nome do arquivo
+            img_tmp_file.flush()  # Garante que o arquivo seja escrito completamente
+            os.fsync(img_tmp_file.fileno())  # Garante que o conteúdo seja salvo no disco
+            return img_path
 
+
+    try:
         # Gerar o JSON
-        json_data = baixar_integracao_view(request)
+        json_data = baixar_integracao_view()
         now = datetime.now()
+
         # Gerar a planilha
-        planilha_path = baixar_planilha_view(request)
+        planilha_path = baixar_planilha_view()
+
+        # Gerar a imagem do HTML
+        html_content = "<html><body><h1>Detalhe da Imagem</h1><p>Conteúdo da imagem em HTML.</p></body></html>"
+        #imagem_path = salvar_html_como_imagem(html_content)
 
         # Criar um arquivo ZIP temporário
         with NamedTemporaryFile(delete=False, suffix=".zip") as zip_tmp_file:
             with zipfile.ZipFile(zip_tmp_file, 'w') as zip_file:
+                
                 # Adicionar o arquivo JSON ao ZIP
                 zip_file.writestr(f'data_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.json', json_data)
                 
                 # Adicionar o arquivo da planilha ao ZIP
                 zip_file.write(planilha_path, f'planilha_planner_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.xlsx')
 
+                # Adicionar o arquivo da imagem ao ZIP
+                #zip_file.write(imagem_path, f'imagem_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.jpeg')
+            
             zip_tmp_file.seek(0)
 
             # Configurar a resposta HTTP para o arquivo ZIP
-
             response = HttpResponse(zip_tmp_file.read(), content_type='application/zip')
             response['Content-Disposition'] = f'attachment; filename="arquivos_{now.year}-{now.month}-{now.day}_{now.hour}h_{now.minute}min_{now.second}sec.zip"'
 
         # Limpar arquivos temporários
         os.unlink(planilha_path)
+        #os.unlink(imagem_path)  # Remover o arquivo da imagem
 
         return response
-    
+
     except Exception as e:
         raise Http404(f"Erro ao gerar o arquivo ZIP: {e}")
 

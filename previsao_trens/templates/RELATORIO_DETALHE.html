@@ -231,6 +231,7 @@
             {% for NOME_FERROVIA, DADOS_FERROVIA in DADOS.items %}
                     
                 {% if not NOME_FERROVIA == "TOTAL" %}
+                    
                     {% for NOME_PRODUTO, DADOS_PRODUTO in DADOS_FERROVIA.items %}
                         
                         <tr>
@@ -359,12 +360,11 @@
                 {% endfor %}
 
                 <tr class="TOTAL"> 
+
                     <th colspan=4 class="NOME__TERMINAL COLUNA_TOTAL">{{NOME_TERMINAL}} TOTAL</th> 
                     
                     {% for DIA_LOGISTICO, DADOS_DIA_LOGISTICO in DADOS.TOTAL.items %}
                             
-
-
                         <td class="TOTAL_{{DIA_LOGISTICO}}">                    
                             
                             {% if DADOS_DIA_LOGISTICO.SALDOS.P1 != 0 %}                      
@@ -372,6 +372,7 @@
                             {% endif%} 
 
                         </td>  
+
                         <td class="TOTAL_{{DIA_LOGISTICO}}">
 
                             {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P1 != 0 %}                      
@@ -379,6 +380,7 @@
                             {% endif%} 
 
                         </td>  
+
                         <td class="TOTAL_PD{{DIA_LOGISTICO}}">
                             
                             {% if DADOS_DIA_LOGISTICO.PEDRA.P1 != 0 %}                      
@@ -419,6 +421,7 @@
                             {% endif%}     
 
                         </td> 
+
                         <td class="TOTAL_{{DIA_LOGISTICO}}">
                             
                             {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P3 != 0 %}                      
@@ -426,6 +429,7 @@
                             {% endif%}     
 
                         </td>
+
                         <td class="TOTAL_PD{{DIA_LOGISTICO}}">
                                 
                             {% if DADOS_DIA_LOGISTICO.PEDRA.P3 != 0 %}                      
@@ -434,7 +438,6 @@
 
                         </td> 
                         
-
                         <td class="TOTAL_{{DIA_LOGISTICO}}">
                             
                             {% if DADOS_DIA_LOGISTICO.SALDOS.P4 != 0 %}                      
@@ -442,6 +445,7 @@
                             {% endif%}     
 
                         </td>
+
                         <td class="TOTAL_{{DIA_LOGISTICO}}">
 
                             {% if DADOS_DIA_LOGISTICO.RECEBIMENTOS.P4 != 0 %}                      
@@ -449,6 +453,7 @@
                             {% endif%}     
 
                         </td> 
+
                         <td class="TOTAL_PD{{DIA_LOGISTICO}}">
 
                             {% if DADOS_DIA_LOGISTICO.PEDRA.P4 != 0 %}                      
@@ -457,7 +462,6 @@
       
                         </td> 
                         
-                        
                         <td class="TOTAL_TOTAL{{DIA_LOGISTICO}}">
 
                             {% if DADOS_DIA_LOGISTICO.TT_OF != 0 %}                      
@@ -465,6 +469,7 @@
                             {% endif%} 
 
                         </td> 
+
                         <td class="TOTAL_TOTAL{{DIA_LOGISTICO}}">
 
                             {% if DADOS_DIA_LOGISTICO.TT_PD != 0 %}                      
@@ -488,7 +493,7 @@
              {% if RELATORIO.RUMO.RUMO.TOTAO_GRAO_ACUCAR %}
              <tr class="TOTAL">
                  <th colspan="4" class=" COLUNA_TOTAL NOME__TERMINAL">TOTAL RUMO GRÃOS E AÇÚCAR</th>
-                 {{RELATORIO.RUMO.PSN}}
+                 
                  {% for DIA_LOGISTICO, DADOS_DIA_LOGISTICO in  RELATORIO.RUMO.RUMO.TOTAO_GRAO_ACUCAR.items %}
                  <td class="TOTAL_{{DIA_LOGISTICO}}">
 
@@ -2570,7 +2575,6 @@
                {% endif %}
                <!--#endregion-->
 
-
             <!--#region RELATORIO MRS TOTAL GRAO + ACUCAR-->
                   {% if RELATORIO.MRS.TOTAO_GRAO_ACUCAR %}
                   <tr class="TOTAL">
@@ -2685,10 +2689,9 @@
                   </tr>
               {% endif %}
               <!--#endregion-->
-             
-              
+                   
             <!--#region RELATORIO MRS CELULOSE PSN-->
-                 {% if RELATORIO.MRS.CELULOSE.PSN %}
+            {% if RELATORIO.MRS.CELULOSE.PSN %}
                  <tr>
                      <th colspan="4" class="NOME__TERMINAL">MRS CELULOSE PSN</th>
                      {{RELATORIO.RUMO.PSN}}
